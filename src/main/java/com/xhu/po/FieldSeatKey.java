@@ -1,5 +1,12 @@
 package com.xhu.po;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class FieldSeatKey {
     private String seatId;
 
@@ -7,27 +14,5 @@ public class FieldSeatKey {
 
     private String orderId;
 
-    public String getSeatId() {
-        return seatId;
-    }
 
-    public void setSeatId(String seatId) {
-        this.seatId = seatId == null ? null : seatId.trim();
-    }
-
-    public String getFieldId() {
-        return fieldId;
-    }
-
-    public void setFieldId(String fieldId) {
-        this.fieldId = fieldId == null ? null : fieldId.trim();
-    }
-
-    public String getOrderId() {
-        return orderId;
-    }
-
-    public void setOrderId(String orderId) {
-        this.orderId = orderId == null ? null : orderId.trim();
-    }
 }

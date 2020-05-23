@@ -1,25 +1,16 @@
 package com.xhu.po;
 
-import java.math.BigDecimal;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Contact {
     private String concatId;
 
     private BigDecimal concatNumber;
 
-    public String getConcatId() {
-        return concatId;
-    }
-
-    public void setConcatId(String concatId) {
-        this.concatId = concatId == null ? null : concatId.trim();
-    }
-
-    public BigDecimal getConcatNumber() {
-        return concatNumber;
-    }
-
-    public void setConcatNumber(BigDecimal concatNumber) {
-        this.concatNumber = concatNumber;
-    }
 }

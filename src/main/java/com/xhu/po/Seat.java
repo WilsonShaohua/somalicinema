@@ -1,5 +1,12 @@
 package com.xhu.po;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Seat {
     private String seatId;
 
@@ -11,43 +18,4 @@ public class Seat {
 
     private Integer seatIsIt;
 
-    public String getSeatId() {
-        return seatId;
-    }
-
-    public void setSeatId(String seatId) {
-        this.seatId = seatId == null ? null : seatId.trim();
-    }
-
-    public String getScreeningRoomId() {
-        return screeningRoomId;
-    }
-
-    public void setScreeningRoomId(String screeningRoomId) {
-        this.screeningRoomId = screeningRoomId == null ? null : screeningRoomId.trim();
-    }
-
-    public Integer getSeatX() {
-        return seatX;
-    }
-
-    public void setSeatX(Integer seatX) {
-        this.seatX = seatX;
-    }
-
-    public Integer getSeatY() {
-        return seatY;
-    }
-
-    public void setSeatY(Integer seatY) {
-        this.seatY = seatY;
-    }
-
-    public Integer getSeatIsIt() {
-        return seatIsIt;
-    }
-
-    public void setSeatIsIt(Integer seatIsIt) {
-        this.seatIsIt = seatIsIt;
-    }
 }

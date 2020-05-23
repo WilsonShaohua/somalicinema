@@ -1,5 +1,12 @@
 package com.xhu.po;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class ScreeningRoom {
     private String screeningRoomId;
 
@@ -10,44 +17,4 @@ public class ScreeningRoom {
     private String screeningRoomName;
 
     private Integer screeningRoomCapacity;
-
-    public String getScreeningRoomId() {
-        return screeningRoomId;
-    }
-
-    public void setScreeningRoomId(String screeningRoomId) {
-        this.screeningRoomId = screeningRoomId == null ? null : screeningRoomId.trim();
-    }
-
-    public String getFieldId() {
-        return fieldId;
-    }
-
-    public void setFieldId(String fieldId) {
-        this.fieldId = fieldId == null ? null : fieldId.trim();
-    }
-
-    public String getTheaterId() {
-        return theaterId;
-    }
-
-    public void setTheaterId(String theaterId) {
-        this.theaterId = theaterId == null ? null : theaterId.trim();
-    }
-
-    public String getScreeningRoomName() {
-        return screeningRoomName;
-    }
-
-    public void setScreeningRoomName(String screeningRoomName) {
-        this.screeningRoomName = screeningRoomName == null ? null : screeningRoomName.trim();
-    }
-
-    public Integer getScreeningRoomCapacity() {
-        return screeningRoomCapacity;
-    }
-
-    public void setScreeningRoomCapacity(Integer screeningRoomCapacity) {
-        this.screeningRoomCapacity = screeningRoomCapacity;
-    }
 }

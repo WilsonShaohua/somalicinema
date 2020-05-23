@@ -1,23 +1,15 @@
 package com.xhu.po;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Occupational {
     private String occupationalId;
 
     private String occupationalName;
 
-    public String getOccupationalId() {
-        return occupationalId;
-    }
-
-    public void setOccupationalId(String occupationalId) {
-        this.occupationalId = occupationalId == null ? null : occupationalId.trim();
-    }
-
-    public String getOccupationalName() {
-        return occupationalName;
-    }
-
-    public void setOccupationalName(String occupationalName) {
-        this.occupationalName = occupationalName == null ? null : occupationalName.trim();
-    }
 }

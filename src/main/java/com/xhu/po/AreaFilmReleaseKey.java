@@ -1,23 +1,15 @@
 package com.xhu.po;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class AreaFilmReleaseKey {
     private String movieId;
 
     private String worldCountryId;
 
-    public String getMovieId() {
-        return movieId;
-    }
-
-    public void setMovieId(String movieId) {
-        this.movieId = movieId == null ? null : movieId.trim();
-    }
-
-    public String getWorldCountryId() {
-        return worldCountryId;
-    }
-
-    public void setWorldCountryId(String worldCountryId) {
-        this.worldCountryId = worldCountryId == null ? null : worldCountryId.trim();
-    }
 }

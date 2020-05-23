@@ -1,5 +1,12 @@
 package com.xhu.po;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Theater {
     private String theaterId;
 
@@ -11,43 +18,5 @@ public class Theater {
 
     private String theaterIntroduced;
 
-    public String getTheaterId() {
-        return theaterId;
-    }
 
-    public void setTheaterId(String theaterId) {
-        this.theaterId = theaterId == null ? null : theaterId.trim();
-    }
-
-    public String getPersonId() {
-        return personId;
-    }
-
-    public void setPersonId(String personId) {
-        this.personId = personId == null ? null : personId.trim();
-    }
-
-    public String getAreaAddressId() {
-        return areaAddressId;
-    }
-
-    public void setAreaAddressId(String areaAddressId) {
-        this.areaAddressId = areaAddressId == null ? null : areaAddressId.trim();
-    }
-
-    public String getTheaterName() {
-        return theaterName;
-    }
-
-    public void setTheaterName(String theaterName) {
-        this.theaterName = theaterName == null ? null : theaterName.trim();
-    }
-
-    public String getTheaterIntroduced() {
-        return theaterIntroduced;
-    }
-
-    public void setTheaterIntroduced(String theaterIntroduced) {
-        this.theaterIntroduced = theaterIntroduced == null ? null : theaterIntroduced.trim();
-    }
 }
