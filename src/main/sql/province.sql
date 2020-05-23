@@ -37,7 +37,7 @@ insert into province (province_id,province_name,world_country_id) values
 ( 620, '甘肃省','1001001001'),
 ( 630, '青海省','1001001001'),
 ( 640, '宁夏回族自治区','1001001001'),
-( 650, '新疆维吾尔自治区')
+( 650, '新疆维吾尔自治区','1001001001')
 go
 
 select * from province
