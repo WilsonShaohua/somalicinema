@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xhu.mapper.PreferentialMapper">
+  <resultMap id="BaseResultMap" type="com.xhu.po.Preferential">
+    <id column="preferential_id" jdbcType="CHAR" property="preferentialId" />
+    <result column="preferential_name" jdbcType="VARCHAR" property="preferentialName" />
+    <result column="preferential_introduction" jdbcType="VARCHAR" property="preferentialIntroduction" />
+    <result column="preferential_only" jdbcType="BIT" property="preferentialOnly" />
+    <result column="preferential_power" jdbcType="DECIMAL" property="preferentialPower" />
+    <result column="preferential_start_data_time" jdbcType="TIMESTAMP" property="preferentialStartDataTime" />
+    <result column="preferential_end_data_time" jdbcType="TIMESTAMP" property="preferentialEndDataTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    preferential_id, preferential_name, preferential_introduction, preferential_only, 
+    preferential_power, preferential_start_data_time, preferential_end_data_time
+  </sql>
+  <select id="selectByExample" parameterType="com.xhu.po.PreferentialExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from preferential
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from preferential
+    where preferential_id = #{preferentialId,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from preferential
+    where preferential_id = #{preferentialId,jdbcType=CHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.xhu.po.PreferentialExample">
+    delete from preferential
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.xhu.po.Preferential">
+    insert into preferential (preferential_id, preferential_name, preferential_introduction, 
+      preferential_only, preferential_power, preferential_start_data_time, 
+      preferential_end_data_time)
+    values (#{preferentialId,jdbcType=CHAR}, #{preferentialName,jdbcType=VARCHAR}, #{preferentialIntroduction,jdbcType=VARCHAR}, 
+      #{preferentialOnly,jdbcType=BIT}, #{preferentialPower,jdbcType=DECIMAL}, #{preferentialStartDataTime,jdbcType=TIMESTAMP}, 
+      #{preferentialEndDataTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.xhu.po.Preferential">
+    insert into preferential
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="preferentialId != null">
+        preferential_id,
+      </if>
+      <if test="preferentialName != null">
+        preferential_name,
+      </if>
+      <if test="preferentialIntroduction != null">
+        preferential_introduction,
+      </if>
+      <if test="preferentialOnly != null">
+        preferential_only,
+      </if>
+      <if test="preferentialPower != null">
+        preferential_power,
+      </if>
+      <if test="preferentialStartDataTime != null">
+        preferential_start_data_time,
+      </if>
+      <if test="preferentialEndDataTime != null">
+        preferential_end_data_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="preferentialId != null">
+        #{preferentialId,jdbcType=CHAR},
+      </if>
+      <if test="preferentialName != null">
+        #{preferentialName,jdbcType=VARCHAR},
+      </if>
+      <if test="preferentialIntroduction != null">
+        #{preferentialIntroduction,jdbcType=VARCHAR},
+      </if>
+      <if test="preferentialOnly != null">
+        #{preferentialOnly,jdbcType=BIT},
+      </if>
+      <if test="preferentialPower != null">
+        #{preferentialPower,jdbcType=DECIMAL},
+      </if>
+      <if test="preferentialStartDataTime != null">
+        #{preferentialStartDataTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="preferentialEndDataTime != null">
+        #{preferentialEndDataTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.xhu.po.PreferentialExample" resultType="java.lang.Long">
+    select count(*) from preferential
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update preferential
+    <set>
+      <if test="record.preferentialId != null">
+        preferential_id = #{record.preferentialId,jdbcType=CHAR},
+      </if>
+      <if test="record.preferentialName != null">
+        preferential_name = #{record.preferentialName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.preferentialIntroduction != null">
+        preferential_introduction = #{record.preferentialIntroduction,jdbcType=VARCHAR},
+      </if>
+      <if test="record.preferentialOnly != null">
+        preferential_only = #{record.preferentialOnly,jdbcType=BIT},
+      </if>
+      <if test="record.preferentialPower != null">
+        preferential_power = #{record.preferentialPower,jdbcType=DECIMAL},
+      </if>
+      <if test="record.preferentialStartDataTime != null">
+        preferential_start_data_time = #{record.preferentialStartDataTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.preferentialEndDataTime != null">
+        preferential_end_data_time = #{record.preferentialEndDataTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update preferential
+    set preferential_id = #{record.preferentialId,jdbcType=CHAR},
+      preferential_name = #{record.preferentialName,jdbcType=VARCHAR},
+      preferential_introduction = #{record.preferentialIntroduction,jdbcType=VARCHAR},
+      preferential_only = #{record.preferentialOnly,jdbcType=BIT},
+      preferential_power = #{record.preferentialPower,jdbcType=DECIMAL},
+      preferential_start_data_time = #{record.preferentialStartDataTime,jdbcType=TIMESTAMP},
+      preferential_end_data_time = #{record.preferentialEndDataTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xhu.po.Preferential">
+    update preferential
+    <set>
+      <if test="preferentialName != null">
+        preferential_name = #{preferentialName,jdbcType=VARCHAR},
+      </if>
+      <if test="preferentialIntroduction != null">
+        preferential_introduction = #{preferentialIntroduction,jdbcType=VARCHAR},
+      </if>
+      <if test="preferentialOnly != null">
+        preferential_only = #{preferentialOnly,jdbcType=BIT},
+      </if>
+      <if test="preferentialPower != null">
+        preferential_power = #{preferentialPower,jdbcType=DECIMAL},
+      </if>
+      <if test="preferentialStartDataTime != null">
+        preferential_start_data_time = #{preferentialStartDataTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="preferentialEndDataTime != null">
+        preferential_end_data_time = #{preferentialEndDataTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where preferential_id = #{preferentialId,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xhu.po.Preferential">
+    update preferential
+    set preferential_name = #{preferentialName,jdbcType=VARCHAR},
+      preferential_introduction = #{preferentialIntroduction,jdbcType=VARCHAR},
+      preferential_only = #{preferentialOnly,jdbcType=BIT},
+      preferential_power = #{preferentialPower,jdbcType=DECIMAL},
+      preferential_start_data_time = #{preferentialStartDataTime,jdbcType=TIMESTAMP},
+      preferential_end_data_time = #{preferentialEndDataTime,jdbcType=TIMESTAMP}
+    where preferential_id = #{preferentialId,jdbcType=CHAR}
+  </update>
+</mapper>
