@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="JsonSchemaMappingsProjectConfiguration">
+    <state>
+      <map>
+        <entry key="JSON schema v6">
+          <value>
+            <SchemaInfo>
+              <option name="name" value="JSON schema v6" />
+              <option name="relativePathToSchema" value="http://json-schema.org/draft-06/schema" />
+            </SchemaInfo>
+          </value>
+        </entry>
+      </map>
+    </state>
+  </component>
+</project>
