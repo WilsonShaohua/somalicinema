@@ -174,6 +174,76 @@ public class WorldCountryExample {
             return (Criteria) this;
         }
 
+        public Criteria andChauIdIsNull() {
+            addCriterion("chau_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andChauIdIsNotNull() {
+            addCriterion("chau_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andChauIdEqualTo(String value) {
+            addCriterion("chau_id =", value, "chauId");
+            return (Criteria) this;
+        }
+
+        public Criteria andChauIdNotEqualTo(String value) {
+            addCriterion("chau_id <>", value, "chauId");
+            return (Criteria) this;
+        }
+
+        public Criteria andChauIdGreaterThan(String value) {
+            addCriterion("chau_id >", value, "chauId");
+            return (Criteria) this;
+        }
+
+        public Criteria andChauIdGreaterThanOrEqualTo(String value) {
+            addCriterion("chau_id >=", value, "chauId");
+            return (Criteria) this;
+        }
+
+        public Criteria andChauIdLessThan(String value) {
+            addCriterion("chau_id <", value, "chauId");
+            return (Criteria) this;
+        }
+
+        public Criteria andChauIdLessThanOrEqualTo(String value) {
+            addCriterion("chau_id <=", value, "chauId");
+            return (Criteria) this;
+        }
+
+        public Criteria andChauIdLike(String value) {
+            addCriterion("chau_id like", value, "chauId");
+            return (Criteria) this;
+        }
+
+        public Criteria andChauIdNotLike(String value) {
+            addCriterion("chau_id not like", value, "chauId");
+            return (Criteria) this;
+        }
+
+        public Criteria andChauIdIn(List<String> values) {
+            addCriterion("chau_id in", values, "chauId");
+            return (Criteria) this;
+        }
+
+        public Criteria andChauIdNotIn(List<String> values) {
+            addCriterion("chau_id not in", values, "chauId");
+            return (Criteria) this;
+        }
+
+        public Criteria andChauIdBetween(String value1, String value2) {
+            addCriterion("chau_id between", value1, value2, "chauId");
+            return (Criteria) this;
+        }
+
+        public Criteria andChauIdNotBetween(String value1, String value2) {
+            addCriterion("chau_id not between", value1, value2, "chauId");
+            return (Criteria) this;
+        }
+
         public Criteria andWorldCountryNameIsNull() {
             addCriterion("world_country_name is null");
             return (Criteria) this;
@@ -241,76 +311,6 @@ public class WorldCountryExample {
 
         public Criteria andWorldCountryNameNotBetween(String value1, String value2) {
             addCriterion("world_country_name not between", value1, value2, "worldCountryName");
-            return (Criteria) this;
-        }
-
-        public Criteria andWorldCountryEnglishNameIsNull() {
-            addCriterion("world_country_english_name is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andWorldCountryEnglishNameIsNotNull() {
-            addCriterion("world_country_english_name is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andWorldCountryEnglishNameEqualTo(String value) {
-            addCriterion("world_country_english_name =", value, "worldCountryEnglishName");
-            return (Criteria) this;
-        }
-
-        public Criteria andWorldCountryEnglishNameNotEqualTo(String value) {
-            addCriterion("world_country_english_name <>", value, "worldCountryEnglishName");
-            return (Criteria) this;
-        }
-
-        public Criteria andWorldCountryEnglishNameGreaterThan(String value) {
-            addCriterion("world_country_english_name >", value, "worldCountryEnglishName");
-            return (Criteria) this;
-        }
-
-        public Criteria andWorldCountryEnglishNameGreaterThanOrEqualTo(String value) {
-            addCriterion("world_country_english_name >=", value, "worldCountryEnglishName");
-            return (Criteria) this;
-        }
-
-        public Criteria andWorldCountryEnglishNameLessThan(String value) {
-            addCriterion("world_country_english_name <", value, "worldCountryEnglishName");
-            return (Criteria) this;
-        }
-
-        public Criteria andWorldCountryEnglishNameLessThanOrEqualTo(String value) {
-            addCriterion("world_country_english_name <=", value, "worldCountryEnglishName");
-            return (Criteria) this;
-        }
-
-        public Criteria andWorldCountryEnglishNameLike(String value) {
-            addCriterion("world_country_english_name like", value, "worldCountryEnglishName");
-            return (Criteria) this;
-        }
-
-        public Criteria andWorldCountryEnglishNameNotLike(String value) {
-            addCriterion("world_country_english_name not like", value, "worldCountryEnglishName");
-            return (Criteria) this;
-        }
-
-        public Criteria andWorldCountryEnglishNameIn(List<String> values) {
-            addCriterion("world_country_english_name in", values, "worldCountryEnglishName");
-            return (Criteria) this;
-        }
-
-        public Criteria andWorldCountryEnglishNameNotIn(List<String> values) {
-            addCriterion("world_country_english_name not in", values, "worldCountryEnglishName");
-            return (Criteria) this;
-        }
-
-        public Criteria andWorldCountryEnglishNameBetween(String value1, String value2) {
-            addCriterion("world_country_english_name between", value1, value2, "worldCountryEnglishName");
-            return (Criteria) this;
-        }
-
-        public Criteria andWorldCountryEnglishNameNotBetween(String value1, String value2) {
-            addCriterion("world_country_english_name not between", value1, value2, "worldCountryEnglishName");
             return (Criteria) this;
         }
     }

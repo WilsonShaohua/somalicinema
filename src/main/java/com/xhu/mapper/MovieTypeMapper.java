@@ -1,7 +1,7 @@
 package com.xhu.mapper;
 
+import com.xhu.po.MovieType;
 import com.xhu.po.MovieTypeExample;
-import com.xhu.po.MovieTypeKey;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
@@ -10,15 +10,21 @@ public interface MovieTypeMapper {
 
     int deleteByExample(MovieTypeExample example);
 
-    int deleteByPrimaryKey(MovieTypeKey key);
+    int deleteByPrimaryKey(String movieTypeId);
 
-    int insert(MovieTypeKey record);
+    int insert(MovieType record);
 
-    int insertSelective(MovieTypeKey record);
+    int insertSelective(MovieType record);
 
-    List<MovieTypeKey> selectByExample(MovieTypeExample example);
+    List<MovieType> selectByExample(MovieTypeExample example);
 
-    int updateByExampleSelective(@Param("record") MovieTypeKey record, @Param("example") MovieTypeExample example);
+    MovieType selectByPrimaryKey(String movieTypeId);
 
-    int updateByExample(@Param("record") MovieTypeKey record, @Param("example") MovieTypeExample example);
+    int updateByExampleSelective(@Param("record") MovieType record, @Param("example") MovieTypeExample example);
+
+    int updateByExample(@Param("record") MovieType record, @Param("example") MovieTypeExample example);
+
+    int updateByPrimaryKeySelective(MovieType record);
+
+    int updateByPrimaryKey(MovieType record);
 }

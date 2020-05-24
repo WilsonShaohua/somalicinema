@@ -3,11 +3,16 @@
 <mapper namespace="com.xhu.mapper.UserMapper">
   <resultMap id="BaseResultMap" type="com.xhu.po.User">
     <id column="user_id" jdbcType="CHAR" property="userId" />
-    <result column="person_id" jdbcType="CHAR" property="personId" />
+    <result column="city_id" jdbcType="CHAR" property="cityId" />
     <result column="user_sex" jdbcType="BIT" property="userSex" />
     <result column="user_birthday" jdbcType="TIMESTAMP" property="userBirthday" />
-    <result column="user_passwd" jdbcType="VARCHAR" property="userPasswd" />
-    <result column="user_info" jdbcType="VARCHAR" property="userInfo" />
+    <result column="user_password" jdbcType="CHAR" property="userPassword" />
+    <result column="user_telphone" jdbcType="CHAR" property="userTelphone" />
+    <result column="user_picture_address" jdbcType="VARCHAR" property="userPictureAddress" />
+    <result column="user_create_time" jdbcType="TIMESTAMP" property="userCreateTime" />
+    <result column="user_last_load_time" jdbcType="TIMESTAMP" property="userLastLoadTime" />
+    <result column="user_is_delete" jdbcType="BIT" property="userIsDelete" />
+    <result column="user_is_load" jdbcType="BIT" property="userIsLoad" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -68,7 +73,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    user_id, person_id, user_sex, user_birthday, user_passwd, user_info
+    user_id, city_id, user_sex, user_birthday, user_password, user_telphone, user_picture_address, 
+    user_create_time, user_last_load_time, user_is_delete, user_is_load
   </sql>
   <select id="selectByExample" parameterType="com.xhu.po.UserExample" resultMap="BaseResultMap">
     select
@@ -101,12 +107,14 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.xhu.po.User">
-    insert into user (user_id, person_id, user_sex, 
-      user_birthday, user_passwd, user_info
-      )
-    values (#{userId,jdbcType=CHAR}, #{personId,jdbcType=CHAR}, #{userSex,jdbcType=BIT}, 
-      #{userBirthday,jdbcType=TIMESTAMP}, #{userPasswd,jdbcType=VARCHAR}, #{userInfo,jdbcType=VARCHAR}
-      )
+    insert into user (user_id, city_id, user_sex, 
+      user_birthday, user_password, user_telphone, 
+      user_picture_address, user_create_time, user_last_load_time, 
+      user_is_delete, user_is_load)
+    values (#{userId,jdbcType=CHAR}, #{cityId,jdbcType=CHAR}, #{userSex,jdbcType=BIT}, 
+      #{userBirthday,jdbcType=TIMESTAMP}, #{userPassword,jdbcType=CHAR}, #{userTelphone,jdbcType=CHAR}, 
+      #{userPictureAddress,jdbcType=VARCHAR}, #{userCreateTime,jdbcType=TIMESTAMP}, #{userLastLoadTime,jdbcType=TIMESTAMP}, 
+      #{userIsDelete,jdbcType=BIT}, #{userIsLoad,jdbcType=BIT})
   </insert>
   <insert id="insertSelective" parameterType="com.xhu.po.User">
     insert into user
@@ -114,8 +122,8 @@
       <if test="userId != null">
         user_id,
       </if>
-      <if test="personId != null">
-        person_id,
+      <if test="cityId != null">
+        city_id,
       </if>
       <if test="userSex != null">
         user_sex,
@@ -123,19 +131,34 @@
       <if test="userBirthday != null">
         user_birthday,
       </if>
-      <if test="userPasswd != null">
-        user_passwd,
+      <if test="userPassword != null">
+        user_password,
       </if>
-      <if test="userInfo != null">
-        user_info,
+      <if test="userTelphone != null">
+        user_telphone,
+      </if>
+      <if test="userPictureAddress != null">
+        user_picture_address,
+      </if>
+      <if test="userCreateTime != null">
+        user_create_time,
+      </if>
+      <if test="userLastLoadTime != null">
+        user_last_load_time,
+      </if>
+      <if test="userIsDelete != null">
+        user_is_delete,
+      </if>
+      <if test="userIsLoad != null">
+        user_is_load,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="userId != null">
         #{userId,jdbcType=CHAR},
       </if>
-      <if test="personId != null">
-        #{personId,jdbcType=CHAR},
+      <if test="cityId != null">
+        #{cityId,jdbcType=CHAR},
       </if>
       <if test="userSex != null">
         #{userSex,jdbcType=BIT},
@@ -143,11 +166,26 @@
       <if test="userBirthday != null">
         #{userBirthday,jdbcType=TIMESTAMP},
       </if>
-      <if test="userPasswd != null">
-        #{userPasswd,jdbcType=VARCHAR},
+      <if test="userPassword != null">
+        #{userPassword,jdbcType=CHAR},
       </if>
-      <if test="userInfo != null">
-        #{userInfo,jdbcType=VARCHAR},
+      <if test="userTelphone != null">
+        #{userTelphone,jdbcType=CHAR},
+      </if>
+      <if test="userPictureAddress != null">
+        #{userPictureAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="userCreateTime != null">
+        #{userCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userLastLoadTime != null">
+        #{userLastLoadTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userIsDelete != null">
+        #{userIsDelete,jdbcType=BIT},
+      </if>
+      <if test="userIsLoad != null">
+        #{userIsLoad,jdbcType=BIT},
       </if>
     </trim>
   </insert>
@@ -163,8 +201,8 @@
       <if test="record.userId != null">
         user_id = #{record.userId,jdbcType=CHAR},
       </if>
-      <if test="record.personId != null">
-        person_id = #{record.personId,jdbcType=CHAR},
+      <if test="record.cityId != null">
+        city_id = #{record.cityId,jdbcType=CHAR},
       </if>
       <if test="record.userSex != null">
         user_sex = #{record.userSex,jdbcType=BIT},
@@ -172,11 +210,26 @@
       <if test="record.userBirthday != null">
         user_birthday = #{record.userBirthday,jdbcType=TIMESTAMP},
       </if>
-      <if test="record.userPasswd != null">
-        user_passwd = #{record.userPasswd,jdbcType=VARCHAR},
+      <if test="record.userPassword != null">
+        user_password = #{record.userPassword,jdbcType=CHAR},
       </if>
-      <if test="record.userInfo != null">
-        user_info = #{record.userInfo,jdbcType=VARCHAR},
+      <if test="record.userTelphone != null">
+        user_telphone = #{record.userTelphone,jdbcType=CHAR},
+      </if>
+      <if test="record.userPictureAddress != null">
+        user_picture_address = #{record.userPictureAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userCreateTime != null">
+        user_create_time = #{record.userCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.userLastLoadTime != null">
+        user_last_load_time = #{record.userLastLoadTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.userIsDelete != null">
+        user_is_delete = #{record.userIsDelete,jdbcType=BIT},
+      </if>
+      <if test="record.userIsLoad != null">
+        user_is_load = #{record.userIsLoad,jdbcType=BIT},
       </if>
     </set>
     <if test="_parameter != null">
@@ -186,11 +239,16 @@
   <update id="updateByExample" parameterType="map">
     update user
     set user_id = #{record.userId,jdbcType=CHAR},
-      person_id = #{record.personId,jdbcType=CHAR},
+      city_id = #{record.cityId,jdbcType=CHAR},
       user_sex = #{record.userSex,jdbcType=BIT},
       user_birthday = #{record.userBirthday,jdbcType=TIMESTAMP},
-      user_passwd = #{record.userPasswd,jdbcType=VARCHAR},
-      user_info = #{record.userInfo,jdbcType=VARCHAR}
+      user_password = #{record.userPassword,jdbcType=CHAR},
+      user_telphone = #{record.userTelphone,jdbcType=CHAR},
+      user_picture_address = #{record.userPictureAddress,jdbcType=VARCHAR},
+      user_create_time = #{record.userCreateTime,jdbcType=TIMESTAMP},
+      user_last_load_time = #{record.userLastLoadTime,jdbcType=TIMESTAMP},
+      user_is_delete = #{record.userIsDelete,jdbcType=BIT},
+      user_is_load = #{record.userIsLoad,jdbcType=BIT}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -198,8 +256,8 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.xhu.po.User">
     update user
     <set>
-      <if test="personId != null">
-        person_id = #{personId,jdbcType=CHAR},
+      <if test="cityId != null">
+        city_id = #{cityId,jdbcType=CHAR},
       </if>
       <if test="userSex != null">
         user_sex = #{userSex,jdbcType=BIT},
@@ -207,22 +265,42 @@
       <if test="userBirthday != null">
         user_birthday = #{userBirthday,jdbcType=TIMESTAMP},
       </if>
-      <if test="userPasswd != null">
-        user_passwd = #{userPasswd,jdbcType=VARCHAR},
+      <if test="userPassword != null">
+        user_password = #{userPassword,jdbcType=CHAR},
       </if>
-      <if test="userInfo != null">
-        user_info = #{userInfo,jdbcType=VARCHAR},
+      <if test="userTelphone != null">
+        user_telphone = #{userTelphone,jdbcType=CHAR},
+      </if>
+      <if test="userPictureAddress != null">
+        user_picture_address = #{userPictureAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="userCreateTime != null">
+        user_create_time = #{userCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userLastLoadTime != null">
+        user_last_load_time = #{userLastLoadTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userIsDelete != null">
+        user_is_delete = #{userIsDelete,jdbcType=BIT},
+      </if>
+      <if test="userIsLoad != null">
+        user_is_load = #{userIsLoad,jdbcType=BIT},
       </if>
     </set>
     where user_id = #{userId,jdbcType=CHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.xhu.po.User">
     update user
-    set person_id = #{personId,jdbcType=CHAR},
+    set city_id = #{cityId,jdbcType=CHAR},
       user_sex = #{userSex,jdbcType=BIT},
       user_birthday = #{userBirthday,jdbcType=TIMESTAMP},
-      user_passwd = #{userPasswd,jdbcType=VARCHAR},
-      user_info = #{userInfo,jdbcType=VARCHAR}
+      user_password = #{userPassword,jdbcType=CHAR},
+      user_telphone = #{userTelphone,jdbcType=CHAR},
+      user_picture_address = #{userPictureAddress,jdbcType=VARCHAR},
+      user_create_time = #{userCreateTime,jdbcType=TIMESTAMP},
+      user_last_load_time = #{userLastLoadTime,jdbcType=TIMESTAMP},
+      user_is_delete = #{userIsDelete,jdbcType=BIT},
+      user_is_load = #{userIsLoad,jdbcType=BIT}
     where user_id = #{userId,jdbcType=CHAR}
   </update>
 </mapper>

@@ -1,8 +1,6 @@
 use somali_cinema
 go
 
-delete from province
-go
 
 
 insert into province (province_id,province_name,world_country_id) values

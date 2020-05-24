@@ -1,6 +1,7 @@
 package com.xhu.po;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class ActorExample {
@@ -244,146 +245,6 @@ public class ActorExample {
             return (Criteria) this;
         }
 
-        public Criteria andUserIdIsNull() {
-            addCriterion("user_id is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andUserIdIsNotNull() {
-            addCriterion("user_id is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andUserIdEqualTo(String value) {
-            addCriterion("user_id =", value, "userId");
-            return (Criteria) this;
-        }
-
-        public Criteria andUserIdNotEqualTo(String value) {
-            addCriterion("user_id <>", value, "userId");
-            return (Criteria) this;
-        }
-
-        public Criteria andUserIdGreaterThan(String value) {
-            addCriterion("user_id >", value, "userId");
-            return (Criteria) this;
-        }
-
-        public Criteria andUserIdGreaterThanOrEqualTo(String value) {
-            addCriterion("user_id >=", value, "userId");
-            return (Criteria) this;
-        }
-
-        public Criteria andUserIdLessThan(String value) {
-            addCriterion("user_id <", value, "userId");
-            return (Criteria) this;
-        }
-
-        public Criteria andUserIdLessThanOrEqualTo(String value) {
-            addCriterion("user_id <=", value, "userId");
-            return (Criteria) this;
-        }
-
-        public Criteria andUserIdLike(String value) {
-            addCriterion("user_id like", value, "userId");
-            return (Criteria) this;
-        }
-
-        public Criteria andUserIdNotLike(String value) {
-            addCriterion("user_id not like", value, "userId");
-            return (Criteria) this;
-        }
-
-        public Criteria andUserIdIn(List<String> values) {
-            addCriterion("user_id in", values, "userId");
-            return (Criteria) this;
-        }
-
-        public Criteria andUserIdNotIn(List<String> values) {
-            addCriterion("user_id not in", values, "userId");
-            return (Criteria) this;
-        }
-
-        public Criteria andUserIdBetween(String value1, String value2) {
-            addCriterion("user_id between", value1, value2, "userId");
-            return (Criteria) this;
-        }
-
-        public Criteria andUserIdNotBetween(String value1, String value2) {
-            addCriterion("user_id not between", value1, value2, "userId");
-            return (Criteria) this;
-        }
-
-        public Criteria andActorEnglishNameIsNull() {
-            addCriterion("actor_english_name is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andActorEnglishNameIsNotNull() {
-            addCriterion("actor_english_name is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andActorEnglishNameEqualTo(String value) {
-            addCriterion("actor_english_name =", value, "actorEnglishName");
-            return (Criteria) this;
-        }
-
-        public Criteria andActorEnglishNameNotEqualTo(String value) {
-            addCriterion("actor_english_name <>", value, "actorEnglishName");
-            return (Criteria) this;
-        }
-
-        public Criteria andActorEnglishNameGreaterThan(String value) {
-            addCriterion("actor_english_name >", value, "actorEnglishName");
-            return (Criteria) this;
-        }
-
-        public Criteria andActorEnglishNameGreaterThanOrEqualTo(String value) {
-            addCriterion("actor_english_name >=", value, "actorEnglishName");
-            return (Criteria) this;
-        }
-
-        public Criteria andActorEnglishNameLessThan(String value) {
-            addCriterion("actor_english_name <", value, "actorEnglishName");
-            return (Criteria) this;
-        }
-
-        public Criteria andActorEnglishNameLessThanOrEqualTo(String value) {
-            addCriterion("actor_english_name <=", value, "actorEnglishName");
-            return (Criteria) this;
-        }
-
-        public Criteria andActorEnglishNameLike(String value) {
-            addCriterion("actor_english_name like", value, "actorEnglishName");
-            return (Criteria) this;
-        }
-
-        public Criteria andActorEnglishNameNotLike(String value) {
-            addCriterion("actor_english_name not like", value, "actorEnglishName");
-            return (Criteria) this;
-        }
-
-        public Criteria andActorEnglishNameIn(List<String> values) {
-            addCriterion("actor_english_name in", values, "actorEnglishName");
-            return (Criteria) this;
-        }
-
-        public Criteria andActorEnglishNameNotIn(List<String> values) {
-            addCriterion("actor_english_name not in", values, "actorEnglishName");
-            return (Criteria) this;
-        }
-
-        public Criteria andActorEnglishNameBetween(String value1, String value2) {
-            addCriterion("actor_english_name between", value1, value2, "actorEnglishName");
-            return (Criteria) this;
-        }
-
-        public Criteria andActorEnglishNameNotBetween(String value1, String value2) {
-            addCriterion("actor_english_name not between", value1, value2, "actorEnglishName");
-            return (Criteria) this;
-        }
-
         public Criteria andActorIntroductionIsNull() {
             addCriterion("actor_introduction is null");
             return (Criteria) this;
@@ -451,6 +312,196 @@ public class ActorExample {
 
         public Criteria andActorIntroductionNotBetween(String value1, String value2) {
             addCriterion("actor_introduction not between", value1, value2, "actorIntroduction");
+            return (Criteria) this;
+        }
+
+        public Criteria andActorNameIsNull() {
+            addCriterion("actor_name is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andActorNameIsNotNull() {
+            addCriterion("actor_name is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andActorNameEqualTo(String value) {
+            addCriterion("actor_name =", value, "actorName");
+            return (Criteria) this;
+        }
+
+        public Criteria andActorNameNotEqualTo(String value) {
+            addCriterion("actor_name <>", value, "actorName");
+            return (Criteria) this;
+        }
+
+        public Criteria andActorNameGreaterThan(String value) {
+            addCriterion("actor_name >", value, "actorName");
+            return (Criteria) this;
+        }
+
+        public Criteria andActorNameGreaterThanOrEqualTo(String value) {
+            addCriterion("actor_name >=", value, "actorName");
+            return (Criteria) this;
+        }
+
+        public Criteria andActorNameLessThan(String value) {
+            addCriterion("actor_name <", value, "actorName");
+            return (Criteria) this;
+        }
+
+        public Criteria andActorNameLessThanOrEqualTo(String value) {
+            addCriterion("actor_name <=", value, "actorName");
+            return (Criteria) this;
+        }
+
+        public Criteria andActorNameLike(String value) {
+            addCriterion("actor_name like", value, "actorName");
+            return (Criteria) this;
+        }
+
+        public Criteria andActorNameNotLike(String value) {
+            addCriterion("actor_name not like", value, "actorName");
+            return (Criteria) this;
+        }
+
+        public Criteria andActorNameIn(List<String> values) {
+            addCriterion("actor_name in", values, "actorName");
+            return (Criteria) this;
+        }
+
+        public Criteria andActorNameNotIn(List<String> values) {
+            addCriterion("actor_name not in", values, "actorName");
+            return (Criteria) this;
+        }
+
+        public Criteria andActorNameBetween(String value1, String value2) {
+            addCriterion("actor_name between", value1, value2, "actorName");
+            return (Criteria) this;
+        }
+
+        public Criteria andActorNameNotBetween(String value1, String value2) {
+            addCriterion("actor_name not between", value1, value2, "actorName");
+            return (Criteria) this;
+        }
+
+        public Criteria andActorSexIsNull() {
+            addCriterion("actor_sex is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andActorSexIsNotNull() {
+            addCriterion("actor_sex is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andActorSexEqualTo(Boolean value) {
+            addCriterion("actor_sex =", value, "actorSex");
+            return (Criteria) this;
+        }
+
+        public Criteria andActorSexNotEqualTo(Boolean value) {
+            addCriterion("actor_sex <>", value, "actorSex");
+            return (Criteria) this;
+        }
+
+        public Criteria andActorSexGreaterThan(Boolean value) {
+            addCriterion("actor_sex >", value, "actorSex");
+            return (Criteria) this;
+        }
+
+        public Criteria andActorSexGreaterThanOrEqualTo(Boolean value) {
+            addCriterion("actor_sex >=", value, "actorSex");
+            return (Criteria) this;
+        }
+
+        public Criteria andActorSexLessThan(Boolean value) {
+            addCriterion("actor_sex <", value, "actorSex");
+            return (Criteria) this;
+        }
+
+        public Criteria andActorSexLessThanOrEqualTo(Boolean value) {
+            addCriterion("actor_sex <=", value, "actorSex");
+            return (Criteria) this;
+        }
+
+        public Criteria andActorSexIn(List<Boolean> values) {
+            addCriterion("actor_sex in", values, "actorSex");
+            return (Criteria) this;
+        }
+
+        public Criteria andActorSexNotIn(List<Boolean> values) {
+            addCriterion("actor_sex not in", values, "actorSex");
+            return (Criteria) this;
+        }
+
+        public Criteria andActorSexBetween(Boolean value1, Boolean value2) {
+            addCriterion("actor_sex between", value1, value2, "actorSex");
+            return (Criteria) this;
+        }
+
+        public Criteria andActorSexNotBetween(Boolean value1, Boolean value2) {
+            addCriterion("actor_sex not between", value1, value2, "actorSex");
+            return (Criteria) this;
+        }
+
+        public Criteria andActorBirthdayIsNull() {
+            addCriterion("actor_birthday is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andActorBirthdayIsNotNull() {
+            addCriterion("actor_birthday is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andActorBirthdayEqualTo(Date value) {
+            addCriterion("actor_birthday =", value, "actorBirthday");
+            return (Criteria) this;
+        }
+
+        public Criteria andActorBirthdayNotEqualTo(Date value) {
+            addCriterion("actor_birthday <>", value, "actorBirthday");
+            return (Criteria) this;
+        }
+
+        public Criteria andActorBirthdayGreaterThan(Date value) {
+            addCriterion("actor_birthday >", value, "actorBirthday");
+            return (Criteria) this;
+        }
+
+        public Criteria andActorBirthdayGreaterThanOrEqualTo(Date value) {
+            addCriterion("actor_birthday >=", value, "actorBirthday");
+            return (Criteria) this;
+        }
+
+        public Criteria andActorBirthdayLessThan(Date value) {
+            addCriterion("actor_birthday <", value, "actorBirthday");
+            return (Criteria) this;
+        }
+
+        public Criteria andActorBirthdayLessThanOrEqualTo(Date value) {
+            addCriterion("actor_birthday <=", value, "actorBirthday");
+            return (Criteria) this;
+        }
+
+        public Criteria andActorBirthdayIn(List<Date> values) {
+            addCriterion("actor_birthday in", values, "actorBirthday");
+            return (Criteria) this;
+        }
+
+        public Criteria andActorBirthdayNotIn(List<Date> values) {
+            addCriterion("actor_birthday not in", values, "actorBirthday");
+            return (Criteria) this;
+        }
+
+        public Criteria andActorBirthdayBetween(Date value1, Date value2) {
+            addCriterion("actor_birthday between", value1, value2, "actorBirthday");
+            return (Criteria) this;
+        }
+
+        public Criteria andActorBirthdayNotBetween(Date value1, Date value2) {
+            addCriterion("actor_birthday not between", value1, value2, "actorBirthday");
             return (Criteria) this;
         }
     }

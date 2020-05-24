@@ -3,10 +3,12 @@ package com.xhu.po;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.stereotype.Component;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Component
 public class Seat {
     private String seatId;
 
@@ -16,6 +18,6 @@ public class Seat {
 
     private Integer seatY;
 
-    private Integer seatIsIt;
+    private Integer seatState;
 
 }

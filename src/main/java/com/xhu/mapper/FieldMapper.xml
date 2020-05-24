@@ -3,9 +3,9 @@
 <mapper namespace="com.xhu.mapper.FieldMapper">
   <resultMap id="BaseResultMap" type="com.xhu.po.Field">
     <id column="field_id" jdbcType="CHAR" property="fieldId" />
+    <result column="screening_room_id" jdbcType="CHAR" property="screeningRoomId" />
     <result column="movie_id" jdbcType="CHAR" property="movieId" />
     <result column="field_start_data_time" jdbcType="TIMESTAMP" property="fieldStartDataTime" />
-    <result column="field_end_data_time" jdbcType="TIMESTAMP" property="fieldEndDataTime" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -66,7 +66,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    field_id, movie_id, field_start_data_time, field_end_data_time
+    field_id, screening_room_id, movie_id, field_start_data_time
   </sql>
   <select id="selectByExample" parameterType="com.xhu.po.FieldExample" resultMap="BaseResultMap">
     select
@@ -99,10 +99,10 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.xhu.po.Field">
-    insert into field (field_id, movie_id, field_start_data_time, 
-      field_end_data_time)
-    values (#{fieldId,jdbcType=CHAR}, #{movieId,jdbcType=CHAR}, #{fieldStartDataTime,jdbcType=TIMESTAMP}, 
-      #{fieldEndDataTime,jdbcType=TIMESTAMP})
+    insert into field (field_id, screening_room_id, movie_id, 
+      field_start_data_time)
+    values (#{fieldId,jdbcType=CHAR}, #{screeningRoomId,jdbcType=CHAR}, #{movieId,jdbcType=CHAR}, 
+      #{fieldStartDataTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.xhu.po.Field">
     insert into field
@@ -110,28 +110,28 @@
       <if test="fieldId != null">
         field_id,
       </if>
+      <if test="screeningRoomId != null">
+        screening_room_id,
+      </if>
       <if test="movieId != null">
         movie_id,
       </if>
       <if test="fieldStartDataTime != null">
         field_start_data_time,
       </if>
-      <if test="fieldEndDataTime != null">
-        field_end_data_time,
-      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="fieldId != null">
         #{fieldId,jdbcType=CHAR},
+      </if>
+      <if test="screeningRoomId != null">
+        #{screeningRoomId,jdbcType=CHAR},
       </if>
       <if test="movieId != null">
         #{movieId,jdbcType=CHAR},
       </if>
       <if test="fieldStartDataTime != null">
         #{fieldStartDataTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="fieldEndDataTime != null">
-        #{fieldEndDataTime,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -147,14 +147,14 @@
       <if test="record.fieldId != null">
         field_id = #{record.fieldId,jdbcType=CHAR},
       </if>
+      <if test="record.screeningRoomId != null">
+        screening_room_id = #{record.screeningRoomId,jdbcType=CHAR},
+      </if>
       <if test="record.movieId != null">
         movie_id = #{record.movieId,jdbcType=CHAR},
       </if>
       <if test="record.fieldStartDataTime != null">
         field_start_data_time = #{record.fieldStartDataTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="record.fieldEndDataTime != null">
-        field_end_data_time = #{record.fieldEndDataTime,jdbcType=TIMESTAMP},
       </if>
     </set>
     <if test="_parameter != null">
@@ -164,9 +164,9 @@
   <update id="updateByExample" parameterType="map">
     update field
     set field_id = #{record.fieldId,jdbcType=CHAR},
+      screening_room_id = #{record.screeningRoomId,jdbcType=CHAR},
       movie_id = #{record.movieId,jdbcType=CHAR},
-      field_start_data_time = #{record.fieldStartDataTime,jdbcType=TIMESTAMP},
-      field_end_data_time = #{record.fieldEndDataTime,jdbcType=TIMESTAMP}
+      field_start_data_time = #{record.fieldStartDataTime,jdbcType=TIMESTAMP}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -174,23 +174,23 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.xhu.po.Field">
     update field
     <set>
+      <if test="screeningRoomId != null">
+        screening_room_id = #{screeningRoomId,jdbcType=CHAR},
+      </if>
       <if test="movieId != null">
         movie_id = #{movieId,jdbcType=CHAR},
       </if>
       <if test="fieldStartDataTime != null">
         field_start_data_time = #{fieldStartDataTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="fieldEndDataTime != null">
-        field_end_data_time = #{fieldEndDataTime,jdbcType=TIMESTAMP},
-      </if>
     </set>
     where field_id = #{fieldId,jdbcType=CHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.xhu.po.Field">
     update field
-    set movie_id = #{movieId,jdbcType=CHAR},
-      field_start_data_time = #{fieldStartDataTime,jdbcType=TIMESTAMP},
-      field_end_data_time = #{fieldEndDataTime,jdbcType=TIMESTAMP}
+    set screening_room_id = #{screeningRoomId,jdbcType=CHAR},
+      movie_id = #{movieId,jdbcType=CHAR},
+      field_start_data_time = #{fieldStartDataTime,jdbcType=TIMESTAMP}
     where field_id = #{fieldId,jdbcType=CHAR}
   </update>
 </mapper>

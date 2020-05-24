@@ -1,8 +1,6 @@
 use somali_cinema
 go
 
-delete from city
-go
 insert into city ( city_id, province_id, city_name) values
 (110100000000,110,'市辖区'),
 (110200000000,110,'市辖县'),
@@ -364,10 +362,6 @@ insert into city ( city_id, province_id, city_name) values
 (654200000000,650,'塔城地区'),
 (654300000000,650,'阿勒泰地区'),
 (659000000000,650,'自治区直辖县级行政区划')
-go
-
-
-select * from city
 go
 
 select * from city where  province_id=(

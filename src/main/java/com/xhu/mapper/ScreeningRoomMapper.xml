@@ -3,8 +3,7 @@
 <mapper namespace="com.xhu.mapper.ScreeningRoomMapper">
   <resultMap id="BaseResultMap" type="com.xhu.po.ScreeningRoom">
     <id column="screening_room_id" jdbcType="CHAR" property="screeningRoomId" />
-    <result column="field_id" jdbcType="CHAR" property="fieldId" />
-    <result column="theater_id" jdbcType="CHAR" property="theaterId" />
+    <result column="cinema_id" jdbcType="CHAR" property="cinemaId" />
     <result column="screening_room_name" jdbcType="VARCHAR" property="screeningRoomName" />
     <result column="screening_room_capacity" jdbcType="INTEGER" property="screeningRoomCapacity" />
   </resultMap>
@@ -67,7 +66,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    screening_room_id, field_id, theater_id, screening_room_name, screening_room_capacity
+    screening_room_id, cinema_id, screening_room_name, screening_room_capacity
   </sql>
   <select id="selectByExample" parameterType="com.xhu.po.ScreeningRoomExample" resultMap="BaseResultMap">
     select
@@ -100,12 +99,10 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.xhu.po.ScreeningRoom">
-    insert into screening_room (screening_room_id, field_id, theater_id, 
-      screening_room_name, screening_room_capacity
-      )
-    values (#{screeningRoomId,jdbcType=CHAR}, #{fieldId,jdbcType=CHAR}, #{theaterId,jdbcType=CHAR}, 
-      #{screeningRoomName,jdbcType=VARCHAR}, #{screeningRoomCapacity,jdbcType=INTEGER}
-      )
+    insert into screening_room (screening_room_id, cinema_id, screening_room_name, 
+      screening_room_capacity)
+    values (#{screeningRoomId,jdbcType=CHAR}, #{cinemaId,jdbcType=CHAR}, #{screeningRoomName,jdbcType=VARCHAR}, 
+      #{screeningRoomCapacity,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.xhu.po.ScreeningRoom">
     insert into screening_room
@@ -113,11 +110,8 @@
       <if test="screeningRoomId != null">
         screening_room_id,
       </if>
-      <if test="fieldId != null">
-        field_id,
-      </if>
-      <if test="theaterId != null">
-        theater_id,
+      <if test="cinemaId != null">
+        cinema_id,
       </if>
       <if test="screeningRoomName != null">
         screening_room_name,
@@ -130,11 +124,8 @@
       <if test="screeningRoomId != null">
         #{screeningRoomId,jdbcType=CHAR},
       </if>
-      <if test="fieldId != null">
-        #{fieldId,jdbcType=CHAR},
-      </if>
-      <if test="theaterId != null">
-        #{theaterId,jdbcType=CHAR},
+      <if test="cinemaId != null">
+        #{cinemaId,jdbcType=CHAR},
       </if>
       <if test="screeningRoomName != null">
         #{screeningRoomName,jdbcType=VARCHAR},
@@ -156,11 +147,8 @@
       <if test="record.screeningRoomId != null">
         screening_room_id = #{record.screeningRoomId,jdbcType=CHAR},
       </if>
-      <if test="record.fieldId != null">
-        field_id = #{record.fieldId,jdbcType=CHAR},
-      </if>
-      <if test="record.theaterId != null">
-        theater_id = #{record.theaterId,jdbcType=CHAR},
+      <if test="record.cinemaId != null">
+        cinema_id = #{record.cinemaId,jdbcType=CHAR},
       </if>
       <if test="record.screeningRoomName != null">
         screening_room_name = #{record.screeningRoomName,jdbcType=VARCHAR},
@@ -176,8 +164,7 @@
   <update id="updateByExample" parameterType="map">
     update screening_room
     set screening_room_id = #{record.screeningRoomId,jdbcType=CHAR},
-      field_id = #{record.fieldId,jdbcType=CHAR},
-      theater_id = #{record.theaterId,jdbcType=CHAR},
+      cinema_id = #{record.cinemaId,jdbcType=CHAR},
       screening_room_name = #{record.screeningRoomName,jdbcType=VARCHAR},
       screening_room_capacity = #{record.screeningRoomCapacity,jdbcType=INTEGER}
     <if test="_parameter != null">
@@ -187,11 +174,8 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.xhu.po.ScreeningRoom">
     update screening_room
     <set>
-      <if test="fieldId != null">
-        field_id = #{fieldId,jdbcType=CHAR},
-      </if>
-      <if test="theaterId != null">
-        theater_id = #{theaterId,jdbcType=CHAR},
+      <if test="cinemaId != null">
+        cinema_id = #{cinemaId,jdbcType=CHAR},
       </if>
       <if test="screeningRoomName != null">
         screening_room_name = #{screeningRoomName,jdbcType=VARCHAR},
@@ -204,8 +188,7 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.xhu.po.ScreeningRoom">
     update screening_room
-    set field_id = #{fieldId,jdbcType=CHAR},
-      theater_id = #{theaterId,jdbcType=CHAR},
+    set cinema_id = #{cinemaId,jdbcType=CHAR},
       screening_room_name = #{screeningRoomName,jdbcType=VARCHAR},
       screening_room_capacity = #{screeningRoomCapacity,jdbcType=INTEGER}
     where screening_room_id = #{screeningRoomId,jdbcType=CHAR}

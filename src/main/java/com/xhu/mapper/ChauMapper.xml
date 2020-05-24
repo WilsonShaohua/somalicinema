@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xhu.mapper.ChauMapper">
+  <resultMap id="BaseResultMap" type="com.xhu.po.Chau">
+    <id column="chau_id" jdbcType="CHAR" property="chauId" />
+    <result column="chau_name" jdbcType="VARCHAR" property="chauName" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    chau_id, chau_name
+  </sql>
+  <select id="selectByExample" parameterType="com.xhu.po.ChauExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from chau
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from chau
+    where chau_id = #{chauId,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from chau
+    where chau_id = #{chauId,jdbcType=CHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.xhu.po.ChauExample">
+    delete from chau
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.xhu.po.Chau">
+    insert into chau (chau_id, chau_name)
+    values (#{chauId,jdbcType=CHAR}, #{chauName,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.xhu.po.Chau">
+    insert into chau
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="chauId != null">
+        chau_id,
+      </if>
+      <if test="chauName != null">
+        chau_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="chauId != null">
+        #{chauId,jdbcType=CHAR},
+      </if>
+      <if test="chauName != null">
+        #{chauName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.xhu.po.ChauExample" resultType="java.lang.Long">
+    select count(*) from chau
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update chau
+    <set>
+      <if test="record.chauId != null">
+        chau_id = #{record.chauId,jdbcType=CHAR},
+      </if>
+      <if test="record.chauName != null">
+        chau_name = #{record.chauName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update chau
+    set chau_id = #{record.chauId,jdbcType=CHAR},
+      chau_name = #{record.chauName,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xhu.po.Chau">
+    update chau
+    <set>
+      <if test="chauName != null">
+        chau_name = #{chauName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where chau_id = #{chauId,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xhu.po.Chau">
+    update chau
+    set chau_name = #{chauName,jdbcType=VARCHAR}
+    where chau_id = #{chauId,jdbcType=CHAR}
+  </update>
+</mapper>

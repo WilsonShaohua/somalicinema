@@ -3,8 +3,8 @@
 <mapper namespace="com.xhu.mapper.WorldCountryMapper">
   <resultMap id="BaseResultMap" type="com.xhu.po.WorldCountry">
     <id column="world_country_id" jdbcType="CHAR" property="worldCountryId" />
+    <result column="chau_id" jdbcType="CHAR" property="chauId" />
     <result column="world_country_name" jdbcType="VARCHAR" property="worldCountryName" />
-    <result column="world_country_english_name" jdbcType="VARCHAR" property="worldCountryEnglishName" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -65,7 +65,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    world_country_id, world_country_name, world_country_english_name
+    world_country_id, chau_id, world_country_name
   </sql>
   <select id="selectByExample" parameterType="com.xhu.po.WorldCountryExample" resultMap="BaseResultMap">
     select
@@ -98,9 +98,9 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.xhu.po.WorldCountry">
-    insert into world_country (world_country_id, world_country_name, world_country_english_name
+    insert into world_country (world_country_id, chau_id, world_country_name
       )
-    values (#{worldCountryId,jdbcType=CHAR}, #{worldCountryName,jdbcType=VARCHAR}, #{worldCountryEnglishName,jdbcType=VARCHAR}
+    values (#{worldCountryId,jdbcType=CHAR}, #{chauId,jdbcType=CHAR}, #{worldCountryName,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.xhu.po.WorldCountry">
@@ -109,22 +109,22 @@
       <if test="worldCountryId != null">
         world_country_id,
       </if>
+      <if test="chauId != null">
+        chau_id,
+      </if>
       <if test="worldCountryName != null">
         world_country_name,
-      </if>
-      <if test="worldCountryEnglishName != null">
-        world_country_english_name,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="worldCountryId != null">
         #{worldCountryId,jdbcType=CHAR},
       </if>
+      <if test="chauId != null">
+        #{chauId,jdbcType=CHAR},
+      </if>
       <if test="worldCountryName != null">
         #{worldCountryName,jdbcType=VARCHAR},
-      </if>
-      <if test="worldCountryEnglishName != null">
-        #{worldCountryEnglishName,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -140,11 +140,11 @@
       <if test="record.worldCountryId != null">
         world_country_id = #{record.worldCountryId,jdbcType=CHAR},
       </if>
+      <if test="record.chauId != null">
+        chau_id = #{record.chauId,jdbcType=CHAR},
+      </if>
       <if test="record.worldCountryName != null">
         world_country_name = #{record.worldCountryName,jdbcType=VARCHAR},
-      </if>
-      <if test="record.worldCountryEnglishName != null">
-        world_country_english_name = #{record.worldCountryEnglishName,jdbcType=VARCHAR},
       </if>
     </set>
     <if test="_parameter != null">
@@ -154,8 +154,8 @@
   <update id="updateByExample" parameterType="map">
     update world_country
     set world_country_id = #{record.worldCountryId,jdbcType=CHAR},
-      world_country_name = #{record.worldCountryName,jdbcType=VARCHAR},
-      world_country_english_name = #{record.worldCountryEnglishName,jdbcType=VARCHAR}
+      chau_id = #{record.chauId,jdbcType=CHAR},
+      world_country_name = #{record.worldCountryName,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -163,19 +163,19 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.xhu.po.WorldCountry">
     update world_country
     <set>
+      <if test="chauId != null">
+        chau_id = #{chauId,jdbcType=CHAR},
+      </if>
       <if test="worldCountryName != null">
         world_country_name = #{worldCountryName,jdbcType=VARCHAR},
-      </if>
-      <if test="worldCountryEnglishName != null">
-        world_country_english_name = #{worldCountryEnglishName,jdbcType=VARCHAR},
       </if>
     </set>
     where world_country_id = #{worldCountryId,jdbcType=CHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.xhu.po.WorldCountry">
     update world_country
-    set world_country_name = #{worldCountryName,jdbcType=VARCHAR},
-      world_country_english_name = #{worldCountryEnglishName,jdbcType=VARCHAR}
+    set chau_id = #{chauId,jdbcType=CHAR},
+      world_country_name = #{worldCountryName,jdbcType=VARCHAR}
     where world_country_id = #{worldCountryId,jdbcType=CHAR}
   </update>
 </mapper>

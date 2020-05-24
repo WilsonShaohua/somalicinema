@@ -3,20 +3,24 @@ package com.xhu.po;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.stereotype.Component;
 
+import java.util.Date;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Component
 public class Actor {
     private String actorId;
 
     private String cityId;
 
-    private String userId;
-
-    private String actorEnglishName;
-
     private String actorIntroduction;
 
+    private String actorName;
+
+    private Boolean actorSex;
+
+    private Date actorBirthday;
 
 }

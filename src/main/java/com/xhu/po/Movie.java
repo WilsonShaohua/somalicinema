@@ -3,17 +3,21 @@ package com.xhu.po;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.stereotype.Component;
 
 import java.util.Date;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Component
 public class Movie {
     private String movieId;
 
-    private String movieName;
+    private String movieTypeId;
 
-    private String movieEnglishName;
+    private String cityId;
+
+    private String movieName;
 
     private Date moviePublishingData;
 
@@ -25,6 +29,6 @@ public class Movie {
 
     private Date movieDurationPlayback;
 
-    private Double movieScore;
+    private Date movieLastTime;
 
 }

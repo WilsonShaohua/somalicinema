@@ -3,16 +3,10 @@
 <mapper namespace="com.xhu.mapper.OrderMapper">
   <resultMap id="BaseResultMap" type="com.xhu.po.Order">
     <id column="order_id" jdbcType="CHAR" property="orderId" />
-    <result column="pay_id" jdbcType="CHAR" property="payId" />
-    <result column="studio_card_id" jdbcType="CHAR" property="studioCardId" />
-    <result column="user_id" jdbcType="CHAR" property="userId" />
-    <result column="order_name" jdbcType="VARCHAR" property="orderName" />
     <result column="order_time" jdbcType="TIMESTAMP" property="orderTime" />
-    <result column="order_paid" jdbcType="TIMESTAMP" property="orderPaid" />
-    <result column="order_pay_state" jdbcType="INTEGER" property="orderPayState" />
+    <result column="order_pay_time" jdbcType="TIMESTAMP" property="orderPayTime" />
     <result column="order_limit_time" jdbcType="TIMESTAMP" property="orderLimitTime" />
-    <result column="order_get_ticket_code" jdbcType="NUMERIC" property="orderGetTicketCode" />
-    <result column="order_ticket_state" jdbcType="BIT" property="orderTicketState" />
+    <result column="order_money" jdbcType="DECIMAL" property="orderMoney" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -73,8 +67,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    order_id, pay_id, studio_card_id, user_id, order_name, order_time, order_paid, order_pay_state, 
-    order_limit_time, order_get_ticket_code, order_ticket_state
+    order_id, order_time, order_pay_time, order_limit_time, order_money
   </sql>
   <select id="selectByExample" parameterType="com.xhu.po.OrderExample" resultMap="BaseResultMap">
     select
@@ -107,14 +100,10 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.xhu.po.Order">
-    insert into order (order_id, pay_id, studio_card_id, 
-      user_id, order_name, order_time, 
-      order_paid, order_pay_state, order_limit_time, 
-      order_get_ticket_code, order_ticket_state)
-    values (#{orderId,jdbcType=CHAR}, #{payId,jdbcType=CHAR}, #{studioCardId,jdbcType=CHAR}, 
-      #{userId,jdbcType=CHAR}, #{orderName,jdbcType=VARCHAR}, #{orderTime,jdbcType=TIMESTAMP}, 
-      #{orderPaid,jdbcType=TIMESTAMP}, #{orderPayState,jdbcType=INTEGER}, #{orderLimitTime,jdbcType=TIMESTAMP}, 
-      #{orderGetTicketCode,jdbcType=NUMERIC}, #{orderTicketState,jdbcType=BIT})
+    insert into order (order_id, order_time, order_pay_time, 
+      order_limit_time, order_money)
+    values (#{orderId,jdbcType=CHAR}, #{orderTime,jdbcType=TIMESTAMP}, #{orderPayTime,jdbcType=TIMESTAMP}, 
+      #{orderLimitTime,jdbcType=TIMESTAMP}, #{orderMoney,jdbcType=DECIMAL})
   </insert>
   <insert id="insertSelective" parameterType="com.xhu.po.Order">
     insert into order
@@ -122,70 +111,34 @@
       <if test="orderId != null">
         order_id,
       </if>
-      <if test="payId != null">
-        pay_id,
-      </if>
-      <if test="studioCardId != null">
-        studio_card_id,
-      </if>
-      <if test="userId != null">
-        user_id,
-      </if>
-      <if test="orderName != null">
-        order_name,
-      </if>
       <if test="orderTime != null">
         order_time,
       </if>
-      <if test="orderPaid != null">
-        order_paid,
-      </if>
-      <if test="orderPayState != null">
-        order_pay_state,
+      <if test="orderPayTime != null">
+        order_pay_time,
       </if>
       <if test="orderLimitTime != null">
         order_limit_time,
       </if>
-      <if test="orderGetTicketCode != null">
-        order_get_ticket_code,
-      </if>
-      <if test="orderTicketState != null">
-        order_ticket_state,
+      <if test="orderMoney != null">
+        order_money,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="orderId != null">
         #{orderId,jdbcType=CHAR},
       </if>
-      <if test="payId != null">
-        #{payId,jdbcType=CHAR},
-      </if>
-      <if test="studioCardId != null">
-        #{studioCardId,jdbcType=CHAR},
-      </if>
-      <if test="userId != null">
-        #{userId,jdbcType=CHAR},
-      </if>
-      <if test="orderName != null">
-        #{orderName,jdbcType=VARCHAR},
-      </if>
       <if test="orderTime != null">
         #{orderTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="orderPaid != null">
-        #{orderPaid,jdbcType=TIMESTAMP},
-      </if>
-      <if test="orderPayState != null">
-        #{orderPayState,jdbcType=INTEGER},
+      <if test="orderPayTime != null">
+        #{orderPayTime,jdbcType=TIMESTAMP},
       </if>
       <if test="orderLimitTime != null">
         #{orderLimitTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="orderGetTicketCode != null">
-        #{orderGetTicketCode,jdbcType=NUMERIC},
-      </if>
-      <if test="orderTicketState != null">
-        #{orderTicketState,jdbcType=BIT},
+      <if test="orderMoney != null">
+        #{orderMoney,jdbcType=DECIMAL},
       </if>
     </trim>
   </insert>
@@ -201,35 +154,17 @@
       <if test="record.orderId != null">
         order_id = #{record.orderId,jdbcType=CHAR},
       </if>
-      <if test="record.payId != null">
-        pay_id = #{record.payId,jdbcType=CHAR},
-      </if>
-      <if test="record.studioCardId != null">
-        studio_card_id = #{record.studioCardId,jdbcType=CHAR},
-      </if>
-      <if test="record.userId != null">
-        user_id = #{record.userId,jdbcType=CHAR},
-      </if>
-      <if test="record.orderName != null">
-        order_name = #{record.orderName,jdbcType=VARCHAR},
-      </if>
       <if test="record.orderTime != null">
         order_time = #{record.orderTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="record.orderPaid != null">
-        order_paid = #{record.orderPaid,jdbcType=TIMESTAMP},
-      </if>
-      <if test="record.orderPayState != null">
-        order_pay_state = #{record.orderPayState,jdbcType=INTEGER},
+      <if test="record.orderPayTime != null">
+        order_pay_time = #{record.orderPayTime,jdbcType=TIMESTAMP},
       </if>
       <if test="record.orderLimitTime != null">
         order_limit_time = #{record.orderLimitTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="record.orderGetTicketCode != null">
-        order_get_ticket_code = #{record.orderGetTicketCode,jdbcType=NUMERIC},
-      </if>
-      <if test="record.orderTicketState != null">
-        order_ticket_state = #{record.orderTicketState,jdbcType=BIT},
+      <if test="record.orderMoney != null">
+        order_money = #{record.orderMoney,jdbcType=DECIMAL},
       </if>
     </set>
     <if test="_parameter != null">
@@ -239,16 +174,10 @@
   <update id="updateByExample" parameterType="map">
     update order
     set order_id = #{record.orderId,jdbcType=CHAR},
-      pay_id = #{record.payId,jdbcType=CHAR},
-      studio_card_id = #{record.studioCardId,jdbcType=CHAR},
-      user_id = #{record.userId,jdbcType=CHAR},
-      order_name = #{record.orderName,jdbcType=VARCHAR},
       order_time = #{record.orderTime,jdbcType=TIMESTAMP},
-      order_paid = #{record.orderPaid,jdbcType=TIMESTAMP},
-      order_pay_state = #{record.orderPayState,jdbcType=INTEGER},
+      order_pay_time = #{record.orderPayTime,jdbcType=TIMESTAMP},
       order_limit_time = #{record.orderLimitTime,jdbcType=TIMESTAMP},
-      order_get_ticket_code = #{record.orderGetTicketCode,jdbcType=NUMERIC},
-      order_ticket_state = #{record.orderTicketState,jdbcType=BIT}
+      order_money = #{record.orderMoney,jdbcType=DECIMAL}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -256,51 +185,27 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.xhu.po.Order">
     update order
     <set>
-      <if test="payId != null">
-        pay_id = #{payId,jdbcType=CHAR},
-      </if>
-      <if test="studioCardId != null">
-        studio_card_id = #{studioCardId,jdbcType=CHAR},
-      </if>
-      <if test="userId != null">
-        user_id = #{userId,jdbcType=CHAR},
-      </if>
-      <if test="orderName != null">
-        order_name = #{orderName,jdbcType=VARCHAR},
-      </if>
       <if test="orderTime != null">
         order_time = #{orderTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="orderPaid != null">
-        order_paid = #{orderPaid,jdbcType=TIMESTAMP},
-      </if>
-      <if test="orderPayState != null">
-        order_pay_state = #{orderPayState,jdbcType=INTEGER},
+      <if test="orderPayTime != null">
+        order_pay_time = #{orderPayTime,jdbcType=TIMESTAMP},
       </if>
       <if test="orderLimitTime != null">
         order_limit_time = #{orderLimitTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="orderGetTicketCode != null">
-        order_get_ticket_code = #{orderGetTicketCode,jdbcType=NUMERIC},
-      </if>
-      <if test="orderTicketState != null">
-        order_ticket_state = #{orderTicketState,jdbcType=BIT},
+      <if test="orderMoney != null">
+        order_money = #{orderMoney,jdbcType=DECIMAL},
       </if>
     </set>
     where order_id = #{orderId,jdbcType=CHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.xhu.po.Order">
     update order
-    set pay_id = #{payId,jdbcType=CHAR},
-      studio_card_id = #{studioCardId,jdbcType=CHAR},
-      user_id = #{userId,jdbcType=CHAR},
-      order_name = #{orderName,jdbcType=VARCHAR},
-      order_time = #{orderTime,jdbcType=TIMESTAMP},
-      order_paid = #{orderPaid,jdbcType=TIMESTAMP},
-      order_pay_state = #{orderPayState,jdbcType=INTEGER},
+    set order_time = #{orderTime,jdbcType=TIMESTAMP},
+      order_pay_time = #{orderPayTime,jdbcType=TIMESTAMP},
       order_limit_time = #{orderLimitTime,jdbcType=TIMESTAMP},
-      order_get_ticket_code = #{orderGetTicketCode,jdbcType=NUMERIC},
-      order_ticket_state = #{orderTicketState,jdbcType=BIT}
+      order_money = #{orderMoney,jdbcType=DECIMAL}
     where order_id = #{orderId,jdbcType=CHAR}
   </update>
 </mapper>

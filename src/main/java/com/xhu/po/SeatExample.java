@@ -364,63 +364,63 @@ public class SeatExample {
             return (Criteria) this;
         }
 
-        public Criteria andSeatIsItIsNull() {
-            addCriterion("seat_is_it is null");
+        public Criteria andSeatStateIsNull() {
+            addCriterion("seat_state is null");
             return (Criteria) this;
         }
 
-        public Criteria andSeatIsItIsNotNull() {
-            addCriterion("seat_is_it is not null");
+        public Criteria andSeatStateIsNotNull() {
+            addCriterion("seat_state is not null");
             return (Criteria) this;
         }
 
-        public Criteria andSeatIsItEqualTo(Integer value) {
-            addCriterion("seat_is_it =", value, "seatIsIt");
+        public Criteria andSeatStateEqualTo(Integer value) {
+            addCriterion("seat_state =", value, "seatState");
             return (Criteria) this;
         }
 
-        public Criteria andSeatIsItNotEqualTo(Integer value) {
-            addCriterion("seat_is_it <>", value, "seatIsIt");
+        public Criteria andSeatStateNotEqualTo(Integer value) {
+            addCriterion("seat_state <>", value, "seatState");
             return (Criteria) this;
         }
 
-        public Criteria andSeatIsItGreaterThan(Integer value) {
-            addCriterion("seat_is_it >", value, "seatIsIt");
+        public Criteria andSeatStateGreaterThan(Integer value) {
+            addCriterion("seat_state >", value, "seatState");
             return (Criteria) this;
         }
 
-        public Criteria andSeatIsItGreaterThanOrEqualTo(Integer value) {
-            addCriterion("seat_is_it >=", value, "seatIsIt");
+        public Criteria andSeatStateGreaterThanOrEqualTo(Integer value) {
+            addCriterion("seat_state >=", value, "seatState");
             return (Criteria) this;
         }
 
-        public Criteria andSeatIsItLessThan(Integer value) {
-            addCriterion("seat_is_it <", value, "seatIsIt");
+        public Criteria andSeatStateLessThan(Integer value) {
+            addCriterion("seat_state <", value, "seatState");
             return (Criteria) this;
         }
 
-        public Criteria andSeatIsItLessThanOrEqualTo(Integer value) {
-            addCriterion("seat_is_it <=", value, "seatIsIt");
+        public Criteria andSeatStateLessThanOrEqualTo(Integer value) {
+            addCriterion("seat_state <=", value, "seatState");
             return (Criteria) this;
         }
 
-        public Criteria andSeatIsItIn(List<Integer> values) {
-            addCriterion("seat_is_it in", values, "seatIsIt");
+        public Criteria andSeatStateIn(List<Integer> values) {
+            addCriterion("seat_state in", values, "seatState");
             return (Criteria) this;
         }
 
-        public Criteria andSeatIsItNotIn(List<Integer> values) {
-            addCriterion("seat_is_it not in", values, "seatIsIt");
+        public Criteria andSeatStateNotIn(List<Integer> values) {
+            addCriterion("seat_state not in", values, "seatState");
             return (Criteria) this;
         }
 
-        public Criteria andSeatIsItBetween(Integer value1, Integer value2) {
-            addCriterion("seat_is_it between", value1, value2, "seatIsIt");
+        public Criteria andSeatStateBetween(Integer value1, Integer value2) {
+            addCriterion("seat_state between", value1, value2, "seatState");
             return (Criteria) this;
         }
 
-        public Criteria andSeatIsItNotBetween(Integer value1, Integer value2) {
-            addCriterion("seat_is_it not between", value1, value2, "seatIsIt");
+        public Criteria andSeatStateNotBetween(Integer value1, Integer value2) {
+            addCriterion("seat_state not between", value1, value2, "seatState");
             return (Criteria) this;
         }
     }

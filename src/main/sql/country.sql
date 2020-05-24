@@ -1,8 +1,7 @@
 -- author wilson
 use somali_cinema
 go
-delete from country
-go
+
 insert into country (city_id,country_id,country_name) values
 (110100000000,110101000000,'东城区'),
 (110100000000,110102000000,'西城区'),

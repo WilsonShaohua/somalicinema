@@ -174,143 +174,73 @@ public class ScreeningRoomExample {
             return (Criteria) this;
         }
 
-        public Criteria andFieldIdIsNull() {
-            addCriterion("field_id is null");
+        public Criteria andCinemaIdIsNull() {
+            addCriterion("cinema_id is null");
             return (Criteria) this;
         }
 
-        public Criteria andFieldIdIsNotNull() {
-            addCriterion("field_id is not null");
+        public Criteria andCinemaIdIsNotNull() {
+            addCriterion("cinema_id is not null");
             return (Criteria) this;
         }
 
-        public Criteria andFieldIdEqualTo(String value) {
-            addCriterion("field_id =", value, "fieldId");
+        public Criteria andCinemaIdEqualTo(String value) {
+            addCriterion("cinema_id =", value, "cinemaId");
             return (Criteria) this;
         }
 
-        public Criteria andFieldIdNotEqualTo(String value) {
-            addCriterion("field_id <>", value, "fieldId");
+        public Criteria andCinemaIdNotEqualTo(String value) {
+            addCriterion("cinema_id <>", value, "cinemaId");
             return (Criteria) this;
         }
 
-        public Criteria andFieldIdGreaterThan(String value) {
-            addCriterion("field_id >", value, "fieldId");
+        public Criteria andCinemaIdGreaterThan(String value) {
+            addCriterion("cinema_id >", value, "cinemaId");
             return (Criteria) this;
         }
 
-        public Criteria andFieldIdGreaterThanOrEqualTo(String value) {
-            addCriterion("field_id >=", value, "fieldId");
+        public Criteria andCinemaIdGreaterThanOrEqualTo(String value) {
+            addCriterion("cinema_id >=", value, "cinemaId");
             return (Criteria) this;
         }
 
-        public Criteria andFieldIdLessThan(String value) {
-            addCriterion("field_id <", value, "fieldId");
+        public Criteria andCinemaIdLessThan(String value) {
+            addCriterion("cinema_id <", value, "cinemaId");
             return (Criteria) this;
         }
 
-        public Criteria andFieldIdLessThanOrEqualTo(String value) {
-            addCriterion("field_id <=", value, "fieldId");
+        public Criteria andCinemaIdLessThanOrEqualTo(String value) {
+            addCriterion("cinema_id <=", value, "cinemaId");
             return (Criteria) this;
         }
 
-        public Criteria andFieldIdLike(String value) {
-            addCriterion("field_id like", value, "fieldId");
+        public Criteria andCinemaIdLike(String value) {
+            addCriterion("cinema_id like", value, "cinemaId");
             return (Criteria) this;
         }
 
-        public Criteria andFieldIdNotLike(String value) {
-            addCriterion("field_id not like", value, "fieldId");
+        public Criteria andCinemaIdNotLike(String value) {
+            addCriterion("cinema_id not like", value, "cinemaId");
             return (Criteria) this;
         }
 
-        public Criteria andFieldIdIn(List<String> values) {
-            addCriterion("field_id in", values, "fieldId");
+        public Criteria andCinemaIdIn(List<String> values) {
+            addCriterion("cinema_id in", values, "cinemaId");
             return (Criteria) this;
         }
 
-        public Criteria andFieldIdNotIn(List<String> values) {
-            addCriterion("field_id not in", values, "fieldId");
+        public Criteria andCinemaIdNotIn(List<String> values) {
+            addCriterion("cinema_id not in", values, "cinemaId");
             return (Criteria) this;
         }
 
-        public Criteria andFieldIdBetween(String value1, String value2) {
-            addCriterion("field_id between", value1, value2, "fieldId");
+        public Criteria andCinemaIdBetween(String value1, String value2) {
+            addCriterion("cinema_id between", value1, value2, "cinemaId");
             return (Criteria) this;
         }
 
-        public Criteria andFieldIdNotBetween(String value1, String value2) {
-            addCriterion("field_id not between", value1, value2, "fieldId");
-            return (Criteria) this;
-        }
-
-        public Criteria andTheaterIdIsNull() {
-            addCriterion("theater_id is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andTheaterIdIsNotNull() {
-            addCriterion("theater_id is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andTheaterIdEqualTo(String value) {
-            addCriterion("theater_id =", value, "theaterId");
-            return (Criteria) this;
-        }
-
-        public Criteria andTheaterIdNotEqualTo(String value) {
-            addCriterion("theater_id <>", value, "theaterId");
-            return (Criteria) this;
-        }
-
-        public Criteria andTheaterIdGreaterThan(String value) {
-            addCriterion("theater_id >", value, "theaterId");
-            return (Criteria) this;
-        }
-
-        public Criteria andTheaterIdGreaterThanOrEqualTo(String value) {
-            addCriterion("theater_id >=", value, "theaterId");
-            return (Criteria) this;
-        }
-
-        public Criteria andTheaterIdLessThan(String value) {
-            addCriterion("theater_id <", value, "theaterId");
-            return (Criteria) this;
-        }
-
-        public Criteria andTheaterIdLessThanOrEqualTo(String value) {
-            addCriterion("theater_id <=", value, "theaterId");
-            return (Criteria) this;
-        }
-
-        public Criteria andTheaterIdLike(String value) {
-            addCriterion("theater_id like", value, "theaterId");
-            return (Criteria) this;
-        }
-
-        public Criteria andTheaterIdNotLike(String value) {
-            addCriterion("theater_id not like", value, "theaterId");
-            return (Criteria) this;
-        }
-
-        public Criteria andTheaterIdIn(List<String> values) {
-            addCriterion("theater_id in", values, "theaterId");
-            return (Criteria) this;
-        }
-
-        public Criteria andTheaterIdNotIn(List<String> values) {
-            addCriterion("theater_id not in", values, "theaterId");
-            return (Criteria) this;
-        }
-
-        public Criteria andTheaterIdBetween(String value1, String value2) {
-            addCriterion("theater_id between", value1, value2, "theaterId");
-            return (Criteria) this;
-        }
-
-        public Criteria andTheaterIdNotBetween(String value1, String value2) {
-            addCriterion("theater_id not between", value1, value2, "theaterId");
+        public Criteria andCinemaIdNotBetween(String value1, String value2) {
+            addCriterion("cinema_id not between", value1, value2, "cinemaId");
             return (Criteria) this;
         }
 

@@ -1,4 +1,4 @@
-insert into world_country values ('1001001001','ÖÐ¹ú','CHINA')
+insert into world_country(world_country_id,world_country_name) values ('1001001001','ä¸­å›½')
 go
 select * from world_country
 go

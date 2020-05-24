@@ -3,14 +3,15 @@
 <mapper namespace="com.xhu.mapper.MovieMapper">
   <resultMap id="BaseResultMap" type="com.xhu.po.Movie">
     <id column="movie_id" jdbcType="CHAR" property="movieId" />
+    <result column="movie_type_id" jdbcType="CHAR" property="movieTypeId" />
+    <result column="city_id" jdbcType="CHAR" property="cityId" />
     <result column="movie_name" jdbcType="VARCHAR" property="movieName" />
-    <result column="movie_english_name" jdbcType="VARCHAR" property="movieEnglishName" />
     <result column="movie_publishing_data" jdbcType="TIMESTAMP" property="moviePublishingData" />
     <result column="movie_introduction" jdbcType="VARCHAR" property="movieIntroduction" />
     <result column="movie_source_address" jdbcType="VARCHAR" property="movieSourceAddress" />
     <result column="movie_poster_address" jdbcType="VARCHAR" property="moviePosterAddress" />
     <result column="movie_duration_playback" jdbcType="TIMESTAMP" property="movieDurationPlayback" />
-    <result column="movie_score" jdbcType="DOUBLE" property="movieScore" />
+    <result column="movie_last_time" jdbcType="TIMESTAMP" property="movieLastTime" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -71,8 +72,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    movie_id, movie_name, movie_english_name, movie_publishing_data, movie_introduction, 
-    movie_source_address, movie_poster_address, movie_duration_playback, movie_score
+    movie_id, movie_type_id, city_id, movie_name, movie_publishing_data, movie_introduction, 
+    movie_source_address, movie_poster_address, movie_duration_playback, movie_last_time
   </sql>
   <select id="selectByExample" parameterType="com.xhu.po.MovieExample" resultMap="BaseResultMap">
     select
@@ -105,14 +106,16 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.xhu.po.Movie">
-    insert into movie (movie_id, movie_name, movie_english_name, 
-      movie_publishing_data, movie_introduction, 
+    insert into movie (movie_id, movie_type_id, city_id, 
+      movie_name, movie_publishing_data, movie_introduction, 
       movie_source_address, movie_poster_address, 
-      movie_duration_playback, movie_score)
-    values (#{movieId,jdbcType=CHAR}, #{movieName,jdbcType=VARCHAR}, #{movieEnglishName,jdbcType=VARCHAR}, 
-      #{moviePublishingData,jdbcType=TIMESTAMP}, #{movieIntroduction,jdbcType=VARCHAR}, 
+      movie_duration_playback, movie_last_time
+      )
+    values (#{movieId,jdbcType=CHAR}, #{movieTypeId,jdbcType=CHAR}, #{cityId,jdbcType=CHAR}, 
+      #{movieName,jdbcType=VARCHAR}, #{moviePublishingData,jdbcType=TIMESTAMP}, #{movieIntroduction,jdbcType=VARCHAR}, 
       #{movieSourceAddress,jdbcType=VARCHAR}, #{moviePosterAddress,jdbcType=VARCHAR}, 
-      #{movieDurationPlayback,jdbcType=TIMESTAMP}, #{movieScore,jdbcType=DOUBLE})
+      #{movieDurationPlayback,jdbcType=TIMESTAMP}, #{movieLastTime,jdbcType=TIMESTAMP}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.xhu.po.Movie">
     insert into movie
@@ -120,11 +123,14 @@
       <if test="movieId != null">
         movie_id,
       </if>
+      <if test="movieTypeId != null">
+        movie_type_id,
+      </if>
+      <if test="cityId != null">
+        city_id,
+      </if>
       <if test="movieName != null">
         movie_name,
-      </if>
-      <if test="movieEnglishName != null">
-        movie_english_name,
       </if>
       <if test="moviePublishingData != null">
         movie_publishing_data,
@@ -141,19 +147,22 @@
       <if test="movieDurationPlayback != null">
         movie_duration_playback,
       </if>
-      <if test="movieScore != null">
-        movie_score,
+      <if test="movieLastTime != null">
+        movie_last_time,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="movieId != null">
         #{movieId,jdbcType=CHAR},
       </if>
+      <if test="movieTypeId != null">
+        #{movieTypeId,jdbcType=CHAR},
+      </if>
+      <if test="cityId != null">
+        #{cityId,jdbcType=CHAR},
+      </if>
       <if test="movieName != null">
         #{movieName,jdbcType=VARCHAR},
-      </if>
-      <if test="movieEnglishName != null">
-        #{movieEnglishName,jdbcType=VARCHAR},
       </if>
       <if test="moviePublishingData != null">
         #{moviePublishingData,jdbcType=TIMESTAMP},
@@ -170,8 +179,8 @@
       <if test="movieDurationPlayback != null">
         #{movieDurationPlayback,jdbcType=TIMESTAMP},
       </if>
-      <if test="movieScore != null">
-        #{movieScore,jdbcType=DOUBLE},
+      <if test="movieLastTime != null">
+        #{movieLastTime,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -187,11 +196,14 @@
       <if test="record.movieId != null">
         movie_id = #{record.movieId,jdbcType=CHAR},
       </if>
+      <if test="record.movieTypeId != null">
+        movie_type_id = #{record.movieTypeId,jdbcType=CHAR},
+      </if>
+      <if test="record.cityId != null">
+        city_id = #{record.cityId,jdbcType=CHAR},
+      </if>
       <if test="record.movieName != null">
         movie_name = #{record.movieName,jdbcType=VARCHAR},
-      </if>
-      <if test="record.movieEnglishName != null">
-        movie_english_name = #{record.movieEnglishName,jdbcType=VARCHAR},
       </if>
       <if test="record.moviePublishingData != null">
         movie_publishing_data = #{record.moviePublishingData,jdbcType=TIMESTAMP},
@@ -208,8 +220,8 @@
       <if test="record.movieDurationPlayback != null">
         movie_duration_playback = #{record.movieDurationPlayback,jdbcType=TIMESTAMP},
       </if>
-      <if test="record.movieScore != null">
-        movie_score = #{record.movieScore,jdbcType=DOUBLE},
+      <if test="record.movieLastTime != null">
+        movie_last_time = #{record.movieLastTime,jdbcType=TIMESTAMP},
       </if>
     </set>
     <if test="_parameter != null">
@@ -219,14 +231,15 @@
   <update id="updateByExample" parameterType="map">
     update movie
     set movie_id = #{record.movieId,jdbcType=CHAR},
+      movie_type_id = #{record.movieTypeId,jdbcType=CHAR},
+      city_id = #{record.cityId,jdbcType=CHAR},
       movie_name = #{record.movieName,jdbcType=VARCHAR},
-      movie_english_name = #{record.movieEnglishName,jdbcType=VARCHAR},
       movie_publishing_data = #{record.moviePublishingData,jdbcType=TIMESTAMP},
       movie_introduction = #{record.movieIntroduction,jdbcType=VARCHAR},
       movie_source_address = #{record.movieSourceAddress,jdbcType=VARCHAR},
       movie_poster_address = #{record.moviePosterAddress,jdbcType=VARCHAR},
       movie_duration_playback = #{record.movieDurationPlayback,jdbcType=TIMESTAMP},
-      movie_score = #{record.movieScore,jdbcType=DOUBLE}
+      movie_last_time = #{record.movieLastTime,jdbcType=TIMESTAMP}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -234,11 +247,14 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.xhu.po.Movie">
     update movie
     <set>
+      <if test="movieTypeId != null">
+        movie_type_id = #{movieTypeId,jdbcType=CHAR},
+      </if>
+      <if test="cityId != null">
+        city_id = #{cityId,jdbcType=CHAR},
+      </if>
       <if test="movieName != null">
         movie_name = #{movieName,jdbcType=VARCHAR},
-      </if>
-      <if test="movieEnglishName != null">
-        movie_english_name = #{movieEnglishName,jdbcType=VARCHAR},
       </if>
       <if test="moviePublishingData != null">
         movie_publishing_data = #{moviePublishingData,jdbcType=TIMESTAMP},
@@ -255,22 +271,23 @@
       <if test="movieDurationPlayback != null">
         movie_duration_playback = #{movieDurationPlayback,jdbcType=TIMESTAMP},
       </if>
-      <if test="movieScore != null">
-        movie_score = #{movieScore,jdbcType=DOUBLE},
+      <if test="movieLastTime != null">
+        movie_last_time = #{movieLastTime,jdbcType=TIMESTAMP},
       </if>
     </set>
     where movie_id = #{movieId,jdbcType=CHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.xhu.po.Movie">
     update movie
-    set movie_name = #{movieName,jdbcType=VARCHAR},
-      movie_english_name = #{movieEnglishName,jdbcType=VARCHAR},
+    set movie_type_id = #{movieTypeId,jdbcType=CHAR},
+      city_id = #{cityId,jdbcType=CHAR},
+      movie_name = #{movieName,jdbcType=VARCHAR},
       movie_publishing_data = #{moviePublishingData,jdbcType=TIMESTAMP},
       movie_introduction = #{movieIntroduction,jdbcType=VARCHAR},
       movie_source_address = #{movieSourceAddress,jdbcType=VARCHAR},
       movie_poster_address = #{moviePosterAddress,jdbcType=VARCHAR},
       movie_duration_playback = #{movieDurationPlayback,jdbcType=TIMESTAMP},
-      movie_score = #{movieScore,jdbcType=DOUBLE}
+      movie_last_time = #{movieLastTime,jdbcType=TIMESTAMP}
     where movie_id = #{movieId,jdbcType=CHAR}
   </update>
 </mapper>

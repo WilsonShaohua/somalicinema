@@ -175,6 +175,76 @@ public class FieldExample {
             return (Criteria) this;
         }
 
+        public Criteria andScreeningRoomIdIsNull() {
+            addCriterion("screening_room_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andScreeningRoomIdIsNotNull() {
+            addCriterion("screening_room_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andScreeningRoomIdEqualTo(String value) {
+            addCriterion("screening_room_id =", value, "screeningRoomId");
+            return (Criteria) this;
+        }
+
+        public Criteria andScreeningRoomIdNotEqualTo(String value) {
+            addCriterion("screening_room_id <>", value, "screeningRoomId");
+            return (Criteria) this;
+        }
+
+        public Criteria andScreeningRoomIdGreaterThan(String value) {
+            addCriterion("screening_room_id >", value, "screeningRoomId");
+            return (Criteria) this;
+        }
+
+        public Criteria andScreeningRoomIdGreaterThanOrEqualTo(String value) {
+            addCriterion("screening_room_id >=", value, "screeningRoomId");
+            return (Criteria) this;
+        }
+
+        public Criteria andScreeningRoomIdLessThan(String value) {
+            addCriterion("screening_room_id <", value, "screeningRoomId");
+            return (Criteria) this;
+        }
+
+        public Criteria andScreeningRoomIdLessThanOrEqualTo(String value) {
+            addCriterion("screening_room_id <=", value, "screeningRoomId");
+            return (Criteria) this;
+        }
+
+        public Criteria andScreeningRoomIdLike(String value) {
+            addCriterion("screening_room_id like", value, "screeningRoomId");
+            return (Criteria) this;
+        }
+
+        public Criteria andScreeningRoomIdNotLike(String value) {
+            addCriterion("screening_room_id not like", value, "screeningRoomId");
+            return (Criteria) this;
+        }
+
+        public Criteria andScreeningRoomIdIn(List<String> values) {
+            addCriterion("screening_room_id in", values, "screeningRoomId");
+            return (Criteria) this;
+        }
+
+        public Criteria andScreeningRoomIdNotIn(List<String> values) {
+            addCriterion("screening_room_id not in", values, "screeningRoomId");
+            return (Criteria) this;
+        }
+
+        public Criteria andScreeningRoomIdBetween(String value1, String value2) {
+            addCriterion("screening_room_id between", value1, value2, "screeningRoomId");
+            return (Criteria) this;
+        }
+
+        public Criteria andScreeningRoomIdNotBetween(String value1, String value2) {
+            addCriterion("screening_room_id not between", value1, value2, "screeningRoomId");
+            return (Criteria) this;
+        }
+
         public Criteria andMovieIdIsNull() {
             addCriterion("movie_id is null");
             return (Criteria) this;
@@ -302,66 +372,6 @@ public class FieldExample {
 
         public Criteria andFieldStartDataTimeNotBetween(Date value1, Date value2) {
             addCriterion("field_start_data_time not between", value1, value2, "fieldStartDataTime");
-            return (Criteria) this;
-        }
-
-        public Criteria andFieldEndDataTimeIsNull() {
-            addCriterion("field_end_data_time is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andFieldEndDataTimeIsNotNull() {
-            addCriterion("field_end_data_time is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andFieldEndDataTimeEqualTo(Date value) {
-            addCriterion("field_end_data_time =", value, "fieldEndDataTime");
-            return (Criteria) this;
-        }
-
-        public Criteria andFieldEndDataTimeNotEqualTo(Date value) {
-            addCriterion("field_end_data_time <>", value, "fieldEndDataTime");
-            return (Criteria) this;
-        }
-
-        public Criteria andFieldEndDataTimeGreaterThan(Date value) {
-            addCriterion("field_end_data_time >", value, "fieldEndDataTime");
-            return (Criteria) this;
-        }
-
-        public Criteria andFieldEndDataTimeGreaterThanOrEqualTo(Date value) {
-            addCriterion("field_end_data_time >=", value, "fieldEndDataTime");
-            return (Criteria) this;
-        }
-
-        public Criteria andFieldEndDataTimeLessThan(Date value) {
-            addCriterion("field_end_data_time <", value, "fieldEndDataTime");
-            return (Criteria) this;
-        }
-
-        public Criteria andFieldEndDataTimeLessThanOrEqualTo(Date value) {
-            addCriterion("field_end_data_time <=", value, "fieldEndDataTime");
-            return (Criteria) this;
-        }
-
-        public Criteria andFieldEndDataTimeIn(List<Date> values) {
-            addCriterion("field_end_data_time in", values, "fieldEndDataTime");
-            return (Criteria) this;
-        }
-
-        public Criteria andFieldEndDataTimeNotIn(List<Date> values) {
-            addCriterion("field_end_data_time not in", values, "fieldEndDataTime");
-            return (Criteria) this;
-        }
-
-        public Criteria andFieldEndDataTimeBetween(Date value1, Date value2) {
-            addCriterion("field_end_data_time between", value1, value2, "fieldEndDataTime");
-            return (Criteria) this;
-        }
-
-        public Criteria andFieldEndDataTimeNotBetween(Date value1, Date value2) {
-            addCriterion("field_end_data_time not between", value1, value2, "fieldEndDataTime");
             return (Criteria) this;
         }
     }

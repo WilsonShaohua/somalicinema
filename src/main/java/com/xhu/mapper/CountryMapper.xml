@@ -5,7 +5,6 @@
     <id column="country_id" jdbcType="CHAR" property="countryId" />
     <result column="city_id" jdbcType="CHAR" property="cityId" />
     <result column="country_name" jdbcType="VARCHAR" property="countryName" />
-    <result column="country_english_name" jdbcType="VARCHAR" property="countryEnglishName" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -66,7 +65,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    country_id, city_id, country_name, country_english_name
+    country_id, city_id, country_name
   </sql>
   <select id="selectByExample" parameterType="com.xhu.po.CountryExample" resultMap="BaseResultMap">
     select
@@ -99,10 +98,10 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.xhu.po.Country">
-    insert into country (country_id, city_id, country_name, 
-      country_english_name)
-    values (#{countryId,jdbcType=CHAR}, #{cityId,jdbcType=CHAR}, #{countryName,jdbcType=VARCHAR}, 
-      #{countryEnglishName,jdbcType=VARCHAR})
+    insert into country (country_id, city_id, country_name
+      )
+    values (#{countryId,jdbcType=CHAR}, #{cityId,jdbcType=CHAR}, #{countryName,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.xhu.po.Country">
     insert into country
@@ -116,9 +115,6 @@
       <if test="countryName != null">
         country_name,
       </if>
-      <if test="countryEnglishName != null">
-        country_english_name,
-      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="countryId != null">
@@ -129,9 +125,6 @@
       </if>
       <if test="countryName != null">
         #{countryName,jdbcType=VARCHAR},
-      </if>
-      <if test="countryEnglishName != null">
-        #{countryEnglishName,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -153,9 +146,6 @@
       <if test="record.countryName != null">
         country_name = #{record.countryName,jdbcType=VARCHAR},
       </if>
-      <if test="record.countryEnglishName != null">
-        country_english_name = #{record.countryEnglishName,jdbcType=VARCHAR},
-      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -165,8 +155,7 @@
     update country
     set country_id = #{record.countryId,jdbcType=CHAR},
       city_id = #{record.cityId,jdbcType=CHAR},
-      country_name = #{record.countryName,jdbcType=VARCHAR},
-      country_english_name = #{record.countryEnglishName,jdbcType=VARCHAR}
+      country_name = #{record.countryName,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -180,17 +169,13 @@
       <if test="countryName != null">
         country_name = #{countryName,jdbcType=VARCHAR},
       </if>
-      <if test="countryEnglishName != null">
-        country_english_name = #{countryEnglishName,jdbcType=VARCHAR},
-      </if>
     </set>
     where country_id = #{countryId,jdbcType=CHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.xhu.po.Country">
     update country
     set city_id = #{cityId,jdbcType=CHAR},
-      country_name = #{countryName,jdbcType=VARCHAR},
-      country_english_name = #{countryEnglishName,jdbcType=VARCHAR}
+      country_name = #{countryName,jdbcType=VARCHAR}
     where country_id = #{countryId,jdbcType=CHAR}
   </update>
 </mapper>

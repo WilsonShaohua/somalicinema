@@ -175,6 +175,146 @@ public class MovieExample {
             return (Criteria) this;
         }
 
+        public Criteria andMovieTypeIdIsNull() {
+            addCriterion("movie_type_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andMovieTypeIdIsNotNull() {
+            addCriterion("movie_type_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andMovieTypeIdEqualTo(String value) {
+            addCriterion("movie_type_id =", value, "movieTypeId");
+            return (Criteria) this;
+        }
+
+        public Criteria andMovieTypeIdNotEqualTo(String value) {
+            addCriterion("movie_type_id <>", value, "movieTypeId");
+            return (Criteria) this;
+        }
+
+        public Criteria andMovieTypeIdGreaterThan(String value) {
+            addCriterion("movie_type_id >", value, "movieTypeId");
+            return (Criteria) this;
+        }
+
+        public Criteria andMovieTypeIdGreaterThanOrEqualTo(String value) {
+            addCriterion("movie_type_id >=", value, "movieTypeId");
+            return (Criteria) this;
+        }
+
+        public Criteria andMovieTypeIdLessThan(String value) {
+            addCriterion("movie_type_id <", value, "movieTypeId");
+            return (Criteria) this;
+        }
+
+        public Criteria andMovieTypeIdLessThanOrEqualTo(String value) {
+            addCriterion("movie_type_id <=", value, "movieTypeId");
+            return (Criteria) this;
+        }
+
+        public Criteria andMovieTypeIdLike(String value) {
+            addCriterion("movie_type_id like", value, "movieTypeId");
+            return (Criteria) this;
+        }
+
+        public Criteria andMovieTypeIdNotLike(String value) {
+            addCriterion("movie_type_id not like", value, "movieTypeId");
+            return (Criteria) this;
+        }
+
+        public Criteria andMovieTypeIdIn(List<String> values) {
+            addCriterion("movie_type_id in", values, "movieTypeId");
+            return (Criteria) this;
+        }
+
+        public Criteria andMovieTypeIdNotIn(List<String> values) {
+            addCriterion("movie_type_id not in", values, "movieTypeId");
+            return (Criteria) this;
+        }
+
+        public Criteria andMovieTypeIdBetween(String value1, String value2) {
+            addCriterion("movie_type_id between", value1, value2, "movieTypeId");
+            return (Criteria) this;
+        }
+
+        public Criteria andMovieTypeIdNotBetween(String value1, String value2) {
+            addCriterion("movie_type_id not between", value1, value2, "movieTypeId");
+            return (Criteria) this;
+        }
+
+        public Criteria andCityIdIsNull() {
+            addCriterion("city_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCityIdIsNotNull() {
+            addCriterion("city_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCityIdEqualTo(String value) {
+            addCriterion("city_id =", value, "cityId");
+            return (Criteria) this;
+        }
+
+        public Criteria andCityIdNotEqualTo(String value) {
+            addCriterion("city_id <>", value, "cityId");
+            return (Criteria) this;
+        }
+
+        public Criteria andCityIdGreaterThan(String value) {
+            addCriterion("city_id >", value, "cityId");
+            return (Criteria) this;
+        }
+
+        public Criteria andCityIdGreaterThanOrEqualTo(String value) {
+            addCriterion("city_id >=", value, "cityId");
+            return (Criteria) this;
+        }
+
+        public Criteria andCityIdLessThan(String value) {
+            addCriterion("city_id <", value, "cityId");
+            return (Criteria) this;
+        }
+
+        public Criteria andCityIdLessThanOrEqualTo(String value) {
+            addCriterion("city_id <=", value, "cityId");
+            return (Criteria) this;
+        }
+
+        public Criteria andCityIdLike(String value) {
+            addCriterion("city_id like", value, "cityId");
+            return (Criteria) this;
+        }
+
+        public Criteria andCityIdNotLike(String value) {
+            addCriterion("city_id not like", value, "cityId");
+            return (Criteria) this;
+        }
+
+        public Criteria andCityIdIn(List<String> values) {
+            addCriterion("city_id in", values, "cityId");
+            return (Criteria) this;
+        }
+
+        public Criteria andCityIdNotIn(List<String> values) {
+            addCriterion("city_id not in", values, "cityId");
+            return (Criteria) this;
+        }
+
+        public Criteria andCityIdBetween(String value1, String value2) {
+            addCriterion("city_id between", value1, value2, "cityId");
+            return (Criteria) this;
+        }
+
+        public Criteria andCityIdNotBetween(String value1, String value2) {
+            addCriterion("city_id not between", value1, value2, "cityId");
+            return (Criteria) this;
+        }
+
         public Criteria andMovieNameIsNull() {
             addCriterion("movie_name is null");
             return (Criteria) this;
@@ -242,76 +382,6 @@ public class MovieExample {
 
         public Criteria andMovieNameNotBetween(String value1, String value2) {
             addCriterion("movie_name not between", value1, value2, "movieName");
-            return (Criteria) this;
-        }
-
-        public Criteria andMovieEnglishNameIsNull() {
-            addCriterion("movie_english_name is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andMovieEnglishNameIsNotNull() {
-            addCriterion("movie_english_name is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andMovieEnglishNameEqualTo(String value) {
-            addCriterion("movie_english_name =", value, "movieEnglishName");
-            return (Criteria) this;
-        }
-
-        public Criteria andMovieEnglishNameNotEqualTo(String value) {
-            addCriterion("movie_english_name <>", value, "movieEnglishName");
-            return (Criteria) this;
-        }
-
-        public Criteria andMovieEnglishNameGreaterThan(String value) {
-            addCriterion("movie_english_name >", value, "movieEnglishName");
-            return (Criteria) this;
-        }
-
-        public Criteria andMovieEnglishNameGreaterThanOrEqualTo(String value) {
-            addCriterion("movie_english_name >=", value, "movieEnglishName");
-            return (Criteria) this;
-        }
-
-        public Criteria andMovieEnglishNameLessThan(String value) {
-            addCriterion("movie_english_name <", value, "movieEnglishName");
-            return (Criteria) this;
-        }
-
-        public Criteria andMovieEnglishNameLessThanOrEqualTo(String value) {
-            addCriterion("movie_english_name <=", value, "movieEnglishName");
-            return (Criteria) this;
-        }
-
-        public Criteria andMovieEnglishNameLike(String value) {
-            addCriterion("movie_english_name like", value, "movieEnglishName");
-            return (Criteria) this;
-        }
-
-        public Criteria andMovieEnglishNameNotLike(String value) {
-            addCriterion("movie_english_name not like", value, "movieEnglishName");
-            return (Criteria) this;
-        }
-
-        public Criteria andMovieEnglishNameIn(List<String> values) {
-            addCriterion("movie_english_name in", values, "movieEnglishName");
-            return (Criteria) this;
-        }
-
-        public Criteria andMovieEnglishNameNotIn(List<String> values) {
-            addCriterion("movie_english_name not in", values, "movieEnglishName");
-            return (Criteria) this;
-        }
-
-        public Criteria andMovieEnglishNameBetween(String value1, String value2) {
-            addCriterion("movie_english_name between", value1, value2, "movieEnglishName");
-            return (Criteria) this;
-        }
-
-        public Criteria andMovieEnglishNameNotBetween(String value1, String value2) {
-            addCriterion("movie_english_name not between", value1, value2, "movieEnglishName");
             return (Criteria) this;
         }
 
@@ -645,63 +715,63 @@ public class MovieExample {
             return (Criteria) this;
         }
 
-        public Criteria andMovieScoreIsNull() {
-            addCriterion("movie_score is null");
+        public Criteria andMovieLastTimeIsNull() {
+            addCriterion("movie_last_time is null");
             return (Criteria) this;
         }
 
-        public Criteria andMovieScoreIsNotNull() {
-            addCriterion("movie_score is not null");
+        public Criteria andMovieLastTimeIsNotNull() {
+            addCriterion("movie_last_time is not null");
             return (Criteria) this;
         }
 
-        public Criteria andMovieScoreEqualTo(Double value) {
-            addCriterion("movie_score =", value, "movieScore");
+        public Criteria andMovieLastTimeEqualTo(Date value) {
+            addCriterion("movie_last_time =", value, "movieLastTime");
             return (Criteria) this;
         }
 
-        public Criteria andMovieScoreNotEqualTo(Double value) {
-            addCriterion("movie_score <>", value, "movieScore");
+        public Criteria andMovieLastTimeNotEqualTo(Date value) {
+            addCriterion("movie_last_time <>", value, "movieLastTime");
             return (Criteria) this;
         }
 
-        public Criteria andMovieScoreGreaterThan(Double value) {
-            addCriterion("movie_score >", value, "movieScore");
+        public Criteria andMovieLastTimeGreaterThan(Date value) {
+            addCriterion("movie_last_time >", value, "movieLastTime");
             return (Criteria) this;
         }
 
-        public Criteria andMovieScoreGreaterThanOrEqualTo(Double value) {
-            addCriterion("movie_score >=", value, "movieScore");
+        public Criteria andMovieLastTimeGreaterThanOrEqualTo(Date value) {
+            addCriterion("movie_last_time >=", value, "movieLastTime");
             return (Criteria) this;
         }
 
-        public Criteria andMovieScoreLessThan(Double value) {
-            addCriterion("movie_score <", value, "movieScore");
+        public Criteria andMovieLastTimeLessThan(Date value) {
+            addCriterion("movie_last_time <", value, "movieLastTime");
             return (Criteria) this;
         }
 
-        public Criteria andMovieScoreLessThanOrEqualTo(Double value) {
-            addCriterion("movie_score <=", value, "movieScore");
+        public Criteria andMovieLastTimeLessThanOrEqualTo(Date value) {
+            addCriterion("movie_last_time <=", value, "movieLastTime");
             return (Criteria) this;
         }
 
-        public Criteria andMovieScoreIn(List<Double> values) {
-            addCriterion("movie_score in", values, "movieScore");
+        public Criteria andMovieLastTimeIn(List<Date> values) {
+            addCriterion("movie_last_time in", values, "movieLastTime");
             return (Criteria) this;
         }
 
-        public Criteria andMovieScoreNotIn(List<Double> values) {
-            addCriterion("movie_score not in", values, "movieScore");
+        public Criteria andMovieLastTimeNotIn(List<Date> values) {
+            addCriterion("movie_last_time not in", values, "movieLastTime");
             return (Criteria) this;
         }
 
-        public Criteria andMovieScoreBetween(Double value1, Double value2) {
-            addCriterion("movie_score between", value1, value2, "movieScore");
+        public Criteria andMovieLastTimeBetween(Date value1, Date value2) {
+            addCriterion("movie_last_time between", value1, value2, "movieLastTime");
             return (Criteria) this;
         }
 
-        public Criteria andMovieScoreNotBetween(Double value1, Double value2) {
-            addCriterion("movie_score not between", value1, value2, "movieScore");
+        public Criteria andMovieLastTimeNotBetween(Date value1, Date value2) {
+            addCriterion("movie_last_time not between", value1, value2, "movieLastTime");
             return (Criteria) this;
         }
     }

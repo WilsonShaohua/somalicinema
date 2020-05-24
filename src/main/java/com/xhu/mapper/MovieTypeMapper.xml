@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xhu.mapper.MovieTypeMapper">
-  <resultMap id="BaseResultMap" type="com.xhu.po.MovieTypeKey">
-    <id column="movie_id" jdbcType="CHAR" property="movieId" />
-    <id column="type_id" jdbcType="CHAR" property="typeId" />
+  <resultMap id="BaseResultMap" type="com.xhu.po.MovieType">
+    <id column="movie_type_id" jdbcType="CHAR" property="movieTypeId" />
+    <result column="movie_type_name" jdbcType="VARCHAR" property="movieTypeName" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -64,7 +64,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    movie_id, type_id
+    movie_type_id, movie_type_name
   </sql>
   <select id="selectByExample" parameterType="com.xhu.po.MovieTypeExample" resultMap="BaseResultMap">
     select
@@ -80,10 +80,15 @@
       order by ${orderByClause}
     </if>
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="com.xhu.po.MovieTypeKey">
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from movie_type
+    where movie_type_id = #{movieTypeId,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from movie_type
-    where movie_id = #{movieId,jdbcType=CHAR}
-      and type_id = #{typeId,jdbcType=CHAR}
+    where movie_type_id = #{movieTypeId,jdbcType=CHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.xhu.po.MovieTypeExample">
     delete from movie_type
@@ -91,26 +96,26 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.xhu.po.MovieTypeKey">
-    insert into movie_type (movie_id, type_id)
-    values (#{movieId,jdbcType=CHAR}, #{typeId,jdbcType=CHAR})
+  <insert id="insert" parameterType="com.xhu.po.MovieType">
+    insert into movie_type (movie_type_id, movie_type_name)
+    values (#{movieTypeId,jdbcType=CHAR}, #{movieTypeName,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.xhu.po.MovieTypeKey">
+  <insert id="insertSelective" parameterType="com.xhu.po.MovieType">
     insert into movie_type
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="movieId != null">
-        movie_id,
+      <if test="movieTypeId != null">
+        movie_type_id,
       </if>
-      <if test="typeId != null">
-        type_id,
+      <if test="movieTypeName != null">
+        movie_type_name,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="movieId != null">
-        #{movieId,jdbcType=CHAR},
+      <if test="movieTypeId != null">
+        #{movieTypeId,jdbcType=CHAR},
       </if>
-      <if test="typeId != null">
-        #{typeId,jdbcType=CHAR},
+      <if test="movieTypeName != null">
+        #{movieTypeName,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -123,11 +128,11 @@
   <update id="updateByExampleSelective" parameterType="map">
     update movie_type
     <set>
-      <if test="record.movieId != null">
-        movie_id = #{record.movieId,jdbcType=CHAR},
+      <if test="record.movieTypeId != null">
+        movie_type_id = #{record.movieTypeId,jdbcType=CHAR},
       </if>
-      <if test="record.typeId != null">
-        type_id = #{record.typeId,jdbcType=CHAR},
+      <if test="record.movieTypeName != null">
+        movie_type_name = #{record.movieTypeName,jdbcType=VARCHAR},
       </if>
     </set>
     <if test="_parameter != null">
@@ -136,10 +141,24 @@
   </update>
   <update id="updateByExample" parameterType="map">
     update movie_type
-    set movie_id = #{record.movieId,jdbcType=CHAR},
-      type_id = #{record.typeId,jdbcType=CHAR}
+    set movie_type_id = #{record.movieTypeId,jdbcType=CHAR},
+      movie_type_name = #{record.movieTypeName,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xhu.po.MovieType">
+    update movie_type
+    <set>
+      <if test="movieTypeName != null">
+        movie_type_name = #{movieTypeName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where movie_type_id = #{movieTypeId,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xhu.po.MovieType">
+    update movie_type
+    set movie_type_name = #{movieTypeName,jdbcType=VARCHAR}
+    where movie_type_id = #{movieTypeId,jdbcType=CHAR}
   </update>
 </mapper>
