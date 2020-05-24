@@ -1,6 +1,7 @@
 package com.xhu.utils;
 
 import com.alibaba.fastjson.JSON;
+import com.xhu.po.Actor;
 import org.junit.Test;
 
 /**
@@ -10,6 +11,10 @@ import org.junit.Test;
 public class JsonTest {
     @Test
     public void testJson() {
-
+        Actor actor = new Actor("123", "10086", "123", "wilson", "liu shao hua");
+        String actroJSON = JSON.toJSONString(actor);
+        System.out.println(actroJSON);
+        actor = JSON.parseObject(actroJSON,Actor.class);
+        System.out.println(actor.toString());
     }
 }
