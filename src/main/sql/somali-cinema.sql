@@ -938,20 +938,13 @@ go
 create table city (
    city_id              char(12)             not null,
    province_id          char(3)             null,
-   actor_id             char(10)             null,
    city_name            varchar(50)          null,
    city_english_name    varchar(20)          null,
    constraint PK_CITY primary key nonclustered (city_id)
 )
 go
 
-/*==============================================================*/
-/* Index: actor_area2_FK                                        */
-/*==============================================================*/
-create index actor_area2_FK on city (
-actor_id ASC
-)
-go
+
 
 /*==============================================================*/
 /* Index: province_city_FK                                      */
@@ -1222,7 +1215,7 @@ create table pay (
    pay_id               char(10)             not null,
    pay_account_id       char(10)             null,
    order_id             char(10)             null,
-   "pay_money+_number"  decimal(8,2)         null,
+   pay_money_number  decimal(8,2)         null,
    constraint PK_PAY primary key nonclustered (pay_id)
 )
 go
@@ -1497,10 +1490,6 @@ create table world_country (
 )
 go
 
-alter table actor
-   add constraint FK_ACTOR_ACTOR_ARE_CITY foreign key (city_id)
-      references city (city_id)
-go
 
 alter table actor
    add constraint FK_ACTOR_USER_ACTO_USER foreign key (user_id)
@@ -1532,10 +1521,6 @@ alter table area_film_release
       references world_country (world_country_id)
 go
 
-alter table city
-   add constraint FK_CITY_ACTOR_ARE_ACTOR foreign key (actor_id)
-      references actor (actor_id)
-go
 
 alter table city
    add constraint FK_CITY_PROVINCE__PROVINCE foreign key (province_id)

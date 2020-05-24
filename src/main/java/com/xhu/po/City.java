@@ -12,8 +12,6 @@ public class City {
 
     private String provinceId;
 
-    private String actorId;
-
     private String cityName;
 
     private String cityEnglishName;

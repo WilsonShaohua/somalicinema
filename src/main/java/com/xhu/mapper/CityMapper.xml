@@ -4,7 +4,6 @@
   <resultMap id="BaseResultMap" type="com.xhu.po.City">
     <id column="city_id" jdbcType="CHAR" property="cityId" />
     <result column="province_id" jdbcType="CHAR" property="provinceId" />
-    <result column="actor_id" jdbcType="CHAR" property="actorId" />
     <result column="city_name" jdbcType="VARCHAR" property="cityName" />
     <result column="city_english_name" jdbcType="VARCHAR" property="cityEnglishName" />
   </resultMap>
@@ -67,7 +66,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    city_id, province_id, actor_id, city_name, city_english_name
+    city_id, province_id, city_name, city_english_name
   </sql>
   <select id="selectByExample" parameterType="com.xhu.po.CityExample" resultMap="BaseResultMap">
     select
@@ -100,7 +99,7 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.xhu.po.City">
-    insert into city (city_id, province_id, actor_id, 
+    insert into city (city_id, province_id,
       city_name, city_english_name)
     values (#{cityId,jdbcType=CHAR}, #{provinceId,jdbcType=CHAR}, #{actorId,jdbcType=CHAR}, 
       #{cityName,jdbcType=VARCHAR}, #{cityEnglishName,jdbcType=VARCHAR})
@@ -113,9 +112,6 @@
       </if>
       <if test="provinceId != null">
         province_id,
-      </if>
-      <if test="actorId != null">
-        actor_id,
       </if>
       <if test="cityName != null">
         city_name,
@@ -157,9 +153,6 @@
       <if test="record.provinceId != null">
         province_id = #{record.provinceId,jdbcType=CHAR},
       </if>
-      <if test="record.actorId != null">
-        actor_id = #{record.actorId,jdbcType=CHAR},
-      </if>
       <if test="record.cityName != null">
         city_name = #{record.cityName,jdbcType=VARCHAR},
       </if>
@@ -175,7 +168,6 @@
     update city
     set city_id = #{record.cityId,jdbcType=CHAR},
       province_id = #{record.provinceId,jdbcType=CHAR},
-      actor_id = #{record.actorId,jdbcType=CHAR},
       city_name = #{record.cityName,jdbcType=VARCHAR},
       city_english_name = #{record.cityEnglishName,jdbcType=VARCHAR}
     <if test="_parameter != null">
@@ -187,9 +179,6 @@
     <set>
       <if test="provinceId != null">
         province_id = #{provinceId,jdbcType=CHAR},
-      </if>
-      <if test="actorId != null">
-        actor_id = #{actorId,jdbcType=CHAR},
       </if>
       <if test="cityName != null">
         city_name = #{cityName,jdbcType=VARCHAR},
@@ -203,7 +192,6 @@
   <update id="updateByPrimaryKey" parameterType="com.xhu.po.City">
     update city
     set province_id = #{provinceId,jdbcType=CHAR},
-      actor_id = #{actorId,jdbcType=CHAR},
       city_name = #{cityName,jdbcType=VARCHAR},
       city_english_name = #{cityEnglishName,jdbcType=VARCHAR}
     where city_id = #{cityId,jdbcType=CHAR}
