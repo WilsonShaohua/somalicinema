@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<beans  xmlns="http://www.springframework.org/schema/beans"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xmlns:context="http://www.springframework.org/schema/context"
-        xmlns:tx="http://www.springframework.org/schema/tx"
-        xmlns:aop="http://www.springframework.org/schema/aop"
-        xmlns:mvc="http://www.springframework.org/schema/mvc"
-        xsi:schemaLocation="http://www.springframework.org/schema/beans
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
     http://www.springframework.org/schema/beans/spring-beans.xsd
     http://www.springframework.org/schema/context
     http://www.springframework.org/schema/context/spring-context.xsd
@@ -14,13 +13,12 @@
     http://www.springframework.org/schema/tx/spring-tx.xsd
     http://www.springframework.org/schema/aop
     http://www.springframework.org/schema/aop/spring-aop.xsd
-    http://www.springframework.org/schema/mvc
-    http://www.springframework.org/schema/mvc/spring-mvc.xsd
     ">
-
+    <context:annotation-config></context:annotation-config>
     <!-- 开启注解扫描 -->
-    <context:component-scan base-package="com.xhu.controller"/>
+    <context:component-scan base-package="com.xhu"/>
     <context:component-scan base-package="com.xhu.service"/>
+
     <!-- 读取配置文件 -->
     <context:property-placeholder location="classpath:sql/sql-server-jdbc.properties"/>
     <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
@@ -34,17 +32,30 @@
     </bean>
 
     <!-- 集成Mybatis（sqlSessionFactory ）-->
-    <bean id="sessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource"></property>
-        <property name="typeAliasesPackage" value="com.xhu.mapper"></property>
+        <property name="mapperLocations">
+            <list>
+                <value>classpath:com/xhu/mapper/*.xml</value>
+            </list>
+        </property>
     </bean>
 
-<!--    扫描mapper-->
+    <!--    扫描mapper-->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="sqlSessionFactoryBeanName" value="sessionFactory"></property>
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
         <property name="basePackage" value="com.xhu.mapper"></property>
     </bean>
-
+    <aop:aspectj-autoproxy />
+	<aop:config  proxy-target-class="true">
+		<aop:pointcut expression="execution(* *cn.appsys.service..*(..))" id="transService"/>
+		<aop:advisor pointcut-ref="transService" advice-ref="txAdvice" />
+	</aop:config>
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+	    <tx:attributes>
+	       <tx:method name="appsys*"  propagation="REQUIRED" rollback-for="Exception"  />
+	    </tx:attributes>
+	</tx:advice>
     <!-- 事务管理器 -->
     <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <property name="dataSource" ref="dataSource"></property>
@@ -53,43 +64,4 @@
     <!-- 事务注解 -->
     <tx:annotation-driven/>
 
-    <!-- mvc注解驱动 -->
-    <mvc:annotation-driven/>
-    <!-- 处理静态资源 -->
-    <mvc:default-servlet-handler/>
-
-
-
-
-
-    <!-- 支持上传文件 -->
-    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-        <!-- 指定默认的编码格式，默认是ISO-8859-1 -->
-        <property name="defaultEncoding" value="utf-8"></property>
-        <!-- 上传文件的最大值，单位是字节 -->
-        <property name="maxUploadSize" value="10000000"></property>
-
-    </bean>
-
-    <!-- 视图处理 -->
-    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-        <property name="prefix" value="/WEB-INF/jsp/"></property>
-        <property name="suffix" value=".jsp"></property>
-    </bean>
-
-    <!-- 使用动态代理技术 -->
-    <!--
-        <bean id="logAspect" class="cn.dtw.aop.LogAspect"></bean>
-        <aop:config>
-            切入点
-            <aop:pointcut expression="execution(public java.lang.Integer addCar(cn.dtw.entity.Car))" id="pointcut"/>
-            <aop:pointcut expression="execution(* cn.dtw.service.*.*(..))" id="pointcut"/>
-            切入面
-            <aop:aspect ref="logAspect">
-                <aop:before method="before" pointcut-ref="pointcut"/>
-            </aop:aspect>
-        </aop:config>
-    -->
-<!--    <bean id="logAspect" class="cn.dtw.aop.LogAspect"></bean>-->
-    <aop:aspectj-autoproxy></aop:aspectj-autoproxy>
 </beans>
