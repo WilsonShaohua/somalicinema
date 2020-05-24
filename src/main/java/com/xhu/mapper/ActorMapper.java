@@ -23,7 +23,7 @@ public interface ActorMapper {
     int updateByExampleSelective(@Param("record") Actor record, @Param("example") ActorExample example);
 
     int updateByExample(@Param("record") Actor record, @Param("example") ActorExample example);
-    //对某一字段进行更新
+
     int updateByPrimaryKeySelective(Actor record);
 
     int updateByPrimaryKey(Actor record);

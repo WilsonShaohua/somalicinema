@@ -3,60 +3,116 @@
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/xhu/mapper/ActorMapper.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/xhu/mapper/ActorMapper.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/xhu/mapper/ActorMapper.xml" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/xhu/mapper/ActorMapper.xml" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/xhu/mapper/ActorOccupationalMapper.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/xhu/mapper/ActorOccupationalMapper.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/xhu/mapper/ActorOccupationalMapper.xml" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/xhu/mapper/ActorOccupationalMapper.xml" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/xhu/mapper/AreaAddressMapper.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/xhu/mapper/AreaAddressMapper.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/xhu/mapper/AreaAddressMapper.xml" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/xhu/mapper/AreaAddressMapper.xml" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/xhu/mapper/AreaFilmReleaseMapper.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/xhu/mapper/AreaFilmReleaseMapper.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/xhu/mapper/AreaFilmReleaseMapper.xml" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/xhu/mapper/AreaFilmReleaseMapper.xml" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/xhu/mapper/CityMapper.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/xhu/mapper/CityMapper.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/xhu/mapper/CityMapper.xml" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/xhu/mapper/CityMapper.xml" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/xhu/mapper/ContactMapper.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/xhu/mapper/ContactMapper.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/xhu/mapper/ContactMapper.xml" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/xhu/mapper/ContactMapper.xml" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/xhu/mapper/CountryMapper.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/xhu/mapper/CountryMapper.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/xhu/mapper/CountryMapper.xml" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/xhu/mapper/CountryMapper.xml" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/xhu/mapper/FieldMapper.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/xhu/mapper/FieldMapper.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/xhu/mapper/FieldMapper.xml" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/xhu/mapper/FieldMapper.xml" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/xhu/mapper/FieldSeatMapper.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/xhu/mapper/FieldSeatMapper.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/xhu/mapper/FieldSeatMapper.xml" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/xhu/mapper/FieldSeatMapper.xml" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/xhu/mapper/MovieActorTableMapper.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/xhu/mapper/MovieActorTableMapper.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/xhu/mapper/MovieActorTableMapper.xml" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/xhu/mapper/MovieActorTableMapper.xml" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/xhu/mapper/MovieMapper.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/xhu/mapper/MovieMapper.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/xhu/mapper/MovieMapper.xml" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/xhu/mapper/MovieMapper.xml" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/xhu/mapper/MovieRoleMapper.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/xhu/mapper/MovieRoleMapper.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/xhu/mapper/MovieRoleMapper.xml" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/xhu/mapper/MovieRoleMapper.xml" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/xhu/mapper/MovieTypeMapper.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/xhu/mapper/MovieTypeMapper.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/xhu/mapper/MovieTypeMapper.xml" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/xhu/mapper/MovieTypeMapper.xml" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/xhu/mapper/OccupationalMapper.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/xhu/mapper/OccupationalMapper.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/xhu/mapper/OccupationalMapper.xml" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/xhu/mapper/OccupationalMapper.xml" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/xhu/mapper/OrderMapper.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/xhu/mapper/OrderMapper.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/xhu/mapper/OrderMapper.xml" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/xhu/mapper/OrderMapper.xml" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/xhu/mapper/OrderPreferentialMapper.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/xhu/mapper/OrderPreferentialMapper.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/xhu/mapper/OrderPreferentialMapper.xml" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/xhu/mapper/OrderPreferentialMapper.xml" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/xhu/mapper/PayAccountMapper.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/xhu/mapper/PayAccountMapper.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/xhu/mapper/PayAccountMapper.xml" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/xhu/mapper/PayAccountMapper.xml" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/xhu/mapper/PayMapper.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/xhu/mapper/PayMapper.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/xhu/mapper/PayMapper.xml" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/xhu/mapper/PayMapper.xml" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/xhu/mapper/PersonMapper.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/xhu/mapper/PersonMapper.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/xhu/mapper/PersonMapper.xml" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/xhu/mapper/PersonMapper.xml" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/xhu/mapper/PreferentialMapper.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/xhu/mapper/PreferentialMapper.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/xhu/mapper/PreferentialMapper.xml" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/xhu/mapper/PreferentialMapper.xml" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/xhu/mapper/ProvinceMapper.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/xhu/mapper/ProvinceMapper.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/xhu/mapper/ProvinceMapper.xml" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/xhu/mapper/ProvinceMapper.xml" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/xhu/mapper/ScreeningRoomMapper.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/xhu/mapper/ScreeningRoomMapper.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/xhu/mapper/ScreeningRoomMapper.xml" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/xhu/mapper/ScreeningRoomMapper.xml" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/xhu/mapper/SeatMapper.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/xhu/mapper/SeatMapper.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/xhu/mapper/SeatMapper.xml" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/xhu/mapper/SeatMapper.xml" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/xhu/mapper/StudioCardMapper.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/xhu/mapper/StudioCardMapper.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/xhu/mapper/StudioCardMapper.xml" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/xhu/mapper/StudioCardMapper.xml" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/xhu/mapper/TheaterMapper.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/xhu/mapper/TheaterMapper.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/xhu/mapper/TheaterMapper.xml" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/xhu/mapper/TheaterMapper.xml" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/xhu/mapper/UserMapper.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/xhu/mapper/UserMapper.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/xhu/mapper/UserMapper.xml" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/xhu/mapper/UserMapper.xml" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/xhu/mapper/UserStudioCardMapper.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/xhu/mapper/UserStudioCardMapper.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/xhu/mapper/UserStudioCardMapper.xml" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/xhu/mapper/UserStudioCardMapper.xml" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/xhu/mapper/WorldCountryMapper.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/xhu/mapper/WorldCountryMapper.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/xhu/mapper/WorldCountryMapper.xml" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/xhu/mapper/WorldCountryMapper.xml" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/xhu/po/Actor.java" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/xhu/po/ActorExample.java" charset="GBK" />

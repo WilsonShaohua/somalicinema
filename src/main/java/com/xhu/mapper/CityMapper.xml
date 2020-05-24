@@ -99,10 +99,10 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.xhu.po.City">
-    insert into city (city_id, province_id,
-      city_name, city_english_name)
-    values (#{cityId,jdbcType=CHAR}, #{provinceId,jdbcType=CHAR}, #{actorId,jdbcType=CHAR}, 
-      #{cityName,jdbcType=VARCHAR}, #{cityEnglishName,jdbcType=VARCHAR})
+    insert into city (city_id, province_id, city_name, 
+      city_english_name)
+    values (#{cityId,jdbcType=CHAR}, #{provinceId,jdbcType=CHAR}, #{cityName,jdbcType=VARCHAR}, 
+      #{cityEnglishName,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.xhu.po.City">
     insert into city
@@ -126,9 +126,6 @@
       </if>
       <if test="provinceId != null">
         #{provinceId,jdbcType=CHAR},
-      </if>
-      <if test="actorId != null">
-        #{actorId,jdbcType=CHAR},
       </if>
       <if test="cityName != null">
         #{cityName,jdbcType=VARCHAR},
