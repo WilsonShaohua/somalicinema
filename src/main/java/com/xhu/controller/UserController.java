@@ -12,7 +12,9 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -33,12 +35,12 @@ public class UserController {
     private UserService userService;
 
 
-    @ApiOperation(value = "登录服务",notes = "获取用户注册telephone和password")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "userTelphone", value = "用户电话", dataType = "String", required = true, example = "13890777435"),
-            @ApiImplicitParam(name = "userPassword", value = "用户密码", dataType = "String", required = true, example = "123456")
-    })
-    @RequestMapping(value = "/login",method = RequestMethod.POST)
+    @ApiOperation(value = "登录服务", notes = "获取用户注册telephone和password")
+    @ApiImplicitParam(name = "user", value = "用户信息",paramType = "User", dataType = "User", required = true, example = "{\n" +
+            "        \"userPassword\": \"123456\",\n" +
+            "        \"userTelphone\": \"18583361379\"\n" +
+            "    }")
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
     public void login(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String jsonStr = JSONUtils.getRequestPostStr(request);
         User user = JSON.parseObject(jsonStr, User.class);
@@ -54,7 +56,7 @@ public class UserController {
          *将查询到的Map对象数据进行解析，获取返回码和返回Uer对象
          */
         Iterator iterator = findUserMap.entrySet().iterator();
-        if(iterator.hasNext()){
+        if (iterator.hasNext()) {
             Map.Entry<Integer, User> entry = (Map.Entry<Integer, User>) iterator.next();
             findCode = entry.getKey();
             findUser = entry.getValue();
@@ -70,13 +72,15 @@ public class UserController {
         response.setContentType("text/html;charset=utf-8");
         response.getWriter().write(res.toJSONString());
     }
-    @ApiOperation(value = "注册服务",notes = "获取用户注册telephone和password")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "userTelphone", value = "用户电话", dataType = "String", required = true, example = "13890777435"),
-            @ApiImplicitParam(name = "userPassword", value = "用户密码", dataType = "String", required = true, example = "123456")
-    })
-    @RequestMapping(value = "/register",method = RequestMethod.POST)
-    public void register(HttpServletRequest request,HttpServletResponse response) throws IOException {
+
+    @ApiOperation(value = "注册服务", notes = "获取用户注册telephone和password")
+
+    @ApiImplicitParam(name = "user", value = "用户信息",paramType = "User", dataType = "User", required = true, example = "{\n" +
+            "        \"userPassword\": \"123456\",\n" +
+            "        \"userTelphone\": \"18583361379\"\n" +
+            "    }")
+    @RequestMapping(value = "/register", method = RequestMethod.POST)
+    public void register(HttpServletRequest request, HttpServletResponse response) throws IOException {
         //将前端JSON数据转化成JSON字符串
         String jsonStr = JSONUtils.getRequestPostStr(request);
         //获取User对象，将JSON字符串转化为user对象
