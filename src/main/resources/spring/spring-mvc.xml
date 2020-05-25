@@ -8,13 +8,12 @@
     http://www.springframework.org/schema/beans/spring-beans.xsd
     http://www.springframework.org/schema/context
     http://www.springframework.org/schema/context/spring-context.xsd
-    http://www.springframework.org/schema/tx
-    http://www.springframework.org/schema/tx/spring-tx.xsd
+
+
     http://www.springframework.org/schema/aop
     http://www.springframework.org/schema/aop/spring-aop.xsd
     http://www.springframework.org/schema/mvc
-    http://www.springframework.org/schema/mvc/spring-mvc.xsd
-    ">
+    http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
     <!-- 扫描contorller注解 -->
     <context:component-scan base-package="com.xhu.controller"/>
@@ -52,4 +51,7 @@
         <!-- 内存中的最大值 -->
         <property name="maxInMemorySize" value="4096"/>
     </bean>
+    <!--    注入跨域文件到spring容器中-->
+    <!-- 文档地址：   https://blog.csdn.net/Smile_Miracle/article/details/76682385-->
+    <bean class="com.xhu.api.CorsConfigurerAdapter"></bean>
 </beans>

@@ -12,7 +12,7 @@ import java.util.Map;
  * @date 2020/5/24 21:43
  */
 public class JSONUtils {
-    public static JSONObject packageeJson(int code, String msg, Object data) {
+    public static JSONObject packageJson(int code, String msg, Object data) {
         Map<String, Object> requestMap = new HashMap<>();
         requestMap.put("code", code);
         requestMap.put("msg", msg);
@@ -65,5 +65,7 @@ public class JSONUtils {
         }
         return new String(buffer, charEncoding);
     }
+
+
 
 }
