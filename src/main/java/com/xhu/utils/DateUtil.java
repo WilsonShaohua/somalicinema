@@ -11,4 +11,8 @@ public class DateUtil {
         Date d = dateFormat.parse(date);
         return d;
     }
+    public static Date getCurrentTime(){
+        Date d = new Date(System.currentTimeMillis());
+        return d;
+    }
 }

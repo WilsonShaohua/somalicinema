@@ -1,6 +1,5 @@
 package com.xhu.service.imp;
 
-import com.alibaba.fastjson.JSON;
 import com.xhu.po.Actor;
 import com.xhu.service.ActorService;
 import com.xhu.utils.KeyProductor;
@@ -8,23 +7,24 @@ import com.xhu.utils.SpringTest;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Date;
+
+
 /**
  * @author liu li
- * @date 2020/5/24 12:51
+ * @date 2020/5/25 9:53
  */
 public class ActorServiceImplTest extends SpringTest {
     @Autowired
-    private ActorService actorService;
+    ActorService actorService;
     @Test
     public void addActor() {
-        Actor actor = new Actor();
-        int return_code = actorService.addActor(actor);
-        System.out.println(return_code);
+        System.out.println(actorService.addActor(new Actor(KeyProductor.getKey(),"110100000000","功夫演员","李小龙",true,null)));
     }
+
     @Test
-    public void selectActorByActorId(){
-        Actor actor = actorService.selectActorById("2005247804");
+    public void selectActorById() {
+        Actor actor = actorService.selectActorById("2005251368");
         System.out.println(actor);
-        System.out.println(JSON.toJSON(actor));
     }
 }

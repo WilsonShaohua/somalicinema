@@ -82,7 +82,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from user
+    from [user]
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -93,21 +93,21 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from user
-    where user_id = #{userId,jdbcType=CHAR}
+    from  [user]
+    where  [user] _id = #{userId,jdbcType=CHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    delete from user
+    delete from  [user]
     where user_id = #{userId,jdbcType=CHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.xhu.po.UserExample">
-    delete from user
+    delete from [user]
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.xhu.po.User">
-    insert into user (user_id, city_id, user_sex, 
+    insert into [user] (user_id, city_id, user_sex,
       user_birthday, user_password, user_telphone, 
       user_picture_address, user_create_time, user_last_load_time, 
       user_is_delete, user_is_load)
@@ -117,7 +117,7 @@
       #{userIsDelete,jdbcType=BIT}, #{userIsLoad,jdbcType=BIT})
   </insert>
   <insert id="insertSelective" parameterType="com.xhu.po.User">
-    insert into user
+    insert into  [user]
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="userId != null">
         user_id,
@@ -190,13 +190,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.xhu.po.UserExample" resultType="java.lang.Long">
-    select count(*) from user
+    select count(*) from  [user]
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update user
+    update  [user]
     <set>
       <if test="record.userId != null">
         user_id = #{record.userId,jdbcType=CHAR},
@@ -237,7 +237,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update user
+    update  [user]
     set user_id = #{record.userId,jdbcType=CHAR},
       city_id = #{record.cityId,jdbcType=CHAR},
       user_sex = #{record.userSex,jdbcType=BIT},
@@ -254,7 +254,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.xhu.po.User">
-    update user
+    update  [user]
     <set>
       <if test="cityId != null">
         city_id = #{cityId,jdbcType=CHAR},
@@ -290,7 +290,7 @@
     where user_id = #{userId,jdbcType=CHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.xhu.po.User">
-    update user
+    update  [user]
     set city_id = #{cityId,jdbcType=CHAR},
       user_sex = #{userSex,jdbcType=BIT},
       user_birthday = #{userBirthday,jdbcType=TIMESTAMP},

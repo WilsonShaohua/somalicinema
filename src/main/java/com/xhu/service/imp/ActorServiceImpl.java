@@ -2,26 +2,26 @@ package com.xhu.service.imp;
 
 import com.xhu.mapper.ActorMapper;
 import com.xhu.po.Actor;
+import com.xhu.po.ActorExample;
 import com.xhu.service.ActorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 /**
  * @author liu li
- * @date 2020/5/24 12:35
+ * @date 2020/5/25 9:28
  */
-@Service(value = "actorService")
-@Transactional
+@Service
 public class ActorServiceImpl implements ActorService {
     @Autowired
     private ActorMapper actorMapper;
+    private ActorExample actorExample ;
+    private ActorExample.Criteria criteria;
     @Override
     public int addActor(Actor actor) {
-        int res = actorMapper.insert(actor);
-        return res;
+        return actorMapper.insertSelective(actor);
     }
 
     @Override
@@ -46,7 +46,7 @@ public class ActorServiceImpl implements ActorService {
 
     @Override
     public Actor selectActorById(String actor_id) {
-        Actor actor = actorMapper.selectByPrimaryKey(actor_id);
-        return actor;
+        return actorMapper.selectByPrimaryKey(actor_id);
+
     }
 }

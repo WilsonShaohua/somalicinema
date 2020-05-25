@@ -364,6 +364,10 @@ insert into city ( city_id, province_id, city_name) values
 (659000000000,650,'自治区直辖县级行政区划')
 go
 
+
+select * from city
+go
+
 select * from city where  province_id=(
     select province_id from province where province_name like '四川%'
 )

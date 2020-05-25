@@ -1,22 +1,19 @@
 package com.xhu.controller;
 
-import com.xhu.utils.SpringConntrollerTest;
+import com.xhu.po.User;
+import com.xhu.utils.SpringTest;
 import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * @author liu li
- * @date 2020/5/24 21:52
+ * @date 2020/5/25 11:11
  */
-public class UserControllerTest extends SpringConntrollerTest {
-    @Autowired
-    private UserController userController;
-    @Test
-    public void login() {
-
-    }
+public class UserControllerTest extends SpringTest {
 
     @Test
-    public void register() {
+    public void NULL() {
+        User user = new User();
+        System.out.println(user.getUserTelphone());
+
     }
 }

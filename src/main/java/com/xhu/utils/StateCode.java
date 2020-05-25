@@ -9,9 +9,16 @@ import java.util.Map;
 import static javax.swing.UIManager.put;
 
 /**
+ * tomcat 1
+ * maven
+ * Lombok
+ * swagger2
+ * spring spring-mvc mybatis
+ * idea
+ *
  * @author liu li
  * @date 2020/5/24 21:04
- * 本接口定义消息返回状态码
+ * 本接口定义消息返回状态码code
  */
 public interface StateCode {
     int SUCCESS = 200; //成功

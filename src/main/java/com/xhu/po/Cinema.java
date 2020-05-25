@@ -3,12 +3,10 @@ package com.xhu.po;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.stereotype.Component;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Component
 public class Cinema {
     private String cinemaId;
 
@@ -21,5 +19,4 @@ public class Cinema {
     private String cinemaAddress;
 
     private String cinemaTelphone;
-
 }

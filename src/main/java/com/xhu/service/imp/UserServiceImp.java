@@ -4,13 +4,16 @@ import com.xhu.mapper.UserMapper;
 import com.xhu.po.User;
 import com.xhu.po.UserExample;
 import com.xhu.service.UserService;
+import com.xhu.utils.DateUtil;
 import com.xhu.utils.KeyProductor;
 import com.xhu.utils.StateCode;
 import io.swagger.models.auth.In;
 import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -49,16 +52,23 @@ public class UserServiceImp implements UserService {
         String pwdMd5 = DigestUtils.md5Hex(user.getUserPassword());
         //pwdMd5与密码相比较
         criteria.andUserPasswordEqualTo(pwdMd5);
-
         long count = userMapper.countByExample(userExample);
-        if (StateCode.ONE_INSTANCE == count) return StateCode.SUCCESS; //查找到电话、密码都正确的数量为1
+        //查找到电话、密码都正确的数量为一个实例
+        if (StateCode.ONE_INSTANCE == count){
+            //更新登录时间
+            Date loadTime = DateUtil.getCurrentTime();
+            User user1 = new User();
+            user1.setUserLastLoadTime(loadTime);
+            user1.setUserIsLoad(true);
+            userMapper.updateByExampleSelective(user1, userExample);
+            return StateCode.SUCCESS;
+        }
         else return StateCode.FAIL;
     }
 
     //用户注册
     @Override
     public int userRegist(User user) {
-
         if (null == user.getUserPassword() || null == user.getUserTelphone()) {
             return StateCode.NULL_FEILD;
         }
@@ -75,6 +85,9 @@ public class UserServiceImp implements UserService {
         user.setUserPassword(pwdMd5);
         String userId = KeyProductor.getKey();
         user.setUserId(userId);
+        Date createTime = DateUtil.getCurrentTime();
+        user.setUserCreateTime(createTime);
+        user.setUserIsDelete(false);
         userMapper.insertSelective(user);
         return StateCode.SUCCESS;
     }
