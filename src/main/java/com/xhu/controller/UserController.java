@@ -8,14 +8,12 @@ import com.xhu.utils.JSONUtils;
 import com.xhu.utils.StateCode;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -36,14 +34,20 @@ public class UserController {
 
 
     @ApiOperation(value = "登录服务", notes = "获取用户注册telephone和password")
-    @ApiImplicitParam(name = "user", value = "用户信息",paramType = "User", dataType = "User", required = true, example = "{\n" +
+    @ApiImplicitParam(name = "user", value = "用户信息",paramType = "User", dataType = "User", required = true, defaultValue = "{\n" +
             "        \"userPassword\": \"123456\",\n" +
             "        \"userTelphone\": \"18583361379\"\n" +
             "    }")
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
     public void login(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String jsonStr = JSONUtils.getRequestPostStr(request);
-        User user = JSON.parseObject(jsonStr, User.class);
+       // String jsonStr = JSONUtils.getRequestPostStr(request);
+        String telphone = request.getParameter("userTelphone");
+        String password = request.getParameter("userPassword");
+
+        User user = new User() ;//JSON.parseObject(jsonStr, User.class);
+
+        user.setUserTelphone(telphone);
+        user.setUserPassword(password);
         System.out.println(user);
         int returnCode = userService.userLogin(user);
         //获取查询到的USer对象
@@ -75,10 +79,7 @@ public class UserController {
 
     @ApiOperation(value = "注册服务", notes = "获取用户注册telephone和password")
 
-    @ApiImplicitParam(name = "user", value = "用户信息",paramType = "User", dataType = "User", required = true, example = "{\n" +
-            "        \"userPassword\": \"123456\",\n" +
-            "        \"userTelphone\": \"18583361379\"\n" +
-            "    }")
+    @ApiImplicitParam(name = "user", value = "用户信息",paramType = "User", dataType = "User", required = true)
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public void register(HttpServletRequest request, HttpServletResponse response) throws IOException {
         //将前端JSON数据转化成JSON字符串

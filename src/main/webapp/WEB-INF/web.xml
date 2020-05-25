@@ -72,4 +72,14 @@
     <welcome-file-list>
         <welcome-file>/index.jsp</welcome-file>
     </welcome-file-list>
+
+<!--    处理跨域问题，引入CORS-->
+    <filter>
+        <filter-name>cors</filter-name>
+        <filter-class>com.xhu.api.JavaCORS</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>cors</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
 </web-app>
