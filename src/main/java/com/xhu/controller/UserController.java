@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -25,7 +26,7 @@ import java.util.Map;
  * @date 2020/5/24 17:14
  */
 @Api
-@CrossOrigin
+//@CrossOrigin
 @Controller
 @RequestMapping(value = "/user")
 public class UserController {
@@ -34,20 +35,22 @@ public class UserController {
 
 
     @ApiOperation(value = "登录服务", notes = "获取用户注册telephone和password")
-    @ApiImplicitParam(name = "user", value = "用户信息",paramType = "User", dataType = "User", required = true, defaultValue = "{\n" +
+    @ApiImplicitParam(name = "user", value = "用户信息", paramType = "User", dataType = "User", required = true, defaultValue = "{\n" +
             "        \"userPassword\": \"123456\",\n" +
             "        \"userTelphone\": \"18583361379\"\n" +
             "    }")
-    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
     public void login(HttpServletRequest request, HttpServletResponse response) throws IOException {
-       // String jsonStr = JSONUtils.getRequestPostStr(request);
-        String telphone = request.getParameter("userTelphone");
-        String password = request.getParameter("userPassword");
-
-        User user = new User() ;//JSON.parseObject(jsonStr, User.class);
-
-        user.setUserTelphone(telphone);
-        user.setUserPassword(password);
+        //用于psot请求
+        String jsonStr = JSONUtils.getRequestPostStr(request);
+        User user = JSON.parseObject(jsonStr, User.class);
+        //用于get请求
+//        String telphone = request.getParameter("userTelphone");
+//        String password = request.getParameter("userPassword");
+        //User user = new User();
+//        user.setUserTelphone(telphone);
+//        user.setUserPassword(password);
+//        控制台输出user信息
         System.out.println(user);
         int returnCode = userService.userLogin(user);
         //获取查询到的USer对象
@@ -74,12 +77,13 @@ public class UserController {
             res = JSONUtils.packageJson(findCode, StateCode.MSG.get(findCode), null);
         }
         response.setContentType("text/html;charset=utf-8");
+
         response.getWriter().write(res.toJSONString());
     }
 
     @ApiOperation(value = "注册服务", notes = "获取用户注册telephone和password")
 
-    @ApiImplicitParam(name = "user", value = "用户信息",paramType = "User", dataType = "User", required = true)
+    @ApiImplicitParam(name = "user", value = "用户信息", paramType = "User", dataType = "User", required = true)
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public void register(HttpServletRequest request, HttpServletResponse response) throws IOException {
         //将前端JSON数据转化成JSON字符串
