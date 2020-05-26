@@ -33,7 +33,7 @@ public class UserServiceImp implements UserService {
     @Override
     public int userLogin(User user) {
         //字段为空，返回错误码204
-        if (null == user.getUserPassword() || null == user.getUserTelphone()) {
+        if (null == user || null == user.getUserPassword() || null == user.getUserTelphone()) {
             return StateCode.NULL_FEILD;
         }
         //实例化example对象

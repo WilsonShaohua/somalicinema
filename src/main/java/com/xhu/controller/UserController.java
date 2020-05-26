@@ -53,6 +53,12 @@ public class UserController {
 //        控制台输出user信息
         System.out.println(user);
         int returnCode = userService.userLogin(user);
+        //用户名或密码为空的情况
+        if(StateCode.NULL_FEILD == returnCode){
+            JSONObject res = JSONUtils.packageJson(returnCode, "用户名或密码为空", null);
+            response.getWriter().write(res.toJSONString());
+            return;
+        }
         //获取查询到的USer对象
         Map<Integer, User> findUserMap = userService.selectUserByTelphone(user.getUserTelphone());
         //将返回码初值定义为NULL_FEILD
