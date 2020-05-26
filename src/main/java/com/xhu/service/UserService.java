@@ -12,4 +12,5 @@ public interface UserService {
     public int userLogin(User user);
     public int userRegist(User user);
     public Map<Integer,User> selectUserByTelphone(String telphone);
+    public int updteUserByPrimaryKey(User user);
 }

@@ -245,6 +245,146 @@ public class UserExample {
             return (Criteria) this;
         }
 
+        public Criteria andStateLifeIdIsNull() {
+            addCriterion("state_life_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andStateLifeIdIsNotNull() {
+            addCriterion("state_life_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andStateLifeIdEqualTo(String value) {
+            addCriterion("state_life_id =", value, "stateLifeId");
+            return (Criteria) this;
+        }
+
+        public Criteria andStateLifeIdNotEqualTo(String value) {
+            addCriterion("state_life_id <>", value, "stateLifeId");
+            return (Criteria) this;
+        }
+
+        public Criteria andStateLifeIdGreaterThan(String value) {
+            addCriterion("state_life_id >", value, "stateLifeId");
+            return (Criteria) this;
+        }
+
+        public Criteria andStateLifeIdGreaterThanOrEqualTo(String value) {
+            addCriterion("state_life_id >=", value, "stateLifeId");
+            return (Criteria) this;
+        }
+
+        public Criteria andStateLifeIdLessThan(String value) {
+            addCriterion("state_life_id <", value, "stateLifeId");
+            return (Criteria) this;
+        }
+
+        public Criteria andStateLifeIdLessThanOrEqualTo(String value) {
+            addCriterion("state_life_id <=", value, "stateLifeId");
+            return (Criteria) this;
+        }
+
+        public Criteria andStateLifeIdLike(String value) {
+            addCriterion("state_life_id like", value, "stateLifeId");
+            return (Criteria) this;
+        }
+
+        public Criteria andStateLifeIdNotLike(String value) {
+            addCriterion("state_life_id not like", value, "stateLifeId");
+            return (Criteria) this;
+        }
+
+        public Criteria andStateLifeIdIn(List<String> values) {
+            addCriterion("state_life_id in", values, "stateLifeId");
+            return (Criteria) this;
+        }
+
+        public Criteria andStateLifeIdNotIn(List<String> values) {
+            addCriterion("state_life_id not in", values, "stateLifeId");
+            return (Criteria) this;
+        }
+
+        public Criteria andStateLifeIdBetween(String value1, String value2) {
+            addCriterion("state_life_id between", value1, value2, "stateLifeId");
+            return (Criteria) this;
+        }
+
+        public Criteria andStateLifeIdNotBetween(String value1, String value2) {
+            addCriterion("state_life_id not between", value1, value2, "stateLifeId");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserNameIsNull() {
+            addCriterion("user_name is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserNameIsNotNull() {
+            addCriterion("user_name is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserNameEqualTo(String value) {
+            addCriterion("user_name =", value, "userName");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserNameNotEqualTo(String value) {
+            addCriterion("user_name <>", value, "userName");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserNameGreaterThan(String value) {
+            addCriterion("user_name >", value, "userName");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserNameGreaterThanOrEqualTo(String value) {
+            addCriterion("user_name >=", value, "userName");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserNameLessThan(String value) {
+            addCriterion("user_name <", value, "userName");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserNameLessThanOrEqualTo(String value) {
+            addCriterion("user_name <=", value, "userName");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserNameLike(String value) {
+            addCriterion("user_name like", value, "userName");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserNameNotLike(String value) {
+            addCriterion("user_name not like", value, "userName");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserNameIn(List<String> values) {
+            addCriterion("user_name in", values, "userName");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserNameNotIn(List<String> values) {
+            addCriterion("user_name not in", values, "userName");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserNameBetween(String value1, String value2) {
+            addCriterion("user_name between", value1, value2, "userName");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserNameNotBetween(String value1, String value2) {
+            addCriterion("user_name not between", value1, value2, "userName");
+            return (Criteria) this;
+        }
+
         public Criteria andUserSexIsNull() {
             addCriterion("user_sex is null");
             return (Criteria) this;
@@ -812,6 +952,76 @@ public class UserExample {
 
         public Criteria andUserIsLoadNotBetween(Boolean value1, Boolean value2) {
             addCriterion("user_is_load not between", value1, value2, "userIsLoad");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserPersonalitySignatureIsNull() {
+            addCriterion("user_personality_signature is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserPersonalitySignatureIsNotNull() {
+            addCriterion("user_personality_signature is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserPersonalitySignatureEqualTo(String value) {
+            addCriterion("user_personality_signature =", value, "userPersonalitySignature");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserPersonalitySignatureNotEqualTo(String value) {
+            addCriterion("user_personality_signature <>", value, "userPersonalitySignature");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserPersonalitySignatureGreaterThan(String value) {
+            addCriterion("user_personality_signature >", value, "userPersonalitySignature");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserPersonalitySignatureGreaterThanOrEqualTo(String value) {
+            addCriterion("user_personality_signature >=", value, "userPersonalitySignature");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserPersonalitySignatureLessThan(String value) {
+            addCriterion("user_personality_signature <", value, "userPersonalitySignature");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserPersonalitySignatureLessThanOrEqualTo(String value) {
+            addCriterion("user_personality_signature <=", value, "userPersonalitySignature");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserPersonalitySignatureLike(String value) {
+            addCriterion("user_personality_signature like", value, "userPersonalitySignature");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserPersonalitySignatureNotLike(String value) {
+            addCriterion("user_personality_signature not like", value, "userPersonalitySignature");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserPersonalitySignatureIn(List<String> values) {
+            addCriterion("user_personality_signature in", values, "userPersonalitySignature");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserPersonalitySignatureNotIn(List<String> values) {
+            addCriterion("user_personality_signature not in", values, "userPersonalitySignature");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserPersonalitySignatureBetween(String value1, String value2) {
+            addCriterion("user_personality_signature between", value1, value2, "userPersonalitySignature");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserPersonalitySignatureNotBetween(String value1, String value2) {
+            addCriterion("user_personality_signature not between", value1, value2, "userPersonalitySignature");
             return (Criteria) this;
         }
     }

@@ -1,4 +1,4 @@
-package com.xhu.api;
+package com.xhu.utils.api;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

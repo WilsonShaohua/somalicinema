@@ -13,6 +13,10 @@ public class User {
 
     private String cityId;
 
+    private String stateLifeId;
+
+    private String userName;
+
     private Boolean userSex;
 
     private Date userBirthday;
@@ -30,4 +34,7 @@ public class User {
     private Boolean userIsDelete;
 
     private Boolean userIsLoad;
+
+    private String userPersonalitySignature;
+
 }

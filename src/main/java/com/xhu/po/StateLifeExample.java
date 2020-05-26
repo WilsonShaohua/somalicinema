@@ -3,14 +3,14 @@ package com.xhu.po;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserFunExample {
+public class StateLifeExample {
     protected String orderByClause;
 
     protected boolean distinct;
 
     protected List<Criteria> oredCriteria;
 
-    public UserFunExample() {
+    public StateLifeExample() {
         oredCriteria = new ArrayList<Criteria>();
     }
 
@@ -104,213 +104,143 @@ public class UserFunExample {
             criteria.add(new Criterion(condition, value1, value2));
         }
 
-        public Criteria andUserFunIdIsNull() {
-            addCriterion("user_fun_id is null");
+        public Criteria andStateLifeIdIsNull() {
+            addCriterion("state_life_id is null");
             return (Criteria) this;
         }
 
-        public Criteria andUserFunIdIsNotNull() {
-            addCriterion("user_fun_id is not null");
+        public Criteria andStateLifeIdIsNotNull() {
+            addCriterion("state_life_id is not null");
             return (Criteria) this;
         }
 
-        public Criteria andUserFunIdEqualTo(String value) {
-            addCriterion("user_fun_id =", value, "userFunId");
+        public Criteria andStateLifeIdEqualTo(String value) {
+            addCriterion("state_life_id =", value, "stateLifeId");
             return (Criteria) this;
         }
 
-        public Criteria andUserFunIdNotEqualTo(String value) {
-            addCriterion("user_fun_id <>", value, "userFunId");
+        public Criteria andStateLifeIdNotEqualTo(String value) {
+            addCriterion("state_life_id <>", value, "stateLifeId");
             return (Criteria) this;
         }
 
-        public Criteria andUserFunIdGreaterThan(String value) {
-            addCriterion("user_fun_id >", value, "userFunId");
+        public Criteria andStateLifeIdGreaterThan(String value) {
+            addCriterion("state_life_id >", value, "stateLifeId");
             return (Criteria) this;
         }
 
-        public Criteria andUserFunIdGreaterThanOrEqualTo(String value) {
-            addCriterion("user_fun_id >=", value, "userFunId");
+        public Criteria andStateLifeIdGreaterThanOrEqualTo(String value) {
+            addCriterion("state_life_id >=", value, "stateLifeId");
             return (Criteria) this;
         }
 
-        public Criteria andUserFunIdLessThan(String value) {
-            addCriterion("user_fun_id <", value, "userFunId");
+        public Criteria andStateLifeIdLessThan(String value) {
+            addCriterion("state_life_id <", value, "stateLifeId");
             return (Criteria) this;
         }
 
-        public Criteria andUserFunIdLessThanOrEqualTo(String value) {
-            addCriterion("user_fun_id <=", value, "userFunId");
+        public Criteria andStateLifeIdLessThanOrEqualTo(String value) {
+            addCriterion("state_life_id <=", value, "stateLifeId");
             return (Criteria) this;
         }
 
-        public Criteria andUserFunIdLike(String value) {
-            addCriterion("user_fun_id like", value, "userFunId");
+        public Criteria andStateLifeIdLike(String value) {
+            addCriterion("state_life_id like", value, "stateLifeId");
             return (Criteria) this;
         }
 
-        public Criteria andUserFunIdNotLike(String value) {
-            addCriterion("user_fun_id not like", value, "userFunId");
+        public Criteria andStateLifeIdNotLike(String value) {
+            addCriterion("state_life_id not like", value, "stateLifeId");
             return (Criteria) this;
         }
 
-        public Criteria andUserFunIdIn(List<String> values) {
-            addCriterion("user_fun_id in", values, "userFunId");
+        public Criteria andStateLifeIdIn(List<String> values) {
+            addCriterion("state_life_id in", values, "stateLifeId");
             return (Criteria) this;
         }
 
-        public Criteria andUserFunIdNotIn(List<String> values) {
-            addCriterion("user_fun_id not in", values, "userFunId");
+        public Criteria andStateLifeIdNotIn(List<String> values) {
+            addCriterion("state_life_id not in", values, "stateLifeId");
             return (Criteria) this;
         }
 
-        public Criteria andUserFunIdBetween(String value1, String value2) {
-            addCriterion("user_fun_id between", value1, value2, "userFunId");
+        public Criteria andStateLifeIdBetween(String value1, String value2) {
+            addCriterion("state_life_id between", value1, value2, "stateLifeId");
             return (Criteria) this;
         }
 
-        public Criteria andUserFunIdNotBetween(String value1, String value2) {
-            addCriterion("user_fun_id not between", value1, value2, "userFunId");
+        public Criteria andStateLifeIdNotBetween(String value1, String value2) {
+            addCriterion("state_life_id not between", value1, value2, "stateLifeId");
             return (Criteria) this;
         }
 
-        public Criteria andUserIdIsNull() {
-            addCriterion("user_id is null");
+        public Criteria andStateLifeNameIsNull() {
+            addCriterion("state_life_name is null");
             return (Criteria) this;
         }
 
-        public Criteria andUserIdIsNotNull() {
-            addCriterion("user_id is not null");
+        public Criteria andStateLifeNameIsNotNull() {
+            addCriterion("state_life_name is not null");
             return (Criteria) this;
         }
 
-        public Criteria andUserIdEqualTo(String value) {
-            addCriterion("user_id =", value, "userId");
+        public Criteria andStateLifeNameEqualTo(String value) {
+            addCriterion("state_life_name =", value, "stateLifeName");
             return (Criteria) this;
         }
 
-        public Criteria andUserIdNotEqualTo(String value) {
-            addCriterion("user_id <>", value, "userId");
+        public Criteria andStateLifeNameNotEqualTo(String value) {
+            addCriterion("state_life_name <>", value, "stateLifeName");
             return (Criteria) this;
         }
 
-        public Criteria andUserIdGreaterThan(String value) {
-            addCriterion("user_id >", value, "userId");
+        public Criteria andStateLifeNameGreaterThan(String value) {
+            addCriterion("state_life_name >", value, "stateLifeName");
             return (Criteria) this;
         }
 
-        public Criteria andUserIdGreaterThanOrEqualTo(String value) {
-            addCriterion("user_id >=", value, "userId");
+        public Criteria andStateLifeNameGreaterThanOrEqualTo(String value) {
+            addCriterion("state_life_name >=", value, "stateLifeName");
             return (Criteria) this;
         }
 
-        public Criteria andUserIdLessThan(String value) {
-            addCriterion("user_id <", value, "userId");
+        public Criteria andStateLifeNameLessThan(String value) {
+            addCriterion("state_life_name <", value, "stateLifeName");
             return (Criteria) this;
         }
 
-        public Criteria andUserIdLessThanOrEqualTo(String value) {
-            addCriterion("user_id <=", value, "userId");
+        public Criteria andStateLifeNameLessThanOrEqualTo(String value) {
+            addCriterion("state_life_name <=", value, "stateLifeName");
             return (Criteria) this;
         }
 
-        public Criteria andUserIdLike(String value) {
-            addCriterion("user_id like", value, "userId");
+        public Criteria andStateLifeNameLike(String value) {
+            addCriterion("state_life_name like", value, "stateLifeName");
             return (Criteria) this;
         }
 
-        public Criteria andUserIdNotLike(String value) {
-            addCriterion("user_id not like", value, "userId");
+        public Criteria andStateLifeNameNotLike(String value) {
+            addCriterion("state_life_name not like", value, "stateLifeName");
             return (Criteria) this;
         }
 
-        public Criteria andUserIdIn(List<String> values) {
-            addCriterion("user_id in", values, "userId");
+        public Criteria andStateLifeNameIn(List<String> values) {
+            addCriterion("state_life_name in", values, "stateLifeName");
             return (Criteria) this;
         }
 
-        public Criteria andUserIdNotIn(List<String> values) {
-            addCriterion("user_id not in", values, "userId");
+        public Criteria andStateLifeNameNotIn(List<String> values) {
+            addCriterion("state_life_name not in", values, "stateLifeName");
             return (Criteria) this;
         }
 
-        public Criteria andUserIdBetween(String value1, String value2) {
-            addCriterion("user_id between", value1, value2, "userId");
+        public Criteria andStateLifeNameBetween(String value1, String value2) {
+            addCriterion("state_life_name between", value1, value2, "stateLifeName");
             return (Criteria) this;
         }
 
-        public Criteria andUserIdNotBetween(String value1, String value2) {
-            addCriterion("user_id not between", value1, value2, "userId");
-            return (Criteria) this;
-        }
-
-        public Criteria andFunIdIsNull() {
-            addCriterion("fun_id is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andFunIdIsNotNull() {
-            addCriterion("fun_id is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andFunIdEqualTo(String value) {
-            addCriterion("fun_id =", value, "funId");
-            return (Criteria) this;
-        }
-
-        public Criteria andFunIdNotEqualTo(String value) {
-            addCriterion("fun_id <>", value, "funId");
-            return (Criteria) this;
-        }
-
-        public Criteria andFunIdGreaterThan(String value) {
-            addCriterion("fun_id >", value, "funId");
-            return (Criteria) this;
-        }
-
-        public Criteria andFunIdGreaterThanOrEqualTo(String value) {
-            addCriterion("fun_id >=", value, "funId");
-            return (Criteria) this;
-        }
-
-        public Criteria andFunIdLessThan(String value) {
-            addCriterion("fun_id <", value, "funId");
-            return (Criteria) this;
-        }
-
-        public Criteria andFunIdLessThanOrEqualTo(String value) {
-            addCriterion("fun_id <=", value, "funId");
-            return (Criteria) this;
-        }
-
-        public Criteria andFunIdLike(String value) {
-            addCriterion("fun_id like", value, "funId");
-            return (Criteria) this;
-        }
-
-        public Criteria andFunIdNotLike(String value) {
-            addCriterion("fun_id not like", value, "funId");
-            return (Criteria) this;
-        }
-
-        public Criteria andFunIdIn(List<String> values) {
-            addCriterion("fun_id in", values, "funId");
-            return (Criteria) this;
-        }
-
-        public Criteria andFunIdNotIn(List<String> values) {
-            addCriterion("fun_id not in", values, "funId");
-            return (Criteria) this;
-        }
-
-        public Criteria andFunIdBetween(String value1, String value2) {
-            addCriterion("fun_id between", value1, value2, "funId");
-            return (Criteria) this;
-        }
-
-        public Criteria andFunIdNotBetween(String value1, String value2) {
-            addCriterion("fun_id not between", value1, value2, "funId");
+        public Criteria andStateLifeNameNotBetween(String value1, String value2) {
+            addCriterion("state_life_name not between", value1, value2, "stateLifeName");
             return (Criteria) this;
         }
     }

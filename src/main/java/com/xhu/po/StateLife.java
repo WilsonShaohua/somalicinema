@@ -7,9 +7,9 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Fun {
-    private String funId;
+public class StateLife {
+    private String stateLifeId;
 
-    private String funName;
+    private String stateLifeName;
 
 }

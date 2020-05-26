@@ -7,10 +7,11 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserFunKey {
+public class UserFun {
+    private String userFunId;
+
     private String userId;
 
     private String funId;
-
 
 }

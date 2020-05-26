@@ -76,7 +76,7 @@
 <!--    处理跨域问题，引入CORS-->
     <filter>
         <filter-name>crossDomainFilter</filter-name>
-        <filter-class>com.xhu.cros.CrossFilter</filter-class>
+        <filter-class>com.xhu.utils.cros.CrossFilter</filter-class>
         <init-param>
             <param-name>targetFilterLifecycle</param-name>
             <param-value>true</param-value>

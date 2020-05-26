@@ -1,7 +1,8 @@
 package com.xhu.mapper;
 
+import com.xhu.po.UserFun;
 import com.xhu.po.UserFunExample;
-import com.xhu.po.UserFunKey;
+
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
@@ -10,15 +11,15 @@ public interface UserFunMapper {
 
     int deleteByExample(UserFunExample example);
 
-    int deleteByPrimaryKey(UserFunKey key);
+    int deleteByPrimaryKey(UserFun key);
 
-    int insert(UserFunKey record);
+    int insert(UserFun record);
 
-    int insertSelective(UserFunKey record);
+    int insertSelective(UserFun record);
 
-    List<UserFunKey> selectByExample(UserFunExample example);
+    List<UserFun> selectByExample(UserFunExample example);
 
-    int updateByExampleSelective(@Param("record") UserFunKey record, @Param("example") UserFunExample example);
+    int updateByExampleSelective(@Param("record") UserFun record, @Param("example") UserFunExample example);
 
-    int updateByExample(@Param("record") UserFunKey record, @Param("example") UserFunExample example);
+    int updateByExample(@Param("record") UserFun record, @Param("example") UserFunExample example);
 }

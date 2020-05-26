@@ -19,12 +19,15 @@ public class KeyProductor {
         SimpleDateFormat df = new SimpleDateFormat("yyMMdd");
         return df.format(new Date()).toString();
     }
-
+    private static String getDatemmss(){
+        SimpleDateFormat df = new SimpleDateFormat("ddmmss");
+        return df.format(new Date()).toString();
+    }
     //随机生成指定位长度数字
-    private static String getTime(int key_length){
+    private static String getTime(int keyLength){
         final long time = System.currentTimeMillis();
         final int suffix = (int) (time % 10000);
-        return  String.format("%0" + key_length+ "d", suffix);
+        return  String.format("%0" + keyLength+ "d", suffix);
     }
     //默认生成十位数key
     public static String getKey(int key_length){
@@ -33,4 +36,6 @@ public class KeyProductor {
     public static String getKey(){
         return getDateYYMMDD().concat(getTime(default_key_length));
     }
+
+
 }

@@ -1,8 +1,10 @@
 /*==============================================================*/
 /* DBMS name:      Microsoft SQL Server 2012                    */
-/* Created on:     2020/5/25 16:50:41                           */
+/* Created on:     2020/5/26 14:55:15                           */
 /*==============================================================*/
 
+use somali_cinema
+go
 
 if exists (select 1
            from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
@@ -167,16 +169,23 @@ go
 
 if exists (select 1
            from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
-           where r.fkeyid = object_id('user_fun') and o.name = 'FK_USER_FUN_USER_FUN_USER')
-alter table user_fun
-    drop constraint FK_USER_FUN_USER_FUN_USER
+           where r.fkeyid = object_id('"user"') and o.name = 'FK_USER_USER_STAT_STATE_LI')
+alter table "user"
+    drop constraint FK_USER_USER_STAT_STATE_LI
 go
 
 if exists (select 1
            from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
-           where r.fkeyid = object_id('user_fun') and o.name = 'FK_USER_FUN_USER_FUN2_FUN')
+           where r.fkeyid = object_id('user_fun') and o.name = 'FK_USER_FUN_RELATIONS_USER')
 alter table user_fun
-    drop constraint FK_USER_FUN_USER_FUN2_FUN
+    drop constraint FK_USER_FUN_RELATIONS_USER
+go
+
+if exists (select 1
+           from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
+           where r.fkeyid = object_id('user_fun') and o.name = 'FK_USER_FUN_RELATIONS_FUN')
+alter table user_fun
+    drop constraint FK_USER_FUN_RELATIONS_FUN
 go
 
 if exists (select 1
@@ -246,6 +255,13 @@ go
 
 if exists (select 1
            from  sysobjects
+           where  id = object_id('area_address')
+             and   type = 'U')
+    drop table area_address
+go
+
+if exists (select 1
+           from  sysobjects
            where  id = object_id('chau')
              and   type = 'U')
     drop table chau
@@ -297,6 +313,13 @@ if exists (select 1
            where  id = object_id('company')
              and   type = 'U')
     drop table company
+go
+
+if exists (select 1
+           from  sysobjects
+           where  id = object_id('contact')
+             and   type = 'U')
+    drop table contact
 go
 
 if exists (select 1
@@ -408,6 +431,13 @@ go
 
 if exists (select 1
            from  sysobjects
+           where  id = object_id('movie_role')
+             and   type = 'U')
+    drop table movie_role
+go
+
+if exists (select 1
+           from  sysobjects
            where  id = object_id('movie_type')
              and   type = 'U')
     drop table movie_type
@@ -415,9 +445,37 @@ go
 
 if exists (select 1
            from  sysobjects
+           where  id = object_id('occupational')
+             and   type = 'U')
+    drop table occupational
+go
+
+if exists (select 1
+           from  sysobjects
            where  id = object_id('"order"')
              and   type = 'U')
     drop table "order"
+go
+
+if exists (select 1
+           from  sysobjects
+           where  id = object_id('pay')
+             and   type = 'U')
+    drop table pay
+go
+
+if exists (select 1
+           from  sysobjects
+           where  id = object_id('pay_account')
+             and   type = 'U')
+    drop table pay_account
+go
+
+if exists (select 1
+           from  sysobjects
+           where  id = object_id('person')
+             and   type = 'U')
+    drop table person
 go
 
 if exists (select 1
@@ -443,6 +501,13 @@ if exists (select 1
            where  id = object_id('picture')
              and   type = 'U')
     drop table picture
+go
+
+if exists (select 1
+           from  sysobjects
+           where  id = object_id('preferential')
+             and   type = 'U')
+    drop table preferential
 go
 
 if exists (select 1
@@ -501,6 +566,27 @@ if exists (select 1
 go
 
 if exists (select 1
+           from  sysobjects
+           where  id = object_id('state_life')
+             and   type = 'U')
+    drop table state_life
+go
+
+if exists (select 1
+           from  sysobjects
+           where  id = object_id('studio_card')
+             and   type = 'U')
+    drop table studio_card
+go
+
+if exists (select 1
+           from  sysobjects
+           where  id = object_id('theater')
+             and   type = 'U')
+    drop table theater
+go
+
+if exists (select 1
            from  sysindexes
            where  id    = object_id('ticket')
              and   name  = 'ticket_watch_FK'
@@ -550,6 +636,22 @@ if exists (select 1
            where  id = object_id('ticket')
              and   type = 'U')
     drop table ticket
+go
+
+if exists (select 1
+           from  sysobjects
+           where  id = object_id('type')
+             and   type = 'U')
+    drop table type
+go
+
+if exists (select 1
+           from  sysindexes
+           where  id    = object_id('"user"')
+             and   name  = 'user_state_life_FK'
+             and   indid > 0
+             and   indid < 255)
+    drop index "user".user_state_life_FK
 go
 
 if exists (select 1
@@ -701,6 +803,17 @@ create table actor_role (
 go
 
 /*==============================================================*/
+/* Table: area_address                                          */
+/*==============================================================*/
+create table area_address (
+                              area_address_id      char(15)             not null,
+                              area_address_name    varchar(30)          null,
+                              area_address_english_name varchar(60)          null,
+                              constraint PK_AREA_ADDRESS primary key nonclustered (area_address_id)
+)
+go
+
+/*==============================================================*/
 /* Table: chau                                                  */
 /*==============================================================*/
 create table chau (
@@ -766,6 +879,16 @@ create table company (
                          company_id           char(10)             not null,
                          company_name         varchar(30)          null,
                          constraint PK_COMPANY primary key nonclustered (company_id)
+)
+go
+
+/*==============================================================*/
+/* Table: contact                                               */
+/*==============================================================*/
+create table contact (
+                         concat_id            char(10)             not null,
+                         concat_number        numeric(11)          null,
+                         constraint PK_CONTACT primary key nonclustered (concat_id)
 )
 go
 
@@ -897,12 +1020,32 @@ create index actor_role_movie_actors_FK on movie_actors (
 go
 
 /*==============================================================*/
+/* Table: movie_role                                            */
+/*==============================================================*/
+create table movie_role (
+                            movie_role_id        char(10)             not null,
+                            movie_role_name      varchar(10)          null,
+                            constraint PK_MOVIE_ROLE primary key nonclustered (movie_role_id)
+)
+go
+
+/*==============================================================*/
 /* Table: movie_type                                            */
 /*==============================================================*/
 create table movie_type (
                             movie_type_id        char(10)             not null,
                             movie_type_name      varchar(20)          null,
                             constraint PK_MOVIE_TYPE primary key (movie_type_id)
+)
+go
+
+/*==============================================================*/
+/* Table: occupational                                          */
+/*==============================================================*/
+create table occupational (
+                              occupational_id      char(10)             not null,
+                              occupational_name    varchar(10)          null,
+                              constraint PK_OCCUPATIONAL primary key nonclustered (occupational_id)
 )
 go
 
@@ -916,6 +1059,37 @@ create table "order" (
                          order_limit_time     datetime             null,
                          order_money          money                null,
                          constraint PK_ORDER primary key nonclustered (order_id)
+)
+go
+
+/*==============================================================*/
+/* Table: pay                                                   */
+/*==============================================================*/
+create table pay (
+                     pay_id               char(10)             not null,
+                     "pay_money+_number"  decimal(8,2)         null,
+                     constraint PK_PAY primary key nonclustered (pay_id)
+)
+go
+
+/*==============================================================*/
+/* Table: pay_account                                           */
+/*==============================================================*/
+create table pay_account (
+                             pay_account_id       char(10)             not null,
+                             pay_account_name     varchar(10)          null,
+                             pay_account_number   varchar(20)          null,
+                             constraint PK_PAY_ACCOUNT primary key nonclustered (pay_account_id)
+)
+go
+
+/*==============================================================*/
+/* Table: person                                                */
+/*==============================================================*/
+create table person (
+                        person_id            char(10)             not null,
+                        person_name          varchar(10)          null,
+                        constraint PK_PERSON primary key nonclustered (person_id)
 )
 go
 
@@ -946,6 +1120,21 @@ go
 create index movie_picture_FK on picture (
                                           movie_id ASC
     )
+go
+
+/*==============================================================*/
+/* Table: preferential                                          */
+/*==============================================================*/
+create table preferential (
+                              preferential_id      char(10)             not null,
+                              preferential_name    varchar(10)          null,
+                              preferential_introduction varchar(100)         null,
+                              preferential_only    bit                  null,
+                              preferential_power   decimal(10,2)        null,
+                              preferential_start_data_time datetime             null,
+                              preferential_end_data_time datetime             null,
+                              constraint PK_PREFERENTIAL primary key nonclustered (preferential_id)
+)
 go
 
 /*==============================================================*/
@@ -1018,6 +1207,41 @@ create index screening_room_seat_FK on seat (
 go
 
 /*==============================================================*/
+/* Table: state_life                                            */
+/*==============================================================*/
+create table state_life (
+                            state_life_id        char(10)             not null,
+                            state_life_name      varchar(10)          null,
+                            constraint PK_STATE_LIFE primary key nonclustered (state_life_id)
+)
+go
+
+/*==============================================================*/
+/* Table: studio_card                                           */
+/*==============================================================*/
+create table studio_card (
+                             studio_card_id       char(10)             not null,
+                             studio_card_name     varchar(10)          null,
+                             studio_card_start_data_time datetime             null,
+                             studio_card_last_time datetime             null,
+                             studio_card_sell_money money                null,
+                             studio_card_introduced varchar(100)         null,
+                             constraint PK_STUDIO_CARD primary key nonclustered (studio_card_id)
+)
+go
+
+/*==============================================================*/
+/* Table: theater                                               */
+/*==============================================================*/
+create table theater (
+                         theater_id           char(10)             not null,
+                         theater_name         varchar(20)          null,
+                         theater_introduced   varchar(100)         null,
+                         constraint PK_THEATER primary key nonclustered (theater_id)
+)
+go
+
+/*==============================================================*/
 /* Table: ticket                                                */
 /*==============================================================*/
 create table ticket (
@@ -1072,11 +1296,23 @@ create index ticket_watch_FK on ticket (
 go
 
 /*==============================================================*/
+/* Table: type                                                  */
+/*==============================================================*/
+create table type (
+                      type_id              char(10)             not null,
+                      type_name            varchar(20)          null,
+                      constraint PK_TYPE primary key nonclustered (type_id)
+)
+go
+
+/*==============================================================*/
 /* Table: "user"                                                */
 /*==============================================================*/
 create table "user" (
                         user_id              char(10)             not null,
                         city_id              char(12)             null,
+                        state_life_id        char(10)             null,
+                        user_name            varchar(20)          null,
                         user_sex             bit                  null,
                         user_birthday        datetime             null,
                         user_password        char(32)             null,
@@ -1086,6 +1322,7 @@ create table "user" (
                         user_last_load_time  datetime             null,
                         user_is_delete       bit                  null,
                         user_is_load         bit                  null,
+                        user_personality_signature varchar(30)          null,
                         constraint PK_USER primary key nonclustered (user_id)
 )
 go
@@ -1099,12 +1336,21 @@ create index user_city_FK on "user" (
 go
 
 /*==============================================================*/
+/* Index: user_state_life_FK                                    */
+/*==============================================================*/
+create index user_state_life_FK on "user" (
+                                           state_life_id ASC
+    )
+go
+
+/*==============================================================*/
 /* Table: user_fun                                              */
 /*==============================================================*/
 create table user_fun (
+                          user_fun_id          char(10)             not null,
                           user_id              char(10)             not null,
                           fun_id               char(10)             not null,
-                          constraint PK_USER_FUN primary key (user_id, fun_id)
+                          constraint PK_USER_FUN primary key (user_fun_id, user_id, fun_id)
 )
 go
 
@@ -1324,13 +1570,18 @@ alter table "user"
         references city (city_id)
 go
 
+alter table "user"
+    add constraint FK_USER_USER_STAT_STATE_LI foreign key (state_life_id)
+        references state_life (state_life_id)
+go
+
 alter table user_fun
-    add constraint FK_USER_FUN_USER_FUN_USER foreign key (user_id)
+    add constraint FK_USER_FUN_RELATIONS_USER foreign key (user_id)
         references "user" (user_id)
 go
 
 alter table user_fun
-    add constraint FK_USER_FUN_USER_FUN2_FUN foreign key (fun_id)
+    add constraint FK_USER_FUN_RELATIONS_FUN foreign key (fun_id)
         references fun (fun_id)
 go
 

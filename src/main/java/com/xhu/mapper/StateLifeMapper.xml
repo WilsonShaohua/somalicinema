@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.xhu.mapper.UserFunMapper">
-  <resultMap id="BaseResultMap" type="com.xhu.po.UserFun">
-    <id column="user_fun_id" jdbcType="CHAR" property="userFunId" />
-    <id column="user_id" jdbcType="CHAR" property="userId" />
-    <id column="fun_id" jdbcType="CHAR" property="funId" />
+<mapper namespace="com.xhu.mapper.StateLifeMapper">
+  <resultMap id="BaseResultMap" type="com.xhu.po.StateLife">
+    <id column="state_life_id" jdbcType="CHAR" property="stateLifeId" />
+    <result column="state_life_name" jdbcType="VARCHAR" property="stateLifeName" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -65,15 +64,15 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    user_fun_id, user_id, fun_id
+    state_life_id, state_life_name
   </sql>
-  <select id="selectByExample" parameterType="com.xhu.po.UserFunExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.xhu.po.StateLifeExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from user_fun
+    from state_life
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -81,66 +80,59 @@
       order by ${orderByClause}
     </if>
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="com.xhu.po.UserFun">
-    delete from user_fun
-    where user_fun_id = #{userFunId,jdbcType=CHAR}
-      and user_id = #{userId,jdbcType=CHAR}
-      and fun_id = #{funId,jdbcType=CHAR}
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from state_life
+    where state_life_id = #{stateLifeId,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from state_life
+    where state_life_id = #{stateLifeId,jdbcType=CHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.xhu.po.UserFunExample">
-    delete from user_fun
+  <delete id="deleteByExample" parameterType="com.xhu.po.StateLifeExample">
+    delete from state_life
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.xhu.po.UserFun">
-    insert into user_fun (user_fun_id, user_id, fun_id
-      )
-    values (#{userFunId,jdbcType=CHAR}, #{userId,jdbcType=CHAR}, #{funId,jdbcType=CHAR}
-      )
+  <insert id="insert" parameterType="com.xhu.po.StateLife">
+    insert into state_life (state_life_id, state_life_name)
+    values (#{stateLifeId,jdbcType=CHAR}, #{stateLifeName,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.xhu.po.UserFun">
-    insert into user_fun
+  <insert id="insertSelective" parameterType="com.xhu.po.StateLife">
+    insert into state_life
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="userFunId != null">
-        user_fun_id,
+      <if test="stateLifeId != null">
+        state_life_id,
       </if>
-      <if test="userId != null">
-        user_id,
-      </if>
-      <if test="funId != null">
-        fun_id,
+      <if test="stateLifeName != null">
+        state_life_name,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="userFunId != null">
-        #{userFunId,jdbcType=CHAR},
+      <if test="stateLifeId != null">
+        #{stateLifeId,jdbcType=CHAR},
       </if>
-      <if test="userId != null">
-        #{userId,jdbcType=CHAR},
-      </if>
-      <if test="funId != null">
-        #{funId,jdbcType=CHAR},
+      <if test="stateLifeName != null">
+        #{stateLifeName,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.xhu.po.UserFunExample" resultType="java.lang.Long">
-    select count(*) from user_fun
+  <select id="countByExample" parameterType="com.xhu.po.StateLifeExample" resultType="java.lang.Long">
+    select count(*) from state_life
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update user_fun
+    update state_life
     <set>
-      <if test="record.userFunId != null">
-        user_fun_id = #{record.userFunId,jdbcType=CHAR},
+      <if test="record.stateLifeId != null">
+        state_life_id = #{record.stateLifeId,jdbcType=CHAR},
       </if>
-      <if test="record.userId != null">
-        user_id = #{record.userId,jdbcType=CHAR},
-      </if>
-      <if test="record.funId != null">
-        fun_id = #{record.funId,jdbcType=CHAR},
+      <if test="record.stateLifeName != null">
+        state_life_name = #{record.stateLifeName,jdbcType=VARCHAR},
       </if>
     </set>
     <if test="_parameter != null">
@@ -148,12 +140,25 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update user_fun
-    set user_fun_id = #{record.userFunId,jdbcType=CHAR},
-      user_id = #{record.userId,jdbcType=CHAR},
-      fun_id = #{record.funId,jdbcType=CHAR}
+    update state_life
+    set state_life_id = #{record.stateLifeId,jdbcType=CHAR},
+      state_life_name = #{record.stateLifeName,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xhu.po.StateLife">
+    update state_life
+    <set>
+      <if test="stateLifeName != null">
+        state_life_name = #{stateLifeName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where state_life_id = #{stateLifeId,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xhu.po.StateLife">
+    update state_life
+    set state_life_name = #{stateLifeName,jdbcType=VARCHAR}
+    where state_life_id = #{stateLifeId,jdbcType=CHAR}
   </update>
 </mapper>

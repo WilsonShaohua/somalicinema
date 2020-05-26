@@ -3,6 +3,8 @@ package com.xhu.controller;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.xhu.po.User;
+import com.xhu.po.UserInfomation;
+import com.xhu.service.UserFunService;
 import com.xhu.service.UserService;
 import com.xhu.utils.JSONUtils;
 import com.xhu.utils.StateCode;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -32,7 +35,8 @@ import java.util.Map;
 public class UserController {
     @Autowired
     private UserService userService;
-
+    @Autowired
+    private UserFunService userFunService;
 
     @ApiOperation(value = "登录服务", notes = "获取用户注册telephone和password")
     @ApiImplicitParam(name = "user", value = "用户信息", paramType = "User", dataType = "User", required = true, defaultValue = "{\n" +
@@ -41,21 +45,15 @@ public class UserController {
             "    }")
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public void login(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        //用于psot请求
+        //用于psot请求将json数据转化为String
         String jsonStr = JSONUtils.getRequestPostStr(request);
+        //将String转化为User对象
         User user = JSON.parseObject(jsonStr, User.class);
-        //用于get请求
-//        String telphone = request.getParameter("userTelphone");
-//        String password = request.getParameter("userPassword");
-        //User user = new User();
-//        user.setUserTelphone(telphone);
-//        user.setUserPassword(password);
-//        控制台输出user信息
-        System.out.println(user);
+
         int returnCode = userService.userLogin(user);
-        //用户名或密码为空的情况
-        if(StateCode.NULL_FEILD == returnCode){
-            JSONObject res = JSONUtils.packageJson(returnCode, "用户名或密码为空", null);
+        //用户名或密码为空的情况或者用户名密码错误
+        if(StateCode.NULL_FEILD == returnCode || StateCode.ERROR_PASSWORD == returnCode ){
+            JSONObject res = JSONUtils.packageJson(returnCode, StateCode.MSG.get(returnCode), null);
             response.getWriter().write(res.toJSONString());
             return;
         }
@@ -88,7 +86,6 @@ public class UserController {
     }
 
     @ApiOperation(value = "注册服务", notes = "获取用户注册telephone和password")
-
     @ApiImplicitParam(name = "user", value = "用户信息", paramType = "User", dataType = "User", required = true)
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public void register(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -108,5 +105,32 @@ public class UserController {
         response.setContentType("text/html;charset=utf-8");
         response.getWriter().write(responseString);
     }
+    @ApiOperation(value = "用户信息录入", notes = "用户输入个人信息")
+    @ApiImplicitParam(name = "userInfomation", value = "用户信息", paramType = "UserInfomation", dataType = "UserInfomation", required = true)
+    @RequestMapping(value = "/writeInfomation",method = RequestMethod.POST)
+    public void writeInfomation(HttpServletRequest request,HttpServletResponse response) throws IOException {
+        //将前端JSON数据转化成JSON字符串
+        String jsonStr = JSONUtils.getRequestPostStr(request);
 
+        //获取UserInfomation对象，将JSON字符串转化为userinformation对象
+        UserInfomation userInformation = JSON.parseObject(jsonStr, UserInfomation.class);
+
+        int user_res = userService.updteUserByPrimaryKey(userInformation.getUser());
+
+        int user_fun_res = StateCode.FAIL;
+        try {
+             user_fun_res = userFunService.addUserFunByUserIdWithFuns(userInformation.getUser().getUserId(), userInformation.getFuns());
+        } catch (SQLException e) {
+            e.printStackTrace();
+            //sql异常
+            JSONObject jsonObject = JSONUtils.packageJson(StateCode.SQL_KEY_NOT_IN_DATABASE, StateCode.MSG.get(StateCode.SQL_KEY_NOT_IN_DATABASE) + userInformation.getUser().getUserId()  + " or " + userInformation.getFuns().toString(), null);
+            response.getWriter().write(jsonObject.toJSONString());
+            return;
+        }
+
+        JSONObject res = null;
+        if(user_res == StateCode.SUCCESS && user_fun_res == StateCode.SUCCESS) res = JSONUtils.packageJson(StateCode.SUCCESS, StateCode.MSG.get(StateCode.SUCCESS), null);
+        else res = JSONUtils.packageJson(StateCode.FAIL, StateCode.MSG.get(StateCode.FAIL), null);
+        response.getWriter().write(res.toJSONString());
+    }
 }

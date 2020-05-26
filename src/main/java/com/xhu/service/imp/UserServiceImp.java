@@ -53,6 +53,8 @@ public class UserServiceImp implements UserService {
         //pwdMd5与密码相比较
         criteria.andUserPasswordEqualTo(pwdMd5);
         long count = userMapper.countByExample(userExample);
+        //密码错误
+        if(StateCode.NULL_FEILD == count) return StateCode.ERROR_PASSWORD;
         //查找到电话、密码都正确的数量为一个实例
         if (StateCode.ONE_INSTANCE == count){
             //更新登录时间
@@ -111,6 +113,13 @@ public class UserServiceImp implements UserService {
             res.put(StateCode.SUCCESS, users.get(0)); //找到该用户
         }
         return res;
+    }
+
+    @Override
+    public int updteUserByPrimaryKey(User user) {
+        int res = userMapper.updateByPrimaryKeySelective(user);
+        if(res ==  1) return StateCode.SUCCESS;
+        return StateCode.FAIL;
     }
 
 

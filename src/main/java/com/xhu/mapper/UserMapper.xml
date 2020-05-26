@@ -4,6 +4,8 @@
   <resultMap id="BaseResultMap" type="com.xhu.po.User">
     <id column="user_id" jdbcType="CHAR" property="userId" />
     <result column="city_id" jdbcType="CHAR" property="cityId" />
+    <result column="state_life_id" jdbcType="CHAR" property="stateLifeId" />
+    <result column="user_name" jdbcType="VARCHAR" property="userName" />
     <result column="user_sex" jdbcType="BIT" property="userSex" />
     <result column="user_birthday" jdbcType="TIMESTAMP" property="userBirthday" />
     <result column="user_password" jdbcType="CHAR" property="userPassword" />
@@ -13,6 +15,7 @@
     <result column="user_last_load_time" jdbcType="TIMESTAMP" property="userLastLoadTime" />
     <result column="user_is_delete" jdbcType="BIT" property="userIsDelete" />
     <result column="user_is_load" jdbcType="BIT" property="userIsLoad" />
+    <result column="user_personality_signature" jdbcType="VARCHAR" property="userPersonalitySignature" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -73,8 +76,9 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    user_id, city_id, user_sex, user_birthday, user_password, user_telphone, user_picture_address, 
-    user_create_time, user_last_load_time, user_is_delete, user_is_load
+    user_id, city_id, state_life_id, user_name, user_sex, user_birthday, user_password, 
+    user_telphone, user_picture_address, user_create_time, user_last_load_time, user_is_delete, 
+    user_is_load, user_personality_signature
   </sql>
   <select id="selectByExample" parameterType="com.xhu.po.UserExample" resultMap="BaseResultMap">
     select
@@ -93,11 +97,11 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from  [user]
-    where  [user] _id = #{userId,jdbcType=CHAR}
+    from [user]
+    where user_id = #{userId,jdbcType=CHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    delete from  [user]
+    delete from user
     where user_id = #{userId,jdbcType=CHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.xhu.po.UserExample">
@@ -107,23 +111,31 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.xhu.po.User">
-    insert into [user] (user_id, city_id, user_sex,
-      user_birthday, user_password, user_telphone, 
-      user_picture_address, user_create_time, user_last_load_time, 
-      user_is_delete, user_is_load)
-    values (#{userId,jdbcType=CHAR}, #{cityId,jdbcType=CHAR}, #{userSex,jdbcType=BIT}, 
-      #{userBirthday,jdbcType=TIMESTAMP}, #{userPassword,jdbcType=CHAR}, #{userTelphone,jdbcType=CHAR}, 
-      #{userPictureAddress,jdbcType=VARCHAR}, #{userCreateTime,jdbcType=TIMESTAMP}, #{userLastLoadTime,jdbcType=TIMESTAMP}, 
-      #{userIsDelete,jdbcType=BIT}, #{userIsLoad,jdbcType=BIT})
+    insert into [user] (user_id, city_id, state_life_id,
+      user_name, user_sex, user_birthday, 
+      user_password, user_telphone, user_picture_address, 
+      user_create_time, user_last_load_time, user_is_delete, 
+      user_is_load, user_personality_signature)
+    values (#{userId,jdbcType=CHAR}, #{cityId,jdbcType=CHAR}, #{stateLifeId,jdbcType=CHAR}, 
+      #{userName,jdbcType=VARCHAR}, #{userSex,jdbcType=BIT}, #{userBirthday,jdbcType=TIMESTAMP}, 
+      #{userPassword,jdbcType=CHAR}, #{userTelphone,jdbcType=CHAR}, #{userPictureAddress,jdbcType=VARCHAR}, 
+      #{userCreateTime,jdbcType=TIMESTAMP}, #{userLastLoadTime,jdbcType=TIMESTAMP}, #{userIsDelete,jdbcType=BIT}, 
+      #{userIsLoad,jdbcType=BIT}, #{userPersonalitySignature,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.xhu.po.User">
-    insert into  [user]
+    insert into [user]
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="userId != null">
         user_id,
       </if>
       <if test="cityId != null">
         city_id,
+      </if>
+      <if test="stateLifeId != null">
+        state_life_id,
+      </if>
+      <if test="userName != null">
+        user_name,
       </if>
       <if test="userSex != null">
         user_sex,
@@ -152,6 +164,9 @@
       <if test="userIsLoad != null">
         user_is_load,
       </if>
+      <if test="userPersonalitySignature != null">
+        user_personality_signature,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="userId != null">
@@ -159,6 +174,12 @@
       </if>
       <if test="cityId != null">
         #{cityId,jdbcType=CHAR},
+      </if>
+      <if test="stateLifeId != null">
+        #{stateLifeId,jdbcType=CHAR},
+      </if>
+      <if test="userName != null">
+        #{userName,jdbcType=VARCHAR},
       </if>
       <if test="userSex != null">
         #{userSex,jdbcType=BIT},
@@ -187,22 +208,31 @@
       <if test="userIsLoad != null">
         #{userIsLoad,jdbcType=BIT},
       </if>
+      <if test="userPersonalitySignature != null">
+        #{userPersonalitySignature,jdbcType=VARCHAR},
+      </if>
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.xhu.po.UserExample" resultType="java.lang.Long">
-    select count(*) from  [user]
+    select count(*) from [user]
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update  [user]
+    update [user]
     <set>
       <if test="record.userId != null">
         user_id = #{record.userId,jdbcType=CHAR},
       </if>
       <if test="record.cityId != null">
         city_id = #{record.cityId,jdbcType=CHAR},
+      </if>
+      <if test="record.stateLifeId != null">
+        state_life_id = #{record.stateLifeId,jdbcType=CHAR},
+      </if>
+      <if test="record.userName != null">
+        user_name = #{record.userName,jdbcType=VARCHAR},
       </if>
       <if test="record.userSex != null">
         user_sex = #{record.userSex,jdbcType=BIT},
@@ -231,15 +261,20 @@
       <if test="record.userIsLoad != null">
         user_is_load = #{record.userIsLoad,jdbcType=BIT},
       </if>
+      <if test="record.userPersonalitySignature != null">
+        user_personality_signature = #{record.userPersonalitySignature,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update  [user]
+    update [user]
     set user_id = #{record.userId,jdbcType=CHAR},
       city_id = #{record.cityId,jdbcType=CHAR},
+      state_life_id = #{record.stateLifeId,jdbcType=CHAR},
+      user_name = #{record.userName,jdbcType=VARCHAR},
       user_sex = #{record.userSex,jdbcType=BIT},
       user_birthday = #{record.userBirthday,jdbcType=TIMESTAMP},
       user_password = #{record.userPassword,jdbcType=CHAR},
@@ -248,16 +283,23 @@
       user_create_time = #{record.userCreateTime,jdbcType=TIMESTAMP},
       user_last_load_time = #{record.userLastLoadTime,jdbcType=TIMESTAMP},
       user_is_delete = #{record.userIsDelete,jdbcType=BIT},
-      user_is_load = #{record.userIsLoad,jdbcType=BIT}
+      user_is_load = #{record.userIsLoad,jdbcType=BIT},
+      user_personality_signature = #{record.userPersonalitySignature,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.xhu.po.User">
-    update  [user]
+    update [user]
     <set>
       <if test="cityId != null">
         city_id = #{cityId,jdbcType=CHAR},
+      </if>
+      <if test="stateLifeId != null">
+        state_life_id = #{stateLifeId,jdbcType=CHAR},
+      </if>
+      <if test="userName != null">
+        user_name = #{userName,jdbcType=VARCHAR},
       </if>
       <if test="userSex != null">
         user_sex = #{userSex,jdbcType=BIT},
@@ -286,12 +328,17 @@
       <if test="userIsLoad != null">
         user_is_load = #{userIsLoad,jdbcType=BIT},
       </if>
+      <if test="userPersonalitySignature != null">
+        user_personality_signature = #{userPersonalitySignature,jdbcType=VARCHAR},
+      </if>
     </set>
     where user_id = #{userId,jdbcType=CHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.xhu.po.User">
-    update  [user]
+    update [user]
     set city_id = #{cityId,jdbcType=CHAR},
+      state_life_id = #{stateLifeId,jdbcType=CHAR},
+      user_name = #{userName,jdbcType=VARCHAR},
       user_sex = #{userSex,jdbcType=BIT},
       user_birthday = #{userBirthday,jdbcType=TIMESTAMP},
       user_password = #{userPassword,jdbcType=CHAR},
@@ -300,7 +347,8 @@
       user_create_time = #{userCreateTime,jdbcType=TIMESTAMP},
       user_last_load_time = #{userLastLoadTime,jdbcType=TIMESTAMP},
       user_is_delete = #{userIsDelete,jdbcType=BIT},
-      user_is_load = #{userIsLoad,jdbcType=BIT}
+      user_is_load = #{userIsLoad,jdbcType=BIT},
+      user_personality_signature = #{userPersonalitySignature,jdbcType=VARCHAR}
     where user_id = #{userId,jdbcType=CHAR}
   </update>
 </mapper>
