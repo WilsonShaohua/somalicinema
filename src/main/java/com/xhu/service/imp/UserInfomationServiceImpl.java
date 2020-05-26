@@ -1,15 +1,10 @@
 package com.xhu.service.imp;
 
-import com.xhu.mapper.CityMapper;
-import com.xhu.mapper.FunMapper;
-import com.xhu.mapper.UserFunMapper;
-import com.xhu.mapper.UserMapper;
+import com.xhu.mapper.*;
 import com.xhu.po.*;
-import com.xhu.service.CityService;
-import com.xhu.service.StateLiftService;
-import com.xhu.service.UserFunService;
 import com.xhu.service.UserInfomationService;
 import com.xhu.utils.StateCode;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,28 +21,82 @@ import java.util.List;
 public class UserInfomationServiceImpl implements UserInfomationService {
     @Autowired
     private UserMapper userMapper;
-
     @Autowired
-    private UserFunService userFunService;
-
+    private FunMapper funMapper;
     @Autowired
-    private StateLiftService stateLiftService;
+    private UserFunMapper userFunMapper;
+    @Autowired
+    private StateLifeMapper stateLifeMapper;
     @Autowired
     private CityMapper cityMapper;
-    @Override
-    public List<Object> findUserInfomationByUserId(String userId) {
 
+    @Override
+    public UserInfomation findUserInfomationByUserId(String userId) {
+        //用户
         User user = userMapper.selectByPrimaryKey(userId);
-        List<Fun> funs = userFunService.findFunByUserId(user.getUserId());
-        StateLife stateLife = stateLiftService.selectStateLifeByPrimartKey(user.getStateLifeId());
+        if (null == user)
+            return null;
+        //用户兴趣
+        UserFunExample userFunExample = new UserFunExample();
+        UserFunExample.Criteria userFunExampleCriteria = userFunExample.createCriteria();
+        userFunExampleCriteria.andUserIdEqualTo(userId);
+        List<UserFun> userFuns = userFunMapper.selectByExample(userFunExample);
+        //迭代获取funIds
+        List<String> funIds = new ArrayList<>();
+        funIds.clear();
+        for (UserFun userFun : userFuns) {
+            funIds.add(userFun.getFunId());
+        }
+        //兴趣
+        List<Fun> funs = null;
+        FunExample funExample = new FunExample();
+        if (null != funIds && funIds.size() != 0) {
+            FunExample.Criteria funCriteria = funExample.createCriteria();
+            funCriteria.andFunIdIn(funIds);
+            funs = funMapper.selectByExample(funExample);
+        }
+
+
+        //生活状态
         String stateLifeName = null;
-        if( null != stateLife ) stateLifeName = stateLife.getStateLifeName();
+        if (null != user.getStateLifeId()) {
+            StateLife stateLife = stateLifeMapper.selectByPrimaryKey(user.getStateLifeId());
+            stateLifeName = stateLife.getStateLifeName();
+        }
+
+        //城市名
         String cityName = null;
-        if(null != user.getCityId()) cityName = cityMapper.selectByPrimaryKey(user.getCityId()).getCityName();
-        UserInfomation userInfomation = new UserInfomation(user, funs, cityName,stateLifeName);
-        List<Object> list = new ArrayList<>();
-        list.add(StateCode.SUCCESS);
-        list.add(userInfomation);
-        return list;
+        if (null != user.getCityId()) {
+            City city = cityMapper.selectByPrimaryKey(user.getCityId());
+            cityName = city.getCityName();
+        }
+        //创建UserInfomation
+        UserInfomation userInfomation = new UserInfomation(user, funs, cityName, stateLifeName);
+        //返回userInfomation
+        return userInfomation;
+    }
+
+    @Override
+    public UserInfomation findUserInfomationByUserTelphoneAndUserPasswprd(String userTelphone, String userPasword) {
+        //创建Example
+        UserExample userExample = new UserExample();
+        UserExample.Criteria userCriteria = userExample.createCriteria();
+        //将telphone和password加入查找条件
+        userCriteria.andUserTelphoneEqualTo(userTelphone);
+        //将密码MD5加密
+        String Md5Password = DigestUtils.md5Hex(userPasword);
+        userCriteria.andUserPasswordEqualTo(Md5Password);
+        //查询用户
+        List<User> users = userMapper.selectByExample(userExample);
+        //查询用为空或返回数据不为一条返回null
+        if (null == users || users.size() != 1) {
+            return null;
+        }
+        //获取用户
+        User user = users.get(0);
+        //获取用户id
+        String userId = user.getUserId();
+        //查找用户id返回用户信息
+        return findUserInfomationByUserId(userId);
     }
 }

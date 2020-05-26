@@ -9,7 +9,11 @@ import java.util.List;
  * @date 2020/5/25 10:34
  */
 public interface CityService {
-    public City selectCityByName(String cityName);
-    public List<City> selectCitiesByProvinceId(String provinceId);
-    public  City selectCityByCityId(String cityId);
+    City selectCityByName(String cityName);
+
+    List<City> selectCitiesByProvinceId(String provinceId);
+
+    City selectCityByCityId(String cityId);
+
+
 }

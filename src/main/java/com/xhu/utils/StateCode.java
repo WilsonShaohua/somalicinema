@@ -31,6 +31,7 @@ public interface StateCode {
     int NULL_FEILD = 0; //NULL值
     int ERROR_PASSWORD = 401; //密码错误
     int SQL_KEY_NOT_IN_DATABASE = 1433; //数据库无该键值
+    int NULL_LOGIN = 99; //未登录
     Map<Integer, String> MSG = ImmutableMap.<Integer, String>builder()
             .put(SUCCESS, "成功")
             .put(FAIL, "失败")
@@ -42,6 +43,7 @@ public interface StateCode {
             .put(NULL_FEILD, "空值")
             .put(ERROR_PASSWORD,"密码错误")
             .put(SQL_KEY_NOT_IN_DATABASE,"数据库查不带此键值：")
+            .put(NULL_LOGIN, "请登录")
             .build();
 
 }

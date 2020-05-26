@@ -1,5 +1,7 @@
 package com.xhu.service;
 
+import com.xhu.po.UserInfomation;
+
 import java.util.List;
 
 /**
@@ -7,5 +9,7 @@ import java.util.List;
  * @date 2020/5/26 19:05
  */
 public interface UserInfomationService {
-    List<Object> findUserInfomationByUserId(String userId);
+    UserInfomation findUserInfomationByUserId(String userId);
+
+    UserInfomation findUserInfomationByUserTelphoneAndUserPasswprd(String userTelphone, String userPasword);
 }

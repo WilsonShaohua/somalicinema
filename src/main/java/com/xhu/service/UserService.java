@@ -9,8 +9,14 @@ import java.util.Map;
  * @date 2020/5/24 17:17
  */
 public interface UserService {
-    public int userLogin(User user);
-    public int userRegist(User user);
-    public Map<Integer,User> selectUserByTelphone(String telphone);
-    public int updteUserByPrimaryKey(User user);
+    int userLogin(User user);
+
+    int userRegist(User user);
+
+    User selectUserByTelphone(String telphone);
+
+    User selectUserByPrimaryKey(String userId);
+
+    int updteUserByPrimaryKey(User user);
+
 }

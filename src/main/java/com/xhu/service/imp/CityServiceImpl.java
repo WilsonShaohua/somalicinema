@@ -17,12 +17,10 @@ import java.util.List;
 public class CityServiceImpl implements CityService {
     @Autowired
     private CityMapper cityMapper;
-    private CityExample cityExample;
-    private CityExample.Criteria criteria;
     @Override
     public City selectCityByName(String cityName) {
-        cityExample = new CityExample();
-        criteria = cityExample.createCriteria();
+        CityExample cityExample = new CityExample();
+        CityExample.Criteria criteria = cityExample.createCriteria();
         criteria.andCityNameEqualTo(cityName);
         List<City> cities = cityMapper.selectByExample(cityExample);
         return cities.get(0);
@@ -30,8 +28,8 @@ public class CityServiceImpl implements CityService {
 
     @Override
     public List<City> selectCitiesByProvinceId(String provinceId) {
-        cityExample = new CityExample();
-        criteria = cityExample.createCriteria();
+        CityExample cityExample = new CityExample();
+        CityExample.Criteria criteria = cityExample.createCriteria();
         criteria.andProvinceIdEqualTo(provinceId);
         List<City> cities = cityMapper.selectByExample(cityExample);
         try{

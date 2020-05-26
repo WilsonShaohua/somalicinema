@@ -18,32 +18,32 @@ import java.util.List;
 public class FunServiceImpl implements FunService {
     @Autowired
     private FunMapper funMapper;
-    private FunExample funExample = new FunExample();
-    private FunExample.Criteria criteria = funExample.createCriteria();
+
 
     @Override
     public List<Fun> selectAllFun() {
+        FunExample funExample = new FunExample();
         return funMapper.selectByExample(funExample);
     }
 
     @Override
     public int insertFun(Fun fun) {
         int res = funMapper.insert(fun);
-        if(res ==  1) return StateCode.SUCCESS;
+        if (res == 1) return StateCode.SUCCESS;
         return StateCode.FAIL;
     }
 
     @Override
     public int delteFunByFunId(String funId) {
         int res = funMapper.deleteByPrimaryKey(funId);
-        if(res ==  1) return StateCode.SUCCESS;
+        if (res == 1) return StateCode.SUCCESS;
         return StateCode.FAIL;
     }
 
     @Override
     public int updateFun(Fun fun) {
         int res = funMapper.updateByPrimaryKey(fun);
-        if(res ==  1) return StateCode.SUCCESS;
+        if (res == 1) return StateCode.SUCCESS;
         return StateCode.FAIL;
     }
 }

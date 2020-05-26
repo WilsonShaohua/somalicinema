@@ -24,8 +24,7 @@ import java.util.Map;
  */
 @Service
 public class UserServiceImp implements UserService {
-    private UserExample userExample = null;
-    private UserExample.Criteria criteria = null;
+
     @Autowired
     private UserMapper userMapper;
 
@@ -36,17 +35,16 @@ public class UserServiceImp implements UserService {
         if (null == user || null == user.getUserPassword() || null == user.getUserTelphone()) {
             return StateCode.NULL_FEILD;
         }
-        //实例化example对象
-        userExample = new UserExample();
-        //获取criter对象
-        criteria = userExample.createCriteria();
-
-        criteria.andUserTelphoneEqualTo(user.getUserTelphone());
+        UserExample userExample = new UserExample();
+        UserExample.Criteria criteria = userExample.createCriteria();
         //系统查找该telphone是否注册
-        boolean is_regist = StateCode.ONE_INSTANCE == userMapper.countByExample(userExample);
-        //未注册特telphone
-        if (is_regist == false) {
+        criteria.andUserTelphoneEqualTo(user.getUserTelphone());
+        long res = userMapper.countByExample(userExample);
+        //未注册的telphone
+        if (res == 0) {
             return StateCode.UNREGIST;
+        } else if (res > 1) {
+            return StateCode.MULTI_INSTANCE;
         }
         //password数据md5码
         String pwdMd5 = DigestUtils.md5Hex(user.getUserPassword());
@@ -71,50 +69,80 @@ public class UserServiceImp implements UserService {
     //用户注册
     @Override
     public int userRegist(User user) {
+        UserExample userExample = new UserExample();
+        UserExample.Criteria criteria = userExample.createCriteria();
+        //用户电话或密码位空，返回空状态码
         if (null == user.getUserPassword() || null == user.getUserTelphone()) {
             return StateCode.NULL_FEILD;
         }
-        userExample = new UserExample();
-        criteria = userExample.createCriteria();
+        //检查电话号码是否已经注册
         criteria.andUserTelphoneEqualTo(user.getUserTelphone());
+        //查找注册数据条数
         long count = userMapper.countByExample(userExample);
-
+        //注册数据条数大于0，返回状态USED
         if (count > 0) {
             return StateCode.USED;
         }
+        //请理example
         userExample.clear();
+        //使用MD5加密密码
         String pwdMd5 = DigestUtils.md5Hex(user.getUserPassword());
+        //将md5加密后的密码传入user对象
         user.setUserPassword(pwdMd5);
+        //使用随机数产生用户id
         String userId = KeyProductor.getKey();
         user.setUserId(userId);
+        //获取系统当前时间座位数据创建时间
         Date createTime = DateUtil.getCurrentTime();
         user.setUserCreateTime(createTime);
+        //默认删除为delete
         user.setUserIsDelete(false);
-        userMapper.insertSelective(user);
-        return StateCode.SUCCESS;
+        //数据库加入数据,并获取添加信息
+        int code = userMapper.insertSelective(user);
+
+        //添加信息为1 返回成功状态码，否则返回失败状态码
+        if (code == 1) return StateCode.SUCCESS;
+        else return StateCode.FAIL;
+    }
+
+    /**
+     * 通过用户电话号码查找改用户
+     *
+     * @param telphone
+     * @return
+     */
+    @Override
+    public User selectUserByTelphone(String telphone) {
+        UserExample userExample = new UserExample();
+        UserExample.Criteria criteria = userExample.createCriteria();
+        //传入电话号码为空或电话号码长度为0，返回Null
+        if(null == telphone || telphone.length() == 0) {
+            return null;
+        }
+        //查询电话号码是否已经注册
+        criteria.andUserTelphoneEqualTo(telphone);
+        //查询改电话注册的用户
+        List<User> users = userMapper.selectByExample(userExample);
+        //用户列表为空、或用户列表长度为0
+        if (null == users || users.size() == 0) {
+            return null;
+        } else if (users.size() == 1) { //用户长度刚好为1
+            return users.get(0);
+        }
+        //其它内容
+        return null;
     }
 
     @Override
-    public Map<Integer,User> selectUserByTelphone(String telphone) {
-        Map<Integer,User> res = new HashMap<>();
-        if(null == telphone || telphone.length() == 0){
-            res.put(StateCode.NULL_FEILD, null);
-            return res;
-        }
-        userExample = new UserExample();
-        criteria = userExample.createCriteria();
-        criteria.andUserTelphoneEqualTo(telphone);
-        List<User> users = userMapper.selectByExample(userExample);
-        if(null == users || users.size() == StateCode.NULL_FEILD){
-            res.put(StateCode.NOT_FOUND, null); //用户不存在
-        }else if(users.size() > StateCode.ONE_INSTANCE){
-            res.put(StateCode.MULTI_INSTANCE, null); //用户注册过多
-        }else {
-            res.put(StateCode.SUCCESS, users.get(0)); //找到该用户
-        }
-        return res;
+    public User selectUserByPrimaryKey(String userId) {
+        return userMapper.selectByPrimaryKey(userId);
     }
 
+    /**
+     * 通过用户主键升级改用户
+     * @param user
+     * @return
+     */
     @Override
     public int updteUserByPrimaryKey(User user) {
         int res = userMapper.updateByPrimaryKeySelective(user);

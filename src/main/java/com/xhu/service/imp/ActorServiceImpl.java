@@ -17,8 +17,7 @@ import java.util.List;
 public class ActorServiceImpl implements ActorService {
     @Autowired
     private ActorMapper actorMapper;
-    private ActorExample actorExample ;
-    private ActorExample.Criteria criteria;
+
     @Override
     public int addActor(Actor actor) {
         return actorMapper.insertSelective(actor);

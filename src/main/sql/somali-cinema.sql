@@ -1309,20 +1309,20 @@ go
 /* Table: "user"                                                */
 /*==============================================================*/
 create table "user" (
-                        user_id              char(10)             not null,
-                        city_id              char(12)             null,
-                        state_life_id        char(10)             null,
-                        user_name            varchar(20)          null,
-                        user_sex             bit                  null,
-                        user_birthday        datetime             null,
-                        user_password        char(32)             null,
-                        user_telphone        char(13)             null,
-                        user_picture_address varchar(50)          null,
-                        user_create_time     datetime             null,
-                        user_last_load_time  datetime             null,
-                        user_is_delete       bit                  null,
-                        user_is_load         bit                  null,
-                        user_personality_signature varchar(30)          null,
+                        user_id                    char(10)    not null,
+                        city_id                    char(12)    null,
+                        state_life_id              char(10)    null,
+                        user_name                  varchar(20) null,
+                        user_sex                   bit         null,
+                        user_birthday              datetime    null,
+                        user_password              char(32)    null,
+                        user_telphone              char(11)    null,
+                        user_picture_address       varchar(50) null,
+                        user_create_time           datetime    null,
+                        user_last_load_time        datetime    null,
+                        user_is_delete             bit         null,
+                        user_is_load               bit         null,
+                        user_personality_signature varchar(30) null,
                         constraint PK_USER primary key nonclustered (user_id)
 )
 go

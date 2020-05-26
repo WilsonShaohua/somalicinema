@@ -80,7 +80,7 @@ public class UserFunServiceImpl implements UserFunService {
     }
 
     /**
-     * 抛出slq异常，表示数据库的用户id或者funId不存在。
+     * 抛出sql异常，表示数据库的用户id或者funId不存在。
      *
      * @param userId
      * @param funIds

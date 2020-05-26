@@ -18,36 +18,36 @@ import java.util.List;
 public class StateLiftServiceImpl implements StateLiftService {
     @Autowired
     private StateLifeMapper stateLifeMapper;
-    private StateLifeExample stateLifeExample = new StateLifeExample();
-    private StateLifeExample.Criteria criteria = stateLifeExample.createCriteria();
+
     @Override
     public List<StateLife> selectAllStateLife() {
+        StateLifeExample stateLifeExample = new StateLifeExample();
         return stateLifeMapper.selectByExample(stateLifeExample);
     }
 
     @Override
     public int insertStateLift(StateLife stateLife) {
         int res = stateLifeMapper.insert(stateLife);
-        if(res ==  1) return StateCode.SUCCESS;
+        if (res == 1) return StateCode.SUCCESS;
         return StateCode.FAIL;
     }
 
     @Override
     public int delteStateLifeByStateLifeId(String stateLifeId) {
         int res = stateLifeMapper.deleteByPrimaryKey(stateLifeId);
-        if(res ==  1) return StateCode.SUCCESS;
+        if (res == 1) return StateCode.SUCCESS;
         return StateCode.FAIL;
     }
 
     @Override
     public int updateStateLife(StateLife stateLife) {
         int res = stateLifeMapper.updateByPrimaryKey(stateLife);
-        if(res ==  1) return StateCode.SUCCESS;
+        if (res == 1) return StateCode.SUCCESS;
         return StateCode.FAIL;
     }
 
     @Override
     public StateLife selectStateLifeByPrimartKey(String stateLifeId) {
-         return stateLifeMapper.selectByPrimaryKey(stateLifeId);
+        return stateLifeMapper.selectByPrimaryKey(stateLifeId);
     }
 }
