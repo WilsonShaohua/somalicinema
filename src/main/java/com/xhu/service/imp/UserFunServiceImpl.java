@@ -26,6 +26,8 @@ public class UserFunServiceImpl implements UserFunService {
     private UserFunMapper userFunMapper;
     @Autowired
     private FunMapper funMapper;
+
+
     private UserFunExample userFunExample = new UserFunExample();
     private UserFunExample.Criteria criteria = userFunExample.createCriteria();
 
@@ -36,17 +38,18 @@ public class UserFunServiceImpl implements UserFunService {
         criteria.andUserIdEqualTo(userId);
         //查找用户的全部兴趣
         List<UserFun> userFuns = userFunMapper.selectByExample(userFunExample);
-        if( null == userFuns) return null;
+        if( null == userFuns || userFuns.size() == 0) return null;
         //创建funExample对象查找fun数据
         FunExample funExample = new FunExample();
         FunExample.Criteria funExampleCriteria = funExample.createCriteria();
-        List<String> fundIds = new ArrayList<>();
-        for (UserFun item : userFuns) {
-            fundIds.add(item.getFunId());
+        List<String> findIds = new ArrayList<>();
+        findIds.clear();
+        for (UserFun userFun : userFuns) {
+            findIds.add(userFun.getFunId());
         }
 
         //将funIds添加进查询条件
-        funExampleCriteria.andFunIdIn(fundIds);
+        funExampleCriteria.andFunIdIn(findIds);
         //查找兴趣对象集合
         List<Fun> funs = funMapper.selectByExample(funExample);
         //返回对象

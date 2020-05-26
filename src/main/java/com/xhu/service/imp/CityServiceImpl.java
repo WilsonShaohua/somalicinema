@@ -41,4 +41,9 @@ public class CityServiceImpl implements CityService {
         }
 
     }
+
+    @Override
+    public City selectCityByCityId(String cityId) {
+        return cityMapper.selectByPrimaryKey(cityId);
+    }
 }

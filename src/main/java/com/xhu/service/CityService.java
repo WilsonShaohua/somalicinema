@@ -11,4 +11,5 @@ import java.util.List;
 public interface CityService {
     public City selectCityByName(String cityName);
     public List<City> selectCitiesByProvinceId(String provinceId);
+    public  City selectCityByCityId(String cityId);
 }
