@@ -33,9 +33,10 @@ public class UserFunServiceImpl implements UserFunService {
     public List<Fun> findFunByUserId(String userId) {
         if (null == userId) return null;
         //添加用户id查询条件
-        criteria.andUserFunIdEqualTo(userId);
+        criteria.andUserIdEqualTo(userId);
         //查找用户的全部兴趣
         List<UserFun> userFuns = userFunMapper.selectByExample(userFunExample);
+        if( null == userFuns) return null;
         //创建funExample对象查找fun数据
         FunExample funExample = new FunExample();
         FunExample.Criteria funExampleCriteria = funExample.createCriteria();
@@ -43,6 +44,7 @@ public class UserFunServiceImpl implements UserFunService {
         for (UserFun item : userFuns) {
             fundIds.add(item.getFunId());
         }
+
         //将funIds添加进查询条件
         funExampleCriteria.andFunIdIn(fundIds);
         //查找兴趣对象集合

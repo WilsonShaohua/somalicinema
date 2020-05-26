@@ -1,4 +1,5 @@
-
+use somali_cinema
+go
 
 insert into province (province_id,province_name) values
 (110 ,'北京市'),

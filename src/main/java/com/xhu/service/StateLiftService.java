@@ -15,4 +15,6 @@ public interface StateLiftService {
     int insertStateLift(StateLife stateLife);
     int delteStateLifeByStateLifeId(String stateLifeId);
     int updateStateLife(StateLife stateLife);
+
+    StateLife selectStateLifeByPrimartKey(String stateLifeId);
 }

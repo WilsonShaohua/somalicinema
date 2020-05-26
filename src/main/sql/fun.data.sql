@@ -1,3 +1,6 @@
+use somali_cinema
+go
+
 insert into fun (fun_id,fun_name) values
 ('1001001001','美食'),
 ('1001001002','动漫'),

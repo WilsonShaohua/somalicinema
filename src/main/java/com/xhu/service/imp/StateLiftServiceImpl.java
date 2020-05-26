@@ -45,4 +45,9 @@ public class StateLiftServiceImpl implements StateLiftService {
         if(res ==  1) return StateCode.SUCCESS;
         return StateCode.FAIL;
     }
+
+    @Override
+    public StateLife selectStateLifeByPrimartKey(String stateLifeId) {
+         return stateLifeMapper.selectByPrimaryKey(stateLifeId);
+    }
 }

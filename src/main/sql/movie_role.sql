@@ -1,3 +1,6 @@
+use somali_cinema
+go
+
 insert into movie_role(movie_role_id,movie_role_name) values
 ('100000001','喜剧'),
 ('100000002','爱情'),

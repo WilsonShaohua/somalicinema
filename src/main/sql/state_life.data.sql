@@ -1,3 +1,5 @@
+use somali_cinema
+go
 insert into state_life (state_life_id,state_life_name) values
 ('1001001001','单身'),
 ('1001001002','热恋中'),
