@@ -13,6 +13,7 @@ import com.xhu.utils.StateCode;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -69,7 +70,10 @@ public class UserInfomationController {
         System.out.println(jsonStr);
         //将前端获取的数据转化为UserInfomaton对象
         UserInfomation userInformation = JSON.parseObject(jsonStr, UserInfomation.class);
-
+        User user = userInformation.getUser();
+        String userPassword = user.getUserPassword();
+        user.setUserPassword(DigestUtils.md5Hex(userPassword));
+        userInformation.setUser(user);
         //修改userfun数据
         int userFunRes = StateCode.FAIL;
         try {
