@@ -66,6 +66,7 @@ public class UserInfomationController {
     public void writeInfomation(HttpServletRequest request, HttpServletResponse response) throws IOException {
         //将前端数据妆化为String
         String jsonStr = JSONUtils.getRequestPostStr(request);
+        System.out.println(jsonStr);
         //将前端获取的数据转化为UserInfomaton对象
         UserInfomation userInformation = JSON.parseObject(jsonStr, UserInfomation.class);
 
