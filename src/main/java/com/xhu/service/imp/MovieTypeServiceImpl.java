@@ -34,16 +34,16 @@ public class MovieTypeServiceImpl implements MovieTypeService {
 
     @Override
     public int updateMovieType(MovieType movieType) {
-        return 0;
+        return movieTypeMapper.updateByPrimaryKeySelective(movieType);
     }
 
     @Override
     public int insertMovieType(MovieType movieType) {
-        return 0;
+        return movieTypeMapper.insertSelective(movieType);
     }
 
     @Override
     public int deleteMovieType(String movieType) {
-        return 0;
+        return movieTypeMapper.deleteByPrimaryKey(movieType);
     }
 }

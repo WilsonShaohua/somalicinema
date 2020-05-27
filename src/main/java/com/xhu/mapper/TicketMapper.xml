@@ -8,6 +8,7 @@
     <result column="watched_id" jdbcType="CHAR" property="watchedId" />
     <result column="seat_id" jdbcType="CHAR" property="seatId" />
     <result column="field_id" jdbcType="CHAR" property="fieldId" />
+      <result column="ticket_money" jdbcType="DECIMAL" property="ticketMoney"/>
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -68,7 +69,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    ticket_id, order_id, movie_id, watched_id, seat_id, field_id
+              ticket_id, order_id, movie_id, watched_id, seat_id, field_id, ticket_money
   </sql>
   <select id="selectByExample" parameterType="com.xhu.po.TicketExample" resultMap="BaseResultMap">
     select
@@ -101,10 +102,12 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.xhu.po.Ticket">
-    insert into ticket (ticket_id, order_id, movie_id, 
-      watched_id, seat_id, field_id)
-    values (#{ticketId,jdbcType=CHAR}, #{orderId,jdbcType=CHAR}, #{movieId,jdbcType=CHAR}, 
-      #{watchedId,jdbcType=CHAR}, #{seatId,jdbcType=CHAR}, #{fieldId,jdbcType=CHAR})
+    insert into ticket (ticket_id, order_id, movie_id,
+                        watched_id, seat_id, field_id,
+                        ticket_money)
+    values (#{ticketId,jdbcType=CHAR}, #{orderId,jdbcType=CHAR}, #{movieId,jdbcType=CHAR},
+            #{watchedId,jdbcType=CHAR}, #{seatId,jdbcType=CHAR}, #{fieldId,jdbcType=CHAR},
+            #{ticketMoney,jdbcType=DECIMAL})
   </insert>
   <insert id="insertSelective" parameterType="com.xhu.po.Ticket">
     insert into ticket
@@ -127,6 +130,9 @@
       <if test="fieldId != null">
         field_id,
       </if>
+        <if test="ticketMoney != null">
+            ticket_money,
+        </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="ticketId != null">
@@ -147,6 +153,9 @@
       <if test="fieldId != null">
         #{fieldId,jdbcType=CHAR},
       </if>
+        <if test="ticketMoney != null">
+            #{ticketMoney,jdbcType=DECIMAL},
+        </if>
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.xhu.po.TicketExample" resultType="java.lang.Long">
@@ -176,6 +185,9 @@
       <if test="record.fieldId != null">
         field_id = #{record.fieldId,jdbcType=CHAR},
       </if>
+        <if test="record.ticketMoney != null">
+            ticket_money = #{record.ticketMoney,jdbcType=DECIMAL},
+        </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -188,7 +200,8 @@
       movie_id = #{record.movieId,jdbcType=CHAR},
       watched_id = #{record.watchedId,jdbcType=CHAR},
       seat_id = #{record.seatId,jdbcType=CHAR},
-      field_id = #{record.fieldId,jdbcType=CHAR}
+      field_id = #{record.fieldId,jdbcType=CHAR},
+      ticket_money = #{record.ticketMoney,jdbcType=DECIMAL}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -211,16 +224,20 @@
       <if test="fieldId != null">
         field_id = #{fieldId,jdbcType=CHAR},
       </if>
+        <if test="ticketMoney != null">
+            ticket_money = #{ticketMoney,jdbcType=DECIMAL},
+        </if>
     </set>
     where ticket_id = #{ticketId,jdbcType=CHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.xhu.po.Ticket">
     update ticket
-    set order_id = #{orderId,jdbcType=CHAR},
-      movie_id = #{movieId,jdbcType=CHAR},
-      watched_id = #{watchedId,jdbcType=CHAR},
-      seat_id = #{seatId,jdbcType=CHAR},
-      field_id = #{fieldId,jdbcType=CHAR}
+    set order_id     = #{orderId,jdbcType=CHAR},
+        movie_id     = #{movieId,jdbcType=CHAR},
+        watched_id   = #{watchedId,jdbcType=CHAR},
+        seat_id      = #{seatId,jdbcType=CHAR},
+        field_id     = #{fieldId,jdbcType=CHAR},
+        ticket_money = #{ticketMoney,jdbcType=DECIMAL}
     where ticket_id = #{ticketId,jdbcType=CHAR}
   </update>
 </mapper>

@@ -1245,12 +1245,13 @@ go
 /* Table: ticket                                                */
 /*==============================================================*/
 create table ticket (
-                        ticket_id            char(16)             not null,
-                        order_id             char(10)             null,
-                        movie_id             char(10)             null,
-                        watched_id           char(10)             null,
-                        seat_id              char(10)             null,
-                        field_id             char(10)             null,
+                        ticket_id     char(16) not null,
+                        order_id      char(10) null,
+                        movie_id      char(10) null,
+                        watched_id    char(10) null,
+                        seat_id       char(10) null,
+                        field_id      char(10) null,
+                        ticket_monoey money    not null,
                         constraint PK_TICKET primary key nonclustered (ticket_id)
 )
 go
@@ -1615,3 +1616,6 @@ alter table world_country
         references chau (chau_id)
 go
 
+alter table [user]
+    ADD CONSTRAINT user_picture_address_default DEFAULT ('/img/photo.jpg') for user_picture_address
+go

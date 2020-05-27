@@ -1,5 +1,6 @@
 package com.xhu.po;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -521,6 +522,66 @@ public class TicketExample {
 
         public Criteria andFieldIdNotBetween(String value1, String value2) {
             addCriterion("field_id not between", value1, value2, "fieldId");
+            return (Criteria) this;
+        }
+
+        public Criteria andTicketMoneyIsNull() {
+            addCriterion("ticket_money is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTicketMoneyIsNotNull() {
+            addCriterion("ticket_money is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTicketMoneyEqualTo(BigDecimal value) {
+            addCriterion("ticket_money =", value, "ticketMoney");
+            return (Criteria) this;
+        }
+
+        public Criteria andTicketMoneyNotEqualTo(BigDecimal value) {
+            addCriterion("ticket_money <>", value, "ticketMoney");
+            return (Criteria) this;
+        }
+
+        public Criteria andTicketMoneyGreaterThan(BigDecimal value) {
+            addCriterion("ticket_money >", value, "ticketMoney");
+            return (Criteria) this;
+        }
+
+        public Criteria andTicketMoneyGreaterThanOrEqualTo(BigDecimal value) {
+            addCriterion("ticket_money >=", value, "ticketMoney");
+            return (Criteria) this;
+        }
+
+        public Criteria andTicketMoneyLessThan(BigDecimal value) {
+            addCriterion("ticket_money <", value, "ticketMoney");
+            return (Criteria) this;
+        }
+
+        public Criteria andTicketMoneyLessThanOrEqualTo(BigDecimal value) {
+            addCriterion("ticket_money <=", value, "ticketMoney");
+            return (Criteria) this;
+        }
+
+        public Criteria andTicketMoneyIn(List<BigDecimal> values) {
+            addCriterion("ticket_money in", values, "ticketMoney");
+            return (Criteria) this;
+        }
+
+        public Criteria andTicketMoneyNotIn(List<BigDecimal> values) {
+            addCriterion("ticket_money not in", values, "ticketMoney");
+            return (Criteria) this;
+        }
+
+        public Criteria andTicketMoneyBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("ticket_money between", value1, value2, "ticketMoney");
+            return (Criteria) this;
+        }
+
+        public Criteria andTicketMoneyNotBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("ticket_money not between", value1, value2, "ticketMoney");
             return (Criteria) this;
         }
     }

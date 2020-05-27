@@ -6,6 +6,7 @@ import com.xhu.service.ActorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -21,7 +22,8 @@ import java.util.Map;
 public class ActorController {
     @Autowired
     private ActorService actorService;
-    @RequestMapping("/infomation")
+
+    @RequestMapping(value = "/infomation", method = RequestMethod.POST)
     public String selectActor(HttpServletResponse response, HttpServletRequest request){
         String id = request.getParameter("id");
         Actor actor = actorService.selectActorById(id);
@@ -29,7 +31,7 @@ public class ActorController {
         if(actor == null){
             res.put("code", 404);
             res.put("msg", "未查找到该演员");
-            res.put("data", null);;
+            res.put("data", null);
         }else{
             res.put("code",200);
             res.put("msg", "成功找到该演员");

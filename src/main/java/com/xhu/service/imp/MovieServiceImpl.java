@@ -13,6 +13,8 @@ import java.util.*;
 /**
  * @author liu li
  * @date 2020/5/27 9:14
+ * 未完成，程序有待优化性能
+ * 在查询Movie时可使用TreeSet作为方法类型，而使用List不具有自动去重功能，如果要完成去重功能，需要较大的性能代价
  */
 @Service
 public class MovieServiceImpl implements MovieService {
@@ -20,8 +22,7 @@ public class MovieServiceImpl implements MovieService {
     private MovieMapper movieMapper;
     @Autowired
     private FieldMapper fieldMapper;
-    @Autowired
-    private CompanyMapper companyMapper;
+
     @Autowired
     private CinemaMapper cinemaMapper;
     @Autowired
@@ -55,6 +56,12 @@ public class MovieServiceImpl implements MovieService {
         return movieMapper.selectByPrimaryKey(movieId);
     }
 
+    /**
+     * 同通过电影类型id查找电影
+     *
+     * @param movieTypeId
+     * @return
+     */
     @Override
     public List<Movie> findMovieByMovieTypeId(String movieTypeId) {
         MovieExample movieExample = new MovieExample();
@@ -64,6 +71,13 @@ public class MovieServiceImpl implements MovieService {
         return movies;
     }
 
+    /**
+     * 查找特定类型名的影片，并且限制数量
+     * 模糊查询类型名
+     * @param orderType
+     * @param limit
+     * @return
+     */
     @Override
     public List<Movie> findMovieByMovieTypeIdLimit(String orderType, int limit) {
         MovieExample movieExample = new MovieExample();
@@ -175,6 +189,11 @@ public class MovieServiceImpl implements MovieService {
         return movies;
     }
 
+    /**
+     * 根据影院id查询电影
+     * @param cinemaId
+     * @return
+     */
     @Override
     public List<Movie> findMovieByCinemaId(String cinemaId) {
         ScreeningRoomExample screeningRoomExample = new ScreeningRoomExample();
@@ -187,20 +206,51 @@ public class MovieServiceImpl implements MovieService {
         return movies;
     }
 
+    /**
+     * 根据影厅id查找该影厅的档期内的全部电影
+     * @param screeningRoomId
+     * @return
+     */
     @Override
     public List<Movie> findMovieByScreeningRoomId(String screeningRoomId) {
         FieldExample fieldExample = new FieldExample();
         FieldExample.Criteria fieldCriteria = fieldExample.createCriteria();
-
-        List<Movie> movies = new ArrayList<>();
-
+        //获取当前时间
+        Date date = DateUtil.getCurrentTime();
+        //查找比当前时间之后的电影篇次
+        fieldCriteria.andFieldStartDataTimeGreaterThanOrEqualTo(date);
+        //查找该影厅的篇次
+        fieldCriteria.andScreeningRoomIdEqualTo(screeningRoomId);
+        //查询
+        List<Field> fields = fieldMapper.selectByExample(fieldExample);
+        List<String> movieIds = new ArrayList<>();
+        for (Field field : fields) {
+            if (movieIds.contains(field.getMovieId()) == false)
+                movieIds.add(field.getMovieId());
+        }
+        MovieExample movieExample = new MovieExample();
+        MovieExample.Criteria movieCriteria = movieExample.createCriteria();
+        //添加查询条件movieIds
+        movieCriteria.andMovieIdIn(movieIds);
+        //查询
+        List<Movie> movies = movieMapper.selectByExample(movieExample);
         return movies;
     }
 
 
     @Override
     public List<Movie> findMovieByCinemaName(String cinemaName) {
-        return null;
+        CinemaExample cinemaExample = new CinemaExample();
+        CinemaExample.Criteria cinemaCriteria = cinemaExample.createCriteria();
+        cinemaCriteria.andCinemaNameLike(cinemaName);
+        List<Cinema> cinemas = cinemaMapper.selectByExample(cinemaExample);
+        Set<Movie> movieSet = new TreeSet<>();
+        for (Cinema cinema : cinemas) {
+            movieSet.addAll(findMovieByCinemaId(cinema.getCinemaId()));
+        }
+        List<Movie> movies = new ArrayList<>();
+        movies.addAll(movieSet);
+        return movies;
     }
 
     @Override
