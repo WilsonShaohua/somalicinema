@@ -40,11 +40,11 @@ public interface MovieService {
     List<Movie> findMovieByMovieTypeIdLimit(String orderType,int limit);
 
     /**
-     * 查找电影的上映日期是否早于现在
-     * @param compater
+     * 查找电影的系统当前时间之后在热映的电影
      * @return
      */
-    List<Movie> findMovieByMoviePublishingDate(int compater);
+    List<Movie> findMovieByMoviePublishingDate();
+
 
     /**
      * 查找指定日期档期的电影
@@ -67,6 +67,13 @@ public interface MovieService {
      */
     List<Movie> findMovieByCinemaId(String cinemaId);
 
+    /**
+     * 通过影厅id查找将要上映的电影
+     *
+     * @param screeningRoomId
+     * @return
+     */
+    List<Movie> findMovieByScreeningRoomId(String screeningRoomId);
     /**
      * 查找指定名字的电影院的电影（模糊查询）
      * @param cinemaName

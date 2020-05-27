@@ -44,6 +44,7 @@ public class UserInfomationController {
     public void showInfomation(HttpServletResponse response, HttpServletRequest request) throws IOException {
         //抓取前端数据
         String jsonStr = JSONUtils.getRequestPostStr(request);
+        System.out.println(jsonStr);
         //将前端数据护转换为User Object
         User user = JSON.parseObject(jsonStr, User.class);
         //获取UserInfomation数据
