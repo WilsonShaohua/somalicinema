@@ -2,8 +2,9 @@ package com.xhu.mapper;
 
 import com.xhu.po.Seat;
 import com.xhu.po.SeatExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface SeatMapper {
     long countByExample(SeatExample example);

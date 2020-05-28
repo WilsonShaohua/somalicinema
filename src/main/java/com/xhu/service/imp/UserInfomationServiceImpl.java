@@ -3,7 +3,6 @@ package com.xhu.service.imp;
 import com.xhu.mapper.*;
 import com.xhu.po.*;
 import com.xhu.service.UserInfomationService;
-import com.xhu.utils.StateCode;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

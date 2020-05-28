@@ -1,8 +1,6 @@
 package com.xhu.utils;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -17,11 +15,11 @@ public class KeyProductor {
     //生成日期格式
     private static String getDateYYMMDD(){
         SimpleDateFormat df = new SimpleDateFormat("yyMMdd");
-        return df.format(new Date()).toString();
+        return df.format(new Date());
     }
     private static String getDatemmss(){
         SimpleDateFormat df = new SimpleDateFormat("ddmmss");
-        return df.format(new Date()).toString();
+        return df.format(new Date());
     }
     //随机生成指定位长度数字
     private static String getTime(int keyLength){

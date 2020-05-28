@@ -2,8 +2,9 @@ package com.xhu.mapper;
 
 import com.xhu.po.ActorRole;
 import com.xhu.po.ActorRoleExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface ActorRoleMapper {
     long countByExample(ActorRoleExample example);

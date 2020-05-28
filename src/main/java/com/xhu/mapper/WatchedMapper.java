@@ -2,8 +2,9 @@ package com.xhu.mapper;
 
 import com.xhu.po.Watched;
 import com.xhu.po.WatchedExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface WatchedMapper {
     long countByExample(WatchedExample example);

@@ -7,8 +7,6 @@ import com.xhu.utils.SpringTest;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.Date;
-
 
 /**
  * @author liu li

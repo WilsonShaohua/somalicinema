@@ -1,6 +1,5 @@
 package com.xhu.service;
 
-import com.xhu.po.Fun;
 import com.xhu.po.StateLife;
 
 import java.util.List;

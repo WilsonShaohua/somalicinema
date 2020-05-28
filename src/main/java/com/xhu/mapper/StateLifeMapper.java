@@ -2,8 +2,9 @@ package com.xhu.mapper;
 
 import com.xhu.po.StateLife;
 import com.xhu.po.StateLifeExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface StateLifeMapper {
     long countByExample(StateLifeExample example);

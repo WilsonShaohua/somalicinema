@@ -1,6 +1,7 @@
 package com.xhu.service.imp;
 
 import com.xhu.mapper.CityMapper;
+import com.xhu.mapper.MovieMapper;
 import com.xhu.po.City;
 import com.xhu.po.CityExample;
 import com.xhu.service.CityService;
@@ -17,6 +18,9 @@ import java.util.List;
 public class CityServiceImpl implements CityService {
     @Autowired
     private CityMapper cityMapper;
+
+    @Autowired
+    private MovieMapper movieMapper;
     @Override
     public City selectCityByName(String cityName) {
         CityExample cityExample = new CityExample();
@@ -44,4 +48,5 @@ public class CityServiceImpl implements CityService {
     public City selectCityByCityId(String cityId) {
         return cityMapper.selectByPrimaryKey(cityId);
     }
+
 }

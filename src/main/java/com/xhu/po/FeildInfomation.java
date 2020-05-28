@@ -14,6 +14,6 @@ import lombok.NoArgsConstructor;
 public class FeildInfomation {
     private Field field;
     private ScreeningRoomInfomation screeningRoomInfomation;
-    private MovieInfomation movieInfomation;
+    private MovieInformation movieInformation;
 
 }

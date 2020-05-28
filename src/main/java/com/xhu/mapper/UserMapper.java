@@ -2,8 +2,9 @@ package com.xhu.mapper;
 
 import com.xhu.po.User;
 import com.xhu.po.UserExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface UserMapper {
     long countByExample(UserExample example);

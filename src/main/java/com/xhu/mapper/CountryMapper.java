@@ -2,8 +2,9 @@ package com.xhu.mapper;
 
 import com.xhu.po.Country;
 import com.xhu.po.CountryExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface CountryMapper {
     long countByExample(CountryExample example);

@@ -2,8 +2,9 @@ package com.xhu.mapper;
 
 import com.xhu.po.City;
 import com.xhu.po.CityExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface CityMapper {
     long countByExample(CityExample example);

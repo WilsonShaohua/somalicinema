@@ -25,6 +25,11 @@ public class MovieTypeServiceImpl implements MovieTypeService {
     }
 
     @Override
+    public MovieType findMovieTypeById(String movieTypeId) {
+        return movieTypeMapper.selectByPrimaryKey(movieTypeId);
+    }
+
+    @Override
     public List<MovieType> findMovieTypeByIds(List<String> movieTypeIds) {
         MovieTypeExample movieTypeExample = new MovieTypeExample();
         MovieTypeExample.Criteria criteria = movieTypeExample.createCriteria();

@@ -97,4 +97,11 @@ public interface MovieService {
     List<Movie> findMovieByCityId(String cityId);
 
 
+    List<Movie> findAllMovie();
+
+    List<Movie> findMovieByRegionalId(String movieRegionalId);
+
+    List<Movie> findMovieAfterNow();
+
+    List<Movie> findMovieBeforeNow();
 }

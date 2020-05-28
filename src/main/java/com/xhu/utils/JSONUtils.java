@@ -4,7 +4,10 @@ import com.alibaba.fastjson.JSONObject;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -30,7 +33,7 @@ public class JSONUtils {
         String submitMehtod = request.getMethod();
         // GET
         if (submitMehtod.equals("GET")) {
-            return new String(request.getQueryString().getBytes("iso-8859-1"), "utf-8").replaceAll("%22", "\"");
+            return new String(request.getQueryString().getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8).replaceAll("%22", "\"");
             // POST
         } else {
             return getRequestPostStr(request);
@@ -43,7 +46,7 @@ public class JSONUtils {
         if (contentLength < 0) {
             return null;
         }
-        byte buffer[] = new byte[contentLength];
+        byte[] buffer = new byte[contentLength];
         for (int i = 0; i < contentLength; ) {
 
             int readlen = request.getInputStream().read(buffer, i,
@@ -58,7 +61,7 @@ public class JSONUtils {
 
 
     public static String getRequestPostStr(HttpServletRequest request) throws IOException {
-        byte buffer[] = getRequestPostBytes(request);
+        byte[] buffer = getRequestPostBytes(request);
         String charEncoding = request.getCharacterEncoding();
         if (charEncoding == null) {
             charEncoding = "UTF-8";
@@ -66,6 +69,24 @@ public class JSONUtils {
         return new String(buffer, charEncoding);
     }
 
-
+    public static List<Object> MovieCodeAndLimit(HttpServletRequest request) throws IOException {
+        //String jsonString = JSONUtils.getRequestJsonString(request);
+        JSONObject jsonObject = JSONUtils.getRequestJsonObject(request);
+        List<Object> codeAndLimit = new ArrayList<>();
+        Integer code = jsonObject.getInteger("code");
+        codeAndLimit.add(code);
+        Map<String, Object> stringObjectMap = new HashMap<>();
+        Integer limit = jsonObject.getInteger("limit");
+        if (limit != null)
+            stringObjectMap.put("limit", limit);
+        String movieTypeId = jsonObject.getString("movieTypeId");
+        if (null != movieTypeId)
+            stringObjectMap.put("movieTypeId", movieTypeId);
+        String regionalId = jsonObject.getString("regionalId");
+        if (null != regionalId)
+            stringObjectMap.put("regionalId", regionalId);
+        codeAndLimit.add(stringObjectMap);
+        return codeAndLimit;
+    }
 
 }

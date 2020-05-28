@@ -2,9 +2,9 @@ package com.xhu.mapper;
 
 import com.xhu.po.UserFun;
 import com.xhu.po.UserFunExample;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
-import org.apache.ibatis.annotations.Param;
 
 public interface UserFunMapper {
     long countByExample(UserFunExample example);

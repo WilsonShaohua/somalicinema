@@ -2,8 +2,9 @@ package com.xhu.mapper;
 
 import com.xhu.po.Cinema;
 import com.xhu.po.CinemaExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface CinemaMapper {
     long countByExample(CinemaExample example);

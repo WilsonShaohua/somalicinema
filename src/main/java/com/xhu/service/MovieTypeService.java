@@ -11,6 +11,8 @@ import java.util.List;
 public interface MovieTypeService {
     List<MovieType> findAllMovieType();
 
+    MovieType findMovieTypeById(String movieTypeId);
+
     List<MovieType> findMovieTypeByIds(List<String> movieTypeIds);
 
     int updateMovieType(MovieType movieType);

@@ -2,8 +2,9 @@ package com.xhu.mapper;
 
 import com.xhu.po.Company;
 import com.xhu.po.CompanyExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface CompanyMapper {
     long countByExample(CompanyExample example);

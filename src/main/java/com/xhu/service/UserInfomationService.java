@@ -2,8 +2,6 @@ package com.xhu.service;
 
 import com.xhu.po.UserInfomation;
 
-import java.util.List;
-
 /**
  * @author liu li
  * @date 2020/5/26 19:05

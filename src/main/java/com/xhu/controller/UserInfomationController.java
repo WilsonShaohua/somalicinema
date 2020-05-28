@@ -4,7 +4,6 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.xhu.po.User;
 import com.xhu.po.UserInfomation;
-import com.xhu.service.CityService;
 import com.xhu.service.UserFunService;
 import com.xhu.service.UserInfomationService;
 import com.xhu.service.UserService;

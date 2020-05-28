@@ -2,8 +2,6 @@ package com.xhu.service;
 
 import com.xhu.po.User;
 
-import java.util.Map;
-
 /**
  * @author liu li
  * @date 2020/5/24 17:17

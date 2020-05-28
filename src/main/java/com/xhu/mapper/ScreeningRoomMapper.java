@@ -2,8 +2,9 @@ package com.xhu.mapper;
 
 import com.xhu.po.ScreeningRoom;
 import com.xhu.po.ScreeningRoomExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface ScreeningRoomMapper {
     long countByExample(ScreeningRoomExample example);

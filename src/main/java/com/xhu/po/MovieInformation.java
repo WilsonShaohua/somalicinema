@@ -14,7 +14,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class MovieInfomation {
+public class MovieInformation {
     private Movie movie;
     private List<Actor> actors;
     private City city;

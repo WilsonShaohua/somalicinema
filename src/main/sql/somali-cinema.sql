@@ -1619,3 +1619,10 @@ go
 alter table [user]
     ADD CONSTRAINT user_picture_address_default DEFAULT ('/img/photo.jpg') for user_picture_address
 go
+
+alter table regional
+    alter column regional_id char(10) not null
+go
+alter table regional
+    add constraint regional_PK primary key nonclustered (regional_id)
+go

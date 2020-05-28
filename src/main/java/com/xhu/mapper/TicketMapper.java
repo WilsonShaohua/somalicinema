@@ -2,8 +2,9 @@ package com.xhu.mapper;
 
 import com.xhu.po.Ticket;
 import com.xhu.po.TicketExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface TicketMapper {
     long countByExample(TicketExample example);

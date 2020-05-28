@@ -14,8 +14,7 @@ public class WorldCountry {
 
     private String worldCountryName;
 
-    public String getWorldCountryId() {
-        return worldCountryId;
-    }
+    private String regionalId;
+
 
 }

@@ -11,5 +11,4 @@ public class Regional {
     private String regionalId;
 
     private String regoionalName;
-
 }

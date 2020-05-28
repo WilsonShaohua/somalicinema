@@ -2,8 +2,9 @@ package com.xhu.mapper;
 
 import com.xhu.po.Chau;
 import com.xhu.po.ChauExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface ChauMapper {
     long countByExample(ChauExample example);

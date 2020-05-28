@@ -5,8 +5,6 @@ import com.xhu.po.Movie;
 import com.xhu.po.MovieActors;
 
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 /**
  * @author liu li
@@ -18,4 +16,6 @@ public interface MovieActorService {
     List<Actor> findActorByMovieId(String movieId);
 
     List<Movie> findMvoieByActorId(String actorId);
+
+
 }

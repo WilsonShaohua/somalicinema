@@ -2,8 +2,9 @@ package com.xhu.mapper;
 
 import com.xhu.po.Province;
 import com.xhu.po.ProvinceExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface ProvinceMapper {
     long countByExample(ProvinceExample example);

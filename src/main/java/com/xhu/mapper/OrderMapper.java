@@ -2,8 +2,9 @@ package com.xhu.mapper;
 
 import com.xhu.po.Order;
 import com.xhu.po.OrderExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface OrderMapper {
     long countByExample(OrderExample example);
