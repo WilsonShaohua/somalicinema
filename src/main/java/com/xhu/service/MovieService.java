@@ -2,6 +2,7 @@ package com.xhu.service;
 
 import com.xhu.po.Movie;
 
+import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 
@@ -51,7 +52,7 @@ public interface MovieService {
      * @param date
      * @return
      */
-    List<Movie> findMovieByDate(Date date);
+    List<Movie> findMovieByDate(Date date) throws ParseException;
 
     /**
      * 查找指定公司的电影院上映电影

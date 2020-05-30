@@ -3,8 +3,8 @@ package com.xhu.controller;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.xhu.po.User;
-import com.xhu.po.UserInfomation;
-import com.xhu.service.UserInfomationService;
+import com.xhu.po.UserPo;
+import com.xhu.service.UserPoService;
 import com.xhu.service.UserService;
 import com.xhu.utils.JSONUtils;
 import com.xhu.utils.StateCode;
@@ -31,7 +31,7 @@ public class UserController {
     @Autowired
     private UserService userService;
     @Autowired
-    private UserInfomationService userInfomationService;
+    private UserPoService userPoService;
 
     @ApiOperation(value = "登录服务", notes = "获取用户注册telephone和password")
     @ApiImplicitParam(name = "user", value = "用户信息", paramType = "User", dataType = "User", required = true, defaultValue = "{\n" +
@@ -52,12 +52,12 @@ public class UserController {
             return;
         }
         //获取用户信息
-        UserInfomation userInfomation = userInfomationService.findUserInfomationByUserTelphoneAndUserPasswprd(user.getUserTelphone(), user.getUserPassword());
+        UserPo userPo = userPoService.findUserInfomationByUserTelphoneAndUserPasswprd(user.getUserTelphone(), user.getUserPassword());
         int code = StateCode.NULL_FEILD;  //默认登录失败
         //用户信息不为空
-        if (userInfomation != null)
+        if (userPo != null)
             code = StateCode.SUCCESS; //状态码为SUCCESS
-        JSONObject jsonObject = JSONUtils.packageJson(code, StateCode.MSG.get(code), userInfomation);
+        JSONObject jsonObject = JSONUtils.packageJson(code, StateCode.MSG.get(code), userPo);
         //设置字符集
         response.setContentType("text/html;charset=utf-8");
         //传递数据

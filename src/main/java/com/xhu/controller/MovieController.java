@@ -2,13 +2,16 @@ package com.xhu.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.xhu.po.Movie;
-import com.xhu.po.MovieInformation;
-import com.xhu.service.*;
+import com.xhu.po.MoviePo;
+import com.xhu.service.FieldService;
+import com.xhu.service.MoviePoService;
+import com.xhu.service.MovieService;
 import com.xhu.utils.JSONUtils;
 import com.xhu.utils.MovieSortCode;
 import com.xhu.utils.StateCode;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +21,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -33,86 +38,45 @@ import java.util.List;
  */
 @Api
 @Controller
+@Slf4j
 @RequestMapping(value = "/movie")
 public class MovieController {
     @Autowired
     private MovieService movieService;
 
     @Autowired
-    private MovieActorService movieActorService;
-    @Autowired
-    private CityService cityService;
-    @Autowired
-    private MovieTypeService movieTypeService;
-    @Autowired
     private FieldService fieldService;
 
     @Autowired
-    private MovieInformationService movieInformationService;
+    private MoviePoService moviePoService;
 
-    private List<MovieInformation> now(int... limit) {
+
+    /**
+     * @param limit
+     * @return
+     */
+    private List<MoviePo> now(int... limit) {
         //找到排片晚于当前且出版日期早于现在的电影
         List<Movie> movies = fieldService.findMovieAfterNow();
         //获取电影信息
-        List<MovieInformation> movieInformations = movieInformationService.findMovieInformationByMovies(movies);
+        List<MoviePo> moviePos = moviePoService.findMoviePoByMovies(movies);
         //排序
-        movieInformations.sort(MovieSortCode.SORT_WAY.get(MovieSortCode.HEATING_UP));
-        if (limit != null)
-            return movieInformations.subList(0, limit[0]);
-        return movieInformations;
+        moviePos.sort(MovieSortCode.SORT_WAY.get(MovieSortCode.HEATING_UP));
+        log.info("/movie/now", moviePos);
+        if (limit != null && limit.length > 0 && limit[0] <= moviePos.size())
+            return moviePos.subList(0, limit[0]);
+        return moviePos;
     }
-
-    /**
-     * 影片资源请求
-     *
-     * @param response
-     */
-//    @ApiOperation(value = "info", httpMethod = "POSt", notes = "请求电影详细信息")
-//    @ApiImplicitParams({
-//            @ApiImplicitParam(name = "code", defaultValue = "0", dataType = "int"),
-//            @ApiImplicitParam(name = "limit", defaultValue = "8", dataType = "int")
-//    })
-//    @RequestMapping(value = "/info", method = RequestMethod.POST)
-//    public void info(HttpServletRequest request, HttpServletResponse response) throws IOException {
-//        List<Object> codeAndLimit = JSONUtils.MovieCodeAndLimit(request);
-//        //将获取到的数据打包到Map中去，相应的请求码存放对应的数
-//        Map<Integer, List<MovieInformation>> movieInformationsMap = new HashMap<>();
-//
-//        if (codeAndLimit.size() == 1) {
-//            //详细请求
-//            int code = (int) codeAndLimit.get(0);
-//            List<MovieInformation> movieInformations = sortMovieInformation(code);
-//            movieInformationsMap.put(code, movieInformations);
-//        } else {
-//            //主页请求
-//            Map<String, Object> condition = (Map<String, Object>) codeAndLimit.get(1);
-//            //请求主页内的六种信息
-//            for (int i = MovieSortCode.HEATING_UP; i <= MovieSortCode.TOP100; i++) {
-//                List<MovieInformation> movieInformations = sortMovieInformation(i, condition);
-//                movieInformationsMap.put((Integer) codeAndLimit.get(0), movieInformations);
-//            }
-//        }
-//        int code; //返回信息码
-//        if (movieInformationsMap == null || movieInformationsMap.size() == 0) {
-//            //数据获取失败
-//            code = StateCode.FAIL;
-//        } else {
-//            //数据获取成功
-//            code = StateCode.SUCCESS;
-//        }
-//        JSONObject jsonObject = JSONUtils.packageJson(code, StateCode.MSG.get(code), movieInformationsMap);
-//        response.getWriter().write(jsonObject.toJSONString());
-//    }
 
     //正在热映
     @ApiOperation(value = "now", notes = "正在热映")
     @RequestMapping(value = "/now", method = RequestMethod.POST)
     public void now(HttpServletResponse response) throws IOException {
-        List<MovieInformation> movieInformations = now();
+        List<MoviePo> moviePo = now();
         int code = StateCode.FAIL;
-        if (movieInformations != null)
+        if (moviePo != null)
             code = StateCode.SUCCESS;
-        JSONObject jsonObject = JSONUtils.packageJson(code, StateCode.MSG.get(code), movieInformations);
+        JSONObject jsonObject = JSONUtils.packageJson(code, StateCode.MSG.get(code), moviePo);
 
         //修正数据字符集
         response.setContentType("text/html;charset=utf-8");
@@ -120,26 +84,26 @@ public class MovieController {
         response.getWriter().write(jsonObject.toJSONString());
     }
 
-    private List<MovieInformation> comingSoon(int... limit) {
+    private List<MoviePo> comingSoon(int... limit) {
         List<Movie> movies = movieService.findMovieByMoviePublishingDate();
         //获取电影信息
-        List<MovieInformation> movieInformations = movieInformationService.findMovieInformationByMovies(movies);
+        List<MoviePo> moviePos = moviePoService.findMoviePoByMovies(movies);
         //排序
-        movieInformations.sort(MovieSortCode.SORT_WAY.get(MovieSortCode.COMING_SOON));
-        if (limit != null)
-            return movieInformations.subList(0, limit[0]);
-        return movieInformations;
+        moviePos.sort(MovieSortCode.SORT_WAY.get(MovieSortCode.COMING_SOON));
+        if (limit != null && limit.length > 0 && limit[0] <= moviePos.size())
+            return moviePos.subList(0, limit[0]);
+        return moviePos;
     }
 
     //即将上映
     @ApiOperation(value = "coming", notes = "即将上映")
     @RequestMapping(value = "/coming", method = RequestMethod.POST)
     public void comingSoon(HttpServletResponse response) throws IOException {
-        List<MovieInformation> movieInformations = comingSoon();
+        List<MoviePo> moviePos = comingSoon();
         int code = StateCode.FAIL;
-        if (movieInformations != null)
+        if (moviePos != null)
             code = StateCode.SUCCESS;
-        JSONObject jsonObject = JSONUtils.packageJson(code, StateCode.MSG.get(code), movieInformations);
+        JSONObject jsonObject = JSONUtils.packageJson(code, StateCode.MSG.get(code), moviePos);
 
         //修正数据字符集
         response.setContentType("text/html;charset=utf-8");
@@ -147,26 +111,39 @@ public class MovieController {
         response.getWriter().write(jsonObject.toJSONString());
     }
 
-    private List<MovieInformation> hot(int... limit) {
+    /**
+     * @param limit
+     * @return
+     */
+    private List<MoviePo> hot(int... limit) {
         //找到排片晚于当前且出版日期早于现在的电影
         List<Movie> movies = fieldService.findMovieAfterNow();
+        log.info(movies.toString());
         //获取电影信息
-        List<MovieInformation> movieInformations = movieInformationService.findMovieInformationByMovies(movies);
-        movieInformations.sort(MovieSortCode.SORT_WAY.get(MovieSortCode.HOT_MOVIE));
-        if (limit != null)
-            return movieInformations.subList(0, limit[0]);
-        return movieInformations;
+        List<MoviePo> moviePos = moviePoService.findMoviePoByMovies(movies);
+        if (moviePos == null) {
+            return null;
+        }
+        log.info(moviePos.toString());
+        //获取排序方式
+        Comparator<MoviePo> movieInformationComparator = MovieSortCode.SORT_WAY.get(MovieSortCode.HOT_MOVIE);
+        Collections.sort(moviePos, movieInformationComparator);
+        log.info("sort scuess");
+        if (limit != null && limit.length > 0 && limit[0] <= moviePos.size())
+            return moviePos.subList(0, limit[0]);
+        return moviePos;
     }
 
     //热播电影
     @ApiOperation(value = "hot", notes = "热播电影")
     @RequestMapping(value = "/hot", method = RequestMethod.POST)
     public void hot(HttpServletResponse response) throws IOException {
-        List<MovieInformation> movieInformations = hot();
+        List<MoviePo> moviePos = hot();
+        log.info(moviePos.toString());
         int code = StateCode.FAIL;
-        if (movieInformations != null)
+        if (moviePos != null)
             code = StateCode.SUCCESS;
-        JSONObject jsonObject = JSONUtils.packageJson(code, StateCode.MSG.get(code), movieInformations);
+        JSONObject jsonObject = JSONUtils.packageJson(code, StateCode.MSG.get(code), moviePos);
 
         //修正数据字符集
         response.setContentType("text/html;charset=utf-8");
@@ -174,26 +151,26 @@ public class MovieController {
         response.getWriter().write(jsonObject.toJSONString());
     }
 
-    private List<MovieInformation> box(int... limit) {
+    private List<MoviePo> box(int... limit) {
         //找到排片晚于当前且出版日期早于现在的电影
         List<String> movieIds = fieldService.findTodayFeild();
         //获取电影信息
-        List<MovieInformation> movieInformations = movieInformationService.findMovieInformationByMovieIds(movieIds);
-        movieInformations.sort(MovieSortCode.SORT_WAY.get(MovieSortCode.TODAY_BOX));
-        if (limit != null)
-            return movieInformations.subList(0, limit[0]);
-        return movieInformations;
+        List<MoviePo> moviePos = moviePoService.findMoviePoByMovieIds(movieIds);
+        moviePos.sort(MovieSortCode.SORT_WAY.get(MovieSortCode.TODAY_BOX));
+        if (limit != null && limit.length > 0 && limit[0] <= moviePos.size())
+            return moviePos.subList(0, limit[0]);
+        return moviePos;
     }
 
     //今日票房
     @ApiOperation(value = "box", notes = "今日票房")
     @RequestMapping(value = "/box", method = RequestMethod.POST)
     public void box(HttpServletResponse response) throws IOException {
-        List<MovieInformation> movieInformations = box();
+        List<MoviePo> moviePos = box();
         int code = StateCode.FAIL;
-        if (movieInformations != null)
+        if (moviePos != null)
             code = StateCode.SUCCESS;
-        JSONObject jsonObject = JSONUtils.packageJson(code, StateCode.MSG.get(code), movieInformations);
+        JSONObject jsonObject = JSONUtils.packageJson(code, StateCode.MSG.get(code), moviePos);
 
         //修正数据字符集
         response.setContentType("text/html;charset=utf-8");
@@ -201,26 +178,30 @@ public class MovieController {
         response.getWriter().write(jsonObject.toJSONString());
     }
 
-    private List<MovieInformation> expect(int... limit) {
+    /**
+     * @param limit
+     * @return
+     */
+    private List<MoviePo> expect(int... limit) {
         //上映日期晚于当前受期待电影
         List<Movie> movies = fieldService.findMovieAfterNow();
         //获取电影信息
-        List<MovieInformation> movieInformations = movieInformationService.findMovieInformationByMovies(movies);
-        movieInformations.sort(MovieSortCode.SORT_WAY.get(MovieSortCode.MOST_EXPECT));
-        if (limit != null)
-            return movieInformations.subList(0, limit[0]);
-        return movieInformations;
+        List<MoviePo> moviePos = moviePoService.findMoviePoByMovies(movies);
+        moviePos.sort(MovieSortCode.SORT_WAY.get(MovieSortCode.MOST_EXPECT));
+        if (limit != null && limit.length > 0 && limit[0] <= moviePos.size())
+            return moviePos.subList(0, limit[0]);
+        return moviePos;
     }
 
     //最受期待
     @ApiOperation(value = "expect", notes = "最受期待")
     @RequestMapping(value = "/expect", method = RequestMethod.POST)
     public void expect(HttpServletResponse response) throws IOException {
-        List<MovieInformation> movieInformations = expect();
+        List<MoviePo> moviePos = expect();
         int code = StateCode.FAIL;
-        if (movieInformations != null)
+        if (moviePos != null)
             code = StateCode.SUCCESS;
-        JSONObject jsonObject = JSONUtils.packageJson(code, StateCode.MSG.get(code), movieInformations);
+        JSONObject jsonObject = JSONUtils.packageJson(code, StateCode.MSG.get(code), moviePos);
 
         //修正数据字符集
         response.setContentType("text/html;charset=utf-8");
@@ -228,15 +209,19 @@ public class MovieController {
         response.getWriter().write(jsonObject.toJSONString());
     }
 
-    private List<MovieInformation> top100(int... limit) {
+    /**
+     * @param limit
+     * @return
+     */
+    private List<MoviePo> top100(int... limit) {
         //上映日期晚于当前受期待电影
         List<Movie> movies = movieService.findMovieBeforeNow();
         //获取电影信息
-        List<MovieInformation> movieInformations = movieInformationService.findMovieInformationByMovies(movies);
-        movieInformations.sort(MovieSortCode.SORT_WAY.get(MovieSortCode.TOP100));
-        if (limit != null)
-            return movieInformations.subList(0, limit[0]);
-        return movieInformations;
+        List<MoviePo> moviePos = moviePoService.findMoviePoByMovies(movies);
+        moviePos.sort(MovieSortCode.SORT_WAY.get(MovieSortCode.TOP100));
+        if (limit != null && limit.length > 0 && limit[0] <= moviePos.size())
+            return moviePos.subList(0, limit[0]);
+        return moviePos;
     }
 
     //Top100
@@ -246,12 +231,12 @@ public class MovieController {
         //上映日期晚于当前受期待电影
         List<Movie> movies = movieService.findMovieBeforeNow();
         //获取电影信息
-        List<MovieInformation> movieInformations = movieInformationService.findMovieInformationByMovies(movies);
-        movieInformations.sort(MovieSortCode.SORT_WAY.get(MovieSortCode.TOP100));
+        List<MoviePo> moviePos = moviePoService.findMoviePoByMovies(movies);
+        moviePos.sort(MovieSortCode.SORT_WAY.get(MovieSortCode.TOP100));
         int code = StateCode.FAIL;
-        if (movieInformations != null)
+        if (moviePos != null)
             code = StateCode.SUCCESS;
-        JSONObject jsonObject = JSONUtils.packageJson(code, StateCode.MSG.get(code), movieInformations);
+        JSONObject jsonObject = JSONUtils.packageJson(code, StateCode.MSG.get(code), moviePos);
 
         //修正数据字符集
         response.setContentType("text/html;charset=utf-8");
@@ -263,7 +248,7 @@ public class MovieController {
     @RequestMapping(value = "/index", method = RequestMethod.POST)
     public void index(HttpServletResponse response, HttpServletRequest request) throws IOException {
         int default_length = 8;
-        List<List<MovieInformation>> movieInformationLists = new ArrayList<>();
+        List<List<MoviePo>> movieInformationLists = new ArrayList<>();
         movieInformationLists.add(now(default_length));
         movieInformationLists.add(hot(default_length));
         movieInformationLists.add(expect(default_length));

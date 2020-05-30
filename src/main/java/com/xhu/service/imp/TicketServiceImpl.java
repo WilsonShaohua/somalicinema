@@ -35,6 +35,8 @@ public class TicketServiceImpl implements TicketService {
         ticketCriteria.andMovieIdEqualTo(movieId);
         List<Ticket> tickets = ticketMapper.selectByExample(ticketExample);
         BigDecimal totalBox = BigDecimal.ZERO;
+        if (tickets == null || tickets.size() == 0)
+            return totalBox;
         for (Ticket ticket : tickets) {
             totalBox.add(ticket.getTicketMoney());
         }

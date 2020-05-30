@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class CinemaInfomation {
+public class CinemaPo {
     private Cinema cinema;
     private Company company;
     private City city;

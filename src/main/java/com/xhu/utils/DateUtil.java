@@ -11,7 +11,8 @@ public class DateUtil {
         Date d = dateFormat.parse(date);
         return d;
     }
-    public static Date getCurrentTime(){
+
+    public static Date getCurrentTime() {
         Date d = new Date(System.currentTimeMillis());
         return d;
     }
@@ -22,9 +23,15 @@ public class DateUtil {
     }
 
     public static Date getDayStart(Date date) {
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        String day = dateFormat.format(date);
-        return new Date(day);
+        DateFormat df = new SimpleDateFormat("yyyyMMdd");
+        String dateString = df.format(date);
+        Date today = null;
+        try {
+            today = df.parse(dateString);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return today;
     }
 
 }

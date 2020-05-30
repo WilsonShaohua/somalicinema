@@ -4,12 +4,14 @@ import com.xhu.mapper.OrderMapper;
 import com.xhu.mapper.TicketMapper;
 import com.xhu.mapper.WatchedMapper;
 import com.xhu.po.*;
-import com.xhu.service.WatcedhService;
+import com.xhu.service.WatchedhService;
 import com.xhu.utils.DateUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -20,7 +22,8 @@ import java.util.List;
  * @date 2020/5/27 20:54
  */
 @Service
-public class WatcedhServiceImpl implements WatcedhService {
+@Slf4j
+public class WatchedhServiceImpl implements WatchedhService {
     @Autowired
     private WatchedMapper watchedMapper;
 
@@ -42,7 +45,13 @@ public class WatcedhServiceImpl implements WatcedhService {
         for (Watched watched : watchedList) {
             totalScore.add(BigDecimal.valueOf(watched.getMovieScore()));
         }
-        BigDecimal avgScore = totalScore.divide(BigDecimal.valueOf(watchedList.size()));
+        BigDecimal avgScore = BigDecimal.ZERO;
+        try {
+            totalScore.divide(BigDecimal.valueOf(watchedList.size()));
+        } catch (ArithmeticException e) {
+            e.printStackTrace();
+            log.info(movieId + "无分数信息");
+        }
         return Double.parseDouble(avgScore.toString());
     }
 
@@ -69,15 +78,16 @@ public class WatcedhServiceImpl implements WatcedhService {
     }
 
     @Override
-    public BigDecimal totalTickedSaleToday(String movieId) {
+    public BigDecimal totalTickedSaleToday(String movieId) throws ParseException {
 
         //获取当前时间
-        Date nowDate = DateUtil.getDayStart(DateUtil.getCurrentTime());
-        Date nowDay = DateUtil.getDayStart(nowDate);
+        Date now = DateUtil.getCurrentTime();
+        Date nowDayStart = DateUtil.getDayStart(now);
+
         OrderExample orderExample = new OrderExample();
         OrderExample.Criteria orderCriteria = orderExample.createCriteria();
         //添加条件为今天开始和当前时间
-        orderCriteria.andOrderTimeBetween(nowDay, nowDate);
+        orderCriteria.andOrderTimeBetween(nowDayStart, now);
         //查询今天之内的订单数据
         List<Order> orderList = orderMapper.selectByExample(orderExample);
         List<String> orderIds = new ArrayList<>();
@@ -90,7 +100,8 @@ public class WatcedhServiceImpl implements WatcedhService {
         //查询指定电影的电影票
         ticketCriteria.andMovieIdEqualTo(movieId);
         //查询指定订单的电影票
-        ticketCriteria.andTicketIdIn(orderIds);
+        if (orderIds != null && orderIds.size() > 0)
+            ticketCriteria.andTicketIdIn(orderIds);
         List<Ticket> ticketList = ticketMapper.selectByExample(ticketExample);
         //计算票房
         BigDecimal total = BigDecimal.ZERO;

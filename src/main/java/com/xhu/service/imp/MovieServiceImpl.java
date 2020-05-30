@@ -8,6 +8,7 @@ import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
 import java.util.*;
 
 /**
@@ -122,8 +123,10 @@ public class MovieServiceImpl implements MovieService {
      * @return
      */
     @Override
-    public List<Movie> findMovieByDate(Date date) {
+    public List<Movie> findMovieByDate(Date date) throws ParseException {
+
         date = DateUtil.getDayStart(date);
+
         Date nextDay = DateUtils.addDays(date, 1);
         /**
          * 获取场次晚于当前时间的信息

@@ -3,9 +3,9 @@ package com.xhu.controller;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.xhu.po.User;
-import com.xhu.po.UserInfomation;
+import com.xhu.po.UserPo;
 import com.xhu.service.UserFunService;
-import com.xhu.service.UserInfomationService;
+import com.xhu.service.UserPoService;
 import com.xhu.service.UserService;
 import com.xhu.utils.JSONUtils;
 import com.xhu.utils.StateCode;
@@ -32,7 +32,7 @@ import java.sql.SQLException;
 @RequestMapping(value = "/infomation")
 public class UserInfomationController {
     @Autowired
-    private UserInfomationService userInfomationService;
+    private UserPoService userPoService;
     @Autowired
     private UserService userService;
     @Autowired
@@ -48,27 +48,27 @@ public class UserInfomationController {
         //将前端数据护转换为User Object
         User user = JSON.parseObject(jsonStr, User.class);
         //获取UserInfomation数据
-        UserInfomation userInfomation = userInfomationService.findUserInfomationByUserId(user.getUserId());
+        UserPo userPo = userPoService.findUserInfomationByUserId(user.getUserId());
         //获取状态码，默认为NULL_FEILD
         int code = StateCode.NULL_FEILD;
         //获取数据部位空，状态码转化为SUCCESS
-        if (null != userInfomation) code = StateCode.SUCCESS;
+        if (null != userPo) code = StateCode.SUCCESS;
         //将返回信息封装为JSONObject对象
-        JSONObject jsonObject = JSONUtils.packageJson(code, StateCode.MSG.get(code), userInfomation);
+        JSONObject jsonObject = JSONUtils.packageJson(code, StateCode.MSG.get(code), userPo);
         //将数据返回前端
         response.setContentType("text/html;charset=utf-8");
         response.getWriter().write(jsonObject.toJSONString());
     }
 
     @ApiOperation(value = "用户信息录入", notes = "用户输入个人信息")
-    @ApiImplicitParam(name = "userInfomation", value = "用户信息", paramType = "UserInfomation", dataType = "UserInfomation", required = true)
+    @ApiImplicitParam(name = "userInfomation", value = "用户信息", paramType = "UserPo", dataType = "UserPo", required = true)
     @RequestMapping(value = "/write", method = RequestMethod.POST)
     public void writeInfomation(HttpServletRequest request, HttpServletResponse response) throws IOException {
         //将前端数据妆化为String
         String jsonStr = JSONUtils.getRequestPostStr(request);
         System.out.println(jsonStr);
         //将前端获取的数据转化为UserInfomaton对象
-        UserInfomation userInformation = JSON.parseObject(jsonStr, UserInfomation.class);
+        UserPo userInformation = JSON.parseObject(jsonStr, UserPo.class);
         User user = userInformation.getUser();
         String userPassword = user.getUserPassword();
         user.setUserPassword(DigestUtils.md5Hex(userPassword));
@@ -96,9 +96,9 @@ public class UserInfomationController {
         JSONObject res = null;
         if (userRes == StateCode.SUCCESS && userFunRes == StateCode.SUCCESS) {   //修改成功将更新后的UerInfomation对象返回前端
             //通过用户id查找用户信息
-            UserInfomation userInfomation = userInfomationService.findUserInfomationByUserId(userId);
+            UserPo userPo = userPoService.findUserInfomationByUserId(userId);
             //将数据打包成JSONObject对象
-            res = JSONUtils.packageJson(StateCode.SUCCESS, StateCode.MSG.get(StateCode.SUCCESS), userInfomation);
+            res = JSONUtils.packageJson(StateCode.SUCCESS, StateCode.MSG.get(StateCode.SUCCESS), userPo);
         }//数据修改失败返回错误信息
         else res = JSONUtils.packageJson(StateCode.FAIL, StateCode.MSG.get(StateCode.FAIL), null);
         //将sjon数据返回前端

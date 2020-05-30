@@ -2,7 +2,7 @@ package com.xhu.service.imp;
 
 import com.xhu.mapper.*;
 import com.xhu.po.*;
-import com.xhu.service.UserInfomationService;
+import com.xhu.service.UserPoService;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,7 +17,7 @@ import java.util.List;
  * 只为项目开发中节约时间的一时之局，项目结束后便改
  */
 @Service
-public class UserInfomationServiceImpl implements UserInfomationService {
+public class UserPoServiceImpl implements UserPoService {
     @Autowired
     private UserMapper userMapper;
     @Autowired
@@ -30,7 +30,7 @@ public class UserInfomationServiceImpl implements UserInfomationService {
     private CityMapper cityMapper;
 
     @Override
-    public UserInfomation findUserInfomationByUserId(String userId) {
+    public UserPo findUserInfomationByUserId(String userId) {
         //用户
         User user = userMapper.selectByPrimaryKey(userId);
         if (null == user)
@@ -70,13 +70,13 @@ public class UserInfomationServiceImpl implements UserInfomationService {
             cityName = city.getCityName();
         }
         //创建UserInfomation
-        UserInfomation userInfomation = new UserInfomation(user, funs, cityName, stateLifeName);
+        UserPo userPo = new UserPo(user, funs, cityName, stateLifeName);
         //返回userInfomation
-        return userInfomation;
+        return userPo;
     }
 
     @Override
-    public UserInfomation findUserInfomationByUserTelphoneAndUserPasswprd(String userTelphone, String userPasword) {
+    public UserPo findUserInfomationByUserTelphoneAndUserPasswprd(String userTelphone, String userPasword) {
         //创建Example
         UserExample userExample = new UserExample();
         UserExample.Criteria userCriteria = userExample.createCriteria();

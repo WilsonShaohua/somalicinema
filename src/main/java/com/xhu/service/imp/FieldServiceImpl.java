@@ -8,6 +8,7 @@ import com.xhu.po.Movie;
 import com.xhu.po.MovieExample;
 import com.xhu.service.FieldService;
 import com.xhu.utils.DateUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,7 @@ import java.util.*;
  * @date 2020/5/28 20:30
  */
 @Service
+@Slf4j
 public class FieldServiceImpl implements FieldService {
     @Autowired
     private FieldMapper fieldMapper;
@@ -45,12 +47,18 @@ public class FieldServiceImpl implements FieldService {
     public List<String> findTodayFeild() {
         Date now = DateUtil.getCurrentTime();
         Date today = DateUtil.getDayStart(now);
+
+        if (today == null)
+            return null;
+
         Date tomorrow = DateUtils.addDays(today, 1);
+
         FieldExample fieldExample = new FieldExample();
         fieldExample.setOrderByClause("field_start_data_time asc");
         FieldExample.Criteria fieldCriteria = fieldExample.createCriteria();
         fieldCriteria.andFieldStartDataTimeBetween(today, tomorrow);
         List<Field> fields = fieldMapper.selectByExample(fieldExample);
+
         Set<String> movieIds = new TreeSet<>();
         for (Field field : fields) {
             movieIds.add(field.getMovieId());
@@ -68,6 +76,7 @@ public class FieldServiceImpl implements FieldService {
      */
     @Override
     public List<Movie> findMovieAfterDate(Date date) {
+
         FieldExample fieldExample = new FieldExample();
         FieldExample.Criteria fieldCriteria = fieldExample.createCriteria();
         //晚于当前时间的电影场次安排
@@ -78,6 +87,7 @@ public class FieldServiceImpl implements FieldService {
         for (Field field : fields) {
             movieIds.add(field.getMovieId());
         }
+
         MovieExample movieExample = new MovieExample();
         MovieExample.Criteria movieCriteria = movieExample.createCriteria();
         movieCriteria.andMoviePublishingDataLessThan(date);
@@ -85,6 +95,7 @@ public class FieldServiceImpl implements FieldService {
             addAll(movieIds);
         }});
         List<Movie> movies = movieMapper.selectByExample(movieExample);
+
         return movies;
     }
 

@@ -14,7 +14,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserInfomation {
+public class UserPo {
     private User user;
     private List<Fun> funs;
     private String cityName;
