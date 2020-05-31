@@ -31,7 +31,7 @@ import java.sql.SQLException;
 @Api
 @Slf4j
 @Controller
-@RequestMapping(value = "/infomation")
+@RequestMapping(value = "/information")
 public class UserInfomationController {
     @Autowired
     private UserPoService userPoService;

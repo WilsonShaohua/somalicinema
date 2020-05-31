@@ -69,7 +69,7 @@ public class MoviePoServiceImpl implements MoviePoService {
             Province province = provinceMapper.selectByPrimaryKey(city.getProvinceId());
             worldCountry = worldCountryMapper.selectByPrimaryKey(province.getWorldCountryId());
         } catch (NullPointerException e) {
-            log.warn("world country is null", worldCountry);
+            log.warn("world country is null");
         }
 
         MovieType movieType = movieTypeMapper.selectByPrimaryKey(movie.getMovieTypeId());
@@ -97,6 +97,7 @@ public class MoviePoServiceImpl implements MoviePoService {
         moviePo.setWorldCountry(worldCountry);
         moviePo.setActors(actors);
         moviePo.setMovieType(movieType);
+        log.info("get movie id :" + movie.getMovieId());
         return moviePo;
     }
 

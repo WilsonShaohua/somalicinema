@@ -131,6 +131,7 @@ public class MovieController {
             log.warn("/movie/hot null date");
             return null;
         }
+        log.info("/movie/hot had date : " + moviePos.toString());
         //获取票房数据
         moviePos = moviePoService.getTodaySalledMoney(moviePos);
         //获取排序方式
