@@ -2,7 +2,6 @@ package com.xhu.utils.constant;
 
 import com.google.common.collect.ImmutableMap;
 import com.xhu.po.MoviePo;
-import com.xhu.utils.MovieInformationComparatorMethod;
 
 import java.util.Comparator;
 import java.util.Map;

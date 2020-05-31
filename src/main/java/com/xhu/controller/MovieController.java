@@ -57,9 +57,14 @@ public class MovieController {
         List<Movie> movies = fieldService.findMovieAfterNow();
         //获取电影信息
         List<MoviePo> moviePos = moviePoService.findMoviePoByMovies(movies);
+        if (moviePos == null || moviePos.size() == 0) {
+            log.warn("/movie/now null date");
+            return null;
+        }
+        moviePos = moviePoService.getTicketAmount(moviePos);
         //排序
         moviePos.sort(MovieSortCode.SORT_WAY.get(MovieSortCode.HEATING_UP));
-        log.info("/movie/now", moviePos);
+
         if (limit != null && limit.length > 0 && limit[0] <= moviePos.size())
             return moviePos.subList(0, limit[0]);
         return moviePos;
@@ -74,7 +79,7 @@ public class MovieController {
         if (moviePo != null)
             code = StateCode.SUCCESS;
         JSONObject jsonObject = JSONUtils.packageJson(code, StateCode.MSG.get(code), moviePo);
-
+        log.info("/movie/now response\n" + jsonObject.toJSONString());
         //修正数据字符集
         response.setContentType("text/html;charset=utf-8");
         //传递数据
@@ -85,6 +90,10 @@ public class MovieController {
         List<Movie> movies = movieService.findMovieByMoviePublishingDate();
         //获取电影信息
         List<MoviePo> moviePos = moviePoService.findMoviePoByMovies(movies);
+        if (moviePos == null || moviePos.size() == 0) {
+            log.warn("/movie/coming null date");
+            return null;
+        }
         //排序
         moviePos.sort(MovieSortCode.SORT_WAY.get(MovieSortCode.COMING_SOON));
         if (limit != null && limit.length > 0 && limit[0] <= moviePos.size())
@@ -101,7 +110,7 @@ public class MovieController {
         if (moviePos != null)
             code = StateCode.SUCCESS;
         JSONObject jsonObject = JSONUtils.packageJson(code, StateCode.MSG.get(code), moviePos);
-
+        log.info("/movie/comming response \n" + jsonObject.toJSONString());
         //修正数据字符集
         response.setContentType("text/html;charset=utf-8");
         //传递数据
@@ -115,12 +124,15 @@ public class MovieController {
     private List<MoviePo> hot(int... limit) {
         //找到排片晚于当前且出版日期早于现在的电影
         List<Movie> movies = fieldService.findMovieAfterNow();
-        log.info(movies.toString());
+
         //获取电影信息
         List<MoviePo> moviePos = moviePoService.findMoviePoByMovies(movies);
-        if (moviePos == null) {
+        if (moviePos == null || moviePos.size() == 0) {
+            log.warn("/movie/hot null date");
             return null;
         }
+        //获取票房数据
+        moviePos = moviePoService.getTodaySalledMoney(moviePos);
         //获取排序方式
         Comparator<MoviePo> movieInformationComparator = MovieSortCode.SORT_WAY.get(MovieSortCode.HOT_MOVIE);
         Collections.sort(moviePos, movieInformationComparator);
@@ -139,7 +151,7 @@ public class MovieController {
         if (moviePos != null)
             code = StateCode.SUCCESS;
         JSONObject jsonObject = JSONUtils.packageJson(code, StateCode.MSG.get(code), moviePos);
-
+        log.info("/movie/hot response: \n" + jsonObject.toJSONString());
         //修正数据字符集
         response.setContentType("text/html;charset=utf-8");
         //传递数据
@@ -149,22 +161,25 @@ public class MovieController {
     private List<MoviePo> box(int... limit) {
         //找到排片晚于当前且出版日期早于现在的电影
         List<String> movieIds = fieldService.findTodayFeild();
-        try {
-            log.info(movieIds.toString());
-        } catch (NullPointerException e) {
-            log.warn("影视数据为空", movieIds);
-        }
+
         //获取电影信息
         List<MoviePo> moviePos = moviePoService.findMoviePoByMovieIds(movieIds);
-        log.info("影视数据：" + moviePos.toString());
+        if (moviePos == null || moviePos.size() == 0) {
+            log.warn("/movie/box null date");
+            return null;
+        }
+        //添加票房数据
+        moviePos = moviePoService.getSalledMoney(moviePos);
         moviePos.sort(MovieSortCode.SORT_WAY.get(MovieSortCode.TODAY_BOX));
-        if (limit != null && limit.length > 0 && limit[0] <= moviePos.size())
+        if (limit != null && limit.length > 0 && limit[0] <= moviePos.size()) {
+            log.info("index请求");
             return moviePos.subList(0, limit[0]);
+        }
         return moviePos;
     }
 
     //今日票房
-    @ApiOperation(value = "box", notes = "今日票房")
+    @ApiOperation(value = "box", notes = "今日票房", tags = "今日票房")
     @RequestMapping(value = "/box", method = RequestMethod.POST)
     public void box(HttpServletResponse response) throws IOException {
         List<MoviePo> moviePos = box();
@@ -172,11 +187,12 @@ public class MovieController {
         if (moviePos != null)
             code = StateCode.SUCCESS;
         JSONObject jsonObject = JSONUtils.packageJson(code, StateCode.MSG.get(code), moviePos);
-
+        String jsonString = jsonObject.toJSONString();
+        log.info("/movie/box : response：/n" + jsonString);
         //修正数据字符集
         response.setContentType("text/html;charset=utf-8");
         //传递数据
-        response.getWriter().write(jsonObject.toJSONString());
+        response.getWriter().write(jsonString);
     }
 
     /**
@@ -188,6 +204,12 @@ public class MovieController {
         List<Movie> movies = fieldService.findMovieAfterNow();
         //获取电影信息
         List<MoviePo> moviePos = moviePoService.findMoviePoByMovies(movies);
+        if (moviePos == null || moviePos.size() == 0) {
+            log.error("/movie/expect : null date");
+            return null;
+        }
+        //添加期待数据
+        moviePos = moviePoService.getWantWatchAmount(moviePos);
         moviePos.sort(MovieSortCode.SORT_WAY.get(MovieSortCode.MOST_EXPECT));
         if (limit != null && limit.length > 0 && limit[0] <= moviePos.size())
             return moviePos.subList(0, limit[0]);
@@ -203,11 +225,12 @@ public class MovieController {
         if (moviePos != null)
             code = StateCode.SUCCESS;
         JSONObject jsonObject = JSONUtils.packageJson(code, StateCode.MSG.get(code), moviePos);
-
+        String jsonString = jsonObject.toJSONString();
+        log.info("/movie/expect : response/n" + jsonString);
         //修正数据字符集
         response.setContentType("text/html;charset=utf-8");
         //传递数据
-        response.getWriter().write(jsonObject.toJSONString());
+        response.getWriter().write(jsonString);
     }
 
     /**
@@ -217,8 +240,14 @@ public class MovieController {
     private List<MoviePo> top100(int... limit) {
         //上映日期晚于当前受期待电影
         List<Movie> movies = movieService.findMovieBeforeNow();
+        log.info("top100 movies" + movies);
         //获取电影信息
         List<MoviePo> moviePos = moviePoService.findMoviePoByMovies(movies);
+        if (moviePos == null || moviePos.size() == 0) {
+            log.warn("/movie/top100 null data");
+            return null;
+        }
+        moviePos = moviePoService.getScore(moviePos);
         moviePos.sort(MovieSortCode.SORT_WAY.get(MovieSortCode.TOP100));
         if (limit != null && limit.length > 0 && limit[0] <= moviePos.size())
             return moviePos.subList(0, limit[0]);
@@ -232,17 +261,18 @@ public class MovieController {
         //上映日期晚于当前受期待电影
         List<Movie> movies = movieService.findMovieBeforeNow();
         //获取电影信息
-        List<MoviePo> moviePos = moviePoService.findMoviePoByMovies(movies);
-        moviePos.sort(MovieSortCode.SORT_WAY.get(MovieSortCode.TOP100));
+        List<MoviePo> moviePos = top100();
         int code = StateCode.FAIL;
         if (moviePos != null)
             code = StateCode.SUCCESS;
         JSONObject jsonObject = JSONUtils.packageJson(code, StateCode.MSG.get(code), moviePos);
 
+        String jsonString = jsonObject.toJSONString();
+        log.info("/movie/top100 response : \n" + jsonString);
         //修正数据字符集
         response.setContentType("text/html;charset=utf-8");
         //传递数据
-        response.getWriter().write(jsonObject.toJSONString());
+        response.getWriter().write(jsonString);
     }
 
     @ApiOperation(value = "index", notes = "主页信息")
@@ -257,10 +287,13 @@ public class MovieController {
         moviePoMap.put("comingSoon", comingSoon(ConstantString.DEAFULT_PAGE_SIZE));
         int code = StateCode.SUCCESS;
         JSONObject jsonObject = JSONUtils.packageJson(code, StateCode.MSG.get(code), moviePoMap);
+
+        String jsonString = jsonObject.toJSONString();
+        log.info("/movie/index response :" + jsonString);
         //修正数据字符集
         response.setContentType("text/html;charset=utf-8");
         //传递数据
-        response.getWriter().write(jsonObject.toJSONString());
+        response.getWriter().write(jsonString);
 
     }
 }

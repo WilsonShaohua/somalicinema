@@ -1,16 +1,11 @@
-package com.xhu.utils;
+package com.xhu.utils.constant;
 
 import com.xhu.po.Movie;
 import com.xhu.po.MoviePo;
-import com.xhu.service.TicketService;
 import com.xhu.service.WantWatchService;
 import com.xhu.service.WatchedhService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
-import java.math.BigDecimal;
-import java.text.ParseException;
 import java.util.Comparator;
 import java.util.Date;
 
@@ -47,12 +42,8 @@ public class MovieInformationComparatorMethod {
     public static Comparator<MoviePo> SCORE_SORT = new Comparator<MoviePo>() {
         @Override
         public int compare(MoviePo o1, MoviePo o2) {
-            Movie movie1 = o1.getMovie();
-            Movie movie2 = o2.getMovie();
-            String movieId1 = movie1.getMovieId();
-            String movieId2 = movie2.getMovieId();
-            double score1 = watchedService.movieScoreByMovieId(movieId1);
-            double score2 = watchedService.movieScoreByMovieId(movieId2);
+            double score1 = o1.getScore();
+            double score2 = o2.getScore();
             return Double.compare(score1, score2);
         }
     };
@@ -65,43 +56,20 @@ public class MovieInformationComparatorMethod {
     public static Comparator<MoviePo> TODAY_TICKET_SALE_MONEY = new Comparator<MoviePo>() {
         @Override
         public int compare(MoviePo moviePo1, MoviePo moviePo2) {
-            BigDecimal totalTickedSaleToday1 = null;
-            try {
-                totalTickedSaleToday1 = watchedService.totalTickedSaleToday(moviePo1.getMovie().getMovieId());
-            } catch (ParseException e) {
-
-            }
-            BigDecimal totalTickedSaleToday2 = null;
-            try {
-                totalTickedSaleToday2 = watchedService.totalTickedSaleToday(moviePo2.getMovie().getMovieId());
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-            return totalTickedSaleToday1.compareTo(totalTickedSaleToday2);
+            return moviePo1.getSalledMoney().compareTo(moviePo2.getSalledMoney());
         }
     };
-    private static TicketService ticketService;
+
     public static Comparator<MoviePo> HEATING_UP = new Comparator<MoviePo>() {
         @Override
         public int compare(MoviePo o1, MoviePo o2) {
-            Movie movie1 = o1.getMovie();
-            Movie movie2 = o2.getMovie();
-            System.out.println("MovieInformationComparatorMethod");
-            System.out.println(movie1);
-            System.out.println(movie2);
-            long totalTicket1 = ticketService.countTicketAmountByMovieId(movie1.getMovieId());
-            long totalTicket2 = ticketService.countTicketAmountByMovieId(movie2.getMovieId());
-            return Long.compare(totalTicket1, totalTicket2);
+            return Long.compare(o1.getTicketAmount(), o2.getTicketAmount());
         }
     };
     public static Comparator<MoviePo> HOT_MOVIE = new Comparator<MoviePo>() {
         @Override
         public int compare(MoviePo o1, MoviePo o2) {
-            Movie movie1 = o1.getMovie();
-            Movie movie2 = o2.getMovie();
-            BigDecimal totalMoney1 = ticketService.countIicketTotalBox(movie1.getMovieId());
-            BigDecimal totalMoney2 = ticketService.countIicketTotalBox(movie2.getMovieId());
-            return totalMoney1.compareTo(totalMoney2);
+            return o1.getTodaySalledMoney().compareTo(o2.getTodaySalledMoney());
         }
     };
     private static WantWatchService wantWatchService;
@@ -115,23 +83,8 @@ public class MovieInformationComparatorMethod {
     public static Comparator<MoviePo> MOST_ANTICIPATED = new Comparator<MoviePo>() {
         @Override
         public int compare(MoviePo moviePo1, MoviePo moviePo2) {
-            long wantWatchMovieInfomation1 = wantWatchService.countTotalWantByMovieId(moviePo1.getMovie().getMovieId());
-            long wantWatchMovieInfomation2 = wantWatchService.countTotalWantByMovieId(moviePo2.getMovie().getMovieId());
-            return Long.compare(wantWatchMovieInfomation1, wantWatchMovieInfomation2);
+            return Long.compare(moviePo1.getWantWatch(), moviePo2.getWantWatch());
         }
     };
-    @Autowired
-    private WatchedhService watchedhServiceInit;
-    @Autowired
-    private TicketService ticketServiceInit;
-    @Autowired
-    private WantWatchService wantWatchServiceInit;
-
-    @PostConstruct
-    private void beforeInit() {
-        watchedService = watchedhServiceInit;
-        ticketService = ticketServiceInit;
-        wantWatchService = wantWatchServiceInit;
-    }
 
 }

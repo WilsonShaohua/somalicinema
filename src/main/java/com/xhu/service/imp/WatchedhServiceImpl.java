@@ -49,7 +49,6 @@ public class WatchedhServiceImpl implements WatchedhService {
         try {
             totalScore.divide(BigDecimal.valueOf(watchedList.size()));
         } catch (ArithmeticException e) {
-            e.printStackTrace();
             log.info(movieId + "无分数信息");
         }
         return Double.parseDouble(avgScore.toString());

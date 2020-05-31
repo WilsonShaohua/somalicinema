@@ -12,6 +12,7 @@ import com.xhu.utils.constant.StateCode;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,6 +29,7 @@ import java.sql.SQLException;
  * @date 2020/5/26 18:51
  */
 @Api
+@Slf4j
 @Controller
 @RequestMapping(value = "/infomation")
 public class UserInfomationController {
@@ -55,6 +57,7 @@ public class UserInfomationController {
         if (null != userPo) code = StateCode.SUCCESS;
         //将返回信息封装为JSONObject对象
         JSONObject jsonObject = JSONUtils.packageJson(code, StateCode.MSG.get(code), userPo);
+        log.info(jsonObject.toJSONString());
         //将数据返回前端
         response.setContentType("text/html;charset=utf-8");
         response.getWriter().write(jsonObject.toJSONString());
@@ -101,6 +104,7 @@ public class UserInfomationController {
             res = JSONUtils.packageJson(StateCode.SUCCESS, StateCode.MSG.get(StateCode.SUCCESS), userPo);
         }//数据修改失败返回错误信息
         else res = JSONUtils.packageJson(StateCode.FAIL, StateCode.MSG.get(StateCode.FAIL), null);
+        log.info(res.toJSONString());
         //将sjon数据返回前端
         response.setContentType("text/html;charset=utf-8");
         response.getWriter().write(res.toJSONString());

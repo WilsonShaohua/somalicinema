@@ -1,6 +1,7 @@
 package com.xhu.utils;
 
 import com.xhu.po.MoviePo;
+import com.xhu.utils.constant.MovieInformationComparatorMethod;
 import org.junit.Test;
 
 import java.util.ArrayList;

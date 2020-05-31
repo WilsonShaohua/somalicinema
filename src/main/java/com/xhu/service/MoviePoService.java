@@ -17,4 +17,30 @@ public interface MoviePoService {
     MoviePo findMoviePoByMovieId(String movieId);
 
     List<MoviePo> findMoviePoByMovieIds(List<String> movieIds);
+
+    //获取评分
+    MoviePo getScore(MoviePo moviePo);
+
+    List<MoviePo> getScore(List<MoviePo> moviePoList);
+
+    //获取票数
+    MoviePo getTicketAmount(MoviePo moviePo);
+
+    List<MoviePo> getTicketAmount(List<MoviePo> moviePoList);
+
+    //获取票房
+    MoviePo getSalledMoney(MoviePo moviePo);
+
+    List<MoviePo> getSalledMoney(List<MoviePo> moviePoList);
+
+    //获取今日票房
+    MoviePo getTodaySalledMoney(MoviePo moviePo);
+
+    List<MoviePo> getTodaySalledMoney(List<MoviePo> moviePoList);
+
+    //获取想看人数
+    MoviePo getWantWatchAmount(MoviePo moviePo);
+
+    List<MoviePo> getWantWatchAmount(List<MoviePo> moviePoList);
+
 }

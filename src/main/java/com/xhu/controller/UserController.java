@@ -48,7 +48,7 @@ public class UserController {
         User user = JSON.parseObject(jsonStr, User.class);
 
         int returnCode = userService.userLogin(user);
-        log.info("返回状态码：" + returnCode);
+
         //登录未成功
         if (StateCode.SUCCESS != returnCode) {
             JSONObject res = JSONUtils.packageJson(returnCode, StateCode.MSG.get(returnCode), null);
@@ -62,6 +62,7 @@ public class UserController {
         if (userPo != null)
             code = StateCode.SUCCESS; //状态码为SUCCESS
         JSONObject jsonObject = JSONUtils.packageJson(code, StateCode.MSG.get(code), userPo);
+        log.info(jsonObject.toJSONString());
         //设置字符集
         response.setContentType("text/html;charset=utf-8");
         //传递数据
@@ -86,6 +87,7 @@ public class UserController {
         JSONObject jsonObject = JSONUtils.packageJson(returnCode, StateCode.MSG.get(returnCode), user);
         //将JSONObject转化为JSON字符串
         String responseString = jsonObject.toJSONString();
+        log.info(jsonObject.toJSONString());
         //修正数据字符集
         response.setContentType("text/html;charset=utf-8");
         //传递数据

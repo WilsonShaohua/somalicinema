@@ -4,10 +4,12 @@ import com.xhu.mapper.TicketMapper;
 import com.xhu.po.Ticket;
 import com.xhu.po.TicketExample;
 import com.xhu.service.TicketService;
+import com.xhu.utils.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -41,5 +43,17 @@ public class TicketServiceImpl implements TicketService {
             totalBox.add(ticket.getTicketMoney());
         }
         return totalBox;
+    }
+
+    @Override
+    public BigDecimal countTicketTodayBox(String movieId) {
+        Date now = DateUtil.getCurrentTime();
+        return countTicketDateBox(movieId, now);
+    }
+
+    @Override
+    public BigDecimal countTicketDateBox(String movieId, Date date) {
+
+        return null;
     }
 }

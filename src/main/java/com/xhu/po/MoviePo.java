@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -19,4 +20,17 @@ public class MoviePo {
     private List<Actor> actors;
     private WorldCountry worldCountry;
     private MovieType movieType;
+    //卖出电影票数量
+    private long ticketAmount;
+    //票房
+    private BigDecimal salledMoney;
+
+    //今日票房
+    private BigDecimal todaySalledMoney;
+    //评分
+    private double score;
+    //想看
+    private long wantWatch;
+
+
 }

@@ -1626,3 +1626,7 @@ go
 alter table regional
     add constraint regional_PK primary key nonclustered (regional_id)
 go
+
+alter table field
+    add [money] money
+go
