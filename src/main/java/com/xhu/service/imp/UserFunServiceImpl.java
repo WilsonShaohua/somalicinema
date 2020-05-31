@@ -71,6 +71,9 @@ public class UserFunServiceImpl implements UserFunService {
 
     @Override
     public int addUserFunByUserIdWithFuns(String userId, List<Fun> funs) throws SQLException {
+        if (funs == null || funs.size() == 0) {
+            return 0;
+        }
         List<String> funIds = new ArrayList<>();
         funIds.clear();
         for (Fun fun : funs) {

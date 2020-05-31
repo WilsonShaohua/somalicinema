@@ -17,4 +17,5 @@ public interface UserService {
 
     int updteUserByPrimaryKey(User user);
 
+    boolean checkPassword(String userId, String userPassword);
 }

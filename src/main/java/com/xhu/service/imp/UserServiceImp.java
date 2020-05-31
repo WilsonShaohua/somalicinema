@@ -146,5 +146,15 @@ public class UserServiceImp implements UserService {
         return StateCode.FAIL;
     }
 
+    @Override
+    public boolean checkPassword(String userId, String userPassword) {
+        UserExample userExample = new UserExample();
+        UserExample.Criteria userCriteria = userExample.createCriteria();
+        userCriteria.andUserIdEqualTo(userId);
+        userCriteria.andUserPasswordEqualTo(userPassword);
+        long count = userMapper.countByExample(userExample);
+        return count == 1;
+    }
+
 
 }

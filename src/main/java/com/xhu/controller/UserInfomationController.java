@@ -2,6 +2,7 @@ package com.xhu.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.xhu.po.Fun;
 import com.xhu.po.User;
 import com.xhu.po.UserPo;
 import com.xhu.service.UserFunService;
@@ -23,6 +24,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.List;
 
 /**
  * @author liu li
@@ -46,11 +48,12 @@ public class UserInfomationController {
     public void showInfomation(HttpServletResponse response, HttpServletRequest request) throws IOException {
         //抓取前端数据
         String jsonStr = JSONUtils.getRequestPostStr(request);
-        System.out.println(jsonStr);
+        log.info("request string " + jsonStr);
         //将前端数据护转换为User Object
         User user = JSON.parseObject(jsonStr, User.class);
         //获取UserInfomation数据
         UserPo userPo = userPoService.findUserInfomationByUserId(user.getUserId());
+        log.info("get user po" + userPo.toString());
         //获取状态码，默认为NULL_FEILD
         int code = StateCode.NULL_FEILD;
         //获取数据部位空，状态码转化为SUCCESS
@@ -67,7 +70,7 @@ public class UserInfomationController {
     @ApiImplicitParam(name = "userInfomation", value = "用户信息", paramType = "UserPo", dataType = "UserPo", required = true)
     @RequestMapping(value = "/write", method = RequestMethod.POST)
     public void writeInfomation(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        //将前端数据妆化为String
+        //将前端数据转化为String
         String jsonStr = JSONUtils.getRequestPostStr(request);
         System.out.println(jsonStr);
         //将前端获取的数据转化为UserInfomaton对象
@@ -76,10 +79,17 @@ public class UserInfomationController {
         String userPassword = user.getUserPassword();
         user.setUserPassword(DigestUtils.md5Hex(userPassword));
         userInformation.setUser(user);
+        //用户名 密码校验失败
+        if (userService.checkPassword(user.getUserId(), user.getUserPassword()) == false) {
+            JSONObject jsonObject = JSONUtils.packageJson(StateCode.ERROR_PASSWORD, StateCode.MSG.get(StateCode.ERROR_PASSWORD), null);
+            response.getWriter().write(jsonObject.toJSONString());
+            return;
+        }
+        List<Fun> funs = userFunService.findFunByUserId(user.getUserId());
         //修改userfun数据
         int userFunRes = StateCode.FAIL;
         try {
-            userFunRes = userFunService.addUserFunByUserIdWithFuns(userInformation.getUser().getUserId(), userInformation.getFuns());
+            userFunRes = userFunService.addUserFunByUserIdWithFuns(userInformation.getUser().getUserId(), funs);
         } catch (SQLException e) {
             e.printStackTrace();
             //sql异常
@@ -90,6 +100,7 @@ public class UserInfomationController {
             e.printStackTrace();
             JSONObject jsonObject = JSONUtils.packageJson(StateCode.NULL_LOGIN, StateCode.MSG.get(StateCode.NULL_LOGIN), null);
             response.getWriter().write(jsonObject.toJSONString());
+            return;
         }
         //修改User对象
         int userRes = userService.updteUserByPrimaryKey(userInformation.getUser());
