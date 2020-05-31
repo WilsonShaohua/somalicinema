@@ -35,6 +35,8 @@ insert into province (province_id,province_name) values
 ( 640, '宁夏回族自治区'),
 ( 650, '新疆维吾尔自治区')
 go
-
+update province
+set world_country_id = '1001001001'
+go
 select * from province
 go

@@ -7,8 +7,9 @@ import com.xhu.service.FieldService;
 import com.xhu.service.MoviePoService;
 import com.xhu.service.MovieService;
 import com.xhu.utils.JSONUtils;
-import com.xhu.utils.MovieSortCode;
-import com.xhu.utils.StateCode;
+import com.xhu.utils.constant.ConstantString;
+import com.xhu.utils.constant.MovieSortCode;
+import com.xhu.utils.constant.StateCode;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -17,13 +18,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 /**
  * 正在热映
@@ -124,11 +121,10 @@ public class MovieController {
         if (moviePos == null) {
             return null;
         }
-        log.info(moviePos.toString());
         //获取排序方式
         Comparator<MoviePo> movieInformationComparator = MovieSortCode.SORT_WAY.get(MovieSortCode.HOT_MOVIE);
         Collections.sort(moviePos, movieInformationComparator);
-        log.info("sort scuess");
+
         if (limit != null && limit.length > 0 && limit[0] <= moviePos.size())
             return moviePos.subList(0, limit[0]);
         return moviePos;
@@ -139,7 +135,6 @@ public class MovieController {
     @RequestMapping(value = "/hot", method = RequestMethod.POST)
     public void hot(HttpServletResponse response) throws IOException {
         List<MoviePo> moviePos = hot();
-        log.info(moviePos.toString());
         int code = StateCode.FAIL;
         if (moviePos != null)
             code = StateCode.SUCCESS;
@@ -154,8 +149,14 @@ public class MovieController {
     private List<MoviePo> box(int... limit) {
         //找到排片晚于当前且出版日期早于现在的电影
         List<String> movieIds = fieldService.findTodayFeild();
+        try {
+            log.info(movieIds.toString());
+        } catch (NullPointerException e) {
+            log.warn("影视数据为空", movieIds);
+        }
         //获取电影信息
         List<MoviePo> moviePos = moviePoService.findMoviePoByMovieIds(movieIds);
+        log.info("影视数据：" + moviePos.toString());
         moviePos.sort(MovieSortCode.SORT_WAY.get(MovieSortCode.TODAY_BOX));
         if (limit != null && limit.length > 0 && limit[0] <= moviePos.size())
             return moviePos.subList(0, limit[0]);
@@ -246,22 +247,20 @@ public class MovieController {
 
     @ApiOperation(value = "index", notes = "主页信息")
     @RequestMapping(value = "/index", method = RequestMethod.POST)
-    public void index(HttpServletResponse response, HttpServletRequest request) throws IOException {
-        int default_length = 8;
-        List<List<MoviePo>> movieInformationLists = new ArrayList<>();
-        movieInformationLists.add(now(default_length));
-        movieInformationLists.add(hot(default_length));
-        movieInformationLists.add(expect(default_length));
-        movieInformationLists.add(top100(default_length));
-        movieInformationLists.add(box(default_length));
-        movieInformationLists.add(comingSoon(default_length));
+    public void index(HttpServletResponse response) throws IOException {
+        Map<String, List<MoviePo>> moviePoMap = new TreeMap<>();
+        moviePoMap.put("now", now(ConstantString.DEAFULT_PAGE_SIZE));
+        moviePoMap.put("hot", hot(ConstantString.DEAFULT_PAGE_SIZE));
+        moviePoMap.put("expect", expect(ConstantString.DEAFULT_PAGE_SIZE));
+        moviePoMap.put("top100", top100(ConstantString.DEAFULT_PAGE_SIZE));
+        moviePoMap.put("box", box(ConstantString.DEAFULT_PAGE_SIZE));
+        moviePoMap.put("comingSoon", comingSoon(ConstantString.DEAFULT_PAGE_SIZE));
         int code = StateCode.SUCCESS;
-        JSONObject jsonObject = JSONUtils.packageJson(code, StateCode.MSG.get(code), movieInformationLists);
+        JSONObject jsonObject = JSONUtils.packageJson(code, StateCode.MSG.get(code), moviePoMap);
         //修正数据字符集
         response.setContentType("text/html;charset=utf-8");
         //传递数据
         response.getWriter().write(jsonObject.toJSONString());
 
     }
-
 }

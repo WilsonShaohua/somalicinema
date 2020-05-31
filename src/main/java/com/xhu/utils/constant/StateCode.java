@@ -1,4 +1,4 @@
-package com.xhu.utils;
+package com.xhu.utils.constant;
 
 import com.google.common.collect.ImmutableMap;
 

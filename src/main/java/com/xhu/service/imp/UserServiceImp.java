@@ -6,7 +6,7 @@ import com.xhu.po.UserExample;
 import com.xhu.service.UserService;
 import com.xhu.utils.DateUtil;
 import com.xhu.utils.KeyProductor;
-import com.xhu.utils.StateCode;
+import com.xhu.utils.constant.StateCode;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

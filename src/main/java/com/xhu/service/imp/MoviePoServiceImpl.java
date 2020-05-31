@@ -52,9 +52,11 @@ public class MoviePoServiceImpl implements MoviePoService {
     public MoviePo findMoviePoByMovie(Movie movie) {
         City city = cityMapper.selectByPrimaryKey(movie.getCityId());
         WorldCountry worldCountry = null;
-        if (city != null) {
+        try {
             Province province = provinceMapper.selectByPrimaryKey(city.getProvinceId());
             worldCountry = worldCountryMapper.selectByPrimaryKey(province.getWorldCountryId());
+        } catch (NullPointerException e) {
+            log.warn("world country is null", worldCountry);
         }
 
         MovieType movieType = movieTypeMapper.selectByPrimaryKey(movie.getMovieTypeId());
@@ -63,8 +65,11 @@ public class MoviePoServiceImpl implements MoviePoService {
         movieActorsCriteria.andMovieIdEqualTo(movie.getMovieId());
         List<MovieActors> movieActorsList = movieActorsMapper.selectByExample(movieActorsExample);
         List<String> actorIds = new ArrayList<>();
+        for (MovieActors movieActors : movieActorsList) {
+            actorIds.add(movieActors.getActorId());
+        }
         List<Actor> actors = null;
-        if (null == actorIds && actorIds.size() > 0) {
+        if (null != actorIds && actorIds.size() > 0) {
             for (MovieActors movieActors : movieActorsList) {
                 actorIds.add(movieActors.getActorId());
             }

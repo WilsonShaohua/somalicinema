@@ -4,7 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.xhu.po.User;
 import com.xhu.service.UserService;
 import com.xhu.utils.SpringTest;
-import com.xhu.utils.StateCode;
+import com.xhu.utils.constant.StateCode;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 

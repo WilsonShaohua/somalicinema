@@ -8,7 +8,7 @@ import com.xhu.service.UserFunService;
 import com.xhu.service.UserPoService;
 import com.xhu.service.UserService;
 import com.xhu.utils.JSONUtils;
-import com.xhu.utils.StateCode;
+import com.xhu.utils.constant.StateCode;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;

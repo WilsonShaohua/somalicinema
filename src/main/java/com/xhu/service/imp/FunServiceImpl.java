@@ -4,7 +4,7 @@ import com.xhu.mapper.FunMapper;
 import com.xhu.po.Fun;
 import com.xhu.po.FunExample;
 import com.xhu.service.FunService;
-import com.xhu.utils.StateCode;
+import com.xhu.utils.constant.StateCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -4,7 +4,7 @@ import com.xhu.mapper.StateLifeMapper;
 import com.xhu.po.StateLife;
 import com.xhu.po.StateLifeExample;
 import com.xhu.service.StateLiftService;
-import com.xhu.utils.StateCode;
+import com.xhu.utils.constant.StateCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

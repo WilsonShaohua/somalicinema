@@ -8,7 +8,7 @@ import com.xhu.po.UserFun;
 import com.xhu.po.UserFunExample;
 import com.xhu.service.UserFunService;
 import com.xhu.utils.KeyProductor;
-import com.xhu.utils.StateCode;
+import com.xhu.utils.constant.StateCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
