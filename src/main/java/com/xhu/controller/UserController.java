@@ -46,9 +46,7 @@ public class UserController {
         log.info("前端获取数据：" + jsonStr);
         //将String转化为User对象
         User user = JSON.parseObject(jsonStr, User.class);
-
         int returnCode = userService.userLogin(user);
-
         //登录未成功
         if (StateCode.SUCCESS != returnCode) {
             JSONObject res = JSONUtils.packageJson(returnCode, StateCode.MSG.get(returnCode), null);

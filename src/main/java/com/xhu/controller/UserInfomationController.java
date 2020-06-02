@@ -85,6 +85,11 @@ public class UserInfomationController {
                 response.getWriter().write(jsonObject.toJSONString());
                 return;
             }
+        } else {
+            log.error("请输入密码");
+//            int code = StateCode.ERROR_PASSWORD;
+//            JSONObject jsonObject = JSONUtils.packageJson(code, StateCode.MSG.get(code), null);
+//            response.getWriter().write(jsonObject.toJSONString());
         }
 
 

@@ -1,5 +1,5 @@
 <html>
 <body>
-<h2>omali-Cinema</h2>
+<h2>Somali-Cinema</h2>
 </body>
 </html>

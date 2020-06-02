@@ -76,12 +76,12 @@ public class MovieController {
     //正在热映
     @ApiOperation(value = "now", notes = "正在热映")
     @RequestMapping(value = "/now", method = RequestMethod.POST)
-    public void now(HttpServletResponse response, @RequestBody Integer pageNo) throws IOException {
+    public void now(HttpServletResponse response) throws IOException {
         List<MoviePo> moviePos = now();
         int code = StateCode.FAIL;
         if (moviePos != null)
             code = StateCode.SUCCESS;
-        moviePos = PageUtils.page(pageNo, ConstantString.DEFAULT_MENU_PAGE_SIZE, moviePos);
+        //  moviePos = PageUtils.page(pageNo, ConstantString.DEFAULT_MENU_PAGE_SIZE, moviePos);
         JSONObject jsonObject = JSONUtils.packageJson(code, StateCode.MSG.get(code), moviePos);
         log.info("/movie/now response\n" + jsonObject.toJSONString());
         //修正数据字符集
@@ -108,12 +108,12 @@ public class MovieController {
     //即将上映
     @ApiOperation(value = "coming", notes = "即将上映")
     @RequestMapping(value = "/coming", method = RequestMethod.POST)
-    public void comingSoon(HttpServletResponse response, @RequestBody Integer pageNo) throws IOException {
+    public void comingSoon(HttpServletResponse response) throws IOException {
         List<MoviePo> moviePos = comingSoon();
         int code = StateCode.FAIL;
         if (moviePos != null)
             code = StateCode.SUCCESS;
-        moviePos = PageUtils.page(pageNo, ConstantString.DEFAULT_MENU_PAGE_SIZE, moviePos);
+//        moviePos = PageUtils.page(pageNo, ConstantString.DEFAULT_MENU_PAGE_SIZE, moviePos);
         JSONObject jsonObject = JSONUtils.packageJson(code, StateCode.MSG.get(code), moviePos);
         log.info("/movie/comming response \n" + jsonObject.toJSONString());
         //修正数据字符集
@@ -151,12 +151,12 @@ public class MovieController {
     //热播电影
     @ApiOperation(value = "hot", notes = "热播电影")
     @RequestMapping(value = "/hot", method = RequestMethod.POST)
-    public void hot(HttpServletResponse response, @RequestBody Integer pageNo) throws IOException {
+    public void hot(HttpServletResponse response) throws IOException {
         List<MoviePo> moviePos = hot();
         int code = StateCode.FAIL;
         if (moviePos != null)
             code = StateCode.SUCCESS;
-        moviePos = PageUtils.page(pageNo, ConstantString.DEFAULT_MENU_PAGE_SIZE, moviePos);
+        //    moviePos = PageUtils.page(pageNo, ConstantString.DEFAULT_MENU_PAGE_SIZE, moviePos);
         JSONObject jsonObject = JSONUtils.packageJson(code, StateCode.MSG.get(code), moviePos);
         log.info("/movie/hot response: \n" + jsonObject.toJSONString());
         //修正数据字符集
@@ -188,12 +188,12 @@ public class MovieController {
     //今日票房
     @ApiOperation(value = "box", notes = "今日票房", tags = "今日票房")
     @RequestMapping(value = "/box", method = RequestMethod.POST)
-    public void box(HttpServletResponse response, @RequestBody Integer pageNo) throws IOException {
+    public void box(HttpServletResponse response) throws IOException {
         List<MoviePo> moviePos = box();
         int code = StateCode.FAIL;
         if (moviePos != null)
             code = StateCode.SUCCESS;
-        moviePos = PageUtils.page(pageNo, ConstantString.DEFAULT_MENU_PAGE_SIZE, moviePos);
+        // moviePos = PageUtils.page(pageNo, ConstantString.DEFAULT_MENU_PAGE_SIZE, moviePos);
         JSONObject jsonObject = JSONUtils.packageJson(code, StateCode.MSG.get(code), moviePos);
         String jsonString = jsonObject.toJSONString();
         log.info("/movie/box : response：/n" + jsonString);
@@ -227,12 +227,12 @@ public class MovieController {
     //最受期待
     @ApiOperation(value = "expect", notes = "最受期待")
     @RequestMapping(value = "/expect", method = RequestMethod.POST)
-    public void expect(HttpServletResponse response, @RequestBody Integer pageNo) throws IOException {
+    public void expect(HttpServletResponse response) throws IOException {
         List<MoviePo> moviePos = expect();
         int code = StateCode.FAIL;
         if (moviePos != null)
             code = StateCode.SUCCESS;
-        moviePos = PageUtils.page(pageNo, ConstantString.DEFAULT_MENU_PAGE_SIZE, moviePos);
+        //moviePos = PageUtils.page(pageNo, ConstantString.DEFAULT_MENU_PAGE_SIZE, moviePos);
         JSONObject jsonObject = JSONUtils.packageJson(code, StateCode.MSG.get(code), moviePos);
         String jsonString = jsonObject.toJSONString();
         log.info("/movie/expect : response/n" + jsonString);

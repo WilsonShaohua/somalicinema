@@ -47,7 +47,4 @@ public interface MovieSortCode {
             .put(TOP100, MovieInformationComparatorMethod.SCORE_SORT) //高分排序
             .put(DATE_AGE, MovieInformationComparatorMethod.PUBLISHING_TIME) //出版年代
             .build();
-
-
-
 }

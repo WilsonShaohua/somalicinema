@@ -2,8 +2,6 @@ package com.xhu.utils.constant;
 
 import com.xhu.po.Movie;
 import com.xhu.po.MoviePo;
-import com.xhu.service.WatchedhService;
-import org.springframework.stereotype.Component;
 
 import java.util.Comparator;
 import java.util.Date;
@@ -12,7 +10,7 @@ import java.util.Date;
  * @author liu li
  * @date 2020/5/30 13:54
  */
-@Component
+
 public class MovieInformationComparatorMethod {
 
     /**
@@ -31,7 +29,6 @@ public class MovieInformationComparatorMethod {
             return publishingDate1.compareTo(publishingDate2);
         }
     };
-    private static WatchedhService watchedService;
     /**
      * compare movieInformation1 and movieInformation2 publishing time
      * if movie score equal return 0
