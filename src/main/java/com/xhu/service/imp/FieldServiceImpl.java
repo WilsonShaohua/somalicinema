@@ -91,9 +91,8 @@ public class FieldServiceImpl implements FieldService {
         MovieExample movieExample = new MovieExample();
         MovieExample.Criteria movieCriteria = movieExample.createCriteria();
         movieCriteria.andMoviePublishingDataLessThan(date);
-        movieCriteria.andMovieIdIn(new ArrayList<String>() {{
-            addAll(movieIds);
-        }});
+        if (movieIds != null && movieIds.size() > 0)
+            movieCriteria.andMovieIdIn(new ArrayList<String>(movieIds));
         List<Movie> movies = movieMapper.selectByExample(movieExample);
 
         return movies;

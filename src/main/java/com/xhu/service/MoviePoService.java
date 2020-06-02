@@ -43,4 +43,5 @@ public interface MoviePoService {
 
     List<MoviePo> getWantWatchAmount(List<MoviePo> moviePoList);
 
+    List<MoviePo> selectByScreeningConditions(String areaId, String typeId, String yearsId);
 }

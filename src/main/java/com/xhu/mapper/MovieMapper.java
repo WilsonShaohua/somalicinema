@@ -2,9 +2,9 @@ package com.xhu.mapper;
 
 import com.xhu.po.Movie;
 import com.xhu.po.MovieExample;
-import org.apache.ibatis.annotations.Param;
-
 import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
 
 public interface MovieMapper {
     long countByExample(MovieExample example);

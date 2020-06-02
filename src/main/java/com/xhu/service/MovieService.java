@@ -5,6 +5,7 @@ import com.xhu.po.Movie;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author liu li
@@ -100,9 +101,11 @@ public interface MovieService {
 
     List<Movie> findAllMovie();
 
-    List<Movie> findMovieByRegionalId(String movieRegionalId);
+    List<Movie> findMovieByWorldCountryId(String movieRegionalId);
 
     List<Movie> findMovieAfterNow();
 
     List<Movie> findMovieBeforeNow();
+
+    Set<Movie> search(String[] conditions);
 }

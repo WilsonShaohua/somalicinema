@@ -245,76 +245,6 @@ public class MovieExample {
             return (Criteria) this;
         }
 
-        public Criteria andCityIdIsNull() {
-            addCriterion("city_id is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andCityIdIsNotNull() {
-            addCriterion("city_id is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andCityIdEqualTo(String value) {
-            addCriterion("city_id =", value, "cityId");
-            return (Criteria) this;
-        }
-
-        public Criteria andCityIdNotEqualTo(String value) {
-            addCriterion("city_id <>", value, "cityId");
-            return (Criteria) this;
-        }
-
-        public Criteria andCityIdGreaterThan(String value) {
-            addCriterion("city_id >", value, "cityId");
-            return (Criteria) this;
-        }
-
-        public Criteria andCityIdGreaterThanOrEqualTo(String value) {
-            addCriterion("city_id >=", value, "cityId");
-            return (Criteria) this;
-        }
-
-        public Criteria andCityIdLessThan(String value) {
-            addCriterion("city_id <", value, "cityId");
-            return (Criteria) this;
-        }
-
-        public Criteria andCityIdLessThanOrEqualTo(String value) {
-            addCriterion("city_id <=", value, "cityId");
-            return (Criteria) this;
-        }
-
-        public Criteria andCityIdLike(String value) {
-            addCriterion("city_id like", value, "cityId");
-            return (Criteria) this;
-        }
-
-        public Criteria andCityIdNotLike(String value) {
-            addCriterion("city_id not like", value, "cityId");
-            return (Criteria) this;
-        }
-
-        public Criteria andCityIdIn(List<String> values) {
-            addCriterion("city_id in", values, "cityId");
-            return (Criteria) this;
-        }
-
-        public Criteria andCityIdNotIn(List<String> values) {
-            addCriterion("city_id not in", values, "cityId");
-            return (Criteria) this;
-        }
-
-        public Criteria andCityIdBetween(String value1, String value2) {
-            addCriterion("city_id between", value1, value2, "cityId");
-            return (Criteria) this;
-        }
-
-        public Criteria andCityIdNotBetween(String value1, String value2) {
-            addCriterion("city_id not between", value1, value2, "cityId");
-            return (Criteria) this;
-        }
-
         public Criteria andMovieNameIsNull() {
             addCriterion("movie_name is null");
             return (Criteria) this;
@@ -715,63 +645,73 @@ public class MovieExample {
             return (Criteria) this;
         }
 
-        public Criteria andMovieLastTimeIsNull() {
-            addCriterion("movie_last_time is null");
+        public Criteria andWorldCountryIdIsNull() {
+            addCriterion("world_country_id is null");
             return (Criteria) this;
         }
 
-        public Criteria andMovieLastTimeIsNotNull() {
-            addCriterion("movie_last_time is not null");
+        public Criteria andWorldCountryIdIsNotNull() {
+            addCriterion("world_country_id is not null");
             return (Criteria) this;
         }
 
-        public Criteria andMovieLastTimeEqualTo(Date value) {
-            addCriterion("movie_last_time =", value, "movieLastTime");
+        public Criteria andWorldCountryIdEqualTo(String value) {
+            addCriterion("world_country_id =", value, "worldCountryId");
             return (Criteria) this;
         }
 
-        public Criteria andMovieLastTimeNotEqualTo(Date value) {
-            addCriterion("movie_last_time <>", value, "movieLastTime");
+        public Criteria andWorldCountryIdNotEqualTo(String value) {
+            addCriterion("world_country_id <>", value, "worldCountryId");
             return (Criteria) this;
         }
 
-        public Criteria andMovieLastTimeGreaterThan(Date value) {
-            addCriterion("movie_last_time >", value, "movieLastTime");
+        public Criteria andWorldCountryIdGreaterThan(String value) {
+            addCriterion("world_country_id >", value, "worldCountryId");
             return (Criteria) this;
         }
 
-        public Criteria andMovieLastTimeGreaterThanOrEqualTo(Date value) {
-            addCriterion("movie_last_time >=", value, "movieLastTime");
+        public Criteria andWorldCountryIdGreaterThanOrEqualTo(String value) {
+            addCriterion("world_country_id >=", value, "worldCountryId");
             return (Criteria) this;
         }
 
-        public Criteria andMovieLastTimeLessThan(Date value) {
-            addCriterion("movie_last_time <", value, "movieLastTime");
+        public Criteria andWorldCountryIdLessThan(String value) {
+            addCriterion("world_country_id <", value, "worldCountryId");
             return (Criteria) this;
         }
 
-        public Criteria andMovieLastTimeLessThanOrEqualTo(Date value) {
-            addCriterion("movie_last_time <=", value, "movieLastTime");
+        public Criteria andWorldCountryIdLessThanOrEqualTo(String value) {
+            addCriterion("world_country_id <=", value, "worldCountryId");
             return (Criteria) this;
         }
 
-        public Criteria andMovieLastTimeIn(List<Date> values) {
-            addCriterion("movie_last_time in", values, "movieLastTime");
+        public Criteria andWorldCountryIdLike(String value) {
+            addCriterion("world_country_id like", value, "worldCountryId");
             return (Criteria) this;
         }
 
-        public Criteria andMovieLastTimeNotIn(List<Date> values) {
-            addCriterion("movie_last_time not in", values, "movieLastTime");
+        public Criteria andWorldCountryIdNotLike(String value) {
+            addCriterion("world_country_id not like", value, "worldCountryId");
             return (Criteria) this;
         }
 
-        public Criteria andMovieLastTimeBetween(Date value1, Date value2) {
-            addCriterion("movie_last_time between", value1, value2, "movieLastTime");
+        public Criteria andWorldCountryIdIn(List<String> values) {
+            addCriterion("world_country_id in", values, "worldCountryId");
             return (Criteria) this;
         }
 
-        public Criteria andMovieLastTimeNotBetween(Date value1, Date value2) {
-            addCriterion("movie_last_time not between", value1, value2, "movieLastTime");
+        public Criteria andWorldCountryIdNotIn(List<String> values) {
+            addCriterion("world_country_id not in", values, "worldCountryId");
+            return (Criteria) this;
+        }
+
+        public Criteria andWorldCountryIdBetween(String value1, String value2) {
+            addCriterion("world_country_id between", value1, value2, "worldCountryId");
+            return (Criteria) this;
+        }
+
+        public Criteria andWorldCountryIdNotBetween(String value1, String value2) {
+            addCriterion("world_country_id not between", value1, value2, "worldCountryId");
             return (Criteria) this;
         }
     }

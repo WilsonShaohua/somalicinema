@@ -13,8 +13,6 @@ public class Movie {
 
     private String movieTypeId;
 
-    private String cityId;
-
     private String movieName;
 
     private Date moviePublishingData;
@@ -27,6 +25,6 @@ public class Movie {
 
     private Date movieDurationPlayback;
 
-    private Date movieLastTime;
+    private String worldCountryId;
 
 }

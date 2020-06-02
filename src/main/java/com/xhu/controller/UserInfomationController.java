@@ -2,7 +2,6 @@ package com.xhu.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.xhu.po.Fun;
 import com.xhu.po.User;
 import com.xhu.po.UserPo;
 import com.xhu.service.UserFunService;
@@ -24,7 +23,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.List;
 
 /**
  * @author liu li
@@ -85,11 +83,12 @@ public class UserInfomationController {
             response.getWriter().write(jsonObject.toJSONString());
             return;
         }
-        List<Fun> funs = userFunService.findFunByUserId(user.getUserId());
+
         //修改userfun数据
         int userFunRes = StateCode.FAIL;
         try {
-            userFunRes = userFunService.addUserFunByUserIdWithFuns(userInformation.getUser().getUserId(), funs);
+            //修改用户兴趣
+            userFunRes = userFunService.addUserFunByUserIdWithFuns(userInformation.getUser().getUserId(), userInformation.getFuns());
         } catch (SQLException e) {
             e.printStackTrace();
             //sql异常
@@ -104,6 +103,7 @@ public class UserInfomationController {
         }
         //修改User对象
         int userRes = userService.updteUserByPrimaryKey(userInformation.getUser());
+
         //用户id
         String userId = userInformation.getUser().getUserId();
         //返回json数据对象

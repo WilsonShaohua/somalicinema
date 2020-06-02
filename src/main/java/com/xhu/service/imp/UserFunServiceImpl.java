@@ -9,6 +9,7 @@ import com.xhu.po.UserFunExample;
 import com.xhu.service.UserFunService;
 import com.xhu.utils.KeyProductor;
 import com.xhu.utils.constant.StateCode;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +22,7 @@ import java.util.List;
  * @date 2020/5/26 15:37
  */
 @Service
+@Slf4j
 public class UserFunServiceImpl implements UserFunService {
     @Autowired
     private UserFunMapper userFunMapper;
@@ -64,7 +66,11 @@ public class UserFunServiceImpl implements UserFunService {
         //删除操作，返回1表示删除完成
         int res = userFunMapper.deleteByExample(userFunExample);
         //删除完成，返回状态码成功
-        if (res == 1) return StateCode.SUCCESS;
+        if (res == 1) {
+            log.info("delete user fun successful");
+            return StateCode.SUCCESS;
+        }
+        log.info("delete user fun fail");
         //返回状态码失败
         return StateCode.FAIL;
     }
@@ -95,20 +101,26 @@ public class UserFunServiceImpl implements UserFunService {
         UserFun userFun = null;
         int res = 0;
         String key = null;
+        UserFunExample userFunExample = new UserFunExample();
+        UserFunExample.Criteria criteria = userFunExample.createCriteria();
+        criteria.andFunIdNotIn(funIds);
+        criteria.andUserIdEqualTo(userId);
+        //删除未添加的数据
+        userFunMapper.deleteByExample(userFunExample);
+        userFunExample.clear();
         for (String funId : funIds) {
             //查询用户该兴趣是否存在
-            UserFunExample userFunExample1 = new UserFunExample();
-            UserFunExample.Criteria criteria1 = userFunExample1.createCriteria();
-            criteria1.andUserIdEqualTo(userId);
-            criteria1.andFunIdEqualTo(funId);
+            criteria.andUserIdEqualTo(userId);
+            criteria.andFunIdEqualTo(funId);
             //如果存在则跳过；
-            if(userFunMapper.countByExample(userFunExample1) == 1){
+            if (userFunMapper.countByExample(userFunExample) == 1) {
                 res++;
                 continue;
             }
             key = KeyProductor.getKey();
             userFun = new UserFun(key, userId, funId);
             res += userFunMapper.insert(userFun);
+            userFunExample.clear();
         }
         if (res == funIds.size()) return StateCode.SUCCESS;
         return StateCode.FAIL;

@@ -26,4 +26,6 @@ public interface ActorService {
     Set<Movie> findActorMoviesByActorId(String actorId);
 
     Set<Movie> findActorMoviesByActorName(String actorName);
+
+    Set<String> searchAcotrId(String[] conditions);
 }

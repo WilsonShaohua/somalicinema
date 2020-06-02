@@ -5,6 +5,7 @@ import com.xhu.po.Movie;
 import com.xhu.po.MovieActors;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author liu li
@@ -13,9 +14,12 @@ import java.util.List;
 public interface MovieActorService {
     MovieActors findMovieActorById(String movieActorId);
 
-    List<Actor> findActorByMovieId(String movieId);
+    Set<Actor> findActorByMovieId(String movieId);
 
-    List<Movie> findMvoieByActorId(String actorId);
+    Set<Actor> findActorByMovieId(List<String> movieIds);
 
+    Set<Movie> findMvoieByActorId(String actorId);
+
+    Set<Movie> findMvoieByActorId(List<String> actorId);
 
 }

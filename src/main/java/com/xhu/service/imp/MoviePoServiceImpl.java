@@ -6,6 +6,7 @@ import com.xhu.service.MoviePoService;
 import com.xhu.service.TicketService;
 import com.xhu.service.WantWatchService;
 import com.xhu.service.WatchedhService;
+import com.xhu.utils.constant.MovieScreeningConstant;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,10 +23,7 @@ import java.util.List;
 @Service
 public class MoviePoServiceImpl implements MoviePoService {
     @Autowired
-    private CityMapper cityMapper;
-
-    @Autowired
-    private ProvinceMapper provinceMapper;
+    private YearsMapper yearsMapper;
 
     @Autowired
     private WorldCountryMapper worldCountryMapper;
@@ -63,14 +61,8 @@ public class MoviePoServiceImpl implements MoviePoService {
 
     @Override
     public MoviePo findMoviePoByMovie(Movie movie) {
-        City city = cityMapper.selectByPrimaryKey(movie.getCityId());
-        WorldCountry worldCountry = null;
-        try {
-            Province province = provinceMapper.selectByPrimaryKey(city.getProvinceId());
-            worldCountry = worldCountryMapper.selectByPrimaryKey(province.getWorldCountryId());
-        } catch (NullPointerException e) {
-            log.warn("world country is null");
-        }
+
+        WorldCountry worldCountry = worldCountryMapper.selectByPrimaryKey(movie.getWorldCountryId());
 
         MovieType movieType = movieTypeMapper.selectByPrimaryKey(movie.getMovieTypeId());
         MovieActorsExample movieActorsExample = new MovieActorsExample();
@@ -94,7 +86,7 @@ public class MoviePoServiceImpl implements MoviePoService {
 
         MoviePo moviePo = new MoviePo();
         moviePo.setMovie(movie);
-        moviePo.setWorldCountry(worldCountry);
+        moviePo.setArea(worldCountry);
         moviePo.setActors(actors);
         moviePo.setMovieType(movieType);
         log.info("get movie id :" + movie.getMovieId());
@@ -209,5 +201,33 @@ public class MoviePoServiceImpl implements MoviePoService {
             moviePos.add(moviePo);
         }
         return moviePos;
+    }
+
+    @Override
+    public List<MoviePo> selectByScreeningConditions(String areaId, String typeId, String yearsId) {
+        MovieExample movieExample = new MovieExample();
+        MovieExample.Criteria criteria = movieExample.createCriteria();
+        //添加地区查询
+        if (null != areaId && MovieScreeningConstant.ALL_AREA_ID.equals(areaId) == false) {
+            criteria.andWorldCountryIdEqualTo(areaId);
+        }
+        //添加类型查询
+        if (null != typeId && MovieScreeningConstant.ALL_TYPE_ID.equals(typeId) == false) {
+            criteria.andMovieTypeIdEqualTo(typeId);
+        }
+        //添加年代查询
+        if (null != yearsId && MovieScreeningConstant.ALL_YEARS_ID.equals(yearsId) == false) {
+            Years years = yearsMapper.selectByPrimaryKey(yearsId);
+            if (null != years.getYearsStartYear() && null != years.getYearsEndtYear()) {
+                criteria.andMoviePublishingDataBetween(years.getYearsStartYear(), years.getYearsEndtYear());
+            } else {
+                criteria.andMoviePublishingDataLessThan(years.getYearsEndtYear());
+            }
+        }
+        //查询符合条件的影片
+        List<Movie> movies = movieMapper.selectByExample(movieExample);
+        //返回查询符合条件的影片信息
+        return findMoviePoByMovies(movies);
+
     }
 }

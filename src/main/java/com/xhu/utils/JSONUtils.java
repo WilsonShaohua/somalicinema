@@ -16,11 +16,11 @@ import java.util.Map;
  */
 public class JSONUtils {
     public static JSONObject packageJson(int code, String msg, Object data) {
-        Map<String, Object> requestMap = new HashMap<>();
-        requestMap.put("code", code);
-        requestMap.put("msg", msg);
-        requestMap.put("data", data);
-        return new JSONObject(requestMap);
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("code", code);
+        jsonObject.put("msg", msg);
+        jsonObject.put("data", data);
+        return jsonObject;
     }
 
     public static JSONObject getRequestJsonObject(HttpServletRequest request) throws IOException {

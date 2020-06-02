@@ -5,16 +5,20 @@ import com.xhu.mapper.MovieActorsMapper;
 import com.xhu.mapper.MovieMapper;
 import com.xhu.po.*;
 import com.xhu.service.MovieActorService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author liu li
  * @date 2020/5/27 19:40
  */
+@Slf4j
 @Service
 public class MovieActorServiceImpl implements MovieActorService {
     @Autowired
@@ -26,11 +30,13 @@ public class MovieActorServiceImpl implements MovieActorService {
 
     @Override
     public MovieActors findMovieActorById(String movieActorId) {
+        if (movieActorId == null) return null;
         return movieActorsMapper.selectByPrimaryKey(movieActorId);
     }
 
     @Override
-    public List<Actor> findActorByMovieId(String movieId) {
+    public Set<Actor> findActorByMovieId(String movieId) {
+        if (movieId == null) return null;
         MovieActorsExample movieActorsExample = new MovieActorsExample();
         MovieActorsExample.Criteria criteria = movieActorsExample.createCriteria();
         criteria.andMovieIdEqualTo(movieId);
@@ -42,12 +48,27 @@ public class MovieActorServiceImpl implements MovieActorService {
         ActorExample actorExample = new ActorExample();
         ActorExample.Criteria actorCriteria = actorExample.createCriteria();
         actorCriteria.andActorIdIn(actorIds);
-        List<Actor> actors = actorMapper.selectByExample(actorExample);
+        Set<Actor> actors = new HashSet<Actor>() {{
+            actorMapper.selectByExample(actorExample);
+        }};
         return actors;
     }
 
     @Override
-    public List<Movie> findMvoieByActorId(String actorId) {
+    public Set<Actor> findActorByMovieId(List<String> movieIds) {
+        if (movieIds == null || movieIds.size() == 0)
+            return null;
+        Set<Actor> actors = new HashSet<>();
+        for (String movieId : movieIds) {
+            actors.addAll(findActorByMovieId(movieId));
+        }
+        return actors;
+    }
+
+    @Override
+    public Set<Movie> findMvoieByActorId(String actorId) {
+        if (actorId == null)
+            return null;
         MovieActorsExample movieActorsExample = new MovieActorsExample();
         MovieActorsExample.Criteria criteria = movieActorsExample.createCriteria();
         criteria.andActorIdEqualTo(actorId);
@@ -59,7 +80,31 @@ public class MovieActorServiceImpl implements MovieActorService {
         MovieExample movieExample = new MovieExample();
         MovieExample.Criteria movieCriteria = movieExample.createCriteria();
         movieCriteria.andMovieIdIn(movieIds);
-        List<Movie> movies = movieMapper.selectByExample(movieExample);
+        Set<Movie> movies = new HashSet<Movie>(movieMapper.selectByExample(movieExample));
         return movies;
+    }
+
+    @Override
+    public Set<Movie> findMvoieByActorId(List<String> actorIds) {
+        if (actorIds == null || actorIds.size() == 0)
+            return null;
+        MovieActorsExample movieActorsExample = new MovieActorsExample();
+        MovieActorsExample.Criteria criteria = movieActorsExample.createCriteria();
+        criteria.andActorIdIn(actorIds);
+        List<MovieActors> movieActorsList = movieActorsMapper.selectByExample(movieActorsExample);
+        log.info("movie actor list\n" + movieActorsList);
+        List<String> movieIds = new ArrayList<>();
+        for (MovieActors movieActors : movieActorsList) {
+            movieIds.add(movieActors.getActorId());
+        }
+        MovieExample movieExample = new MovieExample();
+        MovieExample.Criteria movieCriteria = movieExample.createCriteria();
+        movieCriteria.andMovieIdIn(movieIds);
+        List<Movie> movieList = movieMapper.selectByExample(movieExample);
+        log.info("movie list\n" + movieList);
+        Set<Movie> movieSet = new HashSet<>();
+        movieSet.addAll(movieList);
+        log.info("movie set\n" + movieSet);
+        return movieSet;
     }
 }

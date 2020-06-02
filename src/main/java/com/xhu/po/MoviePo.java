@@ -18,7 +18,8 @@ import java.util.List;
 public class MoviePo {
     private Movie movie;
     private List<Actor> actors;
-    private WorldCountry worldCountry;
+    private WorldCountry area;
+    private Years years;
     private MovieType movieType;
     //卖出电影票数量
     private long ticketAmount;

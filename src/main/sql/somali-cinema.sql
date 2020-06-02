@@ -1,1632 +1,8629 @@
-/*==============================================================*/
-/* DBMS name:      Microsoft SQL Server 2012                    */
-/* Created on:     2020/5/26 14:55:15                           */
-/*==============================================================*/
-
-use somali_cinema
-go
-
-if exists (select 1
-           from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
-           where r.fkeyid = object_id('actor') and o.name = 'FK_ACTOR_ACTOR_HOM_CITY')
-alter table actor
-    drop constraint FK_ACTOR_ACTOR_HOM_CITY
-go
-
-if exists (select 1
-           from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
-           where r.fkeyid = object_id('cinema') and o.name = 'FK_CINEMA_COMPANY_C_COMPANY')
-alter table cinema
-    drop constraint FK_CINEMA_COMPANY_C_COMPANY
-go
-
-if exists (select 1
-           from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
-           where r.fkeyid = object_id('cinema') and o.name = 'FK_CINEMA_COUNTRY_C_COUNTRY')
-alter table cinema
-    drop constraint FK_CINEMA_COUNTRY_C_COUNTRY
-go
-
-if exists (select 1
-           from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
-           where r.fkeyid = object_id('city') and o.name = 'FK_CITY_PROVINCE__PROVINCE')
-alter table city
-    drop constraint FK_CITY_PROVINCE__PROVINCE
-go
-
-if exists (select 1
-           from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
-           where r.fkeyid = object_id('country') and o.name = 'FK_COUNTRY_CITY_COUN_CITY')
-alter table country
-    drop constraint FK_COUNTRY_CITY_COUN_CITY
-go
-
-if exists (select 1
-           from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
-           where r.fkeyid = object_id('field') and o.name = 'FK_FIELD_MOVIE_FIE_MOVIE')
-alter table field
-    drop constraint FK_FIELD_MOVIE_FIE_MOVIE
-go
-
-if exists (select 1
-           from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
-           where r.fkeyid = object_id('field') and o.name = 'FK_FIELD_SCREENING_SCREENIN')
-alter table field
-    drop constraint FK_FIELD_SCREENING_SCREENIN
-go
-
-if exists (select 1
-           from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
-           where r.fkeyid = object_id('movie') and o.name = 'FK_MOVIE_MOVIE_LOC_CITY')
-alter table movie
-    drop constraint FK_MOVIE_MOVIE_LOC_CITY
-go
-
-if exists (select 1
-           from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
-           where r.fkeyid = object_id('movie') and o.name = 'FK_MOVIE_MOVIES_TY_MOVIE_TY')
-alter table movie
-    drop constraint FK_MOVIE_MOVIES_TY_MOVIE_TY
-go
-
-if exists (select 1
-           from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
-           where r.fkeyid = object_id('movie_actors') and o.name = 'FK_MOVIE_AC_ACTOR_MOV_ACTOR')
-alter table movie_actors
-    drop constraint FK_MOVIE_AC_ACTOR_MOV_ACTOR
-go
-
-if exists (select 1
-           from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
-           where r.fkeyid = object_id('movie_actors') and o.name = 'FK_MOVIE_AC_ACTOR_ROL_ACTOR_RO')
-alter table movie_actors
-    drop constraint FK_MOVIE_AC_ACTOR_ROL_ACTOR_RO
-go
-
-if exists (select 1
-           from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
-           where r.fkeyid = object_id('movie_actors') and o.name = 'FK_MOVIE_AC_MOVIE_MOV_MOVIE')
-alter table movie_actors
-    drop constraint FK_MOVIE_AC_MOVIE_MOV_MOVIE
-go
-
-if exists (select 1
-           from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
-           where r.fkeyid = object_id('picture') and o.name = 'FK_PICTURE_ACTOR_PIC_ACTOR')
-alter table picture
-    drop constraint FK_PICTURE_ACTOR_PIC_ACTOR
-go
-
-if exists (select 1
-           from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
-           where r.fkeyid = object_id('picture') and o.name = 'FK_PICTURE_MOVIE_PIC_MOVIE')
-alter table picture
-    drop constraint FK_PICTURE_MOVIE_PIC_MOVIE
-go
-
-if exists (select 1
-           from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
-           where r.fkeyid = object_id('province') and o.name = 'FK_PROVINCE_WORLD_COU_WORLD_CO')
-alter table province
-    drop constraint FK_PROVINCE_WORLD_COU_WORLD_CO
-go
-
-if exists (select 1
-           from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
-           where r.fkeyid = object_id('screening_room') and o.name = 'FK_SCREENIN_CINEMA_SC_CINEMA')
-alter table screening_room
-    drop constraint FK_SCREENIN_CINEMA_SC_CINEMA
-go
-
-if exists (select 1
-           from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
-           where r.fkeyid = object_id('seat') and o.name = 'FK_SEAT_SCREENING_SCREENIN')
-alter table seat
-    drop constraint FK_SEAT_SCREENING_SCREENIN
-go
-
-if exists (select 1
-           from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
-           where r.fkeyid = object_id('ticket') and o.name = 'FK_TICKET_FIELD_TIC_FIELD')
-alter table ticket
-    drop constraint FK_TICKET_FIELD_TIC_FIELD
-go
-
-if exists (select 1
-           from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
-           where r.fkeyid = object_id('ticket') and o.name = 'FK_TICKET_MOVIE_TIC_MOVIE')
-alter table ticket
-    drop constraint FK_TICKET_MOVIE_TIC_MOVIE
-go
-
-if exists (select 1
-           from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
-           where r.fkeyid = object_id('ticket') and o.name = 'FK_TICKET_ORDER_TIC_ORDER')
-alter table ticket
-    drop constraint FK_TICKET_ORDER_TIC_ORDER
-go
-
-if exists (select 1
-           from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
-           where r.fkeyid = object_id('ticket') and o.name = 'FK_TICKET_SEAT_TICK_SEAT')
-alter table ticket
-    drop constraint FK_TICKET_SEAT_TICK_SEAT
-go
-
-if exists (select 1
-           from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
-           where r.fkeyid = object_id('ticket') and o.name = 'FK_TICKET_TICKET_WA_WATCHED')
-alter table ticket
-    drop constraint FK_TICKET_TICKET_WA_WATCHED
-go
-
-if exists (select 1
-           from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
-           where r.fkeyid = object_id('"user"') and o.name = 'FK_USER_USER_CITY_CITY')
-alter table "user"
-    drop constraint FK_USER_USER_CITY_CITY
-go
-
-if exists (select 1
-           from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
-           where r.fkeyid = object_id('"user"') and o.name = 'FK_USER_USER_STAT_STATE_LI')
-alter table "user"
-    drop constraint FK_USER_USER_STAT_STATE_LI
-go
-
-if exists (select 1
-           from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
-           where r.fkeyid = object_id('user_fun') and o.name = 'FK_USER_FUN_RELATIONS_USER')
-alter table user_fun
-    drop constraint FK_USER_FUN_RELATIONS_USER
-go
-
-if exists (select 1
-           from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
-           where r.fkeyid = object_id('user_fun') and o.name = 'FK_USER_FUN_RELATIONS_FUN')
-alter table user_fun
-    drop constraint FK_USER_FUN_RELATIONS_FUN
-go
-
-if exists (select 1
-           from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
-           where r.fkeyid = object_id('want_watch') and o.name = 'FK_WANT_WAT_USER_WANT_USER')
-alter table want_watch
-    drop constraint FK_WANT_WAT_USER_WANT_USER
-go
-
-if exists (select 1
-           from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
-           where r.fkeyid = object_id('want_watch') and o.name = 'FK_WANT_WAT_WANT_WATC_MOVIE')
-alter table want_watch
-    drop constraint FK_WANT_WAT_WANT_WATC_MOVIE
-go
-
-if exists (select 1
-           from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
-           where r.fkeyid = object_id('watched') and o.name = 'FK_WATCHED_MOVIE_WAT_MOVIE')
-alter table watched
-    drop constraint FK_WATCHED_MOVIE_WAT_MOVIE
-go
-
-if exists (select 1
-           from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
-           where r.fkeyid = object_id('watched') and o.name = 'FK_WATCHED_TICKET_WA_TICKET')
-alter table watched
-    drop constraint FK_WATCHED_TICKET_WA_TICKET
-go
-
-if exists (select 1
-           from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
-           where r.fkeyid = object_id('watched') and o.name = 'FK_WATCHED_USER_WATC_USER')
-alter table watched
-    drop constraint FK_WATCHED_USER_WATC_USER
-go
-
-if exists (select 1
-           from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
-           where r.fkeyid = object_id('world_country') and o.name = 'FK_WORLD_CO_CHAU_COUN_CHAU')
-alter table world_country
-    drop constraint FK_WORLD_CO_CHAU_COUN_CHAU
-go
-
-if exists (select 1
-           from  sysindexes
-           where  id    = object_id('actor')
-             and   name  = 'actor_area_FK'
-             and   indid > 0
-             and   indid < 255)
-    drop index actor.actor_area_FK
-go
-
-if exists (select 1
-           from  sysobjects
-           where  id = object_id('actor')
-             and   type = 'U')
-    drop table actor
-go
-
-if exists (select 1
-           from  sysobjects
-           where  id = object_id('actor_role')
-             and   type = 'U')
-    drop table actor_role
-go
-
-if exists (select 1
-           from  sysobjects
-           where  id = object_id('area_address')
-             and   type = 'U')
-    drop table area_address
-go
-
-if exists (select 1
-           from  sysobjects
-           where  id = object_id('chau')
-             and   type = 'U')
-    drop table chau
-go
-
-if exists (select 1
-           from  sysindexes
-           where  id    = object_id('cinema')
-             and   name  = 'company_cinema_FK'
-             and   indid > 0
-             and   indid < 255)
-    drop index cinema.company_cinema_FK
-go
-
-if exists (select 1
-           from  sysindexes
-           where  id    = object_id('cinema')
-             and   name  = 'country_cinema_FK'
-             and   indid > 0
-             and   indid < 255)
-    drop index cinema.country_cinema_FK
-go
-
-if exists (select 1
-           from  sysobjects
-           where  id = object_id('cinema')
-             and   type = 'U')
-    drop table cinema
-go
-
-if exists (select 1
-           from  sysindexes
-           where  id    = object_id('city')
-             and   name  = 'province_city_FK'
-             and   indid > 0
-             and   indid < 255)
-    drop index city.province_city_FK
-go
-
-if exists (select 1
-           from  sysobjects
-           where  id = object_id('city')
-             and   type = 'U')
-    drop table city
-go
-
-if exists (select 1
-           from  sysobjects
-           where  id = object_id('company')
-             and   type = 'U')
-    drop table company
-go
-
-if exists (select 1
-           from  sysobjects
-           where  id = object_id('contact')
-             and   type = 'U')
-    drop table contact
-go
-
-if exists (select 1
-           from  sysindexes
-           where  id    = object_id('country')
-             and   name  = 'city_country_FK'
-             and   indid > 0
-             and   indid < 255)
-    drop index country.city_country_FK
-go
-
-if exists (select 1
-           from  sysobjects
-           where  id = object_id('country')
-             and   type = 'U')
-    drop table country
-go
-
-if exists (select 1
-           from  sysindexes
-           where  id    = object_id('field')
-             and   name  = 'screening_room_field_FK'
-             and   indid > 0
-             and   indid < 255)
-    drop index field.screening_room_field_FK
-go
-
-if exists (select 1
-           from  sysindexes
-           where  id    = object_id('field')
-             and   name  = 'movie_field_FK'
-             and   indid > 0
-             and   indid < 255)
-    drop index field.movie_field_FK
-go
-
-if exists (select 1
-           from  sysobjects
-           where  id = object_id('field')
-             and   type = 'U')
-    drop table field
-go
-
-if exists (select 1
-           from  sysobjects
-           where  id = object_id('fun')
-             and   type = 'U')
-    drop table fun
-go
-
-if exists (select 1
-           from  sysindexes
-           where  id    = object_id('movie')
-             and   name  = 'movie_location_FK'
-             and   indid > 0
-             and   indid < 255)
-    drop index movie.movie_location_FK
-go
-
-if exists (select 1
-           from  sysindexes
-           where  id    = object_id('movie')
-             and   name  = 'movies_type_FK'
-             and   indid > 0
-             and   indid < 255)
-    drop index movie.movies_type_FK
-go
-
-if exists (select 1
-           from  sysobjects
-           where  id = object_id('movie')
-             and   type = 'U')
-    drop table movie
-go
-
-if exists (select 1
-           from  sysindexes
-           where  id    = object_id('movie_actors')
-             and   name  = 'actor_role_movie_actors_FK'
-             and   indid > 0
-             and   indid < 255)
-    drop index movie_actors.actor_role_movie_actors_FK
-go
-
-if exists (select 1
-           from  sysindexes
-           where  id    = object_id('movie_actors')
-             and   name  = 'movie_movie_actors_FK'
-             and   indid > 0
-             and   indid < 255)
-    drop index movie_actors.movie_movie_actors_FK
-go
-
-if exists (select 1
-           from  sysindexes
-           where  id    = object_id('movie_actors')
-             and   name  = 'actor_movie_actors_FK'
-             and   indid > 0
-             and   indid < 255)
-    drop index movie_actors.actor_movie_actors_FK
-go
-
-if exists (select 1
-           from  sysobjects
-           where  id = object_id('movie_actors')
-             and   type = 'U')
-    drop table movie_actors
-go
-
-if exists (select 1
-           from  sysobjects
-           where  id = object_id('movie_role')
-             and   type = 'U')
-    drop table movie_role
-go
-
-if exists (select 1
-           from  sysobjects
-           where  id = object_id('movie_type')
-             and   type = 'U')
-    drop table movie_type
-go
-
-if exists (select 1
-           from  sysobjects
-           where  id = object_id('occupational')
-             and   type = 'U')
-    drop table occupational
-go
-
-if exists (select 1
-           from  sysobjects
-           where  id = object_id('"order"')
-             and   type = 'U')
-    drop table "order"
-go
-
-if exists (select 1
-           from  sysobjects
-           where  id = object_id('pay')
-             and   type = 'U')
-    drop table pay
-go
-
-if exists (select 1
-           from  sysobjects
-           where  id = object_id('pay_account')
-             and   type = 'U')
-    drop table pay_account
-go
-
-if exists (select 1
-           from  sysobjects
-           where  id = object_id('person')
-             and   type = 'U')
-    drop table person
-go
-
-if exists (select 1
-           from  sysindexes
-           where  id    = object_id('picture')
-             and   name  = 'movie_picture_FK'
-             and   indid > 0
-             and   indid < 255)
-    drop index picture.movie_picture_FK
-go
-
-if exists (select 1
-           from  sysindexes
-           where  id    = object_id('picture')
-             and   name  = 'actor_picture_FK'
-             and   indid > 0
-             and   indid < 255)
-    drop index picture.actor_picture_FK
-go
-
-if exists (select 1
-           from  sysobjects
-           where  id = object_id('picture')
-             and   type = 'U')
-    drop table picture
-go
-
-if exists (select 1
-           from  sysobjects
-           where  id = object_id('preferential')
-             and   type = 'U')
-    drop table preferential
-go
-
-if exists (select 1
-           from  sysindexes
-           where  id    = object_id('province')
-             and   name  = 'country_province_FK'
-             and   indid > 0
-             and   indid < 255)
-    drop index province.country_province_FK
-go
-
-if exists (select 1
-           from  sysobjects
-           where  id = object_id('province')
-             and   type = 'U')
-    drop table province
-go
-
-if exists (select 1
-           from  sysobjects
-           where  id = object_id('regional')
-             and   type = 'U')
-    drop table regional
-go
-
-if exists (select 1
-           from  sysindexes
-           where  id    = object_id('screening_room')
-             and   name  = 'cinema_screening_roo,_FK'
-             and   indid > 0
-             and   indid < 255)
-    drop index screening_room.cinema_screening_room_FK
-go
-
-if exists (select 1
-           from  sysobjects
-           where  id = object_id('screening_room')
-             and   type = 'U')
-    drop table screening_room
-go
-
-if exists (select 1
-           from  sysindexes
-           where  id    = object_id('seat')
-             and   name  = 'screening_room_seat_FK'
-             and   indid > 0
-             and   indid < 255)
-    drop index seat.screening_room_seat_FK
-go
-
-if exists (select 1
-           from  sysobjects
-           where  id = object_id('seat')
-             and   type = 'U')
-    drop table seat
-go
-
-if exists (select 1
-           from  sysobjects
-           where  id = object_id('state_life')
-             and   type = 'U')
-    drop table state_life
-go
-
-if exists (select 1
-           from  sysobjects
-           where  id = object_id('studio_card')
-             and   type = 'U')
-    drop table studio_card
-go
-
-if exists (select 1
-           from  sysobjects
-           where  id = object_id('theater')
-             and   type = 'U')
-    drop table theater
-go
-
-if exists (select 1
-           from  sysindexes
-           where  id    = object_id('ticket')
-             and   name  = 'ticket_watch_FK'
-             and   indid > 0
-             and   indid < 255)
-    drop index ticket.ticket_watch_FK
-go
-
-if exists (select 1
-           from  sysindexes
-           where  id    = object_id('ticket')
-             and   name  = 'field_ticket_FK'
-             and   indid > 0
-             and   indid < 255)
-    drop index ticket.field_ticket_FK
-go
-
-if exists (select 1
-           from  sysindexes
-           where  id    = object_id('ticket')
-             and   name  = 'seat_ticket_FK'
-             and   indid > 0
-             and   indid < 255)
-    drop index ticket.seat_ticket_FK
-go
-
-if exists (select 1
-           from  sysindexes
-           where  id    = object_id('ticket')
-             and   name  = 'order_ticket_FK'
-             and   indid > 0
-             and   indid < 255)
-    drop index ticket.order_ticket_FK
-go
-
-if exists (select 1
-           from  sysindexes
-           where  id    = object_id('ticket')
-             and   name  = 'movie_ticket_FK'
-             and   indid > 0
-             and   indid < 255)
-    drop index ticket.movie_ticket_FK
-go
-
-if exists (select 1
-           from  sysobjects
-           where  id = object_id('ticket')
-             and   type = 'U')
-    drop table ticket
-go
-
-if exists (select 1
-           from  sysobjects
-           where  id = object_id('type')
-             and   type = 'U')
-    drop table type
-go
-
-if exists (select 1
-           from  sysindexes
-           where  id    = object_id('"user"')
-             and   name  = 'user_state_life_FK'
-             and   indid > 0
-             and   indid < 255)
-    drop index "user".user_state_life_FK
-go
-
-if exists (select 1
-           from  sysindexes
-           where  id    = object_id('"user"')
-             and   name  = 'user_city_FK'
-             and   indid > 0
-             and   indid < 255)
-    drop index "user".user_city_FK
-go
-
-if exists (select 1
-           from  sysobjects
-           where  id = object_id('"user"')
-             and   type = 'U')
-    drop table "user"
-go
-
-if exists (select 1
-           from  sysindexes
-           where  id    = object_id('user_fun')
-             and   name  = 'user_fun2_FK'
-             and   indid > 0
-             and   indid < 255)
-    drop index user_fun.user_fun2_FK
-go
-
-if exists (select 1
-           from  sysindexes
-           where  id    = object_id('user_fun')
-             and   name  = 'user_fun_FK'
-             and   indid > 0
-             and   indid < 255)
-    drop index user_fun.user_fun_FK
-go
-
-if exists (select 1
-           from  sysobjects
-           where  id = object_id('user_fun')
-             and   type = 'U')
-    drop table user_fun
-go
-
-if exists (select 1
-           from  sysindexes
-           where  id    = object_id('want_watch')
-             and   name  = 'want_watch_movie_FK'
-             and   indid > 0
-             and   indid < 255)
-    drop index want_watch.want_watch_movie_FK
-go
-
-if exists (select 1
-           from  sysindexes
-           where  id    = object_id('want_watch')
-             and   name  = 'user_want_watch_FK'
-             and   indid > 0
-             and   indid < 255)
-    drop index want_watch.user_want_watch_FK
-go
-
-if exists (select 1
-           from  sysobjects
-           where  id = object_id('want_watch')
-             and   type = 'U')
-    drop table want_watch
-go
-
-if exists (select 1
-           from  sysindexes
-           where  id    = object_id('watched')
-             and   name  = 'ticket_watch2_FK'
-             and   indid > 0
-             and   indid < 255)
-    drop index watched.ticket_watch2_FK
-go
-
-if exists (select 1
-           from  sysindexes
-           where  id    = object_id('watched')
-             and   name  = 'user_watched_FK'
-             and   indid > 0
-             and   indid < 255)
-    drop index watched.user_watched_FK
-go
-
-if exists (select 1
-           from  sysindexes
-           where  id    = object_id('watched')
-             and   name  = 'movie_watched_FK'
-             and   indid > 0
-             and   indid < 255)
-    drop index watched.movie_watched_FK
-go
-
-if exists (select 1
-           from  sysobjects
-           where  id = object_id('watched')
-             and   type = 'U')
-    drop table watched
-go
-
-if exists (select 1
-           from  sysindexes
-           where  id    = object_id('world_country')
-             and   name  = 'chau_country_FK'
-             and   indid > 0
-             and   indid < 255)
-    drop index world_country.chau_country_FK
-go
-
-if exists (select 1
-           from  sysobjects
-           where  id = object_id('world_country')
-             and   type = 'U')
-    drop table world_country
-go
-
-/*==============================================================*/
-/* Table: actor                                                 */
-/*==============================================================*/
-create table actor (
-                       actor_id             char(10)             not null,
-                       city_id              char(12)             null,
-                       actor_introduction   varchar(100)         null,
-                       actor_name           varchar(10)          null,
-                       actor_sex            bit                  null,
-                       actor_birthday       datetime             null,
-                       constraint PK_ACTOR primary key nonclustered (actor_id)
-)
-go
-
-/*==============================================================*/
-/* Index: actor_area_FK                                         */
-/*==============================================================*/
-create index actor_area_FK on actor (
-                                     city_id ASC
-    )
-go
-
-/*==============================================================*/
-/* Table: actor_role                                            */
-/*==============================================================*/
-create table actor_role (
-                            actor_role_id        char(3)              not null,
-                            actor_role_name      varchar(20)          null,
-                            constraint PK_ACTOR_ROLE primary key nonclustered (actor_role_id)
-)
-go
-
-/*==============================================================*/
-/* Table: area_address                                          */
-/*==============================================================*/
-create table area_address (
-                              area_address_id      char(15)             not null,
-                              area_address_name    varchar(30)          null,
-                              area_address_english_name varchar(60)          null,
-                              constraint PK_AREA_ADDRESS primary key nonclustered (area_address_id)
-)
-go
-
-/*==============================================================*/
-/* Table: chau                                                  */
-/*==============================================================*/
-create table chau (
-                      chau_id              char(10)             not null,
-                      chau_name            varchar(20)          null,
-                      constraint PK_CHAU primary key nonclustered (chau_id)
-)
-go
-
-/*==============================================================*/
-/* Table: cinema                                                */
-/*==============================================================*/
-create table cinema (
-                        cinema_id            char(16)             not null,
-                        company_id           char(10)             null,
-                        country_id           char(12)             null,
-                        cinema_name          varchar(50)          null,
-                        cinema_address       varchar(50)          null,
-                        cinema_telphone      varchar(13)          null,
-                        constraint PK_CINEMA primary key nonclustered (cinema_id)
-)
-go
-
-/*==============================================================*/
-/* Index: country_cinema_FK                                     */
-/*==============================================================*/
-create index country_cinema_FK on cinema (
-                                          country_id ASC
-    )
-go
-
-/*==============================================================*/
-/* Index: company_cinema_FK                                     */
-/*==============================================================*/
-create index company_cinema_FK on cinema (
-                                          company_id ASC
-    )
-go
-
-/*==============================================================*/
-/* Table: city                                                  */
-/*==============================================================*/
-create table city (
-                      city_id              char(12)             not null,
-                      province_id          char(3)              null,
-                      city_name            varchar(50)          null,
-                      constraint PK_CITY primary key nonclustered (city_id)
-)
-go
-
-/*==============================================================*/
-/* Index: province_city_FK                                      */
-/*==============================================================*/
-create index province_city_FK on city (
-                                       province_id ASC
-    )
-go
-
-/*==============================================================*/
-/* Table: company                                               */
-/*==============================================================*/
-create table company (
-                         company_id           char(10)             not null,
-                         company_name         varchar(30)          null,
-                         constraint PK_COMPANY primary key nonclustered (company_id)
-)
-go
-
-/*==============================================================*/
-/* Table: contact                                               */
-/*==============================================================*/
-create table contact (
-                         concat_id            char(10)             not null,
-                         concat_number        numeric(11)          null,
-                         constraint PK_CONTACT primary key nonclustered (concat_id)
-)
-go
-
-/*==============================================================*/
-/* Table: country                                               */
-/*==============================================================*/
-create table country (
-                         country_id           char(12)             not null,
-                         city_id              char(12)             null,
-                         country_name         varchar(50)          null,
-                         constraint PK_COUNTRY primary key nonclustered (country_id)
-)
-go
-
-/*==============================================================*/
-/* Index: city_country_FK                                       */
-/*==============================================================*/
-create index city_country_FK on country (
-                                         city_id ASC
-    )
-go
-
-/*==============================================================*/
-/* Table: field                                                 */
-/*==============================================================*/
-create table field (
-                       field_id             char(10)             not null,
-                       screening_room_id    char(10)             null,
-                       movie_id             char(10)             null,
-                       field_start_data_time datetime             null,
-                       constraint PK_FIELD primary key nonclustered (field_id)
-)
-go
-
-/*==============================================================*/
-/* Index: movie_field_FK                                        */
-/*==============================================================*/
-create index movie_field_FK on field (
-                                      movie_id ASC
-    )
-go
-
-/*==============================================================*/
-/* Index: screening_room_field_FK                               */
-/*==============================================================*/
-create index screening_room_field_FK on field (
-                                               screening_room_id ASC
-    )
-go
-
-/*==============================================================*/
-/* Table: fun                                                   */
-/*==============================================================*/
-create table fun (
-                     fun_id               char(10)             not null,
-                     fun_name             varchar(10)          null,
-                     constraint PK_FUN primary key nonclustered (fun_id)
-)
-go
-
-/*==============================================================*/
-/* Table: movie                                                 */
-/*==============================================================*/
-create table movie (
-                       movie_id             char(10)             not null,
-                       movie_type_id        char(10)             null,
-                       city_id              char(12)             null,
-                       movie_name           varchar(10)          null,
-                       movie_publishing_data datetime             null,
-                       movie_introduction   varchar(100)         null,
-                       movie_source_address varchar(50)          null,
-                       movie_poster_address varchar(50)          null,
-                       movie_duration_playback datetime             null,
-                       movie_last_time      datetime             null,
-                       constraint PK_MOVIE primary key nonclustered (movie_id)
-)
-go
-
-/*==============================================================*/
-/* Index: movies_type_FK                                        */
-/*==============================================================*/
-create index movies_type_FK on movie (
-                                      movie_type_id ASC
-    )
-go
-
-/*==============================================================*/
-/* Index: movie_location_FK                                     */
-/*==============================================================*/
-create index movie_location_FK on movie (
-                                         city_id ASC
-    )
-go
-
-/*==============================================================*/
-/* Table: movie_actors                                          */
-/*==============================================================*/
-create table movie_actors (
-                              movie_actors_id      char(10)             not null,
-                              actor_id             char(10)             null,
-                              movie_id             char(10)             null,
-                              actor_role_id        char(3)              null,
-                              constraint PK_MOVIE_ACTORS primary key nonclustered (movie_actors_id)
-)
-go
-
-/*==============================================================*/
-/* Index: actor_movie_actors_FK                                 */
-/*==============================================================*/
-create index actor_movie_actors_FK on movie_actors (
-                                                    actor_id ASC
-    )
-go
-
-/*==============================================================*/
-/* Index: movie_movie_actors_FK                                 */
-/*==============================================================*/
-create index movie_movie_actors_FK on movie_actors (
-                                                    movie_id ASC
-    )
-go
-
-/*==============================================================*/
-/* Index: actor_role_movie_actors_FK                            */
-/*==============================================================*/
-create index actor_role_movie_actors_FK on movie_actors (
-                                                         actor_role_id ASC
-    )
-go
-
-/*==============================================================*/
-/* Table: movie_role                                            */
-/*==============================================================*/
-create table movie_role (
-                            movie_role_id        char(10)             not null,
-                            movie_role_name      varchar(10)          null,
-                            constraint PK_MOVIE_ROLE primary key nonclustered (movie_role_id)
-)
-go
-
-/*==============================================================*/
-/* Table: movie_type                                            */
-/*==============================================================*/
-create table movie_type (
-                            movie_type_id        char(10)             not null,
-                            movie_type_name      varchar(20)          null,
-                            constraint PK_MOVIE_TYPE primary key (movie_type_id)
-)
-go
-
-/*==============================================================*/
-/* Table: occupational                                          */
-/*==============================================================*/
-create table occupational (
-                              occupational_id      char(10)             not null,
-                              occupational_name    varchar(10)          null,
-                              constraint PK_OCCUPATIONAL primary key nonclustered (occupational_id)
-)
-go
-
-/*==============================================================*/
-/* Table: "order"                                               */
-/*==============================================================*/
-create table "order" (
-                         order_id             char(10)             not null,
-                         order_time           datetime             null,
-                         order_pay_time       datetime             null,
-                         order_limit_time     datetime             null,
-                         order_money          money                null,
-                         constraint PK_ORDER primary key nonclustered (order_id)
-)
-go
-
-/*==============================================================*/
-/* Table: pay                                                   */
-/*==============================================================*/
-create table pay (
-                     pay_id               char(10)             not null,
-                     "pay_money+_number"  decimal(8,2)         null,
-                     constraint PK_PAY primary key nonclustered (pay_id)
-)
-go
-
-/*==============================================================*/
-/* Table: pay_account                                           */
-/*==============================================================*/
-create table pay_account (
-                             pay_account_id       char(10)             not null,
-                             pay_account_name     varchar(10)          null,
-                             pay_account_number   varchar(20)          null,
-                             constraint PK_PAY_ACCOUNT primary key nonclustered (pay_account_id)
-)
-go
-
-/*==============================================================*/
-/* Table: person                                                */
-/*==============================================================*/
-create table person (
-                        person_id            char(10)             not null,
-                        person_name          varchar(10)          null,
-                        constraint PK_PERSON primary key nonclustered (person_id)
-)
-go
-
-/*==============================================================*/
-/* Table: picture                                               */
-/*==============================================================*/
-create table picture (
-                         pricture_id          char(10)             not null,
-                         movie_id             char(10)             null,
-                         actor_id             char(10)             null,
-                         picture_name         varchar(20)          null,
-                         pricture_address     varchar(50)          null,
-                         constraint PK_PICTURE primary key nonclustered (pricture_id)
-)
-go
-
-/*==============================================================*/
-/* Index: actor_picture_FK                                      */
-/*==============================================================*/
-create index actor_picture_FK on picture (
-                                          actor_id ASC
-    )
-go
-
-/*==============================================================*/
-/* Index: movie_picture_FK                                      */
-/*==============================================================*/
-create index movie_picture_FK on picture (
-                                          movie_id ASC
-    )
-go
-
-/*==============================================================*/
-/* Table: preferential                                          */
-/*==============================================================*/
-create table preferential (
-                              preferential_id      char(10)             not null,
-                              preferential_name    varchar(10)          null,
-                              preferential_introduction varchar(100)         null,
-                              preferential_only    bit                  null,
-                              preferential_power   decimal(10,2)        null,
-                              preferential_start_data_time datetime             null,
-                              preferential_end_data_time datetime             null,
-                              constraint PK_PREFERENTIAL primary key nonclustered (preferential_id)
-)
-go
-
-/*==============================================================*/
-/* Table: province                                              */
-/*==============================================================*/
-create table province (
-                          province_id          char(3)              not null,
-                          world_country_id     char(10)             null,
-                          province_name        varchar(50)          null,
-                          constraint PK_PROVINCE primary key nonclustered (province_id)
-)
-go
-
-/*==============================================================*/
-/* Index: country_province_FK                                   */
-/*==============================================================*/
-create index country_province_FK on province (
-                                              world_country_id ASC
-    )
-go
-
-/*==============================================================*/
-/* Table: regional                                              */
-/*==============================================================*/
-create table regional (
-                          regional_id          char(5)              null,
-                          regoional_name       varchar(20)          null
-)
-go
-
-/*==============================================================*/
-/* Table: screening_room                                        */
-/*==============================================================*/
-create table screening_room (
-                                screening_room_id    char(10)             not null,
-                                cinema_id            char(16)             null,
-                                screening_room_name  varchar(10)          null,
-                                screening_room_capacity int                  null,
-                                constraint PK_SCREENING_ROOM primary key nonclustered (screening_room_id)
-)
-go
-
-/*==============================================================*/
-/* Index: cinema_screening_roo,_FK                              */
-/*==============================================================*/
-create index cinema_screening_room_FK on screening_room (
-                                                         cinema_id ASC
-    )
-go
-
-/*==============================================================*/
-/* Table: seat                                                  */
-/*==============================================================*/
-create table seat (
-                      seat_id              char(10)             not null,
-                      screening_room_id    char(10)             null,
-                      seat_x               int                  null,
-                      seat_y               int                  null,
-                      seat_state           int                  null,
-                      constraint PK_SEAT primary key nonclustered (seat_id)
-)
-go
-
-/*==============================================================*/
-/* Index: screening_room_seat_FK                                */
-/*==============================================================*/
-create index screening_room_seat_FK on seat (
-                                             screening_room_id ASC
-    )
-go
-
-/*==============================================================*/
-/* Table: state_life                                            */
-/*==============================================================*/
-create table state_life (
-                            state_life_id        char(10)             not null,
-                            state_life_name      varchar(10)          null,
-                            constraint PK_STATE_LIFE primary key nonclustered (state_life_id)
-)
-go
-
-/*==============================================================*/
-/* Table: studio_card                                           */
-/*==============================================================*/
-create table studio_card (
-                             studio_card_id       char(10)             not null,
-                             studio_card_name     varchar(10)          null,
-                             studio_card_start_data_time datetime             null,
-                             studio_card_last_time datetime             null,
-                             studio_card_sell_money money                null,
-                             studio_card_introduced varchar(100)         null,
-                             constraint PK_STUDIO_CARD primary key nonclustered (studio_card_id)
-)
-go
-
-/*==============================================================*/
-/* Table: theater                                               */
-/*==============================================================*/
-create table theater (
-                         theater_id           char(10)             not null,
-                         theater_name         varchar(20)          null,
-                         theater_introduced   varchar(100)         null,
-                         constraint PK_THEATER primary key nonclustered (theater_id)
-)
-go
-
-/*==============================================================*/
-/* Table: ticket                                                */
-/*==============================================================*/
-create table ticket (
-                        ticket_id     char(16) not null,
-                        order_id      char(10) null,
-                        movie_id      char(10) null,
-                        watched_id    char(10) null,
-                        seat_id       char(10) null,
-                        field_id      char(10) null,
-                        ticket_monoey money    not null,
-                        constraint PK_TICKET primary key nonclustered (ticket_id)
-)
-go
-
-/*==============================================================*/
-/* Index: movie_ticket_FK                                       */
-/*==============================================================*/
-create index movie_ticket_FK on ticket (
-                                        movie_id ASC
-    )
-go
-
-/*==============================================================*/
-/* Index: order_ticket_FK                                       */
-/*==============================================================*/
-create index order_ticket_FK on ticket (
-                                        order_id ASC
-    )
-go
-
-/*==============================================================*/
-/* Index: seat_ticket_FK                                        */
-/*==============================================================*/
-create index seat_ticket_FK on ticket (
-                                       seat_id ASC
-    )
-go
-
-/*==============================================================*/
-/* Index: field_ticket_FK                                       */
-/*==============================================================*/
-create index field_ticket_FK on ticket (
-                                        field_id ASC
-    )
-go
-
-/*==============================================================*/
-/* Index: ticket_watch_FK                                       */
-/*==============================================================*/
-create index ticket_watch_FK on ticket (
-                                        watched_id ASC
-    )
-go
-
-/*==============================================================*/
-/* Table: type                                                  */
-/*==============================================================*/
-create table type (
-                      type_id              char(10)             not null,
-                      type_name            varchar(20)          null,
-                      constraint PK_TYPE primary key nonclustered (type_id)
-)
-go
-
-/*==============================================================*/
-/* Table: "user"                                                */
-/*==============================================================*/
-create table "user" (
-                        user_id                    char(10)    not null,
-                        city_id                    char(12)    null,
-                        state_life_id              char(10)    null,
-                        user_name                  varchar(20) null,
-                        user_sex                   bit         null,
-                        user_birthday              datetime    null,
-                        user_password              char(32)    null,
-                        user_telphone              char(11)    null,
-                        user_picture_address       varchar(50) null,
-                        user_create_time           datetime    null,
-                        user_last_load_time        datetime    null,
-                        user_is_delete             bit         null,
-                        user_is_load               bit         null,
-                        user_personality_signature varchar(30) null,
-                        constraint PK_USER primary key nonclustered (user_id)
-)
-go
-
-/*==============================================================*/
-/* Index: user_city_FK                                          */
-/*==============================================================*/
-create index user_city_FK on "user" (
-                                     city_id ASC
-    )
-go
-
-/*==============================================================*/
-/* Index: user_state_life_FK                                    */
-/*==============================================================*/
-create index user_state_life_FK on "user" (
-                                           state_life_id ASC
-    )
-go
-
-/*==============================================================*/
-/* Table: user_fun                                              */
-/*==============================================================*/
-create table user_fun (
-                          user_fun_id          char(10)             not null,
-                          user_id              char(10)             not null,
-                          fun_id               char(10)             not null,
-                          constraint PK_USER_FUN primary key (user_fun_id, user_id, fun_id)
-)
-go
-
-/*==============================================================*/
-/* Index: user_fun_FK                                           */
-/*==============================================================*/
-create index user_fun_FK on user_fun (
-                                      user_id ASC
-    )
-go
-
-/*==============================================================*/
-/* Index: user_fun2_FK                                          */
-/*==============================================================*/
-create index user_fun2_FK on user_fun (
-                                       fun_id ASC
-    )
-go
-
-/*==============================================================*/
-/* Table: want_watch                                            */
-/*==============================================================*/
-create table want_watch (
-                            want_watch_id        char(10)             not null,
-                            movie_id             char(10)             null,
-                            user_id              char(10)             null,
-                            sure_want_watch_time datetime             null,
-                            constraint PK_WANT_WATCH primary key nonclustered (want_watch_id)
-)
-go
-
-/*==============================================================*/
-/* Index: user_want_watch_FK                                    */
-/*==============================================================*/
-create index user_want_watch_FK on want_watch (
-                                               user_id ASC
-    )
-go
-
-/*==============================================================*/
-/* Index: want_watch_movie_FK                                   */
-/*==============================================================*/
-create index want_watch_movie_FK on want_watch (
-                                                movie_id ASC
-    )
-go
-
-/*==============================================================*/
-/* Table: watched                                               */
-/*==============================================================*/
-create table watched (
-                         watched_id           char(10)             not null,
-                         movie_id             char(10)             null,
-                         user_id              char(10)             null,
-                         ticket_id            char(16)             null,
-                         movie_score          float                null,
-                         movie_evalution      varchar(60)          null,
-                         constraint PK_WATCHED primary key nonclustered (watched_id)
-)
-go
-
-/*==============================================================*/
-/* Index: movie_watched_FK                                      */
-/*==============================================================*/
-create index movie_watched_FK on watched (
-                                          movie_id ASC
-    )
-go
-
-/*==============================================================*/
-/* Index: user_watched_FK                                       */
-/*==============================================================*/
-create index user_watched_FK on watched (
-                                         user_id ASC
-    )
-go
-
-/*==============================================================*/
-/* Index: ticket_watch2_FK                                      */
-/*==============================================================*/
-create index ticket_watch2_FK on watched (
-                                          ticket_id ASC
-    )
-go
-
-/*==============================================================*/
-/* Table: world_country                                         */
-/*==============================================================*/
-create table world_country (
-                               world_country_id     char(10)             not null,
-                               chau_id              char(10)             null,
-                               world_country_name   varchar(10)          null,
-                               constraint PK_WORLD_COUNTRY primary key nonclustered (world_country_id)
-)
-go
-
-/*==============================================================*/
-/* Index: chau_country_FK                                       */
-/*==============================================================*/
-create index chau_country_FK on world_country (
-                                               chau_id ASC
-    )
-go
-
-alter table actor
-    add constraint FK_ACTOR_ACTOR_HOM_CITY foreign key (city_id)
-        references city (city_id)
-go
-
-alter table cinema
-    add constraint FK_CINEMA_COMPANY_C_COMPANY foreign key (company_id)
-        references company (company_id)
-go
-
-alter table cinema
-    add constraint FK_CINEMA_COUNTRY_C_COUNTRY foreign key (country_id)
-        references country (country_id)
-go
-
-alter table city
-    add constraint FK_CITY_PROVINCE__PROVINCE foreign key (province_id)
-        references province (province_id)
-go
-
-alter table country
-    add constraint FK_COUNTRY_CITY_COUN_CITY foreign key (city_id)
-        references city (city_id)
-go
-
-alter table field
-    add constraint FK_FIELD_MOVIE_FIE_MOVIE foreign key (movie_id)
-        references movie (movie_id)
-go
-
-alter table field
-    add constraint FK_FIELD_SCREENING_SCREENIN foreign key (screening_room_id)
-        references screening_room (screening_room_id)
-go
-
-alter table movie
-    add constraint FK_MOVIE_MOVIE_LOC_CITY foreign key (city_id)
-        references city (city_id)
-go
-
-alter table movie
-    add constraint FK_MOVIE_MOVIES_TY_MOVIE_TY foreign key (movie_type_id)
-        references movie_type (movie_type_id)
-go
-
-alter table movie_actors
-    add constraint FK_MOVIE_AC_ACTOR_MOV_ACTOR foreign key (actor_id)
-        references actor (actor_id)
-go
-
-alter table movie_actors
-    add constraint FK_MOVIE_AC_ACTOR_ROL_ACTOR_RO foreign key (actor_role_id)
-        references actor_role (actor_role_id)
-go
-
-alter table movie_actors
-    add constraint FK_MOVIE_AC_MOVIE_MOV_MOVIE foreign key (movie_id)
-        references movie (movie_id)
-go
-
-alter table picture
-    add constraint FK_PICTURE_ACTOR_PIC_ACTOR foreign key (actor_id)
-        references actor (actor_id)
-go
-
-alter table picture
-    add constraint FK_PICTURE_MOVIE_PIC_MOVIE foreign key (movie_id)
-        references movie (movie_id)
-go
-
-alter table province
-    add constraint FK_PROVINCE_WORLD_COU_WORLD_CO foreign key (world_country_id)
-        references world_country (world_country_id)
-go
-
-alter table screening_room
-    add constraint FK_SCREENIN_CINEMA_SC_CINEMA foreign key (cinema_id)
-        references cinema (cinema_id)
-go
-
-alter table seat
-    add constraint FK_SEAT_SCREENING_SCREENIN foreign key (screening_room_id)
-        references screening_room (screening_room_id)
-go
-
-alter table ticket
-    add constraint FK_TICKET_FIELD_TIC_FIELD foreign key (field_id)
-        references field (field_id)
-go
-
-alter table ticket
-    add constraint FK_TICKET_MOVIE_TIC_MOVIE foreign key (movie_id)
-        references movie (movie_id)
-go
-
-alter table ticket
-    add constraint FK_TICKET_ORDER_TIC_ORDER foreign key (order_id)
-        references "order" (order_id)
-go
-
-alter table ticket
-    add constraint FK_TICKET_SEAT_TICK_SEAT foreign key (seat_id)
-        references seat (seat_id)
-go
-
-alter table ticket
-    add constraint FK_TICKET_TICKET_WA_WATCHED foreign key (watched_id)
-        references watched (watched_id)
-go
-
-alter table "user"
-    add constraint FK_USER_USER_CITY_CITY foreign key (city_id)
-        references city (city_id)
-go
-
-alter table "user"
-    add constraint FK_USER_USER_STAT_STATE_LI foreign key (state_life_id)
-        references state_life (state_life_id)
-go
-
-alter table user_fun
-    add constraint FK_USER_FUN_RELATIONS_USER foreign key (user_id)
-        references "user" (user_id)
-go
-
-alter table user_fun
-    add constraint FK_USER_FUN_RELATIONS_FUN foreign key (fun_id)
-        references fun (fun_id)
-go
-
-alter table want_watch
-    add constraint FK_WANT_WAT_USER_WANT_USER foreign key (user_id)
-        references "user" (user_id)
-go
-
-alter table want_watch
-    add constraint FK_WANT_WAT_WANT_WATC_MOVIE foreign key (movie_id)
-        references movie (movie_id)
-go
-
-alter table watched
-    add constraint FK_WATCHED_MOVIE_WAT_MOVIE foreign key (movie_id)
-        references movie (movie_id)
-go
-
-alter table watched
-    add constraint FK_WATCHED_TICKET_WA_TICKET foreign key (ticket_id)
-        references ticket (ticket_id)
-go
-
-alter table watched
-    add constraint FK_WATCHED_USER_WATC_USER foreign key (user_id)
-        references "user" (user_id)
-go
-
-alter table world_country
-    add constraint FK_WORLD_CO_CHAU_COUN_CHAU foreign key (chau_id)
-        references chau (chau_id)
-go
-
-alter table [user]
-    ADD CONSTRAINT user_picture_address_default DEFAULT ('/img/photo.jpg') for user_picture_address
-go
-
-alter table regional
-    alter column regional_id char(10) not null
-go
-alter table regional
-    add constraint regional_PK primary key nonclustered (regional_id)
-go
-
-alter table field
-    add [money] money
-go
+USE [master]
+GO
+/****** Object:  Database [somali_cinema]    Script Date: 2020/5/31 17:02:26 ******/
+DROP DATABASE IF EXISTS [somali_cinema]
+GO
+
+CREATE DATABASE [somali_cinema]
+    CONTAINMENT = NONE
+    ON PRIMARY
+    ( NAME = N'somali_cinema', FILENAME = N'E:\Code\software\Sql Server\MSSQL15.MSSQLSERVER\MSSQL\DATA\somali_cinema.mdf' , SIZE = 8192 KB , MAXSIZE = UNLIMITED, FILEGROWTH = 65536 KB )
+    LOG ON
+    ( NAME = N'somali_cinema_log', FILENAME = N'E:\Code\software\Sql Server\MSSQL15.MSSQLSERVER\MSSQL\DATA\somali_cinema_log.ldf' , SIZE = 8192 KB , MAXSIZE = 2048 GB , FILEGROWTH = 65536 KB )
+    WITH CATALOG_COLLATION = DATABASE_DEFAULT
+GO
+ALTER DATABASE [somali_cinema] SET COMPATIBILITY_LEVEL = 150
+GO
+IF (1 = FULLTEXTSERVICEPROPERTY('IsFullTextInstalled'))
+    begin
+        EXEC [somali_cinema].[dbo].[sp_fulltext_database] @action = 'enable'
+    end
+GO
+ALTER DATABASE [somali_cinema] SET ANSI_NULL_DEFAULT OFF
+GO
+ALTER DATABASE [somali_cinema] SET ANSI_NULLS OFF
+GO
+ALTER DATABASE [somali_cinema] SET ANSI_PADDING OFF
+GO
+ALTER DATABASE [somali_cinema] SET ANSI_WARNINGS OFF
+GO
+ALTER DATABASE [somali_cinema] SET ARITHABORT OFF
+GO
+ALTER DATABASE [somali_cinema] SET AUTO_CLOSE OFF
+GO
+ALTER DATABASE [somali_cinema] SET AUTO_SHRINK OFF
+GO
+ALTER DATABASE [somali_cinema] SET AUTO_UPDATE_STATISTICS ON
+GO
+ALTER DATABASE [somali_cinema] SET CURSOR_CLOSE_ON_COMMIT OFF
+GO
+ALTER DATABASE [somali_cinema] SET CURSOR_DEFAULT GLOBAL
+GO
+ALTER DATABASE [somali_cinema] SET CONCAT_NULL_YIELDS_NULL OFF
+GO
+ALTER DATABASE [somali_cinema] SET NUMERIC_ROUNDABORT OFF
+GO
+ALTER DATABASE [somali_cinema] SET QUOTED_IDENTIFIER OFF
+GO
+ALTER DATABASE [somali_cinema] SET RECURSIVE_TRIGGERS OFF
+GO
+ALTER DATABASE [somali_cinema] SET DISABLE_BROKER
+GO
+ALTER DATABASE [somali_cinema] SET AUTO_UPDATE_STATISTICS_ASYNC OFF
+GO
+ALTER DATABASE [somali_cinema] SET DATE_CORRELATION_OPTIMIZATION OFF
+GO
+ALTER DATABASE [somali_cinema] SET TRUSTWORTHY OFF
+GO
+ALTER DATABASE [somali_cinema] SET ALLOW_SNAPSHOT_ISOLATION OFF
+GO
+ALTER DATABASE [somali_cinema] SET PARAMETERIZATION SIMPLE
+GO
+ALTER DATABASE [somali_cinema] SET READ_COMMITTED_SNAPSHOT OFF
+GO
+ALTER DATABASE [somali_cinema] SET HONOR_BROKER_PRIORITY OFF
+GO
+ALTER DATABASE [somali_cinema] SET RECOVERY FULL
+GO
+ALTER DATABASE [somali_cinema] SET MULTI_USER
+GO
+ALTER DATABASE [somali_cinema] SET PAGE_VERIFY CHECKSUM
+GO
+ALTER DATABASE [somali_cinema] SET DB_CHAINING OFF
+GO
+ALTER DATABASE [somali_cinema] SET FILESTREAM ( NON_TRANSACTED_ACCESS = OFF )
+GO
+ALTER DATABASE [somali_cinema] SET TARGET_RECOVERY_TIME = 60 SECONDS
+GO
+ALTER DATABASE [somali_cinema] SET DELAYED_DURABILITY = DISABLED
+GO
+EXEC sys.sp_db_vardecimal_storage_format N'somali_cinema', N'ON'
+GO
+ALTER DATABASE [somali_cinema] SET QUERY_STORE = OFF
+GO
+USE [somali_cinema]
+GO
+/****** Object:  Table [dbo].[actor]    Script Date: 2020/5/31 17:02:26 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[actor]
+(
+    [actor_id]           [char](10)     NOT NULL,
+    [city_id]            [char](12)     NULL,
+    [actor_introduction] [varchar](100) NULL,
+    [actor_name]         [varchar](10)  NULL,
+    [actor_sex]          [bit]          NULL,
+    [actor_birthday]     [datetime]     NULL
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[actor_role]    Script Date: 2020/5/31 17:02:26 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[actor_role]
+(
+    [actor_role_id]   [char](3)     NOT NULL,
+    [actor_role_name] [varchar](20) NULL
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[area_address]    Script Date: 2020/5/31 17:02:26 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[area_address]
+(
+    [area_address_id]           [char](15)    NOT NULL,
+    [area_address_name]         [varchar](30) NULL,
+    [area_address_english_name] [varchar](60) NULL
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[chau]    Script Date: 2020/5/31 17:02:26 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[chau]
+(
+    [chau_id]   [char](10)    NOT NULL,
+    [chau_name] [varchar](20) NULL
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[cinema]    Script Date: 2020/5/31 17:02:26 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[cinema]
+(
+    [cinema_id]       [char](16)    NOT NULL,
+    [company_id]      [char](10)    NULL,
+    [country_id]      [char](12)    NULL,
+    [cinema_name]     [varchar](50) NULL,
+    [cinema_address]  [varchar](50) NULL,
+    [cinema_telphone] [char](11)    NULL
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[city]    Script Date: 2020/5/31 17:02:26 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[city]
+(
+    [city_id]     [char](12)    NOT NULL,
+    [province_id] [char](3)     NULL,
+    [city_name]   [varchar](50) NULL
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[company]    Script Date: 2020/5/31 17:02:26 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[company]
+(
+    [company_id]   [char](10)    NOT NULL,
+    [company_name] [varchar](30) NULL
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[country]    Script Date: 2020/5/31 17:02:26 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[country]
+(
+    [country_id]   [char](12)    NOT NULL,
+    [city_id]      [char](12)    NULL,
+    [country_name] [varchar](50) NULL
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[field]    Script Date: 2020/5/31 17:02:26 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[field]
+(
+    [field_id]              [char](10) NOT NULL,
+    [screening_room_id]     [char](10) NULL,
+    [movie_id]              [char](10) NULL,
+    [field_start_data_time] [datetime] NULL,
+    [field_money]           [money]    NOT NULL
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[fun]    Script Date: 2020/5/31 17:02:26 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[fun]
+(
+    [fun_id]   [char](10)    NOT NULL,
+    [fun_name] [varchar](10) NULL
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[movie]    Script Date: 2020/5/31 17:02:26 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[movie]
+(
+    [movie_id]                [char](10)     NOT NULL,
+    [movie_type_id]           [char](10)     NULL,
+    [city_id]                 [char](12)     NULL,
+    [movie_name]              [varchar](10)  NULL,
+    [movie_publishing_data]   [datetime]     NULL,
+    [movie_introduction]      [varchar](100) NULL,
+    [movie_source_address]    [varchar](50)  NULL,
+    [movie_poster_address]    [varchar](50)  NULL,
+    [movie_duration_playback] [datetime]     NULL,
+    [movie_last_time]         [datetime]     NULL
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[movie_actors]    Script Date: 2020/5/31 17:02:26 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[movie_actors]
+(
+    [movie_actors_id] [char](10) NOT NULL,
+    [actor_id]        [char](10) NULL,
+    [movie_id]        [char](10) NULL,
+    [actor_role_id]   [char](3)  NULL
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[movie_type]    Script Date: 2020/5/31 17:02:26 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[movie_type]
+(
+    [movie_type_id]   [char](10)    NOT NULL,
+    [movie_type_name] [varchar](20) NULL,
+    CONSTRAINT [PK_MOVIE_TYPE] PRIMARY KEY CLUSTERED
+        (
+         [movie_type_id] ASC
+            ) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[order]    Script Date: 2020/5/31 17:02:26 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[order]
+(
+    [order_id]         [char](10) NOT NULL,
+    [order_time]       [datetime] NULL,
+    [order_pay_time]   [datetime] NULL,
+    [order_limit_time] [datetime] NULL,
+    [order_money]      [money]    NULL
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[picture]    Script Date: 2020/5/31 17:02:26 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[picture]
+(
+    [pricture_id]      [char](10)    NOT NULL,
+    [movie_id]         [char](10)    NULL,
+    [actor_id]         [char](10)    NULL,
+    [picture_name]     [varchar](20) NULL,
+    [pricture_address] [varchar](50) NULL
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[province]    Script Date: 2020/5/31 17:02:26 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[province]
+(
+    [province_id]      [char](3)     NOT NULL,
+    [world_country_id] [char](10)    NULL,
+    [province_name]    [varchar](50) NULL
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[regional]    Script Date: 2020/5/31 17:02:26 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[regional]
+(
+    [regional_id]    [char](10)    NOT NULL,
+    [regoional_name] [varchar](20) NULL
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[screening_room]    Script Date: 2020/5/31 17:02:26 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[screening_room]
+(
+    [screening_room_id]       [char](10)    NOT NULL,
+    [cinema_id]               [char](16)    NULL,
+    [screening_room_name]     [varchar](10) NULL,
+    [screening_room_capacity] [int]         NULL
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[seat]    Script Date: 2020/5/31 17:02:26 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[seat]
+(
+    [seat_id]           [char](10) NOT NULL,
+    [screening_room_id] [char](10) NULL,
+    [seat_x]            [int]      NULL,
+    [seat_y]            [int]      NULL,
+    [seat_state]        [int]      NULL
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[state_life]    Script Date: 2020/5/31 17:02:26 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[state_life]
+(
+    [state_life_id]   [char](10)    NOT NULL,
+    [state_life_name] [varchar](10) NULL
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[ticket]    Script Date: 2020/5/31 17:02:26 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[ticket]
+(
+    [ticket_id]    [char](16) NOT NULL,
+    [order_id]     [char](10) NULL,
+    [movie_id]     [char](10) NULL,
+    [watched_id]   [char](10) NULL,
+    [seat_id]      [char](10) NULL,
+    [field_id]     [char](10) NULL,
+    [ticket_money] [money]    NOT NULL
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[type]    Script Date: 2020/5/31 17:02:26 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[type]
+(
+    [type_id]   [char](10)    NOT NULL,
+    [type_name] [varchar](20) NULL
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[user]    Script Date: 2020/5/31 17:02:26 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[user]
+(
+    [user_id]                    [char](10)    NOT NULL,
+    [city_id]                    [char](12)    NULL,
+    [state_life_id]              [char](10)    NULL,
+    [user_name]                  [varchar](20) NULL,
+    [user_sex]                   [bit]         NULL,
+    [user_birthday]              [datetime]    NULL,
+    [user_password]              [char](32)    NULL,
+    [user_telphone]              [char](11)    NULL,
+    [user_picture_address]       [varchar](50) NULL,
+    [user_create_time]           [datetime]    NULL,
+    [user_last_load_time]        [datetime]    NULL,
+    [user_is_delete]             [bit]         NULL,
+    [user_is_load]               [bit]         NULL,
+    [user_personality_signature] [varchar](30) NULL
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[user_fun]    Script Date: 2020/5/31 17:02:26 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[user_fun]
+(
+    [user_fun_id] [char](10) NOT NULL,
+    [user_id]     [char](10) NOT NULL,
+    [fun_id]      [char](10) NOT NULL,
+    CONSTRAINT [PK_USER_FUN] PRIMARY KEY CLUSTERED
+        (
+         [user_fun_id] ASC,
+         [user_id] ASC,
+         [fun_id] ASC
+            ) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[want_watch]    Script Date: 2020/5/31 17:02:26 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[want_watch]
+(
+    [want_watch_id]        [char](10) NOT NULL,
+    [movie_id]             [char](10) NULL,
+    [user_id]              [char](10) NULL,
+    [sure_want_watch_time] [datetime] NULL
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[watched]    Script Date: 2020/5/31 17:02:26 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[watched]
+(
+    [watched_id]      [char](10)    NOT NULL,
+    [movie_id]        [char](10)    NULL,
+    [user_id]         [char](10)    NULL,
+    [ticket_id]       [char](16)    NULL,
+    [movie_score]     [float]       NULL,
+    [movie_evalution] [varchar](60) NULL
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[world_country]    Script Date: 2020/5/31 17:02:26 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[world_country]
+(
+    [world_country_id]   [char](10)    NOT NULL,
+    [chau_id]            [char](10)    NULL,
+    [world_country_name] [varchar](10) NULL,
+    [regional_id]        [char](10)    NULL
+) ON [PRIMARY]
+GO
+INSERT [dbo].[actor] ([actor_id], [city_id], [actor_introduction], [actor_name], [actor_sex], [actor_birthday])
+VALUES (N'1001001001', N'110100000000', N'他很好笑', N'徐峥', 1, NULL)
+INSERT [dbo].[actor] ([actor_id], [city_id], [actor_introduction], [actor_name], [actor_sex], [actor_birthday])
+VALUES (N'1001001002', N'130100000000', N'他很好笑', N'黄渤', 1, NULL)
+INSERT [dbo].[actor] ([actor_id], [city_id], [actor_introduction], [actor_name], [actor_sex], [actor_birthday])
+VALUES (N'1001001003', N'110100000000', N'他很好笑', N'张如意', 0, NULL)
+INSERT [dbo].[actor] ([actor_id], [city_id], [actor_introduction], [actor_name], [actor_sex], [actor_birthday])
+VALUES (N'1001001004', N'110100000000', N'他很好笑', N'刘耀元', 1, NULL)
+INSERT [dbo].[actor] ([actor_id], [city_id], [actor_introduction], [actor_name], [actor_sex], [actor_birthday])
+VALUES (N'1001001005', N'110100000000', N'他很好笑', N'翁红', 0, NULL)
+INSERT [dbo].[actor] ([actor_id], [city_id], [actor_introduction], [actor_name], [actor_sex], [actor_birthday])
+VALUES (N'1001001006', N'110100000000', N'他很好笑', N'汤镇业', 1, NULL)
+INSERT [dbo].[actor] ([actor_id], [city_id], [actor_introduction], [actor_name], [actor_sex], [actor_birthday])
+VALUES (N'1001001007', N'110100000000', N'他很好笑', N'张国荣', 1, NULL)
+INSERT [dbo].[actor] ([actor_id], [city_id], [actor_introduction], [actor_name], [actor_sex], [actor_birthday])
+VALUES (N'1001001008', N'130600000000', N'他很好笑', N'张丰毅', 1, NULL)
+INSERT [dbo].[actor] ([actor_id], [city_id], [actor_introduction], [actor_name], [actor_sex], [actor_birthday])
+VALUES (N'1001001009', N'110100000000', N'他很好笑', N'巩俐', 0, NULL)
+INSERT [dbo].[actor] ([actor_id], [city_id], [actor_introduction], [actor_name], [actor_sex], [actor_birthday])
+VALUES (N'1001001010', N'140200000000', N'他很好笑', N'吴京', 1, NULL)
+INSERT [dbo].[actor] ([actor_id], [city_id], [actor_introduction], [actor_name], [actor_sex], [actor_birthday])
+VALUES (N'1001001011', N'110100000000', N'他很好笑', N'李光洁', 1, NULL)
+INSERT [dbo].[actor] ([actor_id], [city_id], [actor_introduction], [actor_name], [actor_sex], [actor_birthday])
+VALUES (N'1001001012', N'140200000000', N'他很好笑', N'吴孟达', 1, NULL)
+INSERT [dbo].[actor] ([actor_id], [city_id], [actor_introduction], [actor_name], [actor_sex], [actor_birthday])
+VALUES (N'1001001013', N'150900000000', N'他很好笑', N'屈楚萧', 1, NULL)
+INSERT [dbo].[actor] ([actor_id], [city_id], [actor_introduction], [actor_name], [actor_sex], [actor_birthday])
+VALUES (N'1001001014', N'150900000000', N'他很好笑', N'张三', 1, NULL)
+INSERT [dbo].[actor] ([actor_id], [city_id], [actor_introduction], [actor_name], [actor_sex], [actor_birthday])
+VALUES (N'1001001015', N'220800000000', N'他很好笑', N'李四', 1, NULL)
+INSERT [dbo].[actor] ([actor_id], [city_id], [actor_introduction], [actor_name], [actor_sex], [actor_birthday])
+VALUES (N'2005305657', N'110100000000', N'功夫演员', N'李小龙', 1, CAST(N'3869-08-12T00:00:00.000' AS DateTime))
+INSERT [dbo].[actor] ([actor_id], [city_id], [actor_introduction], [actor_name], [actor_sex], [actor_birthday])
+VALUES (N'2005305834', N'110100000000', N'功夫演员', N'李小龙', 1, NULL)
+INSERT [dbo].[actor] ([actor_id], [city_id], [actor_introduction], [actor_name], [actor_sex], [actor_birthday])
+VALUES (N'2005317936', N'110100000000', N'功夫演员', N'李小龙', 1, CAST(N'3869-08-12T00:00:00.000' AS DateTime))
+INSERT [dbo].[actor] ([actor_id], [city_id], [actor_introduction], [actor_name], [actor_sex], [actor_birthday])
+VALUES (N'2005318007', N'110100000000', N'功夫演员', N'李小龙', 1, NULL)
+INSERT [dbo].[actor_role] ([actor_role_id], [actor_role_name])
+VALUES (N'101', N'主演')
+INSERT [dbo].[actor_role] ([actor_role_id], [actor_role_name])
+VALUES (N'102', N'导演')
+INSERT [dbo].[actor_role] ([actor_role_id], [actor_role_name])
+VALUES (N'103', N'服装')
+INSERT [dbo].[actor_role] ([actor_role_id], [actor_role_name])
+VALUES (N'104', N'道具')
+INSERT [dbo].[actor_role] ([actor_role_id], [actor_role_name])
+VALUES (N'105', N'摄影')
+INSERT [dbo].[actor_role] ([actor_role_id], [actor_role_name])
+VALUES (N'106', N'剪辑')
+INSERT [dbo].[actor_role] ([actor_role_id], [actor_role_name])
+VALUES (N'107', N'特效')
+INSERT [dbo].[actor_role] ([actor_role_id], [actor_role_name])
+VALUES (N'108', N'编剧')
+INSERT [dbo].[chau] ([chau_id], [chau_name])
+VALUES (N'1001001001', N'亚洲')
+INSERT [dbo].[chau] ([chau_id], [chau_name])
+VALUES (N'1001001002', N'非洲')
+INSERT [dbo].[chau] ([chau_id], [chau_name])
+VALUES (N'1001001003', N'北美洲')
+INSERT [dbo].[chau] ([chau_id], [chau_name])
+VALUES (N'1001001004', N'南美洲')
+INSERT [dbo].[chau] ([chau_id], [chau_name])
+VALUES (N'1001001005', N'欧洲')
+INSERT [dbo].[chau] ([chau_id], [chau_name])
+VALUES (N'1001001006', N'澳洲')
+INSERT [dbo].[chau] ([chau_id], [chau_name])
+VALUES (N'1001001007', N'南极洲')
+INSERT [dbo].[cinema] ([cinema_id], [company_id], [country_id], [cinema_name], [cinema_address], [cinema_telphone])
+VALUES (N'100100100100101 ', N'1001001010', N'510104000000', N'太平洋影院（春熙路店）', N'春熙路', N'40081231231')
+INSERT [dbo].[cinema] ([cinema_id], [company_id], [country_id], [cinema_name], [cinema_address], [cinema_telphone])
+VALUES (N'100100100100102 ', N'1001001010', N'510105000000', N'太平洋影院（王府井店）', N'王府井', N'40081231232')
+INSERT [dbo].[cinema] ([cinema_id], [company_id], [country_id], [cinema_name], [cinema_address], [cinema_telphone])
+VALUES (N'100100100100103 ', N'1001001010', N'510184000000', N'太平洋影院（金沙店）', N'金沙', N'40081231233')
+INSERT [dbo].[cinema] ([cinema_id], [company_id], [country_id], [cinema_name], [cinema_address], [cinema_telphone])
+VALUES (N'100100100100104 ', N'1001001010', N'510132000000', N'太平洋影院（新城市店）', N'新城市', N'40081231234')
+INSERT [dbo].[cinema] ([cinema_id], [company_id], [country_id], [cinema_name], [cinema_address], [cinema_telphone])
+VALUES (N'100100100100105 ', N'1001001010', N'510113000000', N'太平洋影院（紫荆店）', N'紫荆', N'40081231235')
+INSERT [dbo].[cinema] ([cinema_id], [company_id], [country_id], [cinema_name], [cinema_address], [cinema_telphone])
+VALUES (N'100100100100106 ', N'1001001010', N'510112000000', N'太平洋影院（蜀西店）', N'蜀西', N'40081231236')
+INSERT [dbo].[cinema] ([cinema_id], [company_id], [country_id], [cinema_name], [cinema_address], [cinema_telphone])
+VALUES (N'100100100100107 ', N'1001001010', N'510105000000', N'成都蛟龙国际紫荆电影城', N'蛟龙国际', N'40081231237')
+INSERT [dbo].[cinema] ([cinema_id], [company_id], [country_id], [cinema_name], [cinema_address], [cinema_telphone])
+VALUES (N'100100100100108 ', N'1001001010', N'510124000000', N'太平洋影院（龙城国际店）', N'红光镇龙城国际', N'40081231238')
+INSERT [dbo].[cinema] ([cinema_id], [company_id], [country_id], [cinema_name], [cinema_address], [cinema_telphone])
+VALUES (N'100100100100109 ', N'1001001010', N'510182000000', N'太平洋影院（彭州店）', N'彭州', N'40081231239')
+INSERT [dbo].[cinema] ([cinema_id], [company_id], [country_id], [cinema_name], [cinema_address], [cinema_telphone])
+VALUES (N'100100100100110 ', N'1001001010', N'510124000000', N'太平洋影院（沙湾店）', N'沙湾', N'40081231240')
+INSERT [dbo].[cinema] ([cinema_id], [company_id], [country_id], [cinema_name], [cinema_address], [cinema_telphone])
+VALUES (N'100100100100111 ', N'1001001010', N'510184000000', N'太平洋影院（金色海蓉店）', N'金色海蓉', N'40081231241')
+INSERT [dbo].[cinema] ([cinema_id], [company_id], [country_id], [cinema_name], [cinema_address], [cinema_telphone])
+VALUES (N'100100100100112 ', N'1001001010', N'510107000000', N'太平洋影院（武侯店）', N'武侯祠', N'40081231242')
+INSERT [dbo].[cinema] ([cinema_id], [company_id], [country_id], [cinema_name], [cinema_address], [cinema_telphone])
+VALUES (N'100100100100113 ', N'1001001010', N'510113000000', N'太平洋影院（川师店）', N'四川师范大学', N'40081231243')
+INSERT [dbo].[cinema] ([cinema_id], [company_id], [country_id], [cinema_name], [cinema_address], [cinema_telphone])
+VALUES (N'100100100100114 ', N'1001001010', N'510104000000', N'太平洋影院（中影千盛店）', N'中影千盛', N'40081231244')
+INSERT [dbo].[cinema] ([cinema_id], [company_id], [country_id], [cinema_name], [cinema_address], [cinema_telphone])
+VALUES (N'100100100100115 ', N'1001001010', N'510115000000', N'新时代影城（国色天乡店）', N'国色天乡', N'40081231245')
+INSERT [dbo].[cinema] ([cinema_id], [company_id], [country_id], [cinema_name], [cinema_address], [cinema_telphone])
+VALUES (N'100100100100116 ', N'1001001010', N'510115000000', N'太平洋影城（温江大学城店）', N'温江大学城', N'40081231246')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'110100000000', N'110', N'市辖区')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'110200000000', N'110', N'市辖县')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'120100000000', N'120', N'市辖区')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'120200000000', N'120', N'市辖县')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'130100000000', N'130', N'石家庄市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'130200000000', N'130', N'唐山市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'130300000000', N'130', N'秦皇岛市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'130400000000', N'130', N'邯郸市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'130500000000', N'130', N'邢台市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'130600000000', N'130', N'保定市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'130700000000', N'130', N'张家口市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'130800000000', N'130', N'承德市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'130900000000', N'130', N'沧州市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'131000000000', N'130', N'廊坊市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'131100000000', N'130', N'衡水市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'140100000000', N'140', N'太原市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'140200000000', N'140', N'大同市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'140300000000', N'140', N'阳泉市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'140400000000', N'140', N'长治市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'140500000000', N'140', N'晋城市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'140600000000', N'140', N'朔州市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'140700000000', N'140', N'晋中市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'140800000000', N'140', N'运城市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'140900000000', N'140', N'忻州市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'141000000000', N'140', N'临汾市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'141100000000', N'140', N'吕梁市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'150100000000', N'150', N'呼和浩特市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'150200000000', N'150', N'包头市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'150300000000', N'150', N'乌海市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'150400000000', N'150', N'赤峰市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'150500000000', N'150', N'通辽市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'150600000000', N'150', N'鄂尔多斯市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'150700000000', N'150', N'呼伦贝尔市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'150800000000', N'150', N'巴彦淖尔市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'150900000000', N'150', N'乌兰察布市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'152200000000', N'150', N'兴安盟')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'152500000000', N'150', N'锡林郭勒盟')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'152900000000', N'150', N'阿拉善盟')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'210100000000', N'210', N'沈阳市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'210200000000', N'210', N'大连市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'210300000000', N'210', N'鞍山市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'210400000000', N'210', N'抚顺市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'210500000000', N'210', N'本溪市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'210600000000', N'210', N'丹东市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'210700000000', N'210', N'锦州市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'210800000000', N'210', N'营口市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'210900000000', N'210', N'阜新市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'211000000000', N'210', N'辽阳市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'211100000000', N'210', N'盘锦市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'211200000000', N'210', N'铁岭市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'211300000000', N'210', N'朝阳市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'211400000000', N'210', N'葫芦岛市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'220100000000', N'220', N'长春市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'220200000000', N'220', N'吉林市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'220300000000', N'220', N'四平市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'220400000000', N'220', N'辽源市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'220500000000', N'220', N'通化市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'220600000000', N'220', N'白山市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'220700000000', N'220', N'松原市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'220800000000', N'220', N'白城市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'222400000000', N'220', N'延边朝鲜族自治州')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'230100000000', N'230', N'哈尔滨市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'230200000000', N'230', N'齐齐哈尔市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'230300000000', N'230', N'鸡西市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'230400000000', N'230', N'鹤岗市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'230500000000', N'230', N'双鸭山市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'230600000000', N'230', N'大庆市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'230700000000', N'230', N'伊春市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'230800000000', N'230', N'佳木斯市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'230900000000', N'230', N'七台河市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'231000000000', N'230', N'牡丹江市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'231100000000', N'230', N'黑河市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'231200000000', N'230', N'绥化市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'232700000000', N'230', N'大兴安岭地区')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'310100000000', N'310', N'市辖区')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'310200000000', N'310', N'市辖县')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'320100000000', N'320', N'南京市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'320200000000', N'320', N'无锡市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'320300000000', N'320', N'徐州市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'320400000000', N'320', N'常州市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'320500000000', N'320', N'苏州市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'320600000000', N'320', N'南通市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'320700000000', N'320', N'连云港市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'320800000000', N'320', N'淮安市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'320900000000', N'320', N'盐城市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'321000000000', N'320', N'扬州市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'321100000000', N'320', N'镇江市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'321200000000', N'320', N'泰州市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'321300000000', N'320', N'宿迁市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'330100000000', N'330', N'杭州市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'330200000000', N'330', N'宁波市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'330300000000', N'330', N'温州市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'330400000000', N'330', N'嘉兴市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'330500000000', N'330', N'湖州市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'330600000000', N'330', N'绍兴市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'330700000000', N'330', N'金华市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'330800000000', N'330', N'衢州市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'330900000000', N'330', N'舟山市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'331000000000', N'330', N'台州市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'331100000000', N'330', N'丽水市')
+GO
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'340100000000', N'340', N'合肥市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'340200000000', N'340', N'芜湖市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'340300000000', N'340', N'蚌埠市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'340400000000', N'340', N'淮南市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'340500000000', N'340', N'马鞍山市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'340600000000', N'340', N'淮北市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'340700000000', N'340', N'铜陵市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'340800000000', N'340', N'安庆市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'341000000000', N'340', N'黄山市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'341100000000', N'340', N'滁州市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'341200000000', N'340', N'阜阳市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'341300000000', N'340', N'宿州市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'341500000000', N'340', N'六安市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'341600000000', N'340', N'亳州市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'341700000000', N'340', N'池州市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'341800000000', N'340', N'宣城市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'350100000000', N'350', N'福州市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'350200000000', N'350', N'厦门市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'350300000000', N'350', N'莆田市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'350400000000', N'350', N'三明市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'350500000000', N'350', N'泉州市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'350600000000', N'350', N'漳州市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'350700000000', N'350', N'南平市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'350800000000', N'350', N'龙岩市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'350900000000', N'350', N'宁德市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'360100000000', N'360', N'南昌市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'360200000000', N'360', N'景德镇市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'360300000000', N'360', N'萍乡市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'360400000000', N'360', N'九江市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'360500000000', N'360', N'新余市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'360600000000', N'360', N'鹰潭市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'360700000000', N'360', N'赣州市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'360800000000', N'360', N'吉安市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'360900000000', N'360', N'宜春市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'361000000000', N'360', N'抚州市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'361100000000', N'360', N'上饶市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'370100000000', N'370', N'济南市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'370200000000', N'370', N'青岛市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'370300000000', N'370', N'淄博市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'370400000000', N'370', N'枣庄市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'370500000000', N'370', N'东营市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'370600000000', N'370', N'烟台市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'370700000000', N'370', N'潍坊市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'370800000000', N'370', N'济宁市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'370900000000', N'370', N'泰安市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'371000000000', N'370', N'威海市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'371100000000', N'370', N'日照市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'371200000000', N'370', N'莱芜市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'371300000000', N'370', N'临沂市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'371400000000', N'370', N'德州市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'371500000000', N'370', N'聊城市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'371600000000', N'370', N'滨州市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'371700000000', N'370', N'菏泽市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'410100000000', N'410', N'郑州市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'410200000000', N'410', N'开封市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'410300000000', N'410', N'洛阳市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'410400000000', N'410', N'平顶山市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'410500000000', N'410', N'安阳市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'410600000000', N'410', N'鹤壁市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'410700000000', N'410', N'新乡市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'410800000000', N'410', N'焦作市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'410900000000', N'410', N'濮阳市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'411000000000', N'410', N'许昌市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'411100000000', N'410', N'漯河市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'411200000000', N'410', N'三门峡市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'411300000000', N'410', N'南阳市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'411400000000', N'410', N'商丘市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'411500000000', N'410', N'信阳市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'411600000000', N'410', N'周口市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'411700000000', N'410', N'驻马店市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'419000000000', N'410', N'省直辖县级行政区划')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'420100000000', N'420', N'武汉市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'420200000000', N'420', N'黄石市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'420300000000', N'420', N'十堰市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'420500000000', N'420', N'宜昌市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'420600000000', N'420', N'襄阳市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'420700000000', N'420', N'鄂州市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'420800000000', N'420', N'荆门市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'420900000000', N'420', N'孝感市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'421000000000', N'420', N'荆州市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'421100000000', N'420', N'黄冈市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'421200000000', N'420', N'咸宁市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'421300000000', N'420', N'随州市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'422800000000', N'420', N'恩施土家族苗族自治州')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'429000000000', N'420', N'省直辖县级行政区划')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'430100000000', N'430', N'长沙市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'430200000000', N'430', N'株洲市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'430300000000', N'430', N'湘潭市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'430400000000', N'430', N'衡阳市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'430500000000', N'430', N'邵阳市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'430600000000', N'430', N'岳阳市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'430700000000', N'430', N'常德市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'430800000000', N'430', N'张家界市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'430900000000', N'430', N'益阳市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'431000000000', N'430', N'郴州市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'431100000000', N'430', N'永州市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'431200000000', N'430', N'怀化市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'431300000000', N'430', N'娄底市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'433100000000', N'430', N'湘西土家族苗族自治州')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'440100000000', N'440', N'广州市')
+GO
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'440200000000', N'440', N'韶关市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'440300000000', N'440', N'深圳市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'440400000000', N'440', N'珠海市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'440500000000', N'440', N'汕头市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'440600000000', N'440', N'佛山市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'440700000000', N'440', N'江门市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'440800000000', N'440', N'湛江市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'440900000000', N'440', N'茂名市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'441200000000', N'440', N'肇庆市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'441300000000', N'440', N'惠州市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'441400000000', N'440', N'梅州市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'441500000000', N'440', N'汕尾市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'441600000000', N'440', N'河源市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'441700000000', N'440', N'阳江市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'441800000000', N'440', N'清远市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'441900000000', N'440', N'东莞市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'442000000000', N'440', N'中山市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'445100000000', N'440', N'潮州市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'445200000000', N'440', N'揭阳市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'445300000000', N'440', N'云浮市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'450100000000', N'450', N'南宁市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'450200000000', N'450', N'柳州市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'450300000000', N'450', N'桂林市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'450400000000', N'450', N'梧州市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'450500000000', N'450', N'北海市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'450600000000', N'450', N'防城港市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'450700000000', N'450', N'钦州市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'450800000000', N'450', N'贵港市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'450900000000', N'450', N'玉林市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'451000000000', N'450', N'百色市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'451100000000', N'450', N'贺州市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'451200000000', N'450', N'河池市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'451300000000', N'450', N'来宾市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'451400000000', N'450', N'崇左市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'460100000000', N'460', N'海口市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'460200000000', N'460', N'三亚市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'460300000000', N'460', N'三沙市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'469000000000', N'460', N'省直辖县级行政区划')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'500100000000', N'500', N'市辖区')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'500200000000', N'500', N'市辖县')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'510100000000', N'510', N'成都市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'510300000000', N'510', N'自贡市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'510400000000', N'510', N'攀枝花市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'510500000000', N'510', N'泸州市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'510600000000', N'510', N'德阳市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'510700000000', N'510', N'绵阳市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'510800000000', N'510', N'广元市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'510900000000', N'510', N'遂宁市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'511000000000', N'510', N'内江市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'511100000000', N'510', N'乐山市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'511300000000', N'510', N'南充市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'511400000000', N'510', N'眉山市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'511500000000', N'510', N'宜宾市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'511600000000', N'510', N'广安市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'511700000000', N'510', N'达州市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'511800000000', N'510', N'雅安市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'511900000000', N'510', N'巴中市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'512000000000', N'510', N'资阳市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'513200000000', N'510', N'阿坝藏族羌族自治州')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'513300000000', N'510', N'甘孜藏族自治州')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'513400000000', N'510', N'凉山彝族自治州')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'520100000000', N'520', N'贵阳市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'520200000000', N'520', N'六盘水市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'520300000000', N'520', N'遵义市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'520400000000', N'520', N'安顺市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'520500000000', N'520', N'毕节市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'520600000000', N'520', N'铜仁市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'522300000000', N'520', N'黔西南布依族苗族自治州')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'522600000000', N'520', N'黔东南苗族侗族自治州')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'522700000000', N'520', N'黔南布依族苗族自治州')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'530100000000', N'530', N'昆明市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'530300000000', N'530', N'曲靖市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'530400000000', N'530', N'玉溪市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'530500000000', N'530', N'保山市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'530600000000', N'530', N'昭通市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'530700000000', N'530', N'丽江市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'530800000000', N'530', N'普洱市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'530900000000', N'530', N'临沧市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'532300000000', N'530', N'楚雄彝族自治州')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'532500000000', N'530', N'红河哈尼族彝族自治州')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'532600000000', N'530', N'文山壮族苗族自治州')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'532800000000', N'530', N'西双版纳傣族自治州')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'532900000000', N'530', N'大理白族自治州')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'533100000000', N'530', N'德宏傣族景颇族自治州')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'533300000000', N'530', N'怒江傈僳族自治州')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'533400000000', N'530', N'迪庆藏族自治州')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'540100000000', N'540', N'拉萨市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'542100000000', N'540', N'昌都地区')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'542200000000', N'540', N'山南地区')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'542300000000', N'540', N'日喀则地区')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'542400000000', N'540', N'那曲地区')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'542500000000', N'540', N'阿里地区')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'542600000000', N'540', N'林芝地区')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'610100000000', N'610', N'西安市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'610200000000', N'610', N'铜川市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'610300000000', N'610', N'宝鸡市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'610400000000', N'610', N'咸阳市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'610500000000', N'610', N'渭南市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'610600000000', N'610', N'延安市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'610700000000', N'610', N'汉中市')
+GO
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'610800000000', N'610', N'榆林市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'610900000000', N'610', N'安康市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'611000000000', N'610', N'商洛市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'620100000000', N'620', N'兰州市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'620200000000', N'620', N'嘉峪关市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'620300000000', N'620', N'金昌市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'620400000000', N'620', N'白银市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'620500000000', N'620', N'天水市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'620600000000', N'620', N'武威市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'620700000000', N'620', N'张掖市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'620800000000', N'620', N'平凉市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'620900000000', N'620', N'酒泉市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'621000000000', N'620', N'庆阳市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'621100000000', N'620', N'定西市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'621200000000', N'620', N'陇南市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'622900000000', N'620', N'临夏回族自治州')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'623000000000', N'620', N'甘南藏族自治州')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'630100000000', N'630', N'西宁市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'630200000000', N'630', N'海东市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'632200000000', N'630', N'海北藏族自治州')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'632300000000', N'630', N'黄南藏族自治州')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'632500000000', N'630', N'海南藏族自治州')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'632600000000', N'630', N'果洛藏族自治州')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'632700000000', N'630', N'玉树藏族自治州')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'632800000000', N'630', N'海西蒙古族藏族自治州')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'640100000000', N'640', N'银川市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'640200000000', N'640', N'石嘴山市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'640300000000', N'640', N'吴忠市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'640400000000', N'640', N'固原市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'640500000000', N'640', N'中卫市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'650100000000', N'650', N'乌鲁木齐市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'650200000000', N'650', N'克拉玛依市')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'652100000000', N'650', N'吐鲁番地区')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'652200000000', N'650', N'哈密地区')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'652300000000', N'650', N'昌吉回族自治州')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'652700000000', N'650', N'博尔塔拉蒙古自治州')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'652800000000', N'650', N'巴音郭楞蒙古自治州')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'652900000000', N'650', N'阿克苏地区')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'653000000000', N'650', N'克孜勒苏柯尔克孜自治州')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'653100000000', N'650', N'喀什地区')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'653200000000', N'650', N'和田地区')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'654000000000', N'650', N'伊犁哈萨克自治州')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'654200000000', N'650', N'塔城地区')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'654300000000', N'650', N'阿勒泰地区')
+INSERT [dbo].[city] ([city_id], [province_id], [city_name])
+VALUES (N'659000000000', N'650', N'自治区直辖县级行政区划')
+INSERT [dbo].[company] ([company_id], [company_name])
+VALUES (N'1001001001', N'万达影业')
+INSERT [dbo].[company] ([company_id], [company_name])
+VALUES (N'1001001002', N'丰禾影业')
+INSERT [dbo].[company] ([company_id], [company_name])
+VALUES (N'1001001003', N'中影星美')
+INSERT [dbo].[company] ([company_id], [company_name])
+VALUES (N'1001001004', N'上海联合')
+INSERT [dbo].[company] ([company_id], [company_name])
+VALUES (N'1001001005', N'中影南方新干线')
+INSERT [dbo].[company] ([company_id], [company_name])
+VALUES (N'1001001006', N'广州金逸珠江')
+INSERT [dbo].[company] ([company_id], [company_name])
+VALUES (N'1001001007', N'北京新影联')
+INSERT [dbo].[company] ([company_id], [company_name])
+VALUES (N'1001001008', N'广东大地')
+INSERT [dbo].[company] ([company_id], [company_name])
+VALUES (N'1001001009', N'浙江时代')
+INSERT [dbo].[company] ([company_id], [company_name])
+VALUES (N'1001001010', N'四川太平洋')
+INSERT [dbo].[company] ([company_id], [company_name])
+VALUES (N'1001001011', N'辽宁北方')
+INSERT [dbo].[company] ([company_id], [company_name])
+VALUES (N'1001001012', N'浙江横店')
+INSERT [dbo].[company] ([company_id], [company_name])
+VALUES (N'1001001013', N'河南奥斯卡')
+INSERT [dbo].[company] ([company_id], [company_name])
+VALUES (N'1001001014', N'中影数字院线')
+INSERT [dbo].[company] ([company_id], [company_name])
+VALUES (N'1001001015', N'重庆保利万和')
+INSERT [dbo].[company] ([company_id], [company_name])
+VALUES (N'1001001016', N'时代华夏经典')
+INSERT [dbo].[company] ([company_id], [company_name])
+VALUES (N'1001001017', N'湖北银兴世纪环球')
+INSERT [dbo].[company] ([company_id], [company_name])
+VALUES (N'1001001018', N'武汉天河')
+INSERT [dbo].[company] ([company_id], [company_name])
+VALUES (N'1001001019', N'江苏东方')
+INSERT [dbo].[company] ([company_id], [company_name])
+VALUES (N'1001001020', N'江苏幸福蓝海')
+INSERT [dbo].[company] ([company_id], [company_name])
+VALUES (N'1001001021', N'浙江温州雁荡')
+INSERT [dbo].[company] ([company_id], [company_name])
+VALUES (N'1001001022', N'浙江星光')
+INSERT [dbo].[company] ([company_id], [company_name])
+VALUES (N'1001001023', N'上海大光明')
+INSERT [dbo].[company] ([company_id], [company_name])
+VALUES (N'1001001024', N'山东新世纪')
+INSERT [dbo].[company] ([company_id], [company_name])
+VALUES (N'1001001025', N'福建中兴')
+INSERT [dbo].[company] ([company_id], [company_name])
+VALUES (N'1001001026', N'北京九州中原')
+INSERT [dbo].[company] ([company_id], [company_name])
+VALUES (N'1001001027', N'河北中联影业')
+INSERT [dbo].[company] ([company_id], [company_name])
+VALUES (N'1001001028', N'华夏联合')
+INSERT [dbo].[company] ([company_id], [company_name])
+VALUES (N'1001001029', N'四川峨眉')
+INSERT [dbo].[company] ([company_id], [company_name])
+VALUES (N'1001001030', N'湖南潇湘影视')
+INSERT [dbo].[company] ([company_id], [company_name])
+VALUES (N'1001001031', N'湖南楚湘')
+INSERT [dbo].[company] ([company_id], [company_name])
+VALUES (N'1001001032', N'新疆电影公司')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'110101000000', N'110100000000', N'东城区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'110102000000', N'110100000000', N'西城区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'110105000000', N'110100000000', N'朝阳区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'110106000000', N'110100000000', N'丰台区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'110107000000', N'110100000000', N'石景山区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'110108000000', N'110100000000', N'海淀区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'110109000000', N'110100000000', N'门头沟区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'110111000000', N'110100000000', N'房山区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'110112000000', N'110100000000', N'通州区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'110113000000', N'110100000000', N'顺义区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'110114000000', N'110100000000', N'昌平区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'110115000000', N'110100000000', N'大兴区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'110116000000', N'110100000000', N'怀柔区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'110117000000', N'110100000000', N'平谷区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'110228000000', N'110200000000', N'密云县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'110229000000', N'110200000000', N'延庆县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'120101000000', N'120100000000', N'和平区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'120102000000', N'120100000000', N'河东区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'120103000000', N'120100000000', N'河西区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'120104000000', N'120100000000', N'南开区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'120105000000', N'120100000000', N'河北区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'120106000000', N'120100000000', N'红桥区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'120110000000', N'120100000000', N'东丽区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'120111000000', N'120100000000', N'西青区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'120112000000', N'120100000000', N'津南区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'120113000000', N'120100000000', N'北辰区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'120114000000', N'120100000000', N'武清区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'120115000000', N'120100000000', N'宝坻区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'120116000000', N'120100000000', N'滨海新区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'120221000000', N'120200000000', N'宁河县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'120223000000', N'120200000000', N'静海县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'120225000000', N'120200000000', N'蓟县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130102000000', N'130100000000', N'长安区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130103000000', N'130100000000', N'桥东区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130104000000', N'130100000000', N'桥西区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130105000000', N'130100000000', N'新华区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130107000000', N'130100000000', N'井陉矿区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130108000000', N'130100000000', N'裕华区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130121000000', N'130100000000', N'井陉县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130123000000', N'130100000000', N'正定县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130124000000', N'130100000000', N'栾城县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130125000000', N'130100000000', N'行唐县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130126000000', N'130100000000', N'灵寿县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130127000000', N'130100000000', N'高邑县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130128000000', N'130100000000', N'深泽县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130129000000', N'130100000000', N'赞皇县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130130000000', N'130100000000', N'无极县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130131000000', N'130100000000', N'平山县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130132000000', N'130100000000', N'元氏县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130133000000', N'130100000000', N'赵县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130181000000', N'130100000000', N'辛集市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130182000000', N'130100000000', N'藁城市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130183000000', N'130100000000', N'晋州市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130184000000', N'130100000000', N'新乐市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130185000000', N'130100000000', N'鹿泉市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130202000000', N'130200000000', N'路南区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130203000000', N'130200000000', N'路北区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130204000000', N'130200000000', N'古冶区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130205000000', N'130200000000', N'开平区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130207000000', N'130200000000', N'丰南区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130208000000', N'130200000000', N'丰润区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130209000000', N'130200000000', N'曹妃甸区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130223000000', N'130200000000', N'滦县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130224000000', N'130200000000', N'滦南县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130225000000', N'130200000000', N'乐亭县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130227000000', N'130200000000', N'迁西县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130229000000', N'130200000000', N'玉田县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130281000000', N'130200000000', N'遵化市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130283000000', N'130200000000', N'迁安市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130302000000', N'130300000000', N'海港区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130303000000', N'130300000000', N'山海关区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130304000000', N'130300000000', N'北戴河区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130321000000', N'130300000000', N'青龙满族自治县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130322000000', N'130300000000', N'昌黎县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130323000000', N'130300000000', N'抚宁县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130324000000', N'130300000000', N'卢龙县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130402000000', N'130400000000', N'邯山区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130403000000', N'130400000000', N'丛台区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130404000000', N'130400000000', N'复兴区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130406000000', N'130400000000', N'峰峰矿区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130421000000', N'130400000000', N'邯郸县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130423000000', N'130400000000', N'临漳县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130424000000', N'130400000000', N'成安县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130425000000', N'130400000000', N'大名县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130426000000', N'130400000000', N'涉县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130427000000', N'130400000000', N'磁县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130428000000', N'130400000000', N'肥乡县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130429000000', N'130400000000', N'永年县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130430000000', N'130400000000', N'邱县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130431000000', N'130400000000', N'鸡泽县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130432000000', N'130400000000', N'广平县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130433000000', N'130400000000', N'馆陶县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130434000000', N'130400000000', N'魏县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130435000000', N'130400000000', N'曲周县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130481000000', N'130400000000', N'武安市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130502000000', N'130500000000', N'桥东区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130503000000', N'130500000000', N'桥西区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130521000000', N'130500000000', N'邢台县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130522000000', N'130500000000', N'临城县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130523000000', N'130500000000', N'内丘县')
+GO
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130524000000', N'130500000000', N'柏乡县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130525000000', N'130500000000', N'隆尧县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130526000000', N'130500000000', N'任县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130527000000', N'130500000000', N'南和县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130528000000', N'130500000000', N'宁晋县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130529000000', N'130500000000', N'巨鹿县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130530000000', N'130500000000', N'新河县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130531000000', N'130500000000', N'广宗县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130532000000', N'130500000000', N'平乡县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130533000000', N'130500000000', N'威县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130534000000', N'130500000000', N'清河县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130535000000', N'130500000000', N'临西县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130581000000', N'130500000000', N'南宫市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130582000000', N'130500000000', N'沙河市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130602000000', N'130600000000', N'新市区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130603000000', N'130600000000', N'北市区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130604000000', N'130600000000', N'南市区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130621000000', N'130600000000', N'满城县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130622000000', N'130600000000', N'清苑县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130623000000', N'130600000000', N'涞水县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130624000000', N'130600000000', N'阜平县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130625000000', N'130600000000', N'徐水县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130626000000', N'130600000000', N'定兴县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130627000000', N'130600000000', N'唐县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130628000000', N'130600000000', N'高阳县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130629000000', N'130600000000', N'容城县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130630000000', N'130600000000', N'涞源县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130631000000', N'130600000000', N'望都县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130632000000', N'130600000000', N'安新县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130633000000', N'130600000000', N'易县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130634000000', N'130600000000', N'曲阳县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130635000000', N'130600000000', N'蠡县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130636000000', N'130600000000', N'顺平县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130637000000', N'130600000000', N'博野县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130638000000', N'130600000000', N'雄县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130681000000', N'130600000000', N'涿州市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130682000000', N'130600000000', N'定州市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130683000000', N'130600000000', N'安国市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130684000000', N'130600000000', N'高碑店市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130702000000', N'130700000000', N'桥东区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130703000000', N'130700000000', N'桥西区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130705000000', N'130700000000', N'宣化区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130706000000', N'130700000000', N'下花园区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130721000000', N'130700000000', N'宣化县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130722000000', N'130700000000', N'张北县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130723000000', N'130700000000', N'康保县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130724000000', N'130700000000', N'沽源县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130725000000', N'130700000000', N'尚义县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130726000000', N'130700000000', N'蔚县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130727000000', N'130700000000', N'阳原县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130728000000', N'130700000000', N'怀安县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130729000000', N'130700000000', N'万全县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130730000000', N'130700000000', N'怀来县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130731000000', N'130700000000', N'涿鹿县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130732000000', N'130700000000', N'赤城县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130733000000', N'130700000000', N'崇礼县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130802000000', N'130800000000', N'双桥区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130803000000', N'130800000000', N'双滦区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130804000000', N'130800000000', N'鹰手营子矿区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130821000000', N'130800000000', N'承德县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130822000000', N'130800000000', N'兴隆县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130823000000', N'130800000000', N'平泉县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130824000000', N'130800000000', N'滦平县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130825000000', N'130800000000', N'隆化县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130826000000', N'130800000000', N'丰宁满族自治县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130827000000', N'130800000000', N'宽城满族自治县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130828000000', N'130800000000', N'围场满族蒙古族自治县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130902000000', N'130900000000', N'新华区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130903000000', N'130900000000', N'运河区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130921000000', N'130900000000', N'沧县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130922000000', N'130900000000', N'青县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130923000000', N'130900000000', N'东光县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130924000000', N'130900000000', N'海兴县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130925000000', N'130900000000', N'盐山县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130926000000', N'130900000000', N'肃宁县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130927000000', N'130900000000', N'南皮县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130928000000', N'130900000000', N'吴桥县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130929000000', N'130900000000', N'献县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130930000000', N'130900000000', N'孟村回族自治县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130981000000', N'130900000000', N'泊头市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130982000000', N'130900000000', N'任丘市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130983000000', N'130900000000', N'黄骅市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'130984000000', N'130900000000', N'河间市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'131002000000', N'131000000000', N'安次区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'131003000000', N'131000000000', N'广阳区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'131022000000', N'131000000000', N'固安县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'131023000000', N'131000000000', N'永清县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'131024000000', N'131000000000', N'香河县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'131025000000', N'131000000000', N'大城县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'131026000000', N'131000000000', N'文安县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'131028000000', N'131000000000', N'大厂回族自治县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'131081000000', N'131000000000', N'霸州市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'131082000000', N'131000000000', N'三河市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'131102000000', N'131100000000', N'桃城区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'131121000000', N'131100000000', N'枣强县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'131122000000', N'131100000000', N'武邑县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'131123000000', N'131100000000', N'武强县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'131124000000', N'131100000000', N'饶阳县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'131125000000', N'131100000000', N'安平县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'131126000000', N'131100000000', N'故城县')
+GO
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'131127000000', N'131100000000', N'景县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'131128000000', N'131100000000', N'阜城县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'131181000000', N'131100000000', N'冀州市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'131182000000', N'131100000000', N'深州市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'140105000000', N'140100000000', N'小店区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'140106000000', N'140100000000', N'迎泽区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'140107000000', N'140100000000', N'杏花岭区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'140108000000', N'140100000000', N'尖草坪区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'140109000000', N'140100000000', N'万柏林区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'140110000000', N'140100000000', N'晋源区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'140121000000', N'140100000000', N'清徐县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'140122000000', N'140100000000', N'阳曲县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'140123000000', N'140100000000', N'娄烦县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'140181000000', N'140100000000', N'古交市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'140202000000', N'140200000000', N'城区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'140203000000', N'140200000000', N'矿区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'140211000000', N'140200000000', N'南郊区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'140212000000', N'140200000000', N'新荣区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'140221000000', N'140200000000', N'阳高县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'140222000000', N'140200000000', N'天镇县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'140223000000', N'140200000000', N'广灵县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'140224000000', N'140200000000', N'灵丘县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'140225000000', N'140200000000', N'浑源县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'140226000000', N'140200000000', N'左云县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'140227000000', N'140200000000', N'大同县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'140302000000', N'140300000000', N'城区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'140303000000', N'140300000000', N'矿区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'140311000000', N'140300000000', N'郊区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'140321000000', N'140300000000', N'平定县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'140322000000', N'140300000000', N'盂县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'140402000000', N'140400000000', N'城区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'140411000000', N'140400000000', N'郊区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'140421000000', N'140400000000', N'长治县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'140423000000', N'140400000000', N'襄垣县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'140424000000', N'140400000000', N'屯留县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'140425000000', N'140400000000', N'平顺县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'140426000000', N'140400000000', N'黎城县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'140427000000', N'140400000000', N'壶关县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'140428000000', N'140400000000', N'长子县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'140429000000', N'140400000000', N'武乡县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'140430000000', N'140400000000', N'沁县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'140431000000', N'140400000000', N'沁源县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'140481000000', N'140400000000', N'潞城市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'140502000000', N'140500000000', N'城区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'140521000000', N'140500000000', N'沁水县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'140522000000', N'140500000000', N'阳城县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'140524000000', N'140500000000', N'陵川县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'140525000000', N'140500000000', N'泽州县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'140581000000', N'140500000000', N'高平市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'140602000000', N'140600000000', N'朔城区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'140603000000', N'140600000000', N'平鲁区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'140621000000', N'140600000000', N'山阴县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'140622000000', N'140600000000', N'应县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'140623000000', N'140600000000', N'右玉县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'140624000000', N'140600000000', N'怀仁县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'140702000000', N'140700000000', N'榆次区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'140721000000', N'140700000000', N'榆社县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'140722000000', N'140700000000', N'左权县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'140723000000', N'140700000000', N'和顺县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'140724000000', N'140700000000', N'昔阳县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'140725000000', N'140700000000', N'寿阳县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'140726000000', N'140700000000', N'太谷县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'140727000000', N'140700000000', N'祁县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'140728000000', N'140700000000', N'平遥县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'140729000000', N'140700000000', N'灵石县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'140781000000', N'140700000000', N'介休市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'140802000000', N'140800000000', N'盐湖区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'140821000000', N'140800000000', N'临猗县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'140822000000', N'140800000000', N'万荣县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'140823000000', N'140800000000', N'闻喜县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'140824000000', N'140800000000', N'稷山县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'140825000000', N'140800000000', N'新绛县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'140826000000', N'140800000000', N'绛县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'140827000000', N'140800000000', N'垣曲县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'140828000000', N'140800000000', N'夏县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'140829000000', N'140800000000', N'平陆县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'140830000000', N'140800000000', N'芮城县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'140881000000', N'140800000000', N'永济市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'140882000000', N'140800000000', N'河津市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'140902000000', N'140900000000', N'忻府区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'140921000000', N'140900000000', N'定襄县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'140922000000', N'140900000000', N'五台县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'140923000000', N'140900000000', N'代县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'140924000000', N'140900000000', N'繁峙县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'140925000000', N'140900000000', N'宁武县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'140926000000', N'140900000000', N'静乐县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'140927000000', N'140900000000', N'神池县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'140928000000', N'140900000000', N'五寨县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'140929000000', N'140900000000', N'岢岚县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'140930000000', N'140900000000', N'河曲县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'140931000000', N'140900000000', N'保德县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'140932000000', N'140900000000', N'偏关县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'140981000000', N'140900000000', N'原平市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'141002000000', N'141000000000', N'尧都区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'141021000000', N'141000000000', N'曲沃县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'141022000000', N'141000000000', N'翼城县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'141023000000', N'141000000000', N'襄汾县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'141024000000', N'141000000000', N'洪洞县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'141025000000', N'141000000000', N'古县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'141026000000', N'141000000000', N'安泽县')
+GO
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'141027000000', N'141000000000', N'浮山县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'141028000000', N'141000000000', N'吉县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'141029000000', N'141000000000', N'乡宁县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'141030000000', N'141000000000', N'大宁县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'141031000000', N'141000000000', N'隰县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'141032000000', N'141000000000', N'永和县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'141033000000', N'141000000000', N'蒲县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'141034000000', N'141000000000', N'汾西县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'141081000000', N'141000000000', N'侯马市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'141082000000', N'141000000000', N'霍州市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'141102000000', N'141100000000', N'离石区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'141121000000', N'141100000000', N'文水县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'141122000000', N'141100000000', N'交城县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'141123000000', N'141100000000', N'兴县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'141124000000', N'141100000000', N'临县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'141125000000', N'141100000000', N'柳林县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'141126000000', N'141100000000', N'石楼县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'141127000000', N'141100000000', N'岚县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'141128000000', N'141100000000', N'方山县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'141129000000', N'141100000000', N'中阳县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'141130000000', N'141100000000', N'交口县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'141181000000', N'141100000000', N'孝义市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'141182000000', N'141100000000', N'汾阳市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'150102000000', N'150100000000', N'新城区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'150103000000', N'150100000000', N'回民区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'150104000000', N'150100000000', N'玉泉区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'150105000000', N'150100000000', N'赛罕区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'150121000000', N'150100000000', N'土默特左旗')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'150122000000', N'150100000000', N'托克托县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'150123000000', N'150100000000', N'和林格尔县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'150124000000', N'150100000000', N'清水河县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'150125000000', N'150100000000', N'武川县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'150202000000', N'150200000000', N'东河区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'150203000000', N'150200000000', N'昆都仑区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'150204000000', N'150200000000', N'青山区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'150205000000', N'150200000000', N'石拐区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'150206000000', N'150200000000', N'白云鄂博矿区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'150207000000', N'150200000000', N'九原区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'150221000000', N'150200000000', N'土默特右旗')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'150222000000', N'150200000000', N'固阳县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'150223000000', N'150200000000', N'达尔罕茂明安联合旗')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'150302000000', N'150300000000', N'海勃湾区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'150303000000', N'150300000000', N'海南区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'150304000000', N'150300000000', N'乌达区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'150402000000', N'150400000000', N'红山区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'150403000000', N'150400000000', N'元宝山区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'150404000000', N'150400000000', N'松山区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'150421000000', N'150400000000', N'阿鲁科尔沁旗')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'150422000000', N'150400000000', N'巴林左旗')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'150423000000', N'150400000000', N'巴林右旗')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'150424000000', N'150400000000', N'林西县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'150425000000', N'150400000000', N'克什克腾旗')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'150426000000', N'150400000000', N'翁牛特旗')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'150428000000', N'150400000000', N'喀喇沁旗')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'150429000000', N'150400000000', N'宁城县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'150430000000', N'150400000000', N'敖汉旗')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'150502000000', N'150500000000', N'科尔沁区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'150521000000', N'150500000000', N'科尔沁左翼中旗')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'150522000000', N'150500000000', N'科尔沁左翼后旗')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'150523000000', N'150500000000', N'开鲁县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'150524000000', N'150500000000', N'库伦旗')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'150525000000', N'150500000000', N'奈曼旗')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'150526000000', N'150500000000', N'扎鲁特旗')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'150581000000', N'150500000000', N'霍林郭勒市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'150602000000', N'150600000000', N'东胜区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'150621000000', N'150600000000', N'达拉特旗')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'150622000000', N'150600000000', N'准格尔旗')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'150623000000', N'150600000000', N'鄂托克前旗')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'150624000000', N'150600000000', N'鄂托克旗')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'150625000000', N'150600000000', N'杭锦旗')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'150626000000', N'150600000000', N'乌审旗')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'150627000000', N'150600000000', N'伊金霍洛旗')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'150702000000', N'150700000000', N'海拉尔区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'150703000000', N'150700000000', N'扎赉诺尔区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'150721000000', N'150700000000', N'阿荣旗')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'150722000000', N'150700000000', N'莫力达瓦达斡尔族自治旗')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'150723000000', N'150700000000', N'鄂伦春自治旗')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'150724000000', N'150700000000', N'鄂温克族自治旗')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'150725000000', N'150700000000', N'陈巴尔虎旗')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'150726000000', N'150700000000', N'新巴尔虎左旗')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'150727000000', N'150700000000', N'新巴尔虎右旗')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'150781000000', N'150700000000', N'满洲里市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'150782000000', N'150700000000', N'牙克石市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'150783000000', N'150700000000', N'扎兰屯市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'150784000000', N'150700000000', N'额尔古纳市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'150785000000', N'150700000000', N'根河市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'150802000000', N'150800000000', N'临河区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'150821000000', N'150800000000', N'五原县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'150822000000', N'150800000000', N'磴口县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'150823000000', N'150800000000', N'乌拉特前旗')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'150824000000', N'150800000000', N'乌拉特中旗')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'150825000000', N'150800000000', N'乌拉特后旗')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'150826000000', N'150800000000', N'杭锦后旗')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'150902000000', N'150900000000', N'集宁区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'150921000000', N'150900000000', N'卓资县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'150922000000', N'150900000000', N'化德县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'150923000000', N'150900000000', N'商都县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'150924000000', N'150900000000', N'兴和县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'150925000000', N'150900000000', N'凉城县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'150926000000', N'150900000000', N'察哈尔右翼前旗')
+GO
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'150927000000', N'150900000000', N'察哈尔右翼中旗')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'150928000000', N'150900000000', N'察哈尔右翼后旗')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'150929000000', N'150900000000', N'四子王旗')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'150981000000', N'150900000000', N'丰镇市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'152201000000', N'152200000000', N'乌兰浩特市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'152202000000', N'152200000000', N'阿尔山市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'152221000000', N'152200000000', N'科尔沁右翼前旗')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'152222000000', N'152200000000', N'科尔沁右翼中旗')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'152223000000', N'152200000000', N'扎赉特旗')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'152224000000', N'152200000000', N'突泉县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'152501000000', N'152500000000', N'二连浩特市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'152502000000', N'152500000000', N'锡林浩特市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'152522000000', N'152500000000', N'阿巴嘎旗')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'152523000000', N'152500000000', N'苏尼特左旗')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'152524000000', N'152500000000', N'苏尼特右旗')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'152525000000', N'152500000000', N'东乌珠穆沁旗')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'152526000000', N'152500000000', N'西乌珠穆沁旗')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'152527000000', N'152500000000', N'太仆寺旗')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'152528000000', N'152500000000', N'镶黄旗')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'152529000000', N'152500000000', N'正镶白旗')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'152530000000', N'152500000000', N'正蓝旗')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'152531000000', N'152500000000', N'多伦县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'152921000000', N'152900000000', N'阿拉善左旗')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'152922000000', N'152900000000', N'阿拉善右旗')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'152923000000', N'152900000000', N'额济纳旗')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'210102000000', N'210100000000', N'和平区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'210103000000', N'210100000000', N'沈河区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'210104000000', N'210100000000', N'大东区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'210105000000', N'210100000000', N'皇姑区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'210106000000', N'210100000000', N'铁西区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'210111000000', N'210100000000', N'苏家屯区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'210112000000', N'210100000000', N'东陵区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'210113000000', N'210100000000', N'沈北新区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'210114000000', N'210100000000', N'于洪区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'210122000000', N'210100000000', N'辽中县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'210123000000', N'210100000000', N'康平县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'210124000000', N'210100000000', N'法库县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'210181000000', N'210100000000', N'新民市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'210202000000', N'210200000000', N'中山区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'210203000000', N'210200000000', N'西岗区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'210204000000', N'210200000000', N'沙河口区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'210211000000', N'210200000000', N'甘井子区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'210212000000', N'210200000000', N'旅顺口区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'210213000000', N'210200000000', N'金州区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'210224000000', N'210200000000', N'长海县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'210281000000', N'210200000000', N'瓦房店市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'210282000000', N'210200000000', N'普兰店市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'210283000000', N'210200000000', N'庄河市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'210302000000', N'210300000000', N'铁东区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'210303000000', N'210300000000', N'铁西区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'210304000000', N'210300000000', N'立山区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'210311000000', N'210300000000', N'千山区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'210321000000', N'210300000000', N'台安县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'210323000000', N'210300000000', N'岫岩满族自治县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'210381000000', N'210300000000', N'海城市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'210402000000', N'210400000000', N'新抚区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'210403000000', N'210400000000', N'东洲区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'210404000000', N'210400000000', N'望花区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'210411000000', N'210400000000', N'顺城区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'210421000000', N'210400000000', N'抚顺县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'210422000000', N'210400000000', N'新宾满族自治县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'210423000000', N'210400000000', N'清原满族自治县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'210502000000', N'210500000000', N'平山区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'210503000000', N'210500000000', N'溪湖区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'210504000000', N'210500000000', N'明山区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'210505000000', N'210500000000', N'南芬区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'210521000000', N'210500000000', N'本溪满族自治县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'210522000000', N'210500000000', N'桓仁满族自治县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'210602000000', N'210600000000', N'元宝区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'210603000000', N'210600000000', N'振兴区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'210604000000', N'210600000000', N'振安区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'210624000000', N'210600000000', N'宽甸满族自治县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'210681000000', N'210600000000', N'东港市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'210682000000', N'210600000000', N'凤城市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'210702000000', N'210700000000', N'古塔区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'210703000000', N'210700000000', N'凌河区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'210711000000', N'210700000000', N'太和区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'210726000000', N'210700000000', N'黑山县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'210727000000', N'210700000000', N'义县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'210781000000', N'210700000000', N'凌海市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'210782000000', N'210700000000', N'北镇市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'210802000000', N'210800000000', N'站前区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'210803000000', N'210800000000', N'西市区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'210804000000', N'210800000000', N'鲅鱼圈区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'210811000000', N'210800000000', N'老边区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'210881000000', N'210800000000', N'盖州市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'210882000000', N'210800000000', N'大石桥市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'210902000000', N'210900000000', N'海州区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'210903000000', N'210900000000', N'新邱区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'210904000000', N'210900000000', N'太平区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'210905000000', N'210900000000', N'清河门区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'210911000000', N'210900000000', N'细河区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'210921000000', N'210900000000', N'阜新蒙古族自治县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'210922000000', N'210900000000', N'彰武县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'211002000000', N'211000000000', N'白塔区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'211003000000', N'211000000000', N'文圣区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'211004000000', N'211000000000', N'宏伟区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'211005000000', N'211000000000', N'弓长岭区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'211011000000', N'211000000000', N'太子河区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'211021000000', N'211000000000', N'辽阳县')
+GO
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'211081000000', N'211000000000', N'灯塔市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'211102000000', N'211100000000', N'双台子区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'211103000000', N'211100000000', N'兴隆台区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'211121000000', N'211100000000', N'大洼县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'211122000000', N'211100000000', N'盘山县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'211202000000', N'211200000000', N'银州区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'211204000000', N'211200000000', N'清河区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'211221000000', N'211200000000', N'铁岭县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'211223000000', N'211200000000', N'西丰县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'211224000000', N'211200000000', N'昌图县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'211281000000', N'211200000000', N'调兵山市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'211282000000', N'211200000000', N'开原市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'211302000000', N'211300000000', N'双塔区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'211303000000', N'211300000000', N'龙城区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'211321000000', N'211300000000', N'朝阳县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'211322000000', N'211300000000', N'建平县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'211324000000', N'211300000000', N'喀喇沁左翼蒙古族自治县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'211381000000', N'211300000000', N'北票市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'211382000000', N'211300000000', N'凌源市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'211402000000', N'211400000000', N'连山区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'211403000000', N'211400000000', N'龙港区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'211404000000', N'211400000000', N'南票区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'211421000000', N'211400000000', N'绥中县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'211422000000', N'211400000000', N'建昌县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'211481000000', N'211400000000', N'兴城市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'220102000000', N'220100000000', N'南关区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'220103000000', N'220100000000', N'宽城区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'220104000000', N'220100000000', N'朝阳区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'220105000000', N'220100000000', N'二道区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'220106000000', N'220100000000', N'绿园区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'220112000000', N'220100000000', N'双阳区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'220122000000', N'220100000000', N'农安县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'220181000000', N'220100000000', N'九台市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'220182000000', N'220100000000', N'榆树市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'220183000000', N'220100000000', N'德惠市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'220202000000', N'220200000000', N'昌邑区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'220203000000', N'220200000000', N'龙潭区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'220204000000', N'220200000000', N'船营区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'220211000000', N'220200000000', N'丰满区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'220221000000', N'220200000000', N'永吉县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'220281000000', N'220200000000', N'蛟河市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'220282000000', N'220200000000', N'桦甸市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'220283000000', N'220200000000', N'舒兰市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'220284000000', N'220200000000', N'磐石市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'220302000000', N'220300000000', N'铁西区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'220303000000', N'220300000000', N'铁东区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'220322000000', N'220300000000', N'梨树县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'220323000000', N'220300000000', N'伊通满族自治县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'220381000000', N'220300000000', N'公主岭市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'220382000000', N'220300000000', N'双辽市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'220402000000', N'220400000000', N'龙山区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'220403000000', N'220400000000', N'西安区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'220421000000', N'220400000000', N'东丰县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'220422000000', N'220400000000', N'东辽县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'220502000000', N'220500000000', N'东昌区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'220503000000', N'220500000000', N'二道江区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'220521000000', N'220500000000', N'通化县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'220523000000', N'220500000000', N'辉南县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'220524000000', N'220500000000', N'柳河县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'220581000000', N'220500000000', N'梅河口市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'220582000000', N'220500000000', N'集安市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'220602000000', N'220600000000', N'浑江区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'220605000000', N'220600000000', N'江源区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'220621000000', N'220600000000', N'抚松县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'220622000000', N'220600000000', N'靖宇县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'220623000000', N'220600000000', N'长白朝鲜族自治县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'220681000000', N'220600000000', N'临江市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'220702000000', N'220700000000', N'宁江区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'220721000000', N'220700000000', N'前郭尔罗斯蒙古族自治县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'220722000000', N'220700000000', N'长岭县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'220723000000', N'220700000000', N'乾安县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'220781000000', N'220700000000', N'扶余市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'220802000000', N'220800000000', N'洮北区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'220821000000', N'220800000000', N'镇赉县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'220822000000', N'220800000000', N'通榆县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'220881000000', N'220800000000', N'洮南市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'220882000000', N'220800000000', N'大安市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'222401000000', N'222400000000', N'延吉市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'222402000000', N'222400000000', N'图们市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'222403000000', N'222400000000', N'敦化市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'222404000000', N'222400000000', N'珲春市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'222405000000', N'222400000000', N'龙井市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'222406000000', N'222400000000', N'和龙市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'222424000000', N'222400000000', N'汪清县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'222426000000', N'222400000000', N'安图县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'230102000000', N'230100000000', N'道里区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'230103000000', N'230100000000', N'南岗区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'230104000000', N'230100000000', N'道外区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'230108000000', N'230100000000', N'平房区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'230109000000', N'230100000000', N'松北区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'230110000000', N'230100000000', N'香坊区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'230111000000', N'230100000000', N'呼兰区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'230112000000', N'230100000000', N'阿城区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'230123000000', N'230100000000', N'依兰县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'230124000000', N'230100000000', N'方正县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'230125000000', N'230100000000', N'宾县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'230126000000', N'230100000000', N'巴彦县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'230127000000', N'230100000000', N'木兰县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'230128000000', N'230100000000', N'通河县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'230129000000', N'230100000000', N'延寿县')
+GO
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'230182000000', N'230100000000', N'双城市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'230183000000', N'230100000000', N'尚志市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'230184000000', N'230100000000', N'五常市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'230202000000', N'230200000000', N'龙沙区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'230203000000', N'230200000000', N'建华区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'230204000000', N'230200000000', N'铁锋区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'230205000000', N'230200000000', N'昂昂溪区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'230206000000', N'230200000000', N'富拉尔基区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'230207000000', N'230200000000', N'碾子山区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'230208000000', N'230200000000', N'梅里斯达斡尔族区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'230221000000', N'230200000000', N'龙江县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'230223000000', N'230200000000', N'依安县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'230224000000', N'230200000000', N'泰来县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'230225000000', N'230200000000', N'甘南县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'230227000000', N'230200000000', N'富裕县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'230229000000', N'230200000000', N'克山县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'230230000000', N'230200000000', N'克东县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'230231000000', N'230200000000', N'拜泉县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'230281000000', N'230200000000', N'讷河市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'230302000000', N'230300000000', N'鸡冠区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'230303000000', N'230300000000', N'恒山区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'230304000000', N'230300000000', N'滴道区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'230305000000', N'230300000000', N'梨树区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'230306000000', N'230300000000', N'城子河区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'230307000000', N'230300000000', N'麻山区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'230321000000', N'230300000000', N'鸡东县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'230381000000', N'230300000000', N'虎林市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'230382000000', N'230300000000', N'密山市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'230402000000', N'230400000000', N'向阳区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'230403000000', N'230400000000', N'工农区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'230404000000', N'230400000000', N'南山区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'230405000000', N'230400000000', N'兴安区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'230406000000', N'230400000000', N'东山区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'230407000000', N'230400000000', N'兴山区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'230421000000', N'230400000000', N'萝北县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'230422000000', N'230400000000', N'绥滨县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'230502000000', N'230500000000', N'尖山区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'230503000000', N'230500000000', N'岭东区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'230505000000', N'230500000000', N'四方台区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'230506000000', N'230500000000', N'宝山区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'230521000000', N'230500000000', N'集贤县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'230522000000', N'230500000000', N'友谊县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'230523000000', N'230500000000', N'宝清县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'230524000000', N'230500000000', N'饶河县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'230602000000', N'230600000000', N'萨尔图区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'230603000000', N'230600000000', N'龙凤区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'230604000000', N'230600000000', N'让胡路区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'230605000000', N'230600000000', N'红岗区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'230606000000', N'230600000000', N'大同区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'230621000000', N'230600000000', N'肇州县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'230622000000', N'230600000000', N'肇源县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'230623000000', N'230600000000', N'林甸县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'230624000000', N'230600000000', N'杜尔伯特蒙古族自治县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'230702000000', N'230700000000', N'伊春区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'230703000000', N'230700000000', N'南岔区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'230704000000', N'230700000000', N'友好区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'230705000000', N'230700000000', N'西林区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'230706000000', N'230700000000', N'翠峦区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'230707000000', N'230700000000', N'新青区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'230708000000', N'230700000000', N'美溪区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'230709000000', N'230700000000', N'金山屯区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'230710000000', N'230700000000', N'五营区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'230711000000', N'230700000000', N'乌马河区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'230712000000', N'230700000000', N'汤旺河区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'230713000000', N'230700000000', N'带岭区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'230714000000', N'230700000000', N'乌伊岭区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'230715000000', N'230700000000', N'红星区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'230716000000', N'230700000000', N'上甘岭区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'230722000000', N'230700000000', N'嘉荫县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'230781000000', N'230700000000', N'铁力市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'230803000000', N'230800000000', N'向阳区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'230804000000', N'230800000000', N'前进区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'230805000000', N'230800000000', N'东风区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'230811000000', N'230800000000', N'郊区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'230822000000', N'230800000000', N'桦南县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'230826000000', N'230800000000', N'桦川县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'230828000000', N'230800000000', N'汤原县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'230833000000', N'230800000000', N'抚远县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'230881000000', N'230800000000', N'同江市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'230882000000', N'230800000000', N'富锦市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'230902000000', N'230900000000', N'新兴区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'230903000000', N'230900000000', N'桃山区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'230904000000', N'230900000000', N'茄子河区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'230921000000', N'230900000000', N'勃利县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'231002000000', N'231000000000', N'东安区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'231003000000', N'231000000000', N'阳明区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'231004000000', N'231000000000', N'爱民区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'231005000000', N'231000000000', N'西安区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'231024000000', N'231000000000', N'东宁县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'231025000000', N'231000000000', N'林口县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'231081000000', N'231000000000', N'绥芬河市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'231083000000', N'231000000000', N'海林市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'231084000000', N'231000000000', N'宁安市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'231085000000', N'231000000000', N'穆棱市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'231102000000', N'231100000000', N'爱辉区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'231121000000', N'231100000000', N'嫩江县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'231123000000', N'231100000000', N'逊克县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'231124000000', N'231100000000', N'孙吴县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'231181000000', N'231100000000', N'北安市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'231182000000', N'231100000000', N'五大连池市')
+GO
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'231202000000', N'231200000000', N'北林区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'231221000000', N'231200000000', N'望奎县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'231222000000', N'231200000000', N'兰西县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'231223000000', N'231200000000', N'青冈县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'231224000000', N'231200000000', N'庆安县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'231225000000', N'231200000000', N'明水县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'231226000000', N'231200000000', N'绥棱县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'231281000000', N'231200000000', N'安达市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'231282000000', N'231200000000', N'肇东市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'231283000000', N'231200000000', N'海伦市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'232721000000', N'232700000000', N'呼玛县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'232722000000', N'232700000000', N'塔河县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'232723000000', N'232700000000', N'漠河县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'310101000000', N'310100000000', N'黄浦区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'310104000000', N'310100000000', N'徐汇区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'310105000000', N'310100000000', N'长宁区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'310106000000', N'310100000000', N'静安区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'310107000000', N'310100000000', N'普陀区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'310108000000', N'310100000000', N'闸北区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'310109000000', N'310100000000', N'虹口区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'310110000000', N'310100000000', N'杨浦区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'310112000000', N'310100000000', N'闵行区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'310113000000', N'310100000000', N'宝山区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'310114000000', N'310100000000', N'嘉定区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'310115000000', N'310100000000', N'浦东新区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'310116000000', N'310100000000', N'金山区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'310117000000', N'310100000000', N'松江区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'310118000000', N'310100000000', N'青浦区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'310120000000', N'310100000000', N'奉贤区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'310230000000', N'310200000000', N'崇明县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'320102000000', N'320100000000', N'玄武区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'320104000000', N'320100000000', N'秦淮区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'320105000000', N'320100000000', N'建邺区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'320106000000', N'320100000000', N'鼓楼区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'320111000000', N'320100000000', N'浦口区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'320113000000', N'320100000000', N'栖霞区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'320114000000', N'320100000000', N'雨花台区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'320115000000', N'320100000000', N'江宁区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'320116000000', N'320100000000', N'六合区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'320117000000', N'320100000000', N'溧水区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'320118000000', N'320100000000', N'高淳区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'320202000000', N'320200000000', N'崇安区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'320203000000', N'320200000000', N'南长区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'320204000000', N'320200000000', N'北塘区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'320205000000', N'320200000000', N'锡山区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'320206000000', N'320200000000', N'惠山区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'320211000000', N'320200000000', N'滨湖区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'320281000000', N'320200000000', N'江阴市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'320282000000', N'320200000000', N'宜兴市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'320302000000', N'320300000000', N'鼓楼区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'320303000000', N'320300000000', N'云龙区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'320305000000', N'320300000000', N'贾汪区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'320311000000', N'320300000000', N'泉山区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'320312000000', N'320300000000', N'铜山区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'320321000000', N'320300000000', N'丰县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'320322000000', N'320300000000', N'沛县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'320324000000', N'320300000000', N'睢宁县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'320381000000', N'320300000000', N'新沂市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'320382000000', N'320300000000', N'邳州市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'320402000000', N'320400000000', N'天宁区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'320404000000', N'320400000000', N'钟楼区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'320405000000', N'320400000000', N'戚墅堰区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'320411000000', N'320400000000', N'新北区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'320412000000', N'320400000000', N'武进区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'320481000000', N'320400000000', N'溧阳市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'320482000000', N'320400000000', N'金坛市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'320505000000', N'320500000000', N'虎丘区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'320506000000', N'320500000000', N'吴中区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'320507000000', N'320500000000', N'相城区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'320508000000', N'320500000000', N'姑苏区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'320509000000', N'320500000000', N'吴江区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'320581000000', N'320500000000', N'常熟市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'320582000000', N'320500000000', N'张家港市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'320583000000', N'320500000000', N'昆山市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'320585000000', N'320500000000', N'太仓市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'320602000000', N'320600000000', N'崇川区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'320611000000', N'320600000000', N'港闸区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'320612000000', N'320600000000', N'通州区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'320621000000', N'320600000000', N'海安县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'320623000000', N'320600000000', N'如东县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'320681000000', N'320600000000', N'启东市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'320682000000', N'320600000000', N'如皋市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'320684000000', N'320600000000', N'海门市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'320703000000', N'320700000000', N'连云区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'320705000000', N'320700000000', N'新浦区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'320706000000', N'320700000000', N'海州区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'320721000000', N'320700000000', N'赣榆县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'320722000000', N'320700000000', N'东海县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'320723000000', N'320700000000', N'灌云县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'320724000000', N'320700000000', N'灌南县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'320802000000', N'320800000000', N'清河区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'320803000000', N'320800000000', N'淮安区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'320804000000', N'320800000000', N'淮阴区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'320811000000', N'320800000000', N'清浦区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'320826000000', N'320800000000', N'涟水县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'320829000000', N'320800000000', N'洪泽县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'320830000000', N'320800000000', N'盱眙县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'320831000000', N'320800000000', N'金湖县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'320902000000', N'320900000000', N'亭湖区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'320903000000', N'320900000000', N'盐都区')
+GO
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'320921000000', N'320900000000', N'响水县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'320922000000', N'320900000000', N'滨海县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'320923000000', N'320900000000', N'阜宁县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'320924000000', N'320900000000', N'射阳县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'320925000000', N'320900000000', N'建湖县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'320981000000', N'320900000000', N'东台市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'320982000000', N'320900000000', N'大丰市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'321002000000', N'321000000000', N'广陵区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'321003000000', N'321000000000', N'邗江区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'321012000000', N'321000000000', N'江都区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'321023000000', N'321000000000', N'宝应县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'321081000000', N'321000000000', N'仪征市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'321084000000', N'321000000000', N'高邮市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'321102000000', N'321100000000', N'京口区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'321111000000', N'321100000000', N'润州区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'321112000000', N'321100000000', N'丹徒区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'321181000000', N'321100000000', N'丹阳市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'321182000000', N'321100000000', N'扬中市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'321183000000', N'321100000000', N'句容市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'321202000000', N'321200000000', N'海陵区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'321203000000', N'321200000000', N'高港区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'321204000000', N'321200000000', N'姜堰区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'321281000000', N'321200000000', N'兴化市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'321282000000', N'321200000000', N'靖江市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'321283000000', N'321200000000', N'泰兴市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'321302000000', N'321300000000', N'宿城区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'321311000000', N'321300000000', N'宿豫区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'321322000000', N'321300000000', N'沭阳县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'321323000000', N'321300000000', N'泗阳县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'321324000000', N'321300000000', N'泗洪县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'330102000000', N'330100000000', N'上城区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'330103000000', N'330100000000', N'下城区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'330104000000', N'330100000000', N'江干区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'330105000000', N'330100000000', N'拱墅区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'330106000000', N'330100000000', N'西湖区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'330108000000', N'330100000000', N'滨江区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'330109000000', N'330100000000', N'萧山区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'330110000000', N'330100000000', N'余杭区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'330122000000', N'330100000000', N'桐庐县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'330127000000', N'330100000000', N'淳安县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'330182000000', N'330100000000', N'建德市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'330183000000', N'330100000000', N'富阳市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'330185000000', N'330100000000', N'临安市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'330203000000', N'330200000000', N'海曙区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'330204000000', N'330200000000', N'江东区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'330205000000', N'330200000000', N'江北区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'330206000000', N'330200000000', N'北仑区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'330211000000', N'330200000000', N'镇海区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'330212000000', N'330200000000', N'鄞州区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'330225000000', N'330200000000', N'象山县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'330226000000', N'330200000000', N'宁海县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'330281000000', N'330200000000', N'余姚市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'330282000000', N'330200000000', N'慈溪市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'330283000000', N'330200000000', N'奉化市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'330302000000', N'330300000000', N'鹿城区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'330303000000', N'330300000000', N'龙湾区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'330304000000', N'330300000000', N'瓯海区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'330322000000', N'330300000000', N'洞头县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'330324000000', N'330300000000', N'永嘉县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'330326000000', N'330300000000', N'平阳县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'330327000000', N'330300000000', N'苍南县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'330328000000', N'330300000000', N'文成县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'330329000000', N'330300000000', N'泰顺县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'330381000000', N'330300000000', N'瑞安市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'330382000000', N'330300000000', N'乐清市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'330402000000', N'330400000000', N'南湖区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'330411000000', N'330400000000', N'秀洲区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'330421000000', N'330400000000', N'嘉善县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'330424000000', N'330400000000', N'海盐县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'330481000000', N'330400000000', N'海宁市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'330482000000', N'330400000000', N'平湖市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'330483000000', N'330400000000', N'桐乡市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'330502000000', N'330500000000', N'吴兴区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'330503000000', N'330500000000', N'南浔区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'330521000000', N'330500000000', N'德清县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'330522000000', N'330500000000', N'长兴县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'330523000000', N'330500000000', N'安吉县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'330602000000', N'330600000000', N'越城区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'330621000000', N'330600000000', N'绍兴县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'330624000000', N'330600000000', N'新昌县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'330681000000', N'330600000000', N'诸暨市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'330682000000', N'330600000000', N'上虞市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'330683000000', N'330600000000', N'嵊州市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'330702000000', N'330700000000', N'婺城区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'330703000000', N'330700000000', N'金东区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'330723000000', N'330700000000', N'武义县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'330726000000', N'330700000000', N'浦江县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'330727000000', N'330700000000', N'磐安县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'330781000000', N'330700000000', N'兰溪市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'330782000000', N'330700000000', N'义乌市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'330783000000', N'330700000000', N'东阳市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'330784000000', N'330700000000', N'永康市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'330802000000', N'330800000000', N'柯城区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'330803000000', N'330800000000', N'衢江区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'330822000000', N'330800000000', N'常山县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'330824000000', N'330800000000', N'开化县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'330825000000', N'330800000000', N'龙游县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'330881000000', N'330800000000', N'江山市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'330902000000', N'330900000000', N'定海区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'330903000000', N'330900000000', N'普陀区')
+GO
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'330921000000', N'330900000000', N'岱山县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'330922000000', N'330900000000', N'嵊泗县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'331002000000', N'331000000000', N'椒江区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'331003000000', N'331000000000', N'黄岩区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'331004000000', N'331000000000', N'路桥区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'331021000000', N'331000000000', N'玉环县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'331022000000', N'331000000000', N'三门县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'331023000000', N'331000000000', N'天台县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'331024000000', N'331000000000', N'仙居县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'331081000000', N'331000000000', N'温岭市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'331082000000', N'331000000000', N'临海市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'331102000000', N'331100000000', N'莲都区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'331121000000', N'331100000000', N'青田县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'331122000000', N'331100000000', N'缙云县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'331123000000', N'331100000000', N'遂昌县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'331124000000', N'331100000000', N'松阳县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'331125000000', N'331100000000', N'云和县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'331126000000', N'331100000000', N'庆元县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'331127000000', N'331100000000', N'景宁畲族自治县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'331181000000', N'331100000000', N'龙泉市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'340102000000', N'340100000000', N'瑶海区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'340103000000', N'340100000000', N'庐阳区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'340104000000', N'340100000000', N'蜀山区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'340111000000', N'340100000000', N'包河区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'340121000000', N'340100000000', N'长丰县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'340122000000', N'340100000000', N'肥东县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'340123000000', N'340100000000', N'肥西县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'340124000000', N'340100000000', N'庐江县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'340181000000', N'340100000000', N'巢湖市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'340202000000', N'340200000000', N'镜湖区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'340203000000', N'340200000000', N'弋江区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'340207000000', N'340200000000', N'鸠江区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'340208000000', N'340200000000', N'三山区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'340221000000', N'340200000000', N'芜湖县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'340222000000', N'340200000000', N'繁昌县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'340223000000', N'340200000000', N'南陵县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'340225000000', N'340200000000', N'无为县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'340302000000', N'340300000000', N'龙子湖区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'340303000000', N'340300000000', N'蚌山区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'340304000000', N'340300000000', N'禹会区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'340311000000', N'340300000000', N'淮上区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'340321000000', N'340300000000', N'怀远县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'340322000000', N'340300000000', N'五河县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'340323000000', N'340300000000', N'固镇县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'340402000000', N'340400000000', N'大通区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'340403000000', N'340400000000', N'田家庵区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'340404000000', N'340400000000', N'谢家集区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'340405000000', N'340400000000', N'八公山区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'340406000000', N'340400000000', N'潘集区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'340421000000', N'340400000000', N'凤台县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'340503000000', N'340500000000', N'花山区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'340504000000', N'340500000000', N'雨山区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'340506000000', N'340500000000', N'博望区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'340521000000', N'340500000000', N'当涂县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'340522000000', N'340500000000', N'含山县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'340523000000', N'340500000000', N'和县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'340602000000', N'340600000000', N'杜集区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'340603000000', N'340600000000', N'相山区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'340604000000', N'340600000000', N'烈山区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'340621000000', N'340600000000', N'濉溪县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'340702000000', N'340700000000', N'铜官山区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'340703000000', N'340700000000', N'狮子山区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'340711000000', N'340700000000', N'郊区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'340721000000', N'340700000000', N'铜陵县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'340802000000', N'340800000000', N'迎江区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'340803000000', N'340800000000', N'大观区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'340811000000', N'340800000000', N'宜秀区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'340822000000', N'340800000000', N'怀宁县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'340823000000', N'340800000000', N'枞阳县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'340824000000', N'340800000000', N'潜山县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'340825000000', N'340800000000', N'太湖县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'340826000000', N'340800000000', N'宿松县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'340827000000', N'340800000000', N'望江县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'340828000000', N'340800000000', N'岳西县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'340881000000', N'340800000000', N'桐城市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'341002000000', N'341000000000', N'屯溪区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'341003000000', N'341000000000', N'黄山区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'341004000000', N'341000000000', N'徽州区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'341021000000', N'341000000000', N'歙县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'341022000000', N'341000000000', N'休宁县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'341023000000', N'341000000000', N'黟县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'341024000000', N'341000000000', N'祁门县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'341102000000', N'341100000000', N'琅琊区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'341103000000', N'341100000000', N'南谯区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'341122000000', N'341100000000', N'来安县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'341124000000', N'341100000000', N'全椒县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'341125000000', N'341100000000', N'定远县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'341126000000', N'341100000000', N'凤阳县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'341181000000', N'341100000000', N'天长市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'341182000000', N'341100000000', N'明光市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'341202000000', N'341200000000', N'颍州区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'341203000000', N'341200000000', N'颍东区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'341204000000', N'341200000000', N'颍泉区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'341221000000', N'341200000000', N'临泉县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'341222000000', N'341200000000', N'太和县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'341225000000', N'341200000000', N'阜南县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'341226000000', N'341200000000', N'颍上县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'341282000000', N'341200000000', N'界首市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'341302000000', N'341300000000', N'埇桥区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'341321000000', N'341300000000', N'砀山县')
+GO
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'341322000000', N'341300000000', N'萧县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'341323000000', N'341300000000', N'灵璧县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'341324000000', N'341300000000', N'泗县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'341502000000', N'341500000000', N'金安区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'341503000000', N'341500000000', N'裕安区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'341521000000', N'341500000000', N'寿县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'341522000000', N'341500000000', N'霍邱县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'341523000000', N'341500000000', N'舒城县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'341524000000', N'341500000000', N'金寨县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'341525000000', N'341500000000', N'霍山县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'341602000000', N'341600000000', N'谯城区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'341621000000', N'341600000000', N'涡阳县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'341622000000', N'341600000000', N'蒙城县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'341623000000', N'341600000000', N'利辛县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'341702000000', N'341700000000', N'贵池区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'341721000000', N'341700000000', N'东至县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'341722000000', N'341700000000', N'石台县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'341723000000', N'341700000000', N'青阳县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'341802000000', N'341800000000', N'宣州区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'341821000000', N'341800000000', N'郎溪县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'341822000000', N'341800000000', N'广德县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'341823000000', N'341800000000', N'泾县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'341824000000', N'341800000000', N'绩溪县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'341825000000', N'341800000000', N'旌德县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'341881000000', N'341800000000', N'宁国市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'350102000000', N'350100000000', N'鼓楼区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'350103000000', N'350100000000', N'台江区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'350104000000', N'350100000000', N'仓山区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'350105000000', N'350100000000', N'马尾区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'350111000000', N'350100000000', N'晋安区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'350121000000', N'350100000000', N'闽侯县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'350122000000', N'350100000000', N'连江县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'350123000000', N'350100000000', N'罗源县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'350124000000', N'350100000000', N'闽清县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'350125000000', N'350100000000', N'永泰县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'350128000000', N'350100000000', N'平潭县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'350181000000', N'350100000000', N'福清市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'350182000000', N'350100000000', N'长乐市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'350203000000', N'350200000000', N'思明区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'350205000000', N'350200000000', N'海沧区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'350206000000', N'350200000000', N'湖里区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'350211000000', N'350200000000', N'集美区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'350212000000', N'350200000000', N'同安区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'350213000000', N'350200000000', N'翔安区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'350302000000', N'350300000000', N'城厢区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'350303000000', N'350300000000', N'涵江区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'350304000000', N'350300000000', N'荔城区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'350305000000', N'350300000000', N'秀屿区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'350322000000', N'350300000000', N'仙游县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'350402000000', N'350400000000', N'梅列区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'350403000000', N'350400000000', N'三元区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'350421000000', N'350400000000', N'明溪县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'350423000000', N'350400000000', N'清流县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'350424000000', N'350400000000', N'宁化县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'350425000000', N'350400000000', N'大田县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'350426000000', N'350400000000', N'尤溪县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'350427000000', N'350400000000', N'沙县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'350428000000', N'350400000000', N'将乐县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'350429000000', N'350400000000', N'泰宁县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'350430000000', N'350400000000', N'建宁县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'350481000000', N'350400000000', N'永安市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'350502000000', N'350500000000', N'鲤城区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'350503000000', N'350500000000', N'丰泽区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'350504000000', N'350500000000', N'洛江区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'350505000000', N'350500000000', N'泉港区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'350521000000', N'350500000000', N'惠安县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'350524000000', N'350500000000', N'安溪县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'350525000000', N'350500000000', N'永春县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'350526000000', N'350500000000', N'德化县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'350581000000', N'350500000000', N'石狮市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'350582000000', N'350500000000', N'晋江市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'350583000000', N'350500000000', N'南安市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'350602000000', N'350600000000', N'芗城区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'350603000000', N'350600000000', N'龙文区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'350622000000', N'350600000000', N'云霄县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'350623000000', N'350600000000', N'漳浦县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'350624000000', N'350600000000', N'诏安县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'350625000000', N'350600000000', N'长泰县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'350626000000', N'350600000000', N'东山县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'350627000000', N'350600000000', N'南靖县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'350628000000', N'350600000000', N'平和县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'350629000000', N'350600000000', N'华安县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'350681000000', N'350600000000', N'龙海市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'350702000000', N'350700000000', N'延平区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'350721000000', N'350700000000', N'顺昌县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'350722000000', N'350700000000', N'浦城县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'350723000000', N'350700000000', N'光泽县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'350724000000', N'350700000000', N'松溪县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'350725000000', N'350700000000', N'政和县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'350781000000', N'350700000000', N'邵武市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'350782000000', N'350700000000', N'武夷山市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'350783000000', N'350700000000', N'建瓯市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'350784000000', N'350700000000', N'建阳市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'350802000000', N'350800000000', N'新罗区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'350821000000', N'350800000000', N'长汀县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'350822000000', N'350800000000', N'永定县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'350823000000', N'350800000000', N'上杭县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'350824000000', N'350800000000', N'武平县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'350825000000', N'350800000000', N'连城县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'350881000000', N'350800000000', N'漳平市')
+GO
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'350902000000', N'350900000000', N'蕉城区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'350921000000', N'350900000000', N'霞浦县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'350922000000', N'350900000000', N'古田县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'350923000000', N'350900000000', N'屏南县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'350924000000', N'350900000000', N'寿宁县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'350925000000', N'350900000000', N'周宁县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'350926000000', N'350900000000', N'柘荣县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'350981000000', N'350900000000', N'福安市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'350982000000', N'350900000000', N'福鼎市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'360102000000', N'360100000000', N'东湖区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'360103000000', N'360100000000', N'西湖区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'360104000000', N'360100000000', N'青云谱区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'360105000000', N'360100000000', N'湾里区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'360111000000', N'360100000000', N'青山湖区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'360121000000', N'360100000000', N'南昌县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'360122000000', N'360100000000', N'新建县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'360123000000', N'360100000000', N'安义县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'360124000000', N'360100000000', N'进贤县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'360202000000', N'360200000000', N'昌江区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'360203000000', N'360200000000', N'珠山区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'360222000000', N'360200000000', N'浮梁县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'360281000000', N'360200000000', N'乐平市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'360302000000', N'360300000000', N'安源区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'360313000000', N'360300000000', N'湘东区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'360321000000', N'360300000000', N'莲花县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'360322000000', N'360300000000', N'上栗县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'360323000000', N'360300000000', N'芦溪县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'360402000000', N'360400000000', N'庐山区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'360403000000', N'360400000000', N'浔阳区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'360421000000', N'360400000000', N'九江县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'360423000000', N'360400000000', N'武宁县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'360424000000', N'360400000000', N'修水县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'360425000000', N'360400000000', N'永修县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'360426000000', N'360400000000', N'德安县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'360427000000', N'360400000000', N'星子县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'360428000000', N'360400000000', N'都昌县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'360429000000', N'360400000000', N'湖口县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'360430000000', N'360400000000', N'彭泽县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'360481000000', N'360400000000', N'瑞昌市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'360482000000', N'360400000000', N'共青城市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'360502000000', N'360500000000', N'渝水区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'360521000000', N'360500000000', N'分宜县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'360602000000', N'360600000000', N'月湖区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'360622000000', N'360600000000', N'余江县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'360681000000', N'360600000000', N'贵溪市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'360702000000', N'360700000000', N'章贡区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'360721000000', N'360700000000', N'赣县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'360722000000', N'360700000000', N'信丰县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'360723000000', N'360700000000', N'大余县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'360724000000', N'360700000000', N'上犹县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'360725000000', N'360700000000', N'崇义县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'360726000000', N'360700000000', N'安远县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'360727000000', N'360700000000', N'龙南县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'360728000000', N'360700000000', N'定南县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'360729000000', N'360700000000', N'全南县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'360730000000', N'360700000000', N'宁都县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'360731000000', N'360700000000', N'于都县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'360732000000', N'360700000000', N'兴国县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'360733000000', N'360700000000', N'会昌县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'360734000000', N'360700000000', N'寻乌县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'360735000000', N'360700000000', N'石城县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'360781000000', N'360700000000', N'瑞金市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'360782000000', N'360700000000', N'南康市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'360802000000', N'360800000000', N'吉州区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'360803000000', N'360800000000', N'青原区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'360821000000', N'360800000000', N'吉安县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'360822000000', N'360800000000', N'吉水县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'360823000000', N'360800000000', N'峡江县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'360824000000', N'360800000000', N'新干县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'360825000000', N'360800000000', N'永丰县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'360826000000', N'360800000000', N'泰和县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'360827000000', N'360800000000', N'遂川县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'360828000000', N'360800000000', N'万安县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'360829000000', N'360800000000', N'安福县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'360830000000', N'360800000000', N'永新县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'360881000000', N'360800000000', N'井冈山市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'360902000000', N'360900000000', N'袁州区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'360921000000', N'360900000000', N'奉新县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'360922000000', N'360900000000', N'万载县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'360923000000', N'360900000000', N'上高县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'360924000000', N'360900000000', N'宜丰县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'360925000000', N'360900000000', N'靖安县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'360926000000', N'360900000000', N'铜鼓县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'360981000000', N'360900000000', N'丰城市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'360982000000', N'360900000000', N'樟树市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'360983000000', N'360900000000', N'高安市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'361002000000', N'361000000000', N'临川区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'361021000000', N'361000000000', N'南城县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'361022000000', N'361000000000', N'黎川县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'361023000000', N'361000000000', N'南丰县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'361024000000', N'361000000000', N'崇仁县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'361025000000', N'361000000000', N'乐安县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'361026000000', N'361000000000', N'宜黄县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'361027000000', N'361000000000', N'金溪县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'361028000000', N'361000000000', N'资溪县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'361029000000', N'361000000000', N'东乡县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'361030000000', N'361000000000', N'广昌县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'361102000000', N'361100000000', N'信州区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'361121000000', N'361100000000', N'上饶县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'361122000000', N'361100000000', N'广丰县')
+GO
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'361123000000', N'361100000000', N'玉山县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'361124000000', N'361100000000', N'铅山县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'361125000000', N'361100000000', N'横峰县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'361126000000', N'361100000000', N'弋阳县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'361127000000', N'361100000000', N'余干县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'361128000000', N'361100000000', N'鄱阳县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'361129000000', N'361100000000', N'万年县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'361130000000', N'361100000000', N'婺源县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'361181000000', N'361100000000', N'德兴市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'370102000000', N'370100000000', N'历下区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'370103000000', N'370100000000', N'市中区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'370104000000', N'370100000000', N'槐荫区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'370105000000', N'370100000000', N'天桥区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'370112000000', N'370100000000', N'历城区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'370113000000', N'370100000000', N'长清区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'370124000000', N'370100000000', N'平阴县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'370125000000', N'370100000000', N'济阳县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'370126000000', N'370100000000', N'商河县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'370181000000', N'370100000000', N'章丘市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'370202000000', N'370200000000', N'市南区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'370203000000', N'370200000000', N'市北区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'370211000000', N'370200000000', N'黄岛区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'370212000000', N'370200000000', N'崂山区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'370213000000', N'370200000000', N'李沧区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'370214000000', N'370200000000', N'城阳区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'370281000000', N'370200000000', N'胶州市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'370282000000', N'370200000000', N'即墨市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'370283000000', N'370200000000', N'平度市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'370285000000', N'370200000000', N'莱西市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'370302000000', N'370300000000', N'淄川区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'370303000000', N'370300000000', N'张店区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'370304000000', N'370300000000', N'博山区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'370305000000', N'370300000000', N'临淄区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'370306000000', N'370300000000', N'周村区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'370321000000', N'370300000000', N'桓台县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'370322000000', N'370300000000', N'高青县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'370323000000', N'370300000000', N'沂源县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'370402000000', N'370400000000', N'市中区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'370403000000', N'370400000000', N'薛城区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'370404000000', N'370400000000', N'峄城区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'370405000000', N'370400000000', N'台儿庄区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'370406000000', N'370400000000', N'山亭区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'370481000000', N'370400000000', N'滕州市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'370502000000', N'370500000000', N'东营区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'370503000000', N'370500000000', N'河口区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'370521000000', N'370500000000', N'垦利县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'370522000000', N'370500000000', N'利津县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'370523000000', N'370500000000', N'广饶县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'370602000000', N'370600000000', N'芝罘区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'370611000000', N'370600000000', N'福山区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'370612000000', N'370600000000', N'牟平区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'370613000000', N'370600000000', N'莱山区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'370634000000', N'370600000000', N'长岛县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'370681000000', N'370600000000', N'龙口市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'370682000000', N'370600000000', N'莱阳市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'370683000000', N'370600000000', N'莱州市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'370684000000', N'370600000000', N'蓬莱市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'370685000000', N'370600000000', N'招远市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'370686000000', N'370600000000', N'栖霞市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'370687000000', N'370600000000', N'海阳市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'370702000000', N'370700000000', N'潍城区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'370703000000', N'370700000000', N'寒亭区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'370704000000', N'370700000000', N'坊子区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'370705000000', N'370700000000', N'奎文区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'370724000000', N'370700000000', N'临朐县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'370725000000', N'370700000000', N'昌乐县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'370781000000', N'370700000000', N'青州市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'370782000000', N'370700000000', N'诸城市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'370783000000', N'370700000000', N'寿光市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'370784000000', N'370700000000', N'安丘市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'370785000000', N'370700000000', N'高密市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'370786000000', N'370700000000', N'昌邑市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'370802000000', N'370800000000', N'市中区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'370811000000', N'370800000000', N'任城区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'370826000000', N'370800000000', N'微山县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'370827000000', N'370800000000', N'鱼台县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'370828000000', N'370800000000', N'金乡县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'370829000000', N'370800000000', N'嘉祥县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'370830000000', N'370800000000', N'汶上县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'370831000000', N'370800000000', N'泗水县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'370832000000', N'370800000000', N'梁山县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'370881000000', N'370800000000', N'曲阜市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'370882000000', N'370800000000', N'兖州市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'370883000000', N'370800000000', N'邹城市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'370902000000', N'370900000000', N'泰山区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'370911000000', N'370900000000', N'岱岳区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'370921000000', N'370900000000', N'宁阳县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'370923000000', N'370900000000', N'东平县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'370982000000', N'370900000000', N'新泰市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'370983000000', N'370900000000', N'肥城市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'371002000000', N'371000000000', N'环翠区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'371081000000', N'371000000000', N'文登市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'371082000000', N'371000000000', N'荣成市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'371083000000', N'371000000000', N'乳山市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'371102000000', N'371100000000', N'东港区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'371103000000', N'371100000000', N'岚山区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'371121000000', N'371100000000', N'五莲县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'371122000000', N'371100000000', N'莒县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'371202000000', N'371200000000', N'莱城区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'371203000000', N'371200000000', N'钢城区')
+GO
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'371302000000', N'371300000000', N'兰山区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'371311000000', N'371300000000', N'罗庄区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'371312000000', N'371300000000', N'河东区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'371321000000', N'371300000000', N'沂南县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'371322000000', N'371300000000', N'郯城县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'371323000000', N'371300000000', N'沂水县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'371324000000', N'371300000000', N'苍山县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'371325000000', N'371300000000', N'费县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'371326000000', N'371300000000', N'平邑县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'371327000000', N'371300000000', N'莒南县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'371328000000', N'371300000000', N'蒙阴县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'371329000000', N'371300000000', N'临沭县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'371402000000', N'371400000000', N'德城区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'371421000000', N'371400000000', N'陵县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'371422000000', N'371400000000', N'宁津县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'371423000000', N'371400000000', N'庆云县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'371424000000', N'371400000000', N'临邑县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'371425000000', N'371400000000', N'齐河县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'371426000000', N'371400000000', N'平原县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'371427000000', N'371400000000', N'夏津县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'371428000000', N'371400000000', N'武城县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'371481000000', N'371400000000', N'乐陵市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'371482000000', N'371400000000', N'禹城市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'371502000000', N'371500000000', N'东昌府区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'371521000000', N'371500000000', N'阳谷县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'371522000000', N'371500000000', N'莘县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'371523000000', N'371500000000', N'茌平县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'371524000000', N'371500000000', N'东阿县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'371525000000', N'371500000000', N'冠县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'371526000000', N'371500000000', N'高唐县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'371581000000', N'371500000000', N'临清市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'371602000000', N'371600000000', N'滨城区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'371621000000', N'371600000000', N'惠民县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'371622000000', N'371600000000', N'阳信县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'371623000000', N'371600000000', N'无棣县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'371624000000', N'371600000000', N'沾化县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'371625000000', N'371600000000', N'博兴县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'371626000000', N'371600000000', N'邹平县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'371702000000', N'371700000000', N'牡丹区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'371721000000', N'371700000000', N'曹县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'371722000000', N'371700000000', N'单县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'371723000000', N'371700000000', N'成武县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'371724000000', N'371700000000', N'巨野县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'371725000000', N'371700000000', N'郓城县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'371726000000', N'371700000000', N'鄄城县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'371727000000', N'371700000000', N'定陶县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'371728000000', N'371700000000', N'东明县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'410102000000', N'410100000000', N'中原区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'410103000000', N'410100000000', N'二七区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'410104000000', N'410100000000', N'管城回族区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'410105000000', N'410100000000', N'金水区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'410106000000', N'410100000000', N'上街区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'410108000000', N'410100000000', N'惠济区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'410122000000', N'410100000000', N'中牟县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'410181000000', N'410100000000', N'巩义市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'410182000000', N'410100000000', N'荥阳市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'410183000000', N'410100000000', N'新密市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'410184000000', N'410100000000', N'新郑市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'410185000000', N'410100000000', N'登封市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'410202000000', N'410200000000', N'龙亭区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'410203000000', N'410200000000', N'顺河回族区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'410204000000', N'410200000000', N'鼓楼区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'410205000000', N'410200000000', N'禹王台区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'410211000000', N'410200000000', N'金明区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'410221000000', N'410200000000', N'杞县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'410222000000', N'410200000000', N'通许县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'410223000000', N'410200000000', N'尉氏县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'410224000000', N'410200000000', N'开封县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'410225000000', N'410200000000', N'兰考县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'410302000000', N'410300000000', N'老城区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'410303000000', N'410300000000', N'西工区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'410304000000', N'410300000000', N'瀍河回族区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'410305000000', N'410300000000', N'涧西区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'410306000000', N'410300000000', N'吉利区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'410311000000', N'410300000000', N'洛龙区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'410322000000', N'410300000000', N'孟津县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'410323000000', N'410300000000', N'新安县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'410324000000', N'410300000000', N'栾川县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'410325000000', N'410300000000', N'嵩县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'410326000000', N'410300000000', N'汝阳县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'410327000000', N'410300000000', N'宜阳县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'410328000000', N'410300000000', N'洛宁县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'410329000000', N'410300000000', N'伊川县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'410381000000', N'410300000000', N'偃师市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'410402000000', N'410400000000', N'新华区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'410403000000', N'410400000000', N'卫东区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'410404000000', N'410400000000', N'石龙区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'410411000000', N'410400000000', N'湛河区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'410421000000', N'410400000000', N'宝丰县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'410422000000', N'410400000000', N'叶县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'410423000000', N'410400000000', N'鲁山县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'410425000000', N'410400000000', N'郏县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'410481000000', N'410400000000', N'舞钢市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'410482000000', N'410400000000', N'汝州市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'410502000000', N'410500000000', N'文峰区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'410503000000', N'410500000000', N'北关区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'410505000000', N'410500000000', N'殷都区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'410506000000', N'410500000000', N'龙安区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'410522000000', N'410500000000', N'安阳县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'410523000000', N'410500000000', N'汤阴县')
+GO
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'410526000000', N'410500000000', N'滑县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'410527000000', N'410500000000', N'内黄县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'410581000000', N'410500000000', N'林州市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'410602000000', N'410600000000', N'鹤山区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'410603000000', N'410600000000', N'山城区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'410611000000', N'410600000000', N'淇滨区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'410621000000', N'410600000000', N'浚县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'410622000000', N'410600000000', N'淇县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'410702000000', N'410700000000', N'红旗区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'410703000000', N'410700000000', N'卫滨区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'410704000000', N'410700000000', N'凤泉区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'410711000000', N'410700000000', N'牧野区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'410721000000', N'410700000000', N'新乡县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'410724000000', N'410700000000', N'获嘉县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'410725000000', N'410700000000', N'原阳县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'410726000000', N'410700000000', N'延津县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'410727000000', N'410700000000', N'封丘县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'410728000000', N'410700000000', N'长垣县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'410781000000', N'410700000000', N'卫辉市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'410782000000', N'410700000000', N'辉县市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'410802000000', N'410800000000', N'解放区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'410803000000', N'410800000000', N'中站区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'410804000000', N'410800000000', N'马村区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'410811000000', N'410800000000', N'山阳区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'410821000000', N'410800000000', N'修武县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'410822000000', N'410800000000', N'博爱县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'410823000000', N'410800000000', N'武陟县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'410825000000', N'410800000000', N'温县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'410882000000', N'410800000000', N'沁阳市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'410883000000', N'410800000000', N'孟州市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'410902000000', N'410900000000', N'华龙区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'410922000000', N'410900000000', N'清丰县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'410923000000', N'410900000000', N'南乐县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'410926000000', N'410900000000', N'范县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'410927000000', N'410900000000', N'台前县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'410928000000', N'410900000000', N'濮阳县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'411002000000', N'411000000000', N'魏都区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'411023000000', N'411000000000', N'许昌县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'411024000000', N'411000000000', N'鄢陵县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'411025000000', N'411000000000', N'襄城县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'411081000000', N'411000000000', N'禹州市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'411082000000', N'411000000000', N'长葛市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'411102000000', N'411100000000', N'源汇区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'411103000000', N'411100000000', N'郾城区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'411104000000', N'411100000000', N'召陵区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'411121000000', N'411100000000', N'舞阳县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'411122000000', N'411100000000', N'临颍县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'411202000000', N'411200000000', N'湖滨区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'411221000000', N'411200000000', N'渑池县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'411222000000', N'411200000000', N'陕县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'411224000000', N'411200000000', N'卢氏县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'411281000000', N'411200000000', N'义马市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'411282000000', N'411200000000', N'灵宝市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'411302000000', N'411300000000', N'宛城区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'411303000000', N'411300000000', N'卧龙区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'411321000000', N'411300000000', N'南召县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'411322000000', N'411300000000', N'方城县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'411323000000', N'411300000000', N'西峡县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'411324000000', N'411300000000', N'镇平县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'411325000000', N'411300000000', N'内乡县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'411326000000', N'411300000000', N'淅川县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'411327000000', N'411300000000', N'社旗县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'411328000000', N'411300000000', N'唐河县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'411329000000', N'411300000000', N'新野县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'411330000000', N'411300000000', N'桐柏县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'411381000000', N'411300000000', N'邓州市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'411402000000', N'411400000000', N'梁园区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'411403000000', N'411400000000', N'睢阳区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'411421000000', N'411400000000', N'民权县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'411422000000', N'411400000000', N'睢县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'411423000000', N'411400000000', N'宁陵县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'411424000000', N'411400000000', N'柘城县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'411425000000', N'411400000000', N'虞城县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'411426000000', N'411400000000', N'夏邑县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'411481000000', N'411400000000', N'永城市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'411502000000', N'411500000000', N'浉河区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'411503000000', N'411500000000', N'平桥区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'411521000000', N'411500000000', N'罗山县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'411522000000', N'411500000000', N'光山县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'411523000000', N'411500000000', N'新县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'411524000000', N'411500000000', N'商城县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'411525000000', N'411500000000', N'固始县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'411526000000', N'411500000000', N'潢川县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'411527000000', N'411500000000', N'淮滨县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'411528000000', N'411500000000', N'息县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'411602000000', N'411600000000', N'川汇区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'411621000000', N'411600000000', N'扶沟县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'411622000000', N'411600000000', N'西华县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'411623000000', N'411600000000', N'商水县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'411624000000', N'411600000000', N'沈丘县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'411625000000', N'411600000000', N'郸城县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'411626000000', N'411600000000', N'淮阳县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'411627000000', N'411600000000', N'太康县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'411628000000', N'411600000000', N'鹿邑县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'411681000000', N'411600000000', N'项城市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'411702000000', N'411700000000', N'驿城区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'411721000000', N'411700000000', N'西平县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'411722000000', N'411700000000', N'上蔡县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'411723000000', N'411700000000', N'平舆县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'411724000000', N'411700000000', N'正阳县')
+GO
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'411725000000', N'411700000000', N'确山县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'411726000000', N'411700000000', N'泌阳县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'411727000000', N'411700000000', N'汝南县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'411728000000', N'411700000000', N'遂平县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'411729000000', N'411700000000', N'新蔡县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'419001000000', N'419000000000', N'济源市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'420102000000', N'420100000000', N'江岸区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'420103000000', N'420100000000', N'江汉区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'420104000000', N'420100000000', N'硚口区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'420105000000', N'420100000000', N'汉阳区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'420106000000', N'420100000000', N'武昌区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'420107000000', N'420100000000', N'青山区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'420111000000', N'420100000000', N'洪山区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'420112000000', N'420100000000', N'东西湖区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'420113000000', N'420100000000', N'汉南区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'420114000000', N'420100000000', N'蔡甸区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'420115000000', N'420100000000', N'江夏区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'420116000000', N'420100000000', N'黄陂区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'420117000000', N'420100000000', N'新洲区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'420202000000', N'420200000000', N'黄石港区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'420203000000', N'420200000000', N'西塞山区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'420204000000', N'420200000000', N'下陆区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'420205000000', N'420200000000', N'铁山区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'420222000000', N'420200000000', N'阳新县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'420281000000', N'420200000000', N'大冶市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'420302000000', N'420300000000', N'茅箭区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'420303000000', N'420300000000', N'张湾区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'420321000000', N'420300000000', N'郧县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'420322000000', N'420300000000', N'郧西县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'420323000000', N'420300000000', N'竹山县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'420324000000', N'420300000000', N'竹溪县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'420325000000', N'420300000000', N'房县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'420381000000', N'420300000000', N'丹江口市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'420502000000', N'420500000000', N'西陵区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'420503000000', N'420500000000', N'伍家岗区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'420504000000', N'420500000000', N'点军区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'420505000000', N'420500000000', N'猇亭区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'420506000000', N'420500000000', N'夷陵区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'420525000000', N'420500000000', N'远安县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'420526000000', N'420500000000', N'兴山县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'420527000000', N'420500000000', N'秭归县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'420528000000', N'420500000000', N'长阳土家族自治县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'420529000000', N'420500000000', N'五峰土家族自治县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'420581000000', N'420500000000', N'宜都市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'420582000000', N'420500000000', N'当阳市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'420583000000', N'420500000000', N'枝江市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'420602000000', N'420600000000', N'襄城区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'420606000000', N'420600000000', N'樊城区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'420607000000', N'420600000000', N'襄州区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'420624000000', N'420600000000', N'南漳县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'420625000000', N'420600000000', N'谷城县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'420626000000', N'420600000000', N'保康县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'420682000000', N'420600000000', N'老河口市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'420683000000', N'420600000000', N'枣阳市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'420684000000', N'420600000000', N'宜城市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'420702000000', N'420700000000', N'梁子湖区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'420703000000', N'420700000000', N'华容区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'420704000000', N'420700000000', N'鄂城区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'420802000000', N'420800000000', N'东宝区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'420804000000', N'420800000000', N'掇刀区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'420821000000', N'420800000000', N'京山县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'420822000000', N'420800000000', N'沙洋县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'420881000000', N'420800000000', N'钟祥市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'420902000000', N'420900000000', N'孝南区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'420921000000', N'420900000000', N'孝昌县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'420922000000', N'420900000000', N'大悟县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'420923000000', N'420900000000', N'云梦县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'420981000000', N'420900000000', N'应城市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'420982000000', N'420900000000', N'安陆市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'420984000000', N'420900000000', N'汉川市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'421002000000', N'421000000000', N'沙市区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'421003000000', N'421000000000', N'荆州区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'421022000000', N'421000000000', N'公安县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'421023000000', N'421000000000', N'监利县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'421024000000', N'421000000000', N'江陵县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'421081000000', N'421000000000', N'石首市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'421083000000', N'421000000000', N'洪湖市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'421087000000', N'421000000000', N'松滋市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'421102000000', N'421100000000', N'黄州区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'421121000000', N'421100000000', N'团风县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'421122000000', N'421100000000', N'红安县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'421123000000', N'421100000000', N'罗田县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'421124000000', N'421100000000', N'英山县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'421125000000', N'421100000000', N'浠水县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'421126000000', N'421100000000', N'蕲春县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'421127000000', N'421100000000', N'黄梅县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'421181000000', N'421100000000', N'麻城市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'421182000000', N'421100000000', N'武穴市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'421202000000', N'421200000000', N'咸安区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'421221000000', N'421200000000', N'嘉鱼县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'421222000000', N'421200000000', N'通城县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'421223000000', N'421200000000', N'崇阳县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'421224000000', N'421200000000', N'通山县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'421281000000', N'421200000000', N'赤壁市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'421303000000', N'421300000000', N'曾都区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'421321000000', N'421300000000', N'随县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'421381000000', N'421300000000', N'广水市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'422801000000', N'422800000000', N'恩施市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'422802000000', N'422800000000', N'利川市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'422822000000', N'422800000000', N'建始县')
+GO
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'422823000000', N'422800000000', N'巴东县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'422825000000', N'422800000000', N'宣恩县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'422826000000', N'422800000000', N'咸丰县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'422827000000', N'422800000000', N'来凤县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'422828000000', N'422800000000', N'鹤峰县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'429004000000', N'429000000000', N'仙桃市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'429005000000', N'429000000000', N'潜江市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'429006000000', N'429000000000', N'天门市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'429021000000', N'429000000000', N'神农架林区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'430102000000', N'430100000000', N'芙蓉区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'430103000000', N'430100000000', N'天心区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'430104000000', N'430100000000', N'岳麓区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'430105000000', N'430100000000', N'开福区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'430111000000', N'430100000000', N'雨花区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'430112000000', N'430100000000', N'望城区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'430121000000', N'430100000000', N'长沙县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'430124000000', N'430100000000', N'宁乡县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'430181000000', N'430100000000', N'浏阳市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'430202000000', N'430200000000', N'荷塘区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'430203000000', N'430200000000', N'芦淞区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'430204000000', N'430200000000', N'石峰区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'430211000000', N'430200000000', N'天元区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'430221000000', N'430200000000', N'株洲县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'430223000000', N'430200000000', N'攸县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'430224000000', N'430200000000', N'茶陵县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'430225000000', N'430200000000', N'炎陵县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'430281000000', N'430200000000', N'醴陵市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'430302000000', N'430300000000', N'雨湖区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'430304000000', N'430300000000', N'岳塘区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'430321000000', N'430300000000', N'湘潭县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'430381000000', N'430300000000', N'湘乡市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'430382000000', N'430300000000', N'韶山市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'430405000000', N'430400000000', N'珠晖区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'430406000000', N'430400000000', N'雁峰区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'430407000000', N'430400000000', N'石鼓区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'430408000000', N'430400000000', N'蒸湘区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'430412000000', N'430400000000', N'南岳区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'430421000000', N'430400000000', N'衡阳县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'430422000000', N'430400000000', N'衡南县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'430423000000', N'430400000000', N'衡山县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'430424000000', N'430400000000', N'衡东县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'430426000000', N'430400000000', N'祁东县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'430481000000', N'430400000000', N'耒阳市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'430482000000', N'430400000000', N'常宁市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'430502000000', N'430500000000', N'双清区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'430503000000', N'430500000000', N'大祥区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'430511000000', N'430500000000', N'北塔区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'430521000000', N'430500000000', N'邵东县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'430522000000', N'430500000000', N'新邵县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'430523000000', N'430500000000', N'邵阳县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'430524000000', N'430500000000', N'隆回县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'430525000000', N'430500000000', N'洞口县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'430527000000', N'430500000000', N'绥宁县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'430528000000', N'430500000000', N'新宁县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'430529000000', N'430500000000', N'城步苗族自治县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'430581000000', N'430500000000', N'武冈市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'430602000000', N'430600000000', N'岳阳楼区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'430603000000', N'430600000000', N'云溪区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'430611000000', N'430600000000', N'君山区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'430621000000', N'430600000000', N'岳阳县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'430623000000', N'430600000000', N'华容县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'430624000000', N'430600000000', N'湘阴县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'430626000000', N'430600000000', N'平江县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'430681000000', N'430600000000', N'汨罗市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'430682000000', N'430600000000', N'临湘市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'430702000000', N'430700000000', N'武陵区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'430703000000', N'430700000000', N'鼎城区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'430721000000', N'430700000000', N'安乡县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'430722000000', N'430700000000', N'汉寿县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'430723000000', N'430700000000', N'澧县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'430724000000', N'430700000000', N'临澧县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'430725000000', N'430700000000', N'桃源县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'430726000000', N'430700000000', N'石门县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'430781000000', N'430700000000', N'津市市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'430802000000', N'430800000000', N'永定区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'430811000000', N'430800000000', N'武陵源区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'430821000000', N'430800000000', N'慈利县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'430822000000', N'430800000000', N'桑植县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'430902000000', N'430900000000', N'资阳区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'430903000000', N'430900000000', N'赫山区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'430921000000', N'430900000000', N'南县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'430922000000', N'430900000000', N'桃江县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'430923000000', N'430900000000', N'安化县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'430981000000', N'430900000000', N'沅江市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'431002000000', N'431000000000', N'北湖区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'431003000000', N'431000000000', N'苏仙区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'431021000000', N'431000000000', N'桂阳县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'431022000000', N'431000000000', N'宜章县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'431023000000', N'431000000000', N'永兴县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'431024000000', N'431000000000', N'嘉禾县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'431025000000', N'431000000000', N'临武县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'431026000000', N'431000000000', N'汝城县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'431027000000', N'431000000000', N'桂东县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'431028000000', N'431000000000', N'安仁县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'431081000000', N'431000000000', N'资兴市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'431102000000', N'431100000000', N'零陵区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'431103000000', N'431100000000', N'冷水滩区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'431121000000', N'431100000000', N'祁阳县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'431122000000', N'431100000000', N'东安县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'431123000000', N'431100000000', N'双牌县')
+GO
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'431124000000', N'431100000000', N'道县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'431125000000', N'431100000000', N'江永县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'431126000000', N'431100000000', N'宁远县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'431127000000', N'431100000000', N'蓝山县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'431128000000', N'431100000000', N'新田县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'431129000000', N'431100000000', N'江华瑶族自治县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'431202000000', N'431200000000', N'鹤城区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'431221000000', N'431200000000', N'中方县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'431222000000', N'431200000000', N'沅陵县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'431223000000', N'431200000000', N'辰溪县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'431224000000', N'431200000000', N'溆浦县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'431225000000', N'431200000000', N'会同县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'431226000000', N'431200000000', N'麻阳苗族自治县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'431227000000', N'431200000000', N'新晃侗族自治县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'431228000000', N'431200000000', N'芷江侗族自治县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'431229000000', N'431200000000', N'靖州苗族侗族自治县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'431230000000', N'431200000000', N'通道侗族自治县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'431281000000', N'431200000000', N'洪江市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'431302000000', N'431300000000', N'娄星区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'431321000000', N'431300000000', N'双峰县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'431322000000', N'431300000000', N'新化县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'431381000000', N'431300000000', N'冷水江市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'431382000000', N'431300000000', N'涟源市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'433101000000', N'433100000000', N'吉首市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'433122000000', N'433100000000', N'泸溪县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'433123000000', N'433100000000', N'凤凰县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'433124000000', N'433100000000', N'花垣县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'433125000000', N'433100000000', N'保靖县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'433126000000', N'433100000000', N'古丈县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'433127000000', N'433100000000', N'永顺县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'433130000000', N'433100000000', N'龙山县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'440103000000', N'440100000000', N'荔湾区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'440104000000', N'440100000000', N'越秀区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'440105000000', N'440100000000', N'海珠区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'440106000000', N'440100000000', N'天河区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'440111000000', N'440100000000', N'白云区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'440112000000', N'440100000000', N'黄埔区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'440113000000', N'440100000000', N'番禺区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'440114000000', N'440100000000', N'花都区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'440115000000', N'440100000000', N'南沙区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'440116000000', N'440100000000', N'萝岗区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'440183000000', N'440100000000', N'增城市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'440184000000', N'440100000000', N'从化市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'440203000000', N'440200000000', N'武江区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'440204000000', N'440200000000', N'浈江区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'440205000000', N'440200000000', N'曲江区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'440222000000', N'440200000000', N'始兴县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'440224000000', N'440200000000', N'仁化县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'440229000000', N'440200000000', N'翁源县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'440232000000', N'440200000000', N'乳源瑶族自治县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'440233000000', N'440200000000', N'新丰县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'440281000000', N'440200000000', N'乐昌市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'440282000000', N'440200000000', N'南雄市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'440303000000', N'440300000000', N'罗湖区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'440304000000', N'440300000000', N'福田区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'440305000000', N'440300000000', N'南山区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'440306000000', N'440300000000', N'宝安区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'440307000000', N'440300000000', N'龙岗区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'440308000000', N'440300000000', N'盐田区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'440402000000', N'440400000000', N'香洲区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'440403000000', N'440400000000', N'斗门区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'440404000000', N'440400000000', N'金湾区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'440507000000', N'440500000000', N'龙湖区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'440511000000', N'440500000000', N'金平区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'440512000000', N'440500000000', N'濠江区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'440513000000', N'440500000000', N'潮阳区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'440514000000', N'440500000000', N'潮南区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'440515000000', N'440500000000', N'澄海区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'440523000000', N'440500000000', N'南澳县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'440604000000', N'440600000000', N'禅城区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'440605000000', N'440600000000', N'南海区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'440606000000', N'440600000000', N'顺德区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'440607000000', N'440600000000', N'三水区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'440608000000', N'440600000000', N'高明区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'440703000000', N'440700000000', N'蓬江区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'440704000000', N'440700000000', N'江海区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'440705000000', N'440700000000', N'新会区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'440781000000', N'440700000000', N'台山市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'440783000000', N'440700000000', N'开平市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'440784000000', N'440700000000', N'鹤山市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'440785000000', N'440700000000', N'恩平市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'440802000000', N'440800000000', N'赤坎区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'440803000000', N'440800000000', N'霞山区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'440804000000', N'440800000000', N'坡头区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'440811000000', N'440800000000', N'麻章区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'440823000000', N'440800000000', N'遂溪县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'440825000000', N'440800000000', N'徐闻县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'440881000000', N'440800000000', N'廉江市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'440882000000', N'440800000000', N'雷州市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'440883000000', N'440800000000', N'吴川市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'440902000000', N'440900000000', N'茂南区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'440903000000', N'440900000000', N'茂港区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'440923000000', N'440900000000', N'电白县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'440981000000', N'440900000000', N'高州市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'440982000000', N'440900000000', N'化州市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'440983000000', N'440900000000', N'信宜市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'441202000000', N'441200000000', N'端州区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'441203000000', N'441200000000', N'鼎湖区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'441223000000', N'441200000000', N'广宁县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'441224000000', N'441200000000', N'怀集县')
+GO
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'441225000000', N'441200000000', N'封开县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'441226000000', N'441200000000', N'德庆县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'441283000000', N'441200000000', N'高要市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'441284000000', N'441200000000', N'四会市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'441302000000', N'441300000000', N'惠城区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'441303000000', N'441300000000', N'惠阳区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'441322000000', N'441300000000', N'博罗县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'441323000000', N'441300000000', N'惠东县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'441324000000', N'441300000000', N'龙门县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'441402000000', N'441400000000', N'梅江区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'441421000000', N'441400000000', N'梅县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'441422000000', N'441400000000', N'大埔县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'441423000000', N'441400000000', N'丰顺县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'441424000000', N'441400000000', N'五华县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'441426000000', N'441400000000', N'平远县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'441427000000', N'441400000000', N'蕉岭县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'441481000000', N'441400000000', N'兴宁市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'441502000000', N'441500000000', N'城区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'441521000000', N'441500000000', N'海丰县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'441523000000', N'441500000000', N'陆河县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'441581000000', N'441500000000', N'陆丰市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'441602000000', N'441600000000', N'源城区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'441621000000', N'441600000000', N'紫金县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'441622000000', N'441600000000', N'龙川县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'441623000000', N'441600000000', N'连平县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'441624000000', N'441600000000', N'和平县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'441625000000', N'441600000000', N'东源县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'441702000000', N'441700000000', N'江城区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'441721000000', N'441700000000', N'阳西县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'441723000000', N'441700000000', N'阳东县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'441781000000', N'441700000000', N'阳春市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'441802000000', N'441800000000', N'清城区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'441803000000', N'441800000000', N'清新区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'441821000000', N'441800000000', N'佛冈县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'441823000000', N'441800000000', N'阳山县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'441825000000', N'441800000000', N'连山壮族瑶族自治县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'441826000000', N'441800000000', N'连南瑶族自治县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'441881000000', N'441800000000', N'英德市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'441882000000', N'441800000000', N'连州市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'445102000000', N'445100000000', N'湘桥区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'445103000000', N'445100000000', N'潮安区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'445122000000', N'445100000000', N'饶平县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'445202000000', N'445200000000', N'榕城区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'445203000000', N'445200000000', N'揭东区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'445222000000', N'445200000000', N'揭西县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'445224000000', N'445200000000', N'惠来县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'445281000000', N'445200000000', N'普宁市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'445302000000', N'445300000000', N'云城区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'445321000000', N'445300000000', N'新兴县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'445322000000', N'445300000000', N'郁南县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'445323000000', N'445300000000', N'云安县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'445381000000', N'445300000000', N'罗定市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'450102000000', N'450100000000', N'兴宁区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'450103000000', N'450100000000', N'青秀区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'450105000000', N'450100000000', N'江南区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'450107000000', N'450100000000', N'西乡塘区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'450108000000', N'450100000000', N'良庆区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'450109000000', N'450100000000', N'邕宁区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'450122000000', N'450100000000', N'武鸣县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'450123000000', N'450100000000', N'隆安县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'450124000000', N'450100000000', N'马山县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'450125000000', N'450100000000', N'上林县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'450126000000', N'450100000000', N'宾阳县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'450127000000', N'450100000000', N'横县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'450202000000', N'450200000000', N'城中区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'450203000000', N'450200000000', N'鱼峰区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'450204000000', N'450200000000', N'柳南区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'450205000000', N'450200000000', N'柳北区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'450221000000', N'450200000000', N'柳江县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'450222000000', N'450200000000', N'柳城县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'450223000000', N'450200000000', N'鹿寨县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'450224000000', N'450200000000', N'融安县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'450225000000', N'450200000000', N'融水苗族自治县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'450226000000', N'450200000000', N'三江侗族自治县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'450302000000', N'450300000000', N'秀峰区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'450303000000', N'450300000000', N'叠彩区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'450304000000', N'450300000000', N'象山区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'450305000000', N'450300000000', N'七星区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'450311000000', N'450300000000', N'雁山区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'450312000000', N'450300000000', N'临桂区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'450321000000', N'450300000000', N'阳朔县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'450323000000', N'450300000000', N'灵川县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'450324000000', N'450300000000', N'全州县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'450325000000', N'450300000000', N'兴安县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'450326000000', N'450300000000', N'永福县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'450327000000', N'450300000000', N'灌阳县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'450328000000', N'450300000000', N'龙胜各族自治县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'450329000000', N'450300000000', N'资源县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'450330000000', N'450300000000', N'平乐县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'450331000000', N'450300000000', N'荔浦县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'450332000000', N'450300000000', N'恭城瑶族自治县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'450403000000', N'450400000000', N'万秀区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'450405000000', N'450400000000', N'长洲区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'450406000000', N'450400000000', N'龙圩区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'450421000000', N'450400000000', N'苍梧县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'450422000000', N'450400000000', N'藤县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'450423000000', N'450400000000', N'蒙山县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'450481000000', N'450400000000', N'岑溪市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'450502000000', N'450500000000', N'海城区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'450503000000', N'450500000000', N'银海区')
+GO
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'450512000000', N'450500000000', N'铁山港区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'450521000000', N'450500000000', N'合浦县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'450602000000', N'450600000000', N'港口区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'450603000000', N'450600000000', N'防城区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'450621000000', N'450600000000', N'上思县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'450681000000', N'450600000000', N'东兴市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'450702000000', N'450700000000', N'钦南区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'450703000000', N'450700000000', N'钦北区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'450721000000', N'450700000000', N'灵山县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'450722000000', N'450700000000', N'浦北县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'450802000000', N'450800000000', N'港北区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'450803000000', N'450800000000', N'港南区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'450804000000', N'450800000000', N'覃塘区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'450821000000', N'450800000000', N'平南县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'450881000000', N'450800000000', N'桂平市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'450902000000', N'450900000000', N'玉州区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'450903000000', N'450900000000', N'福绵区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'450921000000', N'450900000000', N'容县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'450922000000', N'450900000000', N'陆川县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'450923000000', N'450900000000', N'博白县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'450924000000', N'450900000000', N'兴业县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'450981000000', N'450900000000', N'北流市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'451002000000', N'451000000000', N'右江区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'451021000000', N'451000000000', N'田阳县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'451022000000', N'451000000000', N'田东县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'451023000000', N'451000000000', N'平果县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'451024000000', N'451000000000', N'德保县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'451025000000', N'451000000000', N'靖西县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'451026000000', N'451000000000', N'那坡县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'451027000000', N'451000000000', N'凌云县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'451028000000', N'451000000000', N'乐业县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'451029000000', N'451000000000', N'田林县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'451030000000', N'451000000000', N'西林县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'451031000000', N'451000000000', N'隆林各族自治县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'451102000000', N'451100000000', N'八步区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'451121000000', N'451100000000', N'昭平县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'451122000000', N'451100000000', N'钟山县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'451123000000', N'451100000000', N'富川瑶族自治县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'451202000000', N'451200000000', N'金城江区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'451221000000', N'451200000000', N'南丹县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'451222000000', N'451200000000', N'天峨县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'451223000000', N'451200000000', N'凤山县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'451224000000', N'451200000000', N'东兰县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'451225000000', N'451200000000', N'罗城仫佬族自治县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'451226000000', N'451200000000', N'环江毛南族自治县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'451227000000', N'451200000000', N'巴马瑶族自治县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'451228000000', N'451200000000', N'都安瑶族自治县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'451229000000', N'451200000000', N'大化瑶族自治县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'451281000000', N'451200000000', N'宜州市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'451302000000', N'451300000000', N'兴宾区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'451321000000', N'451300000000', N'忻城县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'451322000000', N'451300000000', N'象州县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'451323000000', N'451300000000', N'武宣县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'451324000000', N'451300000000', N'金秀瑶族自治县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'451381000000', N'451300000000', N'合山市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'451402000000', N'451400000000', N'江州区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'451421000000', N'451400000000', N'扶绥县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'451422000000', N'451400000000', N'宁明县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'451423000000', N'451400000000', N'龙州县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'451424000000', N'451400000000', N'大新县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'451425000000', N'451400000000', N'天等县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'451481000000', N'451400000000', N'凭祥市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'460105000000', N'460100000000', N'秀英区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'460106000000', N'460100000000', N'龙华区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'460107000000', N'460100000000', N'琼山区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'460108000000', N'460100000000', N'美兰区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'460201000000', N'460200000000', N'市辖区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'460321000000', N'460300000000', N'西沙群岛')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'460322000000', N'460300000000', N'南沙群岛')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'460323000000', N'460300000000', N'中沙群岛的岛礁及其海域')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'469001000000', N'469000000000', N'五指山市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'469002000000', N'469000000000', N'琼海市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'469003000000', N'469000000000', N'儋州市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'469005000000', N'469000000000', N'文昌市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'469006000000', N'469000000000', N'万宁市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'469007000000', N'469000000000', N'东方市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'469021000000', N'469000000000', N'定安县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'469022000000', N'469000000000', N'屯昌县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'469023000000', N'469000000000', N'澄迈县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'469024000000', N'469000000000', N'临高县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'469025000000', N'469000000000', N'白沙黎族自治县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'469026000000', N'469000000000', N'昌江黎族自治县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'469027000000', N'469000000000', N'乐东黎族自治县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'469028000000', N'469000000000', N'陵水黎族自治县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'469029000000', N'469000000000', N'保亭黎族苗族自治县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'469030000000', N'469000000000', N'琼中黎族苗族自治县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'500101000000', N'500100000000', N'万州区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'500102000000', N'500100000000', N'涪陵区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'500103000000', N'500100000000', N'渝中区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'500104000000', N'500100000000', N'大渡口区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'500105000000', N'500100000000', N'江北区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'500106000000', N'500100000000', N'沙坪坝区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'500107000000', N'500100000000', N'九龙坡区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'500108000000', N'500100000000', N'南岸区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'500109000000', N'500100000000', N'北碚区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'500110000000', N'500100000000', N'綦江区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'500111000000', N'500100000000', N'大足区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'500112000000', N'500100000000', N'渝北区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'500113000000', N'500100000000', N'巴南区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'500114000000', N'500100000000', N'黔江区')
+GO
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'500115000000', N'500100000000', N'长寿区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'500116000000', N'500100000000', N'江津区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'500117000000', N'500100000000', N'合川区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'500118000000', N'500100000000', N'永川区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'500119000000', N'500100000000', N'南川区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'500223000000', N'500200000000', N'潼南县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'500224000000', N'500200000000', N'铜梁县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'500226000000', N'500200000000', N'荣昌县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'500227000000', N'500200000000', N'璧山县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'500228000000', N'500200000000', N'梁平县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'500229000000', N'500200000000', N'城口县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'500230000000', N'500200000000', N'丰都县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'500231000000', N'500200000000', N'垫江县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'500232000000', N'500200000000', N'武隆县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'500233000000', N'500200000000', N'忠县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'500234000000', N'500200000000', N'开县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'500235000000', N'500200000000', N'云阳县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'500236000000', N'500200000000', N'奉节县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'500237000000', N'500200000000', N'巫山县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'500238000000', N'500200000000', N'巫溪县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'500240000000', N'500200000000', N'石柱土家族自治县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'500241000000', N'500200000000', N'秀山土家族苗族自治县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'500242000000', N'500200000000', N'酉阳土家族苗族自治县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'500243000000', N'500200000000', N'彭水苗族土家族自治县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'510104000000', N'510100000000', N'锦江区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'510105000000', N'510100000000', N'青羊区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'510106000000', N'510100000000', N'金牛区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'510107000000', N'510100000000', N'武侯区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'510108000000', N'510100000000', N'成华区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'510112000000', N'510100000000', N'龙泉驿区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'510113000000', N'510100000000', N'青白江区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'510114000000', N'510100000000', N'新都区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'510115000000', N'510100000000', N'温江区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'510121000000', N'510100000000', N'金堂县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'510122000000', N'510100000000', N'双流县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'510124000000', N'510100000000', N'郫县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'510129000000', N'510100000000', N'大邑县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'510131000000', N'510100000000', N'蒲江县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'510132000000', N'510100000000', N'新津县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'510181000000', N'510100000000', N'都江堰市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'510182000000', N'510100000000', N'彭州市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'510183000000', N'510100000000', N'邛崃市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'510184000000', N'510100000000', N'崇州市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'510302000000', N'510300000000', N'自流井区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'510303000000', N'510300000000', N'贡井区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'510304000000', N'510300000000', N'大安区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'510311000000', N'510300000000', N'沿滩区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'510321000000', N'510300000000', N'荣县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'510322000000', N'510300000000', N'富顺县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'510402000000', N'510400000000', N'东区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'510403000000', N'510400000000', N'西区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'510411000000', N'510400000000', N'仁和区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'510421000000', N'510400000000', N'米易县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'510422000000', N'510400000000', N'盐边县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'510502000000', N'510500000000', N'江阳区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'510503000000', N'510500000000', N'纳溪区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'510504000000', N'510500000000', N'龙马潭区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'510521000000', N'510500000000', N'泸县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'510522000000', N'510500000000', N'合江县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'510524000000', N'510500000000', N'叙永县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'510525000000', N'510500000000', N'古蔺县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'510603000000', N'510600000000', N'旌阳区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'510623000000', N'510600000000', N'中江县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'510626000000', N'510600000000', N'罗江县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'510681000000', N'510600000000', N'广汉市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'510682000000', N'510600000000', N'什邡市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'510683000000', N'510600000000', N'绵竹市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'510703000000', N'510700000000', N'涪城区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'510704000000', N'510700000000', N'游仙区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'510722000000', N'510700000000', N'三台县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'510723000000', N'510700000000', N'盐亭县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'510724000000', N'510700000000', N'安县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'510725000000', N'510700000000', N'梓潼县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'510726000000', N'510700000000', N'北川羌族自治县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'510727000000', N'510700000000', N'平武县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'510781000000', N'510700000000', N'江油市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'510802000000', N'510800000000', N'利州区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'510811000000', N'510800000000', N'元坝区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'510812000000', N'510800000000', N'朝天区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'510821000000', N'510800000000', N'旺苍县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'510822000000', N'510800000000', N'青川县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'510823000000', N'510800000000', N'剑阁县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'510824000000', N'510800000000', N'苍溪县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'510903000000', N'510900000000', N'船山区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'510904000000', N'510900000000', N'安居区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'510921000000', N'510900000000', N'蓬溪县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'510922000000', N'510900000000', N'射洪县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'510923000000', N'510900000000', N'大英县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'511002000000', N'511000000000', N'市中区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'511011000000', N'511000000000', N'东兴区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'511024000000', N'511000000000', N'威远县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'511025000000', N'511000000000', N'资中县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'511028000000', N'511000000000', N'隆昌县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'511102000000', N'511100000000', N'市中区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'511111000000', N'511100000000', N'沙湾区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'511112000000', N'511100000000', N'五通桥区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'511113000000', N'511100000000', N'金口河区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'511123000000', N'511100000000', N'犍为县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'511124000000', N'511100000000', N'井研县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'511126000000', N'511100000000', N'夹江县')
+GO
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'511129000000', N'511100000000', N'沐川县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'511132000000', N'511100000000', N'峨边彝族自治县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'511133000000', N'511100000000', N'马边彝族自治县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'511181000000', N'511100000000', N'峨眉山市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'511302000000', N'511300000000', N'顺庆区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'511303000000', N'511300000000', N'高坪区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'511304000000', N'511300000000', N'嘉陵区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'511321000000', N'511300000000', N'南部县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'511322000000', N'511300000000', N'营山县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'511323000000', N'511300000000', N'蓬安县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'511324000000', N'511300000000', N'仪陇县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'511325000000', N'511300000000', N'西充县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'511381000000', N'511300000000', N'阆中市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'511402000000', N'511400000000', N'东坡区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'511421000000', N'511400000000', N'仁寿县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'511422000000', N'511400000000', N'彭山县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'511423000000', N'511400000000', N'洪雅县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'511424000000', N'511400000000', N'丹棱县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'511425000000', N'511400000000', N'青神县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'511502000000', N'511500000000', N'翠屏区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'511503000000', N'511500000000', N'南溪区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'511521000000', N'511500000000', N'宜宾县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'511523000000', N'511500000000', N'江安县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'511524000000', N'511500000000', N'长宁县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'511525000000', N'511500000000', N'高县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'511526000000', N'511500000000', N'珙县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'511527000000', N'511500000000', N'筠连县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'511528000000', N'511500000000', N'兴文县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'511529000000', N'511500000000', N'屏山县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'511602000000', N'511600000000', N'广安区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'511603000000', N'511600000000', N'前锋区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'511621000000', N'511600000000', N'岳池县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'511622000000', N'511600000000', N'武胜县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'511623000000', N'511600000000', N'邻水县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'511681000000', N'511600000000', N'华蓥市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'511702000000', N'511700000000', N'通川区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'511703000000', N'511700000000', N'达川区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'511722000000', N'511700000000', N'宣汉县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'511723000000', N'511700000000', N'开江县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'511724000000', N'511700000000', N'大竹县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'511725000000', N'511700000000', N'渠县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'511781000000', N'511700000000', N'万源市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'511802000000', N'511800000000', N'雨城区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'511803000000', N'511800000000', N'名山区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'511822000000', N'511800000000', N'荥经县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'511823000000', N'511800000000', N'汉源县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'511824000000', N'511800000000', N'石棉县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'511825000000', N'511800000000', N'天全县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'511826000000', N'511800000000', N'芦山县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'511827000000', N'511800000000', N'宝兴县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'511902000000', N'511900000000', N'巴州区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'511903000000', N'511900000000', N'恩阳区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'511921000000', N'511900000000', N'通江县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'511922000000', N'511900000000', N'南江县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'511923000000', N'511900000000', N'平昌县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'512002000000', N'512000000000', N'雁江区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'512021000000', N'512000000000', N'安岳县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'512022000000', N'512000000000', N'乐至县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'512081000000', N'512000000000', N'简阳市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'513221000000', N'513200000000', N'汶川县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'513222000000', N'513200000000', N'理县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'513223000000', N'513200000000', N'茂县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'513224000000', N'513200000000', N'松潘县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'513225000000', N'513200000000', N'九寨沟县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'513226000000', N'513200000000', N'金川县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'513227000000', N'513200000000', N'小金县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'513228000000', N'513200000000', N'黑水县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'513229000000', N'513200000000', N'马尔康县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'513230000000', N'513200000000', N'壤塘县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'513231000000', N'513200000000', N'阿坝县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'513232000000', N'513200000000', N'若尔盖县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'513233000000', N'513200000000', N'红原县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'513321000000', N'513300000000', N'康定县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'513322000000', N'513300000000', N'泸定县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'513323000000', N'513300000000', N'丹巴县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'513324000000', N'513300000000', N'九龙县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'513325000000', N'513300000000', N'雅江县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'513326000000', N'513300000000', N'道孚县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'513327000000', N'513300000000', N'炉霍县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'513328000000', N'513300000000', N'甘孜县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'513329000000', N'513300000000', N'新龙县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'513330000000', N'513300000000', N'德格县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'513331000000', N'513300000000', N'白玉县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'513332000000', N'513300000000', N'石渠县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'513333000000', N'513300000000', N'色达县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'513334000000', N'513300000000', N'理塘县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'513335000000', N'513300000000', N'巴塘县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'513336000000', N'513300000000', N'乡城县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'513337000000', N'513300000000', N'稻城县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'513338000000', N'513300000000', N'得荣县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'513401000000', N'513400000000', N'西昌市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'513422000000', N'513400000000', N'木里藏族自治县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'513423000000', N'513400000000', N'盐源县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'513424000000', N'513400000000', N'德昌县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'513425000000', N'513400000000', N'会理县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'513426000000', N'513400000000', N'会东县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'513427000000', N'513400000000', N'宁南县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'513428000000', N'513400000000', N'普格县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'513429000000', N'513400000000', N'布拖县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'513430000000', N'513400000000', N'金阳县')
+GO
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'513431000000', N'513400000000', N'昭觉县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'513432000000', N'513400000000', N'喜德县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'513433000000', N'513400000000', N'冕宁县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'513434000000', N'513400000000', N'越西县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'513435000000', N'513400000000', N'甘洛县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'513436000000', N'513400000000', N'美姑县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'513437000000', N'513400000000', N'雷波县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'520102000000', N'520100000000', N'南明区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'520103000000', N'520100000000', N'云岩区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'520111000000', N'520100000000', N'花溪区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'520112000000', N'520100000000', N'乌当区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'520113000000', N'520100000000', N'白云区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'520115000000', N'520100000000', N'观山湖区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'520121000000', N'520100000000', N'开阳县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'520122000000', N'520100000000', N'息烽县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'520123000000', N'520100000000', N'修文县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'520181000000', N'520100000000', N'清镇市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'520201000000', N'520200000000', N'钟山区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'520203000000', N'520200000000', N'六枝特区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'520221000000', N'520200000000', N'水城县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'520222000000', N'520200000000', N'盘县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'520302000000', N'520300000000', N'红花岗区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'520303000000', N'520300000000', N'汇川区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'520321000000', N'520300000000', N'遵义县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'520322000000', N'520300000000', N'桐梓县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'520323000000', N'520300000000', N'绥阳县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'520324000000', N'520300000000', N'正安县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'520325000000', N'520300000000', N'道真仡佬族苗族自治县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'520326000000', N'520300000000', N'务川仡佬族苗族自治县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'520327000000', N'520300000000', N'凤冈县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'520328000000', N'520300000000', N'湄潭县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'520329000000', N'520300000000', N'余庆县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'520330000000', N'520300000000', N'习水县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'520381000000', N'520300000000', N'赤水市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'520382000000', N'520300000000', N'仁怀市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'520402000000', N'520400000000', N'西秀区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'520421000000', N'520400000000', N'平坝县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'520422000000', N'520400000000', N'普定县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'520423000000', N'520400000000', N'镇宁布依族苗族自治县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'520424000000', N'520400000000', N'关岭布依族苗族自治县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'520425000000', N'520400000000', N'紫云苗族布依族自治县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'520502000000', N'520500000000', N'七星关区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'520521000000', N'520500000000', N'大方县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'520522000000', N'520500000000', N'黔西县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'520523000000', N'520500000000', N'金沙县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'520524000000', N'520500000000', N'织金县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'520525000000', N'520500000000', N'纳雍县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'520526000000', N'520500000000', N'威宁彝族回族苗族自治县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'520527000000', N'520500000000', N'赫章县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'520602000000', N'520600000000', N'碧江区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'520603000000', N'520600000000', N'万山区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'520621000000', N'520600000000', N'江口县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'520622000000', N'520600000000', N'玉屏侗族自治县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'520623000000', N'520600000000', N'石阡县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'520624000000', N'520600000000', N'思南县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'520625000000', N'520600000000', N'印江土家族苗族自治县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'520626000000', N'520600000000', N'德江县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'520627000000', N'520600000000', N'沿河土家族自治县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'520628000000', N'520600000000', N'松桃苗族自治县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'522301000000', N'522300000000', N'兴义市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'522322000000', N'522300000000', N'兴仁县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'522323000000', N'522300000000', N'普安县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'522324000000', N'522300000000', N'晴隆县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'522325000000', N'522300000000', N'贞丰县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'522326000000', N'522300000000', N'望谟县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'522327000000', N'522300000000', N'册亨县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'522328000000', N'522300000000', N'安龙县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'522601000000', N'522600000000', N'凯里市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'522622000000', N'522600000000', N'黄平县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'522623000000', N'522600000000', N'施秉县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'522624000000', N'522600000000', N'三穗县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'522625000000', N'522600000000', N'镇远县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'522626000000', N'522600000000', N'岑巩县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'522627000000', N'522600000000', N'天柱县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'522628000000', N'522600000000', N'锦屏县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'522629000000', N'522600000000', N'剑河县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'522630000000', N'522600000000', N'台江县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'522631000000', N'522600000000', N'黎平县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'522632000000', N'522600000000', N'榕江县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'522633000000', N'522600000000', N'从江县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'522634000000', N'522600000000', N'雷山县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'522635000000', N'522600000000', N'麻江县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'522636000000', N'522600000000', N'丹寨县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'522701000000', N'522700000000', N'都匀市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'522702000000', N'522700000000', N'福泉市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'522722000000', N'522700000000', N'荔波县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'522723000000', N'522700000000', N'贵定县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'522725000000', N'522700000000', N'瓮安县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'522726000000', N'522700000000', N'独山县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'522727000000', N'522700000000', N'平塘县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'522728000000', N'522700000000', N'罗甸县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'522729000000', N'522700000000', N'长顺县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'522730000000', N'522700000000', N'龙里县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'522731000000', N'522700000000', N'惠水县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'522732000000', N'522700000000', N'三都水族自治县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'530102000000', N'530100000000', N'五华区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'530103000000', N'530100000000', N'盘龙区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'530111000000', N'530100000000', N'官渡区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'530112000000', N'530100000000', N'西山区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'530113000000', N'530100000000', N'东川区')
+GO
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'530114000000', N'530100000000', N'呈贡区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'530122000000', N'530100000000', N'晋宁县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'530124000000', N'530100000000', N'富民县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'530125000000', N'530100000000', N'宜良县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'530126000000', N'530100000000', N'石林彝族自治县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'530127000000', N'530100000000', N'嵩明县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'530128000000', N'530100000000', N'禄劝彝族苗族自治县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'530129000000', N'530100000000', N'寻甸回族彝族自治县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'530181000000', N'530100000000', N'安宁市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'530302000000', N'530300000000', N'麒麟区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'530321000000', N'530300000000', N'马龙县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'530322000000', N'530300000000', N'陆良县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'530323000000', N'530300000000', N'师宗县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'530324000000', N'530300000000', N'罗平县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'530325000000', N'530300000000', N'富源县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'530326000000', N'530300000000', N'会泽县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'530328000000', N'530300000000', N'沾益县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'530381000000', N'530300000000', N'宣威市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'530402000000', N'530400000000', N'红塔区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'530421000000', N'530400000000', N'江川县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'530422000000', N'530400000000', N'澄江县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'530423000000', N'530400000000', N'通海县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'530424000000', N'530400000000', N'华宁县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'530425000000', N'530400000000', N'易门县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'530426000000', N'530400000000', N'峨山彝族自治县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'530427000000', N'530400000000', N'新平彝族傣族自治县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'530428000000', N'530400000000', N'元江哈尼族彝族傣族自治县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'530502000000', N'530500000000', N'隆阳区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'530521000000', N'530500000000', N'施甸县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'530522000000', N'530500000000', N'腾冲县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'530523000000', N'530500000000', N'龙陵县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'530524000000', N'530500000000', N'昌宁县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'530602000000', N'530600000000', N'昭阳区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'530621000000', N'530600000000', N'鲁甸县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'530622000000', N'530600000000', N'巧家县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'530623000000', N'530600000000', N'盐津县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'530624000000', N'530600000000', N'大关县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'530625000000', N'530600000000', N'永善县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'530626000000', N'530600000000', N'绥江县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'530627000000', N'530600000000', N'镇雄县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'530628000000', N'530600000000', N'彝良县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'530629000000', N'530600000000', N'威信县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'530630000000', N'530600000000', N'水富县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'530702000000', N'530700000000', N'古城区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'530721000000', N'530700000000', N'玉龙纳西族自治县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'530722000000', N'530700000000', N'永胜县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'530723000000', N'530700000000', N'华坪县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'530724000000', N'530700000000', N'宁蒗彝族自治县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'530802000000', N'530800000000', N'思茅区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'530821000000', N'530800000000', N'宁洱哈尼族彝族自治县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'530822000000', N'530800000000', N'墨江哈尼族自治县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'530823000000', N'530800000000', N'景东彝族自治县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'530824000000', N'530800000000', N'景谷傣族彝族自治县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'530825000000', N'530800000000', N'镇沅彝族哈尼族拉祜族自治县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'530826000000', N'530800000000', N'江城哈尼族彝族自治县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'530827000000', N'530800000000', N'孟连傣族拉祜族佤族自治县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'530828000000', N'530800000000', N'澜沧拉祜族自治县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'530829000000', N'530800000000', N'西盟佤族自治县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'530902000000', N'530900000000', N'临翔区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'530921000000', N'530900000000', N'凤庆县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'530922000000', N'530900000000', N'云县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'530923000000', N'530900000000', N'永德县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'530924000000', N'530900000000', N'镇康县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'530925000000', N'530900000000', N'双江拉祜族佤族布朗族傣族自治县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'530926000000', N'530900000000', N'耿马傣族佤族自治县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'530927000000', N'530900000000', N'沧源佤族自治县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'532301000000', N'532300000000', N'楚雄市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'532322000000', N'532300000000', N'双柏县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'532323000000', N'532300000000', N'牟定县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'532324000000', N'532300000000', N'南华县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'532325000000', N'532300000000', N'姚安县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'532326000000', N'532300000000', N'大姚县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'532327000000', N'532300000000', N'永仁县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'532328000000', N'532300000000', N'元谋县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'532329000000', N'532300000000', N'武定县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'532331000000', N'532300000000', N'禄丰县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'532501000000', N'532500000000', N'个旧市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'532502000000', N'532500000000', N'开远市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'532503000000', N'532500000000', N'蒙自市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'532504000000', N'532500000000', N'弥勒市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'532523000000', N'532500000000', N'屏边苗族自治县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'532524000000', N'532500000000', N'建水县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'532525000000', N'532500000000', N'石屏县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'532527000000', N'532500000000', N'泸西县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'532528000000', N'532500000000', N'元阳县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'532529000000', N'532500000000', N'红河县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'532530000000', N'532500000000', N'金平苗族瑶族傣族自治县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'532531000000', N'532500000000', N'绿春县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'532532000000', N'532500000000', N'河口瑶族自治县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'532601000000', N'532600000000', N'文山市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'532622000000', N'532600000000', N'砚山县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'532623000000', N'532600000000', N'西畴县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'532624000000', N'532600000000', N'麻栗坡县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'532625000000', N'532600000000', N'马关县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'532626000000', N'532600000000', N'丘北县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'532627000000', N'532600000000', N'广南县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'532628000000', N'532600000000', N'富宁县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'532801000000', N'532800000000', N'景洪市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'532822000000', N'532800000000', N'勐海县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'532823000000', N'532800000000', N'勐腊县')
+GO
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'532901000000', N'532900000000', N'大理市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'532922000000', N'532900000000', N'漾濞彝族自治县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'532923000000', N'532900000000', N'祥云县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'532924000000', N'532900000000', N'宾川县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'532925000000', N'532900000000', N'弥渡县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'532926000000', N'532900000000', N'南涧彝族自治县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'532927000000', N'532900000000', N'巍山彝族回族自治县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'532928000000', N'532900000000', N'永平县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'532929000000', N'532900000000', N'云龙县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'532930000000', N'532900000000', N'洱源县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'532931000000', N'532900000000', N'剑川县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'532932000000', N'532900000000', N'鹤庆县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'533102000000', N'533100000000', N'瑞丽市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'533103000000', N'533100000000', N'芒市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'533122000000', N'533100000000', N'梁河县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'533123000000', N'533100000000', N'盈江县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'533124000000', N'533100000000', N'陇川县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'533321000000', N'533300000000', N'泸水县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'533323000000', N'533300000000', N'福贡县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'533324000000', N'533300000000', N'贡山独龙族怒族自治县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'533325000000', N'533300000000', N'兰坪白族普米族自治县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'533421000000', N'533400000000', N'香格里拉县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'533422000000', N'533400000000', N'德钦县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'533423000000', N'533400000000', N'维西傈僳族自治县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'540102000000', N'540100000000', N'城关区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'540121000000', N'540100000000', N'林周县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'540122000000', N'540100000000', N'当雄县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'540123000000', N'540100000000', N'尼木县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'540124000000', N'540100000000', N'曲水县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'540125000000', N'540100000000', N'堆龙德庆县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'540126000000', N'540100000000', N'达孜县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'540127000000', N'540100000000', N'墨竹工卡县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'542121000000', N'542100000000', N'昌都县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'542122000000', N'542100000000', N'江达县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'542123000000', N'542100000000', N'贡觉县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'542124000000', N'542100000000', N'类乌齐县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'542125000000', N'542100000000', N'丁青县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'542126000000', N'542100000000', N'察雅县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'542127000000', N'542100000000', N'八宿县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'542128000000', N'542100000000', N'左贡县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'542129000000', N'542100000000', N'芒康县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'542132000000', N'542100000000', N'洛隆县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'542133000000', N'542100000000', N'边坝县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'542221000000', N'542200000000', N'乃东县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'542222000000', N'542200000000', N'扎囊县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'542223000000', N'542200000000', N'贡嘎县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'542224000000', N'542200000000', N'桑日县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'542225000000', N'542200000000', N'琼结县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'542226000000', N'542200000000', N'曲松县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'542227000000', N'542200000000', N'措美县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'542228000000', N'542200000000', N'洛扎县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'542229000000', N'542200000000', N'加查县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'542231000000', N'542200000000', N'隆子县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'542232000000', N'542200000000', N'错那县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'542233000000', N'542200000000', N'浪卡子县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'542301000000', N'542300000000', N'日喀则市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'542322000000', N'542300000000', N'南木林县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'542323000000', N'542300000000', N'江孜县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'542324000000', N'542300000000', N'定日县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'542325000000', N'542300000000', N'萨迦县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'542326000000', N'542300000000', N'拉孜县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'542327000000', N'542300000000', N'昂仁县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'542328000000', N'542300000000', N'谢通门县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'542329000000', N'542300000000', N'白朗县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'542330000000', N'542300000000', N'仁布县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'542331000000', N'542300000000', N'康马县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'542332000000', N'542300000000', N'定结县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'542333000000', N'542300000000', N'仲巴县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'542334000000', N'542300000000', N'亚东县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'542335000000', N'542300000000', N'吉隆县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'542336000000', N'542300000000', N'聂拉木县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'542337000000', N'542300000000', N'萨嘎县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'542338000000', N'542300000000', N'岗巴县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'542421000000', N'542400000000', N'那曲县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'542422000000', N'542400000000', N'嘉黎县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'542423000000', N'542400000000', N'比如县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'542424000000', N'542400000000', N'聂荣县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'542425000000', N'542400000000', N'安多县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'542426000000', N'542400000000', N'申扎县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'542427000000', N'542400000000', N'索县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'542428000000', N'542400000000', N'班戈县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'542429000000', N'542400000000', N'巴青县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'542430000000', N'542400000000', N'尼玛县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'542431000000', N'542400000000', N'双湖县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'542521000000', N'542500000000', N'普兰县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'542522000000', N'542500000000', N'札达县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'542523000000', N'542500000000', N'噶尔县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'542524000000', N'542500000000', N'日土县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'542525000000', N'542500000000', N'革吉县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'542526000000', N'542500000000', N'改则县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'542527000000', N'542500000000', N'措勤县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'542621000000', N'542600000000', N'林芝县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'542622000000', N'542600000000', N'工布江达县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'542623000000', N'542600000000', N'米林县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'542624000000', N'542600000000', N'墨脱县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'542625000000', N'542600000000', N'波密县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'542626000000', N'542600000000', N'察隅县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'542627000000', N'542600000000', N'朗县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'610102000000', N'610100000000', N'新城区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'610103000000', N'610100000000', N'碑林区')
+GO
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'610104000000', N'610100000000', N'莲湖区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'610111000000', N'610100000000', N'灞桥区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'610112000000', N'610100000000', N'未央区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'610113000000', N'610100000000', N'雁塔区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'610114000000', N'610100000000', N'阎良区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'610115000000', N'610100000000', N'临潼区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'610116000000', N'610100000000', N'长安区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'610122000000', N'610100000000', N'蓝田县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'610124000000', N'610100000000', N'周至县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'610125000000', N'610100000000', N'户县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'610126000000', N'610100000000', N'高陵县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'610202000000', N'610200000000', N'王益区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'610203000000', N'610200000000', N'印台区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'610204000000', N'610200000000', N'耀州区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'610222000000', N'610200000000', N'宜君县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'610302000000', N'610300000000', N'渭滨区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'610303000000', N'610300000000', N'金台区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'610304000000', N'610300000000', N'陈仓区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'610322000000', N'610300000000', N'凤翔县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'610323000000', N'610300000000', N'岐山县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'610324000000', N'610300000000', N'扶风县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'610326000000', N'610300000000', N'眉县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'610327000000', N'610300000000', N'陇县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'610328000000', N'610300000000', N'千阳县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'610329000000', N'610300000000', N'麟游县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'610330000000', N'610300000000', N'凤县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'610331000000', N'610300000000', N'太白县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'610402000000', N'610400000000', N'秦都区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'610403000000', N'610400000000', N'杨陵区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'610404000000', N'610400000000', N'渭城区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'610422000000', N'610400000000', N'三原县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'610423000000', N'610400000000', N'泾阳县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'610424000000', N'610400000000', N'乾县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'610425000000', N'610400000000', N'礼泉县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'610426000000', N'610400000000', N'永寿县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'610427000000', N'610400000000', N'彬县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'610428000000', N'610400000000', N'长武县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'610429000000', N'610400000000', N'旬邑县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'610430000000', N'610400000000', N'淳化县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'610431000000', N'610400000000', N'武功县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'610481000000', N'610400000000', N'兴平市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'610502000000', N'610500000000', N'临渭区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'610521000000', N'610500000000', N'华县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'610522000000', N'610500000000', N'潼关县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'610523000000', N'610500000000', N'大荔县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'610524000000', N'610500000000', N'合阳县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'610525000000', N'610500000000', N'澄城县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'610526000000', N'610500000000', N'蒲城县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'610527000000', N'610500000000', N'白水县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'610528000000', N'610500000000', N'富平县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'610581000000', N'610500000000', N'韩城市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'610582000000', N'610500000000', N'华阴市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'610602000000', N'610600000000', N'宝塔区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'610621000000', N'610600000000', N'延长县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'610622000000', N'610600000000', N'延川县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'610623000000', N'610600000000', N'子长县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'610624000000', N'610600000000', N'安塞县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'610625000000', N'610600000000', N'志丹县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'610626000000', N'610600000000', N'吴起县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'610627000000', N'610600000000', N'甘泉县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'610628000000', N'610600000000', N'富县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'610629000000', N'610600000000', N'洛川县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'610630000000', N'610600000000', N'宜川县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'610631000000', N'610600000000', N'黄龙县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'610632000000', N'610600000000', N'黄陵县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'610702000000', N'610700000000', N'汉台区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'610721000000', N'610700000000', N'南郑县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'610722000000', N'610700000000', N'城固县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'610723000000', N'610700000000', N'洋县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'610724000000', N'610700000000', N'西乡县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'610725000000', N'610700000000', N'勉县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'610726000000', N'610700000000', N'宁强县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'610727000000', N'610700000000', N'略阳县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'610728000000', N'610700000000', N'镇巴县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'610729000000', N'610700000000', N'留坝县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'610730000000', N'610700000000', N'佛坪县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'610802000000', N'610800000000', N'榆阳区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'610821000000', N'610800000000', N'神木县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'610822000000', N'610800000000', N'府谷县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'610823000000', N'610800000000', N'横山县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'610824000000', N'610800000000', N'靖边县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'610825000000', N'610800000000', N'定边县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'610826000000', N'610800000000', N'绥德县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'610827000000', N'610800000000', N'米脂县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'610828000000', N'610800000000', N'佳县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'610829000000', N'610800000000', N'吴堡县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'610830000000', N'610800000000', N'清涧县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'610831000000', N'610800000000', N'子洲县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'610902000000', N'610900000000', N'汉滨区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'610921000000', N'610900000000', N'汉阴县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'610922000000', N'610900000000', N'石泉县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'610923000000', N'610900000000', N'宁陕县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'610924000000', N'610900000000', N'紫阳县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'610925000000', N'610900000000', N'岚皋县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'610926000000', N'610900000000', N'平利县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'610927000000', N'610900000000', N'镇坪县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'610928000000', N'610900000000', N'旬阳县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'610929000000', N'610900000000', N'白河县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'611002000000', N'611000000000', N'商州区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'611021000000', N'611000000000', N'洛南县')
+GO
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'611022000000', N'611000000000', N'丹凤县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'611023000000', N'611000000000', N'商南县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'611024000000', N'611000000000', N'山阳县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'611025000000', N'611000000000', N'镇安县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'611026000000', N'611000000000', N'柞水县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'620102000000', N'620100000000', N'城关区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'620103000000', N'620100000000', N'七里河区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'620104000000', N'620100000000', N'西固区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'620105000000', N'620100000000', N'安宁区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'620111000000', N'620100000000', N'红古区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'620121000000', N'620100000000', N'永登县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'620122000000', N'620100000000', N'皋兰县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'620123000000', N'620100000000', N'榆中县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'620201000000', N'620200000000', N'市辖区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'620302000000', N'620300000000', N'金川区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'620321000000', N'620300000000', N'永昌县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'620402000000', N'620400000000', N'白银区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'620403000000', N'620400000000', N'平川区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'620421000000', N'620400000000', N'靖远县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'620422000000', N'620400000000', N'会宁县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'620423000000', N'620400000000', N'景泰县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'620502000000', N'620500000000', N'秦州区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'620503000000', N'620500000000', N'麦积区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'620521000000', N'620500000000', N'清水县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'620522000000', N'620500000000', N'秦安县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'620523000000', N'620500000000', N'甘谷县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'620524000000', N'620500000000', N'武山县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'620525000000', N'620500000000', N'张家川回族自治县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'620602000000', N'620600000000', N'凉州区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'620621000000', N'620600000000', N'民勤县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'620622000000', N'620600000000', N'古浪县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'620623000000', N'620600000000', N'天祝藏族自治县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'620702000000', N'620700000000', N'甘州区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'620721000000', N'620700000000', N'肃南裕固族自治县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'620722000000', N'620700000000', N'民乐县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'620723000000', N'620700000000', N'临泽县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'620724000000', N'620700000000', N'高台县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'620725000000', N'620700000000', N'山丹县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'620802000000', N'620800000000', N'崆峒区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'620821000000', N'620800000000', N'泾川县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'620822000000', N'620800000000', N'灵台县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'620823000000', N'620800000000', N'崇信县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'620824000000', N'620800000000', N'华亭县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'620825000000', N'620800000000', N'庄浪县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'620826000000', N'620800000000', N'静宁县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'620902000000', N'620900000000', N'肃州区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'620921000000', N'620900000000', N'金塔县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'620922000000', N'620900000000', N'瓜州县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'620923000000', N'620900000000', N'肃北蒙古族自治县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'620924000000', N'620900000000', N'阿克塞哈萨克族自治县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'620981000000', N'620900000000', N'玉门市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'620982000000', N'620900000000', N'敦煌市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'621002000000', N'621000000000', N'西峰区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'621021000000', N'621000000000', N'庆城县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'621022000000', N'621000000000', N'环县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'621023000000', N'621000000000', N'华池县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'621024000000', N'621000000000', N'合水县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'621025000000', N'621000000000', N'正宁县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'621026000000', N'621000000000', N'宁县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'621027000000', N'621000000000', N'镇原县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'621102000000', N'621100000000', N'安定区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'621121000000', N'621100000000', N'通渭县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'621122000000', N'621100000000', N'陇西县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'621123000000', N'621100000000', N'渭源县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'621124000000', N'621100000000', N'临洮县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'621125000000', N'621100000000', N'漳县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'621126000000', N'621100000000', N'岷县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'621202000000', N'621200000000', N'武都区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'621221000000', N'621200000000', N'成县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'621222000000', N'621200000000', N'文县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'621223000000', N'621200000000', N'宕昌县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'621224000000', N'621200000000', N'康县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'621225000000', N'621200000000', N'西和县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'621226000000', N'621200000000', N'礼县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'621227000000', N'621200000000', N'徽县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'621228000000', N'621200000000', N'两当县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'622901000000', N'622900000000', N'临夏市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'622921000000', N'622900000000', N'临夏县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'622922000000', N'622900000000', N'康乐县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'622923000000', N'622900000000', N'永靖县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'622924000000', N'622900000000', N'广河县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'622925000000', N'622900000000', N'和政县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'622926000000', N'622900000000', N'东乡族自治县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'622927000000', N'622900000000', N'积石山保安族东乡族撒拉族自治县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'623001000000', N'623000000000', N'合作市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'623021000000', N'623000000000', N'临潭县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'623022000000', N'623000000000', N'卓尼县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'623023000000', N'623000000000', N'舟曲县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'623024000000', N'623000000000', N'迭部县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'623025000000', N'623000000000', N'玛曲县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'623026000000', N'623000000000', N'碌曲县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'623027000000', N'623000000000', N'夏河县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'630102000000', N'630100000000', N'城东区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'630103000000', N'630100000000', N'城中区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'630104000000', N'630100000000', N'城西区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'630105000000', N'630100000000', N'城北区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'630121000000', N'630100000000', N'大通回族土族自治县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'630122000000', N'630100000000', N'湟中县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'630123000000', N'630100000000', N'湟源县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'630202000000', N'630200000000', N'乐都区')
+GO
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'630221000000', N'630200000000', N'平安县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'630222000000', N'630200000000', N'民和回族土族自治县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'630223000000', N'630200000000', N'互助土族自治县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'630224000000', N'630200000000', N'化隆回族自治县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'630225000000', N'630200000000', N'循化撒拉族自治县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'632221000000', N'632200000000', N'门源回族自治县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'632222000000', N'632200000000', N'祁连县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'632223000000', N'632200000000', N'海晏县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'632224000000', N'632200000000', N'刚察县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'632321000000', N'632300000000', N'同仁县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'632322000000', N'632300000000', N'尖扎县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'632323000000', N'632300000000', N'泽库县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'632324000000', N'632300000000', N'河南蒙古族自治县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'632521000000', N'632500000000', N'共和县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'632522000000', N'632500000000', N'同德县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'632523000000', N'632500000000', N'贵德县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'632524000000', N'632500000000', N'兴海县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'632525000000', N'632500000000', N'贵南县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'632621000000', N'632600000000', N'玛沁县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'632622000000', N'632600000000', N'班玛县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'632623000000', N'632600000000', N'甘德县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'632624000000', N'632600000000', N'达日县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'632625000000', N'632600000000', N'久治县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'632626000000', N'632600000000', N'玛多县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'632701000000', N'632700000000', N'玉树市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'632722000000', N'632700000000', N'杂多县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'632723000000', N'632700000000', N'称多县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'632724000000', N'632700000000', N'治多县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'632725000000', N'632700000000', N'囊谦县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'632726000000', N'632700000000', N'曲麻莱县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'632801000000', N'632800000000', N'格尔木市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'632802000000', N'632800000000', N'德令哈市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'632821000000', N'632800000000', N'乌兰县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'632822000000', N'632800000000', N'都兰县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'632823000000', N'632800000000', N'天峻县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'640104000000', N'640100000000', N'兴庆区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'640105000000', N'640100000000', N'西夏区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'640106000000', N'640100000000', N'金凤区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'640121000000', N'640100000000', N'永宁县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'640122000000', N'640100000000', N'贺兰县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'640181000000', N'640100000000', N'灵武市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'640202000000', N'640200000000', N'大武口区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'640205000000', N'640200000000', N'惠农区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'640221000000', N'640200000000', N'平罗县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'640302000000', N'640300000000', N'利通区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'640303000000', N'640300000000', N'红寺堡区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'640323000000', N'640300000000', N'盐池县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'640324000000', N'640300000000', N'同心县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'640381000000', N'640300000000', N'青铜峡市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'640402000000', N'640400000000', N'原州区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'640422000000', N'640400000000', N'西吉县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'640423000000', N'640400000000', N'隆德县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'640424000000', N'640400000000', N'泾源县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'640425000000', N'640400000000', N'彭阳县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'640502000000', N'640500000000', N'沙坡头区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'640521000000', N'640500000000', N'中宁县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'640522000000', N'640500000000', N'海原县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'650102000000', N'650100000000', N'天山区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'650103000000', N'650100000000', N'沙依巴克区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'650104000000', N'650100000000', N'新市区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'650105000000', N'650100000000', N'水磨沟区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'650106000000', N'650100000000', N'头屯河区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'650107000000', N'650100000000', N'达坂城区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'650109000000', N'650100000000', N'米东区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'650121000000', N'650100000000', N'乌鲁木齐县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'650202000000', N'650200000000', N'独山子区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'650203000000', N'650200000000', N'克拉玛依区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'650204000000', N'650200000000', N'白碱滩区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'650205000000', N'650200000000', N'乌尔禾区')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'652101000000', N'652100000000', N'吐鲁番市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'652122000000', N'652100000000', N'鄯善县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'652123000000', N'652100000000', N'托克逊县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'652201000000', N'652200000000', N'哈密市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'652222000000', N'652200000000', N'巴里坤哈萨克自治县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'652223000000', N'652200000000', N'伊吾县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'652301000000', N'652300000000', N'昌吉市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'652302000000', N'652300000000', N'阜康市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'652323000000', N'652300000000', N'呼图壁县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'652324000000', N'652300000000', N'玛纳斯县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'652325000000', N'652300000000', N'奇台县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'652327000000', N'652300000000', N'吉木萨尔县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'652328000000', N'652300000000', N'木垒哈萨克自治县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'652701000000', N'652700000000', N'博乐市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'652702000000', N'652700000000', N'阿拉山口市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'652722000000', N'652700000000', N'精河县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'652723000000', N'652700000000', N'温泉县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'652801000000', N'652800000000', N'库尔勒市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'652822000000', N'652800000000', N'轮台县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'652823000000', N'652800000000', N'尉犁县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'652824000000', N'652800000000', N'若羌县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'652825000000', N'652800000000', N'且末县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'652826000000', N'652800000000', N'焉耆回族自治县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'652827000000', N'652800000000', N'和静县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'652828000000', N'652800000000', N'和硕县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'652829000000', N'652800000000', N'博湖县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'652901000000', N'652900000000', N'阿克苏市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'652922000000', N'652900000000', N'温宿县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'652923000000', N'652900000000', N'库车县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'652924000000', N'652900000000', N'沙雅县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'652925000000', N'652900000000', N'新和县')
+GO
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'652926000000', N'652900000000', N'拜城县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'652927000000', N'652900000000', N'乌什县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'652928000000', N'652900000000', N'阿瓦提县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'652929000000', N'652900000000', N'柯坪县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'653001000000', N'653000000000', N'阿图什市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'653022000000', N'653000000000', N'阿克陶县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'653023000000', N'653000000000', N'阿合奇县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'653024000000', N'653000000000', N'乌恰县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'653101000000', N'653100000000', N'喀什市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'653121000000', N'653100000000', N'疏附县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'653122000000', N'653100000000', N'疏勒县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'653123000000', N'653100000000', N'英吉沙县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'653124000000', N'653100000000', N'泽普县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'653125000000', N'653100000000', N'莎车县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'653126000000', N'653100000000', N'叶城县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'653127000000', N'653100000000', N'麦盖提县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'653128000000', N'653100000000', N'岳普湖县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'653129000000', N'653100000000', N'伽师县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'653130000000', N'653100000000', N'巴楚县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'653131000000', N'653100000000', N'塔什库尔干塔吉克自治县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'653201000000', N'653200000000', N'和田市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'653221000000', N'653200000000', N'和田县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'653222000000', N'653200000000', N'墨玉县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'653223000000', N'653200000000', N'皮山县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'653224000000', N'653200000000', N'洛浦县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'653225000000', N'653200000000', N'策勒县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'653226000000', N'653200000000', N'于田县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'653227000000', N'653200000000', N'民丰县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'654002000000', N'654000000000', N'伊宁市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'654003000000', N'654000000000', N'奎屯市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'654021000000', N'654000000000', N'伊宁县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'654022000000', N'654000000000', N'察布查尔锡伯自治县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'654023000000', N'654000000000', N'霍城县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'654024000000', N'654000000000', N'巩留县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'654025000000', N'654000000000', N'新源县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'654026000000', N'654000000000', N'昭苏县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'654027000000', N'654000000000', N'特克斯县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'654028000000', N'654000000000', N'尼勒克县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'654201000000', N'654200000000', N'塔城市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'654202000000', N'654200000000', N'乌苏市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'654221000000', N'654200000000', N'额敏县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'654223000000', N'654200000000', N'沙湾县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'654224000000', N'654200000000', N'托里县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'654225000000', N'654200000000', N'裕民县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'654226000000', N'654200000000', N'和布克赛尔蒙古自治县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'654301000000', N'654300000000', N'阿勒泰市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'654321000000', N'654300000000', N'布尔津县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'654322000000', N'654300000000', N'富蕴县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'654323000000', N'654300000000', N'福海县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'654324000000', N'654300000000', N'哈巴河县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'654325000000', N'654300000000', N'青河县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'654326000000', N'654300000000', N'吉木乃县')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'659001000000', N'659000000000', N'石河子市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'659002000000', N'659000000000', N'阿拉尔市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'659003000000', N'659000000000', N'图木舒克市')
+INSERT [dbo].[country] ([country_id], [city_id], [country_name])
+VALUES (N'659004000000', N'659000000000', N'五家渠市')
+INSERT [dbo].[field] ([field_id], [screening_room_id], [movie_id], [field_start_data_time], [field_money])
+VALUES (N'1000000001', N'1001001001', N'1001001009', CAST(N'2019-06-30T00:00:00.000' AS DateTime), 36.5000)
+INSERT [dbo].[field] ([field_id], [screening_room_id], [movie_id], [field_start_data_time], [field_money])
+VALUES (N'1000000002', N'1001001001', N'1001001009', CAST(N'2019-06-30T04:45:00.000' AS DateTime), 36.5000)
+INSERT [dbo].[field] ([field_id], [screening_room_id], [movie_id], [field_start_data_time], [field_money])
+VALUES (N'1000000003', N'1001001001', N'1001001009', CAST(N'2019-06-30T07:32:00.000' AS DateTime), 36.5000)
+INSERT [dbo].[field] ([field_id], [screening_room_id], [movie_id], [field_start_data_time], [field_money])
+VALUES (N'1000000004', N'1001001001', N'1001001025', CAST(N'2020-02-28T00:00:00.000' AS DateTime), 39.0000)
+INSERT [dbo].[field] ([field_id], [screening_room_id], [movie_id], [field_start_data_time], [field_money])
+VALUES (N'1000000005', N'1001001001', N'1001001025', CAST(N'2020-02-28T15:34:00.000' AS DateTime), 888.0000)
+INSERT [dbo].[field] ([field_id], [screening_room_id], [movie_id], [field_start_data_time], [field_money])
+VALUES (N'1000000006', N'1001001001', N'1001001025', CAST(N'2020-02-28T17:33:00.000' AS DateTime), 45.0000)
+INSERT [dbo].[field] ([field_id], [screening_room_id], [movie_id], [field_start_data_time], [field_money])
+VALUES (N'1000000007', N'1001001001', N'1001001011', CAST(N'2020-05-28T00:00:00.000' AS DateTime), 37.0000)
+INSERT [dbo].[field] ([field_id], [screening_room_id], [movie_id], [field_start_data_time], [field_money])
+VALUES (N'1000000008', N'1001001001', N'1001001011', CAST(N'2019-06-01T00:00:00.000' AS DateTime), 36.5000)
+INSERT [dbo].[field] ([field_id], [screening_room_id], [movie_id], [field_start_data_time], [field_money])
+VALUES (N'1000000009', N'1001001001', N'1001001011', CAST(N'2019-06-01T02:00:00.000' AS DateTime), 36.5000)
+INSERT [dbo].[field] ([field_id], [screening_room_id], [movie_id], [field_start_data_time], [field_money])
+VALUES (N'1000000010', N'1001001001', N'1001001014', CAST(N'2020-06-01T06:00:00.000' AS DateTime), 36.5000)
+INSERT [dbo].[field] ([field_id], [screening_room_id], [movie_id], [field_start_data_time], [field_money])
+VALUES (N'1000000011', N'1001001001', N'1001001012', CAST(N'2020-05-31T00:00:00.000' AS DateTime), 36.5000)
+INSERT [dbo].[field] ([field_id], [screening_room_id], [movie_id], [field_start_data_time], [field_money])
+VALUES (N'1000000012', N'1001001001', N'1001001014', CAST(N'2020-06-01T04:00:00.000' AS DateTime), 36.5000)
+INSERT [dbo].[field] ([field_id], [screening_room_id], [movie_id], [field_start_data_time], [field_money])
+VALUES (N'1000000013', N'1001001001', N'1001001021', CAST(N'2020-05-30T23:59:59.000' AS DateTime), 36.5000)
+INSERT [dbo].[field] ([field_id], [screening_room_id], [movie_id], [field_start_data_time], [field_money])
+VALUES (N'1000000014', N'1001001001', N'1001001021', CAST(N'2020-06-01T23:59:59.000' AS DateTime), 36.5000)
+INSERT [dbo].[field] ([field_id], [screening_room_id], [movie_id], [field_start_data_time], [field_money])
+VALUES (N'1000000015', N'1001001001', N'1001001003', CAST(N'2020-06-01T00:00:00.000' AS DateTime), 36.5000)
+INSERT [dbo].[field] ([field_id], [screening_room_id], [movie_id], [field_start_data_time], [field_money])
+VALUES (N'1000000016', N'1001001001', N'1001001012', CAST(N'2020-05-31T23:00:00.000' AS DateTime), 36.5000)
+INSERT [dbo].[field] ([field_id], [screening_room_id], [movie_id], [field_start_data_time], [field_money])
+VALUES (N'1000000017', N'1001001001', N'1001001012', CAST(N'2020-05-31T22:00:00.000' AS DateTime), 36.5000)
+INSERT [dbo].[fun] ([fun_id], [fun_name])
+VALUES (N'1001001001', N'美食')
+INSERT [dbo].[fun] ([fun_id], [fun_name])
+VALUES (N'1001001002', N'动漫')
+INSERT [dbo].[fun] ([fun_id], [fun_name])
+VALUES (N'1001001003', N'摄影')
+INSERT [dbo].[fun] ([fun_id], [fun_name])
+VALUES (N'1001001004', N'电影')
+INSERT [dbo].[fun] ([fun_id], [fun_name])
+VALUES (N'1001001005', N'体育')
+INSERT [dbo].[fun] ([fun_id], [fun_name])
+VALUES (N'1001001006', N'财经')
+INSERT [dbo].[fun] ([fun_id], [fun_name])
+VALUES (N'1001001007', N'音乐')
+INSERT [dbo].[fun] ([fun_id], [fun_name])
+VALUES (N'1001001008', N'游戏')
+INSERT [dbo].[fun] ([fun_id], [fun_name])
+VALUES (N'1001001009', N'科技')
+INSERT [dbo].[fun] ([fun_id], [fun_name])
+VALUES (N'1001001010', N'旅游')
+INSERT [dbo].[fun] ([fun_id], [fun_name])
+VALUES (N'1001001011', N'文学')
+INSERT [dbo].[fun] ([fun_id], [fun_name])
+VALUES (N'1001001012', N'公益')
+INSERT [dbo].[fun] ([fun_id], [fun_name])
+VALUES (N'1001001013', N'汽车')
+INSERT [dbo].[fun] ([fun_id], [fun_name])
+VALUES (N'1001001014', N'时尚')
+INSERT [dbo].[fun] ([fun_id], [fun_name])
+VALUES (N'1001001015', N'宠物')
+INSERT [dbo].[movie] ([movie_id], [movie_type_id], [city_id], [movie_name], [movie_publishing_data],
+                      [movie_introduction], [movie_source_address], [movie_poster_address], [movie_duration_playback],
+                      [movie_last_time])
+VALUES (N'1001001001', N'100000002 ', N'110100000000', N'霸王别姬', CAST(N'2020-06-15T00:00:00.000' AS DateTime),
+        N'影片围绕两位京剧伶人半个世纪的悲欢离合，展现了对传统文化、人的生存状态及人性的思考与领悟。', N'item.mi.com/1161200059.html', N'/img/img6.jpeg',
+        CAST(N'1900-01-01T02:51:00.000' AS DateTime), NULL)
+INSERT [dbo].[movie] ([movie_id], [movie_type_id], [city_id], [movie_name], [movie_publishing_data],
+                      [movie_introduction], [movie_source_address], [movie_poster_address], [movie_duration_playback],
+                      [movie_last_time])
+VALUES (N'1001001002', N'100000001 ', NULL, N'心花怒放', CAST(N'2020-09-30T00:00:00.000' AS DateTime),
+        N'讲述了在生活中遭遇了情感危机的耿浩，好基友郝义为了帮助他摆脱痛苦，带着耿浩开始猎艳之旅。', N'www.mi.com/mibicycle/', N'/img/img12.jpg',
+        CAST(N'1900-01-01T01:57:32.000' AS DateTime), NULL)
+INSERT [dbo].[movie] ([movie_id], [movie_type_id], [city_id], [movie_name], [movie_publishing_data],
+                      [movie_introduction], [movie_source_address], [movie_poster_address], [movie_duration_playback],
+                      [movie_last_time])
+VALUES (N'1001001003', N'100000002 ', NULL, N'刘姬传', CAST(N'2020-05-15T00:00:00.000' AS DateTime),
+        N'影片围绕两位京剧伶人半个世纪的悲欢离合，展现了对传统文化、人的生存状态及人性的思考与领悟。', N'www.mi.com/mitu/', N'/img/img6.jpeg',
+        CAST(N'1900-01-01T01:20:00.000' AS DateTime), NULL)
+INSERT [dbo].[movie] ([movie_id], [movie_type_id], [city_id], [movie_name], [movie_publishing_data],
+                      [movie_introduction], [movie_source_address], [movie_poster_address], [movie_duration_playback],
+                      [movie_last_time])
+VALUES (N'1001001004', N'100000002 ', NULL, N'霸王别姬', CAST(N'2020-06-15T00:00:00.000' AS DateTime),
+        N'影片围绕两位京剧伶人半个世纪的悲欢离合，展现了对传统文化、人的生存状态及人性的思考与领悟。', N'item.mi.com/1161200059.html', N'/img/img6.jpeg',
+        CAST(N'1900-01-01T02:51:00.000' AS DateTime), NULL)
+INSERT [dbo].[movie] ([movie_id], [movie_type_id], [city_id], [movie_name], [movie_publishing_data],
+                      [movie_introduction], [movie_source_address], [movie_poster_address], [movie_duration_playback],
+                      [movie_last_time])
+VALUES (N'1001001005', N'100000002 ', NULL, N'初恋十八', CAST(N'2020-06-17T00:00:00.000' AS DateTime),
+        N'不管你是青年，中年，还是已到暮年，在你的记忆深处，一定存在着一个TA，TA被称为初恋。', N'item.mi.com/1161200059.html', N'/img/img1.jpg',
+        CAST(N'1900-01-01T01:51:00.000' AS DateTime), NULL)
+INSERT [dbo].[movie] ([movie_id], [movie_type_id], [city_id], [movie_name], [movie_publishing_data],
+                      [movie_introduction], [movie_source_address], [movie_poster_address], [movie_duration_playback],
+                      [movie_last_time])
+VALUES (N'1001001006', N'100000002 ', NULL, N'流浪地球', CAST(N'2020-08-15T00:00:00.000' AS DateTime),
+        N'影片围绕两位京剧伶人半个世纪的悲欢离合，展现了对传统文化、人的生存状态及人性的思考与领悟。', N'www.mi.com/ihealth/', N'/img/img7.jpg',
+        CAST(N'1900-01-01T02:17:00.000' AS DateTime), NULL)
+INSERT [dbo].[movie] ([movie_id], [movie_type_id], [city_id], [movie_name], [movie_publishing_data],
+                      [movie_introduction], [movie_source_address], [movie_poster_address], [movie_duration_playback],
+                      [movie_last_time])
+VALUES (N'1001001007', N'100000002 ', NULL, N'初恋十八岁', CAST(N'2020-06-17T00:00:00.000' AS DateTime),
+        N'不管你是青年，中年，还是已到暮年，在你的记忆深处，一定存在着一个TA，TA被称为初恋。', N'item.mi.com/1161200059.html', N'/img/img1.jpg',
+        CAST(N'1900-01-01T02:51:00.000' AS DateTime), NULL)
+INSERT [dbo].[movie] ([movie_id], [movie_type_id], [city_id], [movie_name], [movie_publishing_data],
+                      [movie_introduction], [movie_source_address], [movie_poster_address], [movie_duration_playback],
+                      [movie_last_time])
+VALUES (N'1001001008', N'100000002 ', NULL, N'霸王别姬', CAST(N'2020-06-15T00:00:00.000' AS DateTime),
+        N'影片围绕两位京剧伶人半个世纪的悲欢离合，展现了对传统文化、人的生存状态及人性的思考与领悟。', N'item.mi.com/1161200059.html', N'/img/img6.jpeg',
+        CAST(N'1900-01-01T02:51:00.000' AS DateTime), NULL)
+INSERT [dbo].[movie] ([movie_id], [movie_type_id], [city_id], [movie_name], [movie_publishing_data],
+                      [movie_introduction], [movie_source_address], [movie_poster_address], [movie_duration_playback],
+                      [movie_last_time])
+VALUES (N'1001001009', N'100000004 ', N'220600000000', N'太极张三丰', CAST(N'2019-06-30T00:00:00.000' AS DateTime),
+        N'讲述太极拳创始人张三丰青年时期的武学历程', N'item.mi.com/1161200059.html', N'/img/img6.jpeg',
+        CAST(N'1900-01-01T01:37:29.000' AS DateTime), NULL)
+INSERT [dbo].[movie] ([movie_id], [movie_type_id], [city_id], [movie_name], [movie_publishing_data],
+                      [movie_introduction], [movie_source_address], [movie_poster_address], [movie_duration_playback],
+                      [movie_last_time])
+VALUES (N'1001001011', N'100000005 ', N'222400000000', N'太极张三丰', CAST(N'2020-05-28T00:00:00.000' AS DateTime),
+        N'讲述太极拳创始人张三丰青年时期的武学历程', N'item.mi.com/1161200059.html', N'/img/img6.jpeg',
+        CAST(N'1900-01-01T01:37:29.000' AS DateTime), NULL)
+INSERT [dbo].[movie] ([movie_id], [movie_type_id], [city_id], [movie_name], [movie_publishing_data],
+                      [movie_introduction], [movie_source_address], [movie_poster_address], [movie_duration_playback],
+                      [movie_last_time])
+VALUES (N'1001001012', N'100000007 ', N'130400000000', N'太极张三丰', CAST(N'2020-05-31T00:00:00.000' AS DateTime),
+        N'讲述太极拳创始人张三丰青年时期的武学历程', N'item.mi.com/1161200059.html', N'/img/img6.jpeg',
+        CAST(N'1900-01-01T01:37:29.000' AS DateTime), NULL)
+INSERT [dbo].[movie] ([movie_id], [movie_type_id], [city_id], [movie_name], [movie_publishing_data],
+                      [movie_introduction], [movie_source_address], [movie_poster_address], [movie_duration_playback],
+                      [movie_last_time])
+VALUES (N'1001001013', N'100000009 ', N'340400000000', N'太极张三丰', CAST(N'2020-05-29T00:00:00.000' AS DateTime),
+        N'讲述太极拳创始人张三丰青年时期的武学历程', N'item.mi.com/1161200059.html', N'/img/img6.jpeg',
+        CAST(N'1900-01-01T01:37:29.000' AS DateTime), NULL)
+INSERT [dbo].[movie] ([movie_id], [movie_type_id], [city_id], [movie_name], [movie_publishing_data],
+                      [movie_introduction], [movie_source_address], [movie_poster_address], [movie_duration_playback],
+                      [movie_last_time])
+VALUES (N'1001001014', N'100000010 ', N'340700000000', N'太极张三丰', CAST(N'2020-06-01T00:00:00.000' AS DateTime),
+        N'讲述太极拳创始人张三丰青年时期的武学历程', N'item.mi.com/1161200059.html', N'/img/img6.jpeg',
+        CAST(N'1900-01-01T01:37:29.000' AS DateTime), NULL)
+INSERT [dbo].[movie] ([movie_id], [movie_type_id], [city_id], [movie_name], [movie_publishing_data],
+                      [movie_introduction], [movie_source_address], [movie_poster_address], [movie_duration_playback],
+                      [movie_last_time])
+VALUES (N'1001001015', N'100000014 ', N'130400000000', N'太极张三丰', CAST(N'2020-06-01T00:00:00.000' AS DateTime),
+        N'讲述太极拳创始人张三丰青年时期的武学历程', N'item.mi.com/1161200059.html', N'/img/img6.jpeg',
+        CAST(N'1900-01-01T01:37:29.000' AS DateTime), NULL)
+INSERT [dbo].[movie] ([movie_id], [movie_type_id], [city_id], [movie_name], [movie_publishing_data],
+                      [movie_introduction], [movie_source_address], [movie_poster_address], [movie_duration_playback],
+                      [movie_last_time])
+VALUES (N'1001001016', N'100000002 ', N'511400000000', N'太极张三丰', CAST(N'2020-05-30T00:00:00.000' AS DateTime),
+        N'讲述太极拳创始人张三丰青年时期的武学历程', N'item.mi.com/1161200059.html', N'/img/img6.jpeg',
+        CAST(N'1900-01-01T01:37:29.000' AS DateTime), NULL)
+INSERT [dbo].[movie] ([movie_id], [movie_type_id], [city_id], [movie_name], [movie_publishing_data],
+                      [movie_introduction], [movie_source_address], [movie_poster_address], [movie_duration_playback],
+                      [movie_last_time])
+VALUES (N'1001001017', N'100000001 ', N'511900000000', N'太极张三丰', CAST(N'2020-04-28T00:00:00.000' AS DateTime),
+        N'讲述太极拳创始人张三丰青年时期的武学历程', N'item.mi.com/1161200059.html', N'/img/img6.jpeg',
+        CAST(N'1900-01-01T01:37:29.000' AS DateTime), NULL)
+INSERT [dbo].[movie] ([movie_id], [movie_type_id], [city_id], [movie_name], [movie_publishing_data],
+                      [movie_introduction], [movie_source_address], [movie_poster_address], [movie_duration_playback],
+                      [movie_last_time])
+VALUES (N'1001001018', N'100000007 ', N'441700000000', N'太极张三丰', CAST(N'2020-04-30T00:00:00.000' AS DateTime),
+        N'讲述太极拳创始人张三丰青年时期的武学历程', N'item.mi.com/1161200059.html', N'/img/img6.jpeg',
+        CAST(N'1900-01-01T01:37:29.000' AS DateTime), NULL)
+INSERT [dbo].[movie] ([movie_id], [movie_type_id], [city_id], [movie_name], [movie_publishing_data],
+                      [movie_introduction], [movie_source_address], [movie_poster_address], [movie_duration_playback],
+                      [movie_last_time])
+VALUES (N'1001001019', N'100000013 ', N'130400000000', N'太极张三丰', CAST(N'2020-05-31T00:00:00.000' AS DateTime),
+        N'讲述太极拳创始人张三丰青年时期的武学历程', N'item.mi.com/1161200059.html', N'/img/img6.jpeg',
+        CAST(N'1900-01-01T01:37:29.000' AS DateTime), NULL)
+INSERT [dbo].[movie] ([movie_id], [movie_type_id], [city_id], [movie_name], [movie_publishing_data],
+                      [movie_introduction], [movie_source_address], [movie_poster_address], [movie_duration_playback],
+                      [movie_last_time])
+VALUES (N'1001001020', N'100000015 ', N'420500000000', N'太极张三丰', CAST(N'2020-04-30T00:00:00.000' AS DateTime),
+        N'讲述太极拳创始人张三丰青年时期的武学历程', N'item.mi.com/1161200059.html', N'/img/img6.jpeg',
+        CAST(N'1900-01-01T01:37:29.000' AS DateTime), NULL)
+INSERT [dbo].[movie] ([movie_id], [movie_type_id], [city_id], [movie_name], [movie_publishing_data],
+                      [movie_introduction], [movie_source_address], [movie_poster_address], [movie_duration_playback],
+                      [movie_last_time])
+VALUES (N'1001001021', N'100000006 ', N'610700000000', N'太极张三丰', CAST(N'2020-05-30T00:00:00.000' AS DateTime),
+        N'讲述太极拳创始人张三丰青年时期的武学历程', N'item.mi.com/1161200059.html', N'/img/img6.jpeg',
+        CAST(N'1900-01-01T01:37:29.000' AS DateTime), NULL)
+INSERT [dbo].[movie] ([movie_id], [movie_type_id], [city_id], [movie_name], [movie_publishing_data],
+                      [movie_introduction], [movie_source_address], [movie_poster_address], [movie_duration_playback],
+                      [movie_last_time])
+VALUES (N'1001001022', N'100000005 ', N'611000000000', N'太极张三丰', CAST(N'2020-05-30T00:00:00.000' AS DateTime),
+        N'讲述太极拳创始人张三丰青年时期的武学历程', N'item.mi.com/1161200059.html', N'/img/img6.jpeg',
+        CAST(N'1900-01-01T01:37:29.000' AS DateTime), NULL)
+INSERT [dbo].[movie] ([movie_id], [movie_type_id], [city_id], [movie_name], [movie_publishing_data],
+                      [movie_introduction], [movie_source_address], [movie_poster_address], [movie_duration_playback],
+                      [movie_last_time])
+VALUES (N'1001001023', N'100000006 ', N'654200000000', N'太极张三丰', CAST(N'2020-05-30T00:00:00.000' AS DateTime),
+        N'讲述太极拳创始人张三丰青年时期的武学历程', N'item.mi.com/1161200059.html', N'/img/img6.jpeg',
+        CAST(N'1900-01-01T01:37:29.000' AS DateTime), NULL)
+INSERT [dbo].[movie] ([movie_id], [movie_type_id], [city_id], [movie_name], [movie_publishing_data],
+                      [movie_introduction], [movie_source_address], [movie_poster_address], [movie_duration_playback],
+                      [movie_last_time])
+VALUES (N'1001001024', N'100000003 ', N'653000000000', N'太极张三丰', CAST(N'2020-04-30T00:00:00.000' AS DateTime),
+        N'讲述太极拳创始人张三丰青年时期的武学历程', N'item.mi.com/1161200059.html', N'/img/img6.jpeg',
+        CAST(N'1900-01-01T01:37:29.000' AS DateTime), NULL)
+INSERT [dbo].[movie] ([movie_id], [movie_type_id], [city_id], [movie_name], [movie_publishing_data],
+                      [movie_introduction], [movie_source_address], [movie_poster_address], [movie_duration_playback],
+                      [movie_last_time])
+VALUES (N'1001001025', N'100000007 ', N'511700000000', N'太极张三丰', CAST(N'2020-02-28T00:00:00.000' AS DateTime),
+        N'讲述太极拳创始人张三丰青年时期的武学历程', N'item.mi.com/1161200059.html', N'/img/img6.jpeg',
+        CAST(N'1900-01-01T01:37:29.000' AS DateTime), NULL)
+INSERT [dbo].[movie] ([movie_id], [movie_type_id], [city_id], [movie_name], [movie_publishing_data],
+                      [movie_introduction], [movie_source_address], [movie_poster_address], [movie_duration_playback],
+                      [movie_last_time])
+VALUES (N'1001001026', N'100000009 ', N'450400000000', N'太极张三丰', CAST(N'2020-02-28T00:00:00.000' AS DateTime),
+        N'讲述太极拳创始人张三丰青年时期的武学历程', N'item.mi.com/1161200059.html', N'/img/img6.jpeg',
+        CAST(N'1900-01-01T01:37:29.000' AS DateTime), NULL)
+INSERT [dbo].[movie] ([movie_id], [movie_type_id], [city_id], [movie_name], [movie_publishing_data],
+                      [movie_introduction], [movie_source_address], [movie_poster_address], [movie_duration_playback],
+                      [movie_last_time])
+VALUES (N'1001001027', N'100000010 ', N'450200000000', N'太极张三丰', CAST(N'2020-01-30T00:00:00.000' AS DateTime),
+        N'讲述太极拳创始人张三丰青年时期的武学历程', N'item.mi.com/1161200059.html', N'/img/img6.jpeg',
+        CAST(N'1900-01-01T01:37:29.000' AS DateTime), NULL)
+INSERT [dbo].[movie] ([movie_id], [movie_type_id], [city_id], [movie_name], [movie_publishing_data],
+                      [movie_introduction], [movie_source_address], [movie_poster_address], [movie_duration_playback],
+                      [movie_last_time])
+VALUES (N'1001001028', N'100000011 ', N'421000000000', N'太极张三丰', CAST(N'2020-07-30T00:00:00.000' AS DateTime),
+        N'讲述太极拳创始人张三丰青年时期的武学历程', N'item.mi.com/1161200059.html', N'/img/img6.jpeg',
+        CAST(N'1900-01-01T01:37:29.000' AS DateTime), NULL)
+INSERT [dbo].[movie] ([movie_id], [movie_type_id], [city_id], [movie_name], [movie_publishing_data],
+                      [movie_introduction], [movie_source_address], [movie_poster_address], [movie_duration_playback],
+                      [movie_last_time])
+VALUES (N'1001001029', N'100000001 ', N'370400000000', N'太极张三丰', CAST(N'2020-06-01T00:00:00.000' AS DateTime),
+        N'讲述太极拳创始人张三丰青年时期的武学历程', N'item.mi.com/1161200059.html', N'/img/img6.jpeg',
+        CAST(N'1900-01-01T01:37:29.000' AS DateTime), NULL)
+INSERT [dbo].[movie_actors] ([movie_actors_id], [actor_id], [movie_id], [actor_role_id])
+VALUES (N'1001001001', N'1001001001', N'1001001001', N'101')
+INSERT [dbo].[movie_actors] ([movie_actors_id], [actor_id], [movie_id], [actor_role_id])
+VALUES (N'1001001002', N'1001001002', N'1001001001', N'101')
+INSERT [dbo].[movie_actors] ([movie_actors_id], [actor_id], [movie_id], [actor_role_id])
+VALUES (N'1001001003', N'1001001003', N'1001001001', N'101')
+INSERT [dbo].[movie_actors] ([movie_actors_id], [actor_id], [movie_id], [actor_role_id])
+VALUES (N'1001001004', N'1001001004', N'1001001001', N'101')
+INSERT [dbo].[movie_actors] ([movie_actors_id], [actor_id], [movie_id], [actor_role_id])
+VALUES (N'1001001005', N'1001001005', N'1001001002', N'101')
+INSERT [dbo].[movie_actors] ([movie_actors_id], [actor_id], [movie_id], [actor_role_id])
+VALUES (N'1001001006', N'1001001006', N'1001001002', N'101')
+INSERT [dbo].[movie_actors] ([movie_actors_id], [actor_id], [movie_id], [actor_role_id])
+VALUES (N'1001001007', N'1001001007', N'1001001002', N'101')
+INSERT [dbo].[movie_actors] ([movie_actors_id], [actor_id], [movie_id], [actor_role_id])
+VALUES (N'1001001008', N'1001001003', N'1001001002', N'101')
+INSERT [dbo].[movie_actors] ([movie_actors_id], [actor_id], [movie_id], [actor_role_id])
+VALUES (N'1001001009', N'1001001002', N'1001001002', N'101')
+INSERT [dbo].[movie_actors] ([movie_actors_id], [actor_id], [movie_id], [actor_role_id])
+VALUES (N'1001001010', N'1001001004', N'1001001003', N'101')
+INSERT [dbo].[movie_actors] ([movie_actors_id], [actor_id], [movie_id], [actor_role_id])
+VALUES (N'1001001011', N'1001001005', N'1001001003', N'101')
+INSERT [dbo].[movie_actors] ([movie_actors_id], [actor_id], [movie_id], [actor_role_id])
+VALUES (N'1001001012', N'1001001006', N'1001001003', N'101')
+INSERT [dbo].[movie_actors] ([movie_actors_id], [actor_id], [movie_id], [actor_role_id])
+VALUES (N'1001001013', N'1001001009', N'1001001003', N'101')
+INSERT [dbo].[movie_actors] ([movie_actors_id], [actor_id], [movie_id], [actor_role_id])
+VALUES (N'1001001014', N'1001001011', N'1001001006', N'101')
+INSERT [dbo].[movie_actors] ([movie_actors_id], [actor_id], [movie_id], [actor_role_id])
+VALUES (N'1001001015', N'1001001012', N'1001001006', N'101')
+INSERT [dbo].[movie_actors] ([movie_actors_id], [actor_id], [movie_id], [actor_role_id])
+VALUES (N'1001001016', N'1001001013', N'1001001006', N'101')
+INSERT [dbo].[movie_actors] ([movie_actors_id], [actor_id], [movie_id], [actor_role_id])
+VALUES (N'1001001017', N'1001001010', N'1001001006', N'101')
+INSERT [dbo].[movie_actors] ([movie_actors_id], [actor_id], [movie_id], [actor_role_id])
+VALUES (N'1001001018', N'1001001011', N'1001001003', N'102')
+INSERT [dbo].[movie_actors] ([movie_actors_id], [actor_id], [movie_id], [actor_role_id])
+VALUES (N'1001001019', N'1001001010', N'1001001006', N'101')
+INSERT [dbo].[movie_actors] ([movie_actors_id], [actor_id], [movie_id], [actor_role_id])
+VALUES (N'1001001020', N'1001001011', N'1001001012', N'101')
+INSERT [dbo].[movie_actors] ([movie_actors_id], [actor_id], [movie_id], [actor_role_id])
+VALUES (N'1001001021', N'1001001009', N'1001001012', N'101')
+INSERT [dbo].[movie_actors] ([movie_actors_id], [actor_id], [movie_id], [actor_role_id])
+VALUES (N'1001001022', N'1001001008', N'1001001012', N'101')
+INSERT [dbo].[movie_type] ([movie_type_id], [movie_type_name])
+VALUES (N'100000001 ', N'喜剧')
+INSERT [dbo].[movie_type] ([movie_type_id], [movie_type_name])
+VALUES (N'100000002 ', N'爱情')
+INSERT [dbo].[movie_type] ([movie_type_id], [movie_type_name])
+VALUES (N'100000003 ', N'动作')
+INSERT [dbo].[movie_type] ([movie_type_id], [movie_type_name])
+VALUES (N'100000004 ', N'枪战')
+INSERT [dbo].[movie_type] ([movie_type_id], [movie_type_name])
+VALUES (N'100000005 ', N'犯罪')
+INSERT [dbo].[movie_type] ([movie_type_id], [movie_type_name])
+VALUES (N'100000006 ', N'惊悚')
+INSERT [dbo].[movie_type] ([movie_type_id], [movie_type_name])
+VALUES (N'100000007 ', N'恐怖')
+INSERT [dbo].[movie_type] ([movie_type_id], [movie_type_name])
+VALUES (N'100000008 ', N'悬疑')
+INSERT [dbo].[movie_type] ([movie_type_id], [movie_type_name])
+VALUES (N'100000009 ', N'动画')
+INSERT [dbo].[movie_type] ([movie_type_id], [movie_type_name])
+VALUES (N'100000010 ', N'家庭')
+INSERT [dbo].[movie_type] ([movie_type_id], [movie_type_name])
+VALUES (N'100000011 ', N'奇幻')
+INSERT [dbo].[movie_type] ([movie_type_id], [movie_type_name])
+VALUES (N'100000012 ', N'魔幻')
+INSERT [dbo].[movie_type] ([movie_type_id], [movie_type_name])
+VALUES (N'100000013 ', N'科幻')
+INSERT [dbo].[movie_type] ([movie_type_id], [movie_type_name])
+VALUES (N'100000014 ', N'战争')
+INSERT [dbo].[movie_type] ([movie_type_id], [movie_type_name])
+VALUES (N'100000015 ', N'青春')
+INSERT [dbo].[province] ([province_id], [world_country_id], [province_name])
+VALUES (N'110', N'1001001001', N'北京市')
+INSERT [dbo].[province] ([province_id], [world_country_id], [province_name])
+VALUES (N'120', N'1001001001', N'天津市')
+INSERT [dbo].[province] ([province_id], [world_country_id], [province_name])
+VALUES (N'130', N'1001001001', N'河北省')
+INSERT [dbo].[province] ([province_id], [world_country_id], [province_name])
+VALUES (N'140', N'1001001001', N'山西省')
+INSERT [dbo].[province] ([province_id], [world_country_id], [province_name])
+VALUES (N'150', N'1001001001', N'内蒙古自治区')
+INSERT [dbo].[province] ([province_id], [world_country_id], [province_name])
+VALUES (N'210', N'1001001001', N'辽宁省')
+INSERT [dbo].[province] ([province_id], [world_country_id], [province_name])
+VALUES (N'220', N'1001001001', N'吉林省')
+INSERT [dbo].[province] ([province_id], [world_country_id], [province_name])
+VALUES (N'230', N'1001001001', N'黑龙江省')
+INSERT [dbo].[province] ([province_id], [world_country_id], [province_name])
+VALUES (N'310', N'1001001001', N'上海市')
+INSERT [dbo].[province] ([province_id], [world_country_id], [province_name])
+VALUES (N'320', N'1001001001', N'江苏省')
+INSERT [dbo].[province] ([province_id], [world_country_id], [province_name])
+VALUES (N'330', N'1001001001', N'浙江省')
+INSERT [dbo].[province] ([province_id], [world_country_id], [province_name])
+VALUES (N'340', N'1001001001', N'安徽省')
+INSERT [dbo].[province] ([province_id], [world_country_id], [province_name])
+VALUES (N'350', N'1001001001', N'福建省')
+INSERT [dbo].[province] ([province_id], [world_country_id], [province_name])
+VALUES (N'360', N'1001001001', N'江西省')
+INSERT [dbo].[province] ([province_id], [world_country_id], [province_name])
+VALUES (N'370', N'1001001001', N'山东省')
+INSERT [dbo].[province] ([province_id], [world_country_id], [province_name])
+VALUES (N'380', N'1001001001', N'台湾省')
+INSERT [dbo].[province] ([province_id], [world_country_id], [province_name])
+VALUES (N'410', N'1001001001', N'河南省')
+INSERT [dbo].[province] ([province_id], [world_country_id], [province_name])
+VALUES (N'420', N'1001001001', N'湖北省')
+INSERT [dbo].[province] ([province_id], [world_country_id], [province_name])
+VALUES (N'430', N'1001001001', N'湖南省')
+INSERT [dbo].[province] ([province_id], [world_country_id], [province_name])
+VALUES (N'440', N'1001001001', N'广东省')
+INSERT [dbo].[province] ([province_id], [world_country_id], [province_name])
+VALUES (N'450', N'1001001001', N'广西壮族自治区')
+INSERT [dbo].[province] ([province_id], [world_country_id], [province_name])
+VALUES (N'460', N'1001001001', N'海南省')
+INSERT [dbo].[province] ([province_id], [world_country_id], [province_name])
+VALUES (N'500', N'1001001001', N'重庆市')
+INSERT [dbo].[province] ([province_id], [world_country_id], [province_name])
+VALUES (N'510', N'1001001001', N'四川省')
+INSERT [dbo].[province] ([province_id], [world_country_id], [province_name])
+VALUES (N'520', N'1001001001', N'贵州省')
+INSERT [dbo].[province] ([province_id], [world_country_id], [province_name])
+VALUES (N'530', N'1001001001', N'云南省')
+INSERT [dbo].[province] ([province_id], [world_country_id], [province_name])
+VALUES (N'540', N'1001001001', N'西藏自治区')
+INSERT [dbo].[province] ([province_id], [world_country_id], [province_name])
+VALUES (N'610', N'1001001001', N'陕西省')
+INSERT [dbo].[province] ([province_id], [world_country_id], [province_name])
+VALUES (N'620', N'1001001001', N'甘肃省')
+INSERT [dbo].[province] ([province_id], [world_country_id], [province_name])
+VALUES (N'630', N'1001001001', N'青海省')
+INSERT [dbo].[province] ([province_id], [world_country_id], [province_name])
+VALUES (N'640', N'1001001001', N'宁夏回族自治区')
+INSERT [dbo].[province] ([province_id], [world_country_id], [province_name])
+VALUES (N'650', N'1001001001', N'新疆维吾尔自治区')
+INSERT [dbo].[screening_room] ([screening_room_id], [cinema_id], [screening_room_name], [screening_room_capacity])
+VALUES (N'1001001001', N'100100100100101 ', N'邮政银行厅', 158)
+INSERT [dbo].[screening_room] ([screening_room_id], [cinema_id], [screening_room_name], [screening_room_capacity])
+VALUES (N'1001001002', N'100100100100101 ', N'巨幕厅', 143)
+INSERT [dbo].[screening_room] ([screening_room_id], [cinema_id], [screening_room_name], [screening_room_capacity])
+VALUES (N'1001001003', N'100100100100101 ', N'中国银行厅', 127)
+INSERT [dbo].[screening_room] ([screening_room_id], [cinema_id], [screening_room_name], [screening_room_capacity])
+VALUES (N'1001001004', N'100100100100101 ', N'工商银行厅', 58)
+INSERT [dbo].[screening_room] ([screening_room_id], [cinema_id], [screening_room_name], [screening_room_capacity])
+VALUES (N'1001001005', N'100100100100101 ', N'农业银行厅', 3)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000001811', N'1001001001', 18, 11, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000001901', N'1001001001', 19, 3, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000001902', N'1001001001', 19, 1, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000001903', N'1001001001', 19, 2, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000001904', N'1001001001', 19, 4, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000001905', N'1001001001', 19, 5, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000001906', N'1001001001', 19, 6, -1)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000001907', N'1001001001', 19, 7, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000001908', N'1001001001', 19, 8, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000001909', N'1001001001', 19, 9, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000001910', N'1001001001', 19, 10, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000001911', N'1001001001', 19, 11, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000002001', N'1001001001', 20, 3, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000002002', N'1001001001', 20, 1, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000002003', N'1001001001', 20, 2, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000002004', N'1001001001', 20, 4, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000002005', N'1001001001', 20, 5, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000002006', N'1001001001', 20, 6, -1)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000002007', N'1001001001', 20, 7, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000002008', N'1001001001', 20, 8, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000002009', N'1001001001', 20, 9, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000002010', N'1001001001', 20, 10, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000002011', N'1001001001', 20, 11, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000000101', N'1001001001', 1, 3, -1)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000000102', N'1001001001', 1, 1, -1)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000000103', N'1001001001', 1, 2, -1)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000000104', N'1001001001', 1, 4, -1)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000000105', N'1001001001', 1, 5, -1)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000000106', N'1001001001', 1, 6, -1)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000000107', N'1001001001', 1, 7, -1)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000000108', N'1001001001', 1, 8, -1)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000000109', N'1001001001', 1, 9, -1)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000000110', N'1001001001', 1, 10, -1)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000000111', N'1001001001', 1, 11, -1)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000000201', N'1001001001', 2, 3, -1)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000000202', N'1001001001', 2, 1, -1)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000000203', N'1001001001', 2, 2, -1)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000000204', N'1001001001', 2, 4, -1)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000000205', N'1001001001', 2, 5, -1)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000000206', N'1001001001', 2, 6, -1)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000000207', N'1001001001', 2, 7, -1)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000000208', N'1001001001', 2, 8, -1)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000000209', N'1001001001', 2, 9, -1)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000000210', N'1001001001', 2, 10, -1)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000000211', N'1001001001', 2, 11, -1)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000000301', N'1001001001', 3, 3, -1)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000000302', N'1001001001', 3, 1, -1)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000000303', N'1001001001', 3, 2, -1)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000000304', N'1001001001', 3, 4, -1)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000000305', N'1001001001', 3, 5, -1)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000000306', N'1001001001', 3, 6, -1)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000000307', N'1001001001', 3, 7, -1)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000000308', N'1001001001', 3, 8, -1)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000000309', N'1001001001', 3, 9, -1)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000000310', N'1001001001', 3, 10, -1)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000000311', N'1001001001', 3, 11, -1)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000000401', N'1001001001', 4, 3, -1)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000000402', N'1001001001', 4, 1, -1)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000000403', N'1001001001', 4, 2, -1)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000000404', N'1001001001', 4, 4, -1)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000000405', N'1001001001', 4, 5, -1)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000000406', N'1001001001', 4, 6, -1)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000000407', N'1001001001', 4, 7, -1)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000000408', N'1001001001', 4, 8, -1)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000000409', N'1001001001', 4, 9, -1)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000000410', N'1001001001', 4, 10, -1)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000000411', N'1001001001', 4, 11, -1)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000000501', N'1001001001', 5, 3, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000000502', N'1001001001', 5, 1, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000000503', N'1001001001', 5, 2, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000000504', N'1001001001', 5, 4, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000000505', N'1001001001', 5, 5, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000000506', N'1001001001', 5, 6, -1)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000000507', N'1001001001', 5, 7, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000000508', N'1001001001', 5, 8, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000000509', N'1001001001', 5, 9, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000000510', N'1001001001', 5, 10, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000000511', N'1001001001', 5, 11, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000000601', N'1001001001', 6, 3, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000000602', N'1001001001', 6, 1, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000000603', N'1001001001', 6, 2, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000000604', N'1001001001', 6, 4, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000000605', N'1001001001', 6, 5, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000000606', N'1001001001', 6, 6, -1)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000000607', N'1001001001', 6, 7, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000000608', N'1001001001', 6, 8, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000000609', N'1001001001', 6, 9, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000000610', N'1001001001', 6, 10, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000000611', N'1001001001', 6, 11, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000000701', N'1001001001', 7, 3, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000000702', N'1001001001', 7, 1, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000000703', N'1001001001', 7, 2, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000000704', N'1001001001', 7, 4, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000000705', N'1001001001', 7, 5, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000000706', N'1001001001', 7, 6, -1)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000000707', N'1001001001', 7, 7, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000000708', N'1001001001', 7, 8, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000000709', N'1001001001', 7, 9, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000000710', N'1001001001', 7, 10, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000000711', N'1001001001', 7, 11, 0)
+GO
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000000801', N'1001001001', 8, 3, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000000802', N'1001001001', 8, 1, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000000803', N'1001001001', 8, 2, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000000804', N'1001001001', 8, 4, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000000805', N'1001001001', 8, 5, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000000806', N'1001001001', 8, 6, -1)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000000807', N'1001001001', 8, 7, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000000808', N'1001001001', 8, 8, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000000809', N'1001001001', 8, 9, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000000810', N'1001001001', 8, 10, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000000811', N'1001001001', 8, 11, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000000901', N'1001001001', 9, 3, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000000902', N'1001001001', 9, 1, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000000903', N'1001001001', 9, 2, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000000904', N'1001001001', 9, 4, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000000905', N'1001001001', 9, 5, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000000906', N'1001001001', 9, 6, -1)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000000907', N'1001001001', 9, 7, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000000908', N'1001001001', 9, 8, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000000909', N'1001001001', 9, 9, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000000910', N'1001001001', 9, 10, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000000911', N'1001001001', 9, 11, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000001001', N'1001001001', 10, 3, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000001002', N'1001001001', 10, 1, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000001003', N'1001001001', 10, 2, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000001004', N'1001001001', 10, 4, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000001005', N'1001001001', 10, 5, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000001006', N'1001001001', 10, 6, -1)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000001007', N'1001001001', 10, 7, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000001008', N'1001001001', 10, 8, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000001009', N'1001001001', 10, 9, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000001010', N'1001001001', 10, 10, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000001011', N'1001001001', 10, 11, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000001101', N'1001001001', 11, 3, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000001102', N'1001001001', 11, 1, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000001103', N'1001001001', 11, 2, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000001104', N'1001001001', 11, 4, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000001105', N'1001001001', 11, 5, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000001106', N'1001001001', 11, 6, -1)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000001107', N'1001001001', 11, 7, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000001108', N'1001001001', 11, 8, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000001109', N'1001001001', 11, 9, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000001110', N'1001001001', 11, 10, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000001111', N'1001001001', 11, 11, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000001201', N'1001001001', 12, 3, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000001202', N'1001001001', 12, 1, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000001203', N'1001001001', 12, 2, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000001204', N'1001001001', 12, 4, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000001205', N'1001001001', 12, 5, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000001206', N'1001001001', 12, 6, -1)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000001207', N'1001001001', 12, 7, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000001208', N'1001001001', 12, 8, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000001209', N'1001001001', 12, 9, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000001210', N'1001001001', 12, 10, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000001211', N'1001001001', 12, 11, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000001301', N'1001001001', 13, 3, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000001302', N'1001001001', 13, 1, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000001303', N'1001001001', 13, 2, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000001304', N'1001001001', 13, 4, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000001305', N'1001001001', 13, 5, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000001306', N'1001001001', 13, 6, -1)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000001307', N'1001001001', 13, 7, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000001308', N'1001001001', 13, 8, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000001309', N'1001001001', 13, 9, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000001310', N'1001001001', 13, 10, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000001311', N'1001001001', 13, 11, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000001401', N'1001001001', 14, 3, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000001402', N'1001001001', 14, 1, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000001403', N'1001001001', 14, 2, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000001404', N'1001001001', 14, 4, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000001405', N'1001001001', 14, 5, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000001406', N'1001001001', 14, 6, -1)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000001407', N'1001001001', 14, 7, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000001408', N'1001001001', 14, 8, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000001409', N'1001001001', 14, 9, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000001410', N'1001001001', 14, 10, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000001411', N'1001001001', 14, 11, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000001501', N'1001001001', 15, 3, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000001502', N'1001001001', 15, 1, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000001503', N'1001001001', 15, 2, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000001504', N'1001001001', 15, 4, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000001505', N'1001001001', 15, 5, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000001506', N'1001001001', 15, 6, -1)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000001507', N'1001001001', 15, 7, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000001508', N'1001001001', 15, 8, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000001509', N'1001001001', 15, 9, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000001510', N'1001001001', 15, 10, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000001511', N'1001001001', 15, 11, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000001601', N'1001001001', 16, 3, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000001602', N'1001001001', 16, 1, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000001603', N'1001001001', 16, 2, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000001604', N'1001001001', 16, 4, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000001605', N'1001001001', 16, 5, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000001606', N'1001001001', 16, 6, -1)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000001607', N'1001001001', 16, 7, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000001608', N'1001001001', 16, 8, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000001609', N'1001001001', 16, 9, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000001610', N'1001001001', 16, 10, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000001611', N'1001001001', 16, 11, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000001701', N'1001001001', 17, 3, 0)
+GO
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000001702', N'1001001001', 17, 1, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000001703', N'1001001001', 17, 2, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000001704', N'1001001001', 17, 4, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000001705', N'1001001001', 17, 5, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000001706', N'1001001001', 17, 6, -1)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000001707', N'1001001001', 17, 7, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000001708', N'1001001001', 17, 8, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000001709', N'1001001001', 17, 9, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000001710', N'1001001001', 17, 10, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000001711', N'1001001001', 17, 11, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000001801', N'1001001001', 18, 3, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000001802', N'1001001001', 18, 1, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000001803', N'1001001001', 18, 2, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000001804', N'1001001001', 18, 4, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000001805', N'1001001001', 18, 5, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000001806', N'1001001001', 18, 6, -1)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000001807', N'1001001001', 18, 7, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000001808', N'1001001001', 18, 8, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000001809', N'1001001001', 18, 9, 0)
+INSERT [dbo].[seat] ([seat_id], [screening_room_id], [seat_x], [seat_y], [seat_state])
+VALUES (N'0000001810', N'1001001001', 18, 10, 0)
+INSERT [dbo].[state_life] ([state_life_id], [state_life_name])
+VALUES (N'1001001001', N'单身')
+INSERT [dbo].[state_life] ([state_life_id], [state_life_name])
+VALUES (N'1001001002', N'热恋中')
+INSERT [dbo].[state_life] ([state_life_id], [state_life_name])
+VALUES (N'1001001003', N'已婚')
+INSERT [dbo].[state_life] ([state_life_id], [state_life_name])
+VALUES (N'1001001004', N'为人父母')
+INSERT [dbo].[user] ([user_id], [city_id], [state_life_id], [user_name], [user_sex], [user_birthday], [user_password],
+                     [user_telphone], [user_picture_address], [user_create_time], [user_last_load_time],
+                     [user_is_delete], [user_is_load], [user_personality_signature])
+VALUES (N'2005265665', N'130200000000', N'1001001001', N'张三丰', 1, CAST(N'1997-12-20T00:00:00.000' AS DateTime),
+        N'e10adc3949ba59abbe56e057f20f883e', N'18583361372', N'/img/icon-mi.png',
+        CAST(N'2020-05-26T15:31:35.667' AS DateTime), CAST(N'2020-05-31T15:45:07.723' AS DateTime), 0, 1, N'王霸之气')
+INSERT [dbo].[user] ([user_id], [city_id], [state_life_id], [user_name], [user_sex], [user_birthday], [user_password],
+                     [user_telphone], [user_picture_address], [user_create_time], [user_last_load_time],
+                     [user_is_delete], [user_is_load], [user_personality_signature])
+VALUES (N'2005271129', NULL, NULL, NULL, NULL, NULL, N'fcea920f7412b5da7be0cf42b8c93759', N'18583361373', NULL,
+        CAST(N'2020-05-27T00:26:21.130' AS DateTime), CAST(N'2020-05-31T00:24:53.470' AS DateTime), 0, 1, NULL)
+INSERT [dbo].[user] ([user_id], [city_id], [state_life_id], [user_name], [user_sex], [user_birthday], [user_password],
+                     [user_telphone], [user_picture_address], [user_create_time], [user_last_load_time],
+                     [user_is_delete], [user_is_load], [user_personality_signature])
+VALUES (N'2005261209', NULL, NULL, NULL, NULL, NULL, N'e10adc3949ba59abbe56e057f20f883e', N'18583361371', NULL,
+        CAST(N'2020-05-26T23:41:51.210' AS DateTime), CAST(N'2020-05-27T00:36:10.817' AS DateTime), 0, 1, NULL)
+INSERT [dbo].[user_fun] ([user_fun_id], [user_id], [fun_id])
+VALUES (N'2005261120', N'2005265665', N'1001001001')
+INSERT [dbo].[user_fun] ([user_fun_id], [user_id], [fun_id])
+VALUES (N'2005268088', N'2005265665', N'1001001002')
+INSERT [dbo].[world_country] ([world_country_id], [chau_id], [world_country_name], [regional_id])
+VALUES (N'1001001001', NULL, N'中国', NULL)
+SET ANSI_PADDING ON
+GO
+/****** Object:  Index [PK_ACTOR]    Script Date: 2020/5/31 17:02:26 ******/
+ALTER TABLE [dbo].[actor]
+    ADD CONSTRAINT [PK_ACTOR] PRIMARY KEY NONCLUSTERED
+        (
+         [actor_id] ASC
+            ) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+GO
+SET ANSI_PADDING ON
+GO
+/****** Object:  Index [actor_area_FK]    Script Date: 2020/5/31 17:02:26 ******/
+CREATE NONCLUSTERED INDEX [actor_area_FK] ON [dbo].[actor]
+    (
+     [city_id] ASC
+        ) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+GO
+SET ANSI_PADDING ON
+GO
+/****** Object:  Index [PK_ACTOR_ROLE]    Script Date: 2020/5/31 17:02:26 ******/
+ALTER TABLE [dbo].[actor_role]
+    ADD CONSTRAINT [PK_ACTOR_ROLE] PRIMARY KEY NONCLUSTERED
+        (
+         [actor_role_id] ASC
+            ) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+GO
+SET ANSI_PADDING ON
+GO
+/****** Object:  Index [PK_AREA_ADDRESS]    Script Date: 2020/5/31 17:02:26 ******/
+ALTER TABLE [dbo].[area_address]
+    ADD CONSTRAINT [PK_AREA_ADDRESS] PRIMARY KEY NONCLUSTERED
+        (
+         [area_address_id] ASC
+            ) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+GO
+SET ANSI_PADDING ON
+GO
+/****** Object:  Index [PK_CHAU]    Script Date: 2020/5/31 17:02:26 ******/
+ALTER TABLE [dbo].[chau]
+    ADD CONSTRAINT [PK_CHAU] PRIMARY KEY NONCLUSTERED
+        (
+         [chau_id] ASC
+            ) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+GO
+SET ANSI_PADDING ON
+GO
+/****** Object:  Index [PK_CINEMA]    Script Date: 2020/5/31 17:02:26 ******/
+ALTER TABLE [dbo].[cinema]
+    ADD CONSTRAINT [PK_CINEMA] PRIMARY KEY NONCLUSTERED
+        (
+         [cinema_id] ASC
+            ) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+GO
+SET ANSI_PADDING ON
+GO
+/****** Object:  Index [company_cinema_FK]    Script Date: 2020/5/31 17:02:26 ******/
+CREATE NONCLUSTERED INDEX [company_cinema_FK] ON [dbo].[cinema]
+    (
+     [company_id] ASC
+        ) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+GO
+SET ANSI_PADDING ON
+GO
+/****** Object:  Index [country_cinema_FK]    Script Date: 2020/5/31 17:02:26 ******/
+CREATE NONCLUSTERED INDEX [country_cinema_FK] ON [dbo].[cinema]
+    (
+     [country_id] ASC
+        ) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+GO
+SET ANSI_PADDING ON
+GO
+/****** Object:  Index [PK_CITY]    Script Date: 2020/5/31 17:02:26 ******/
+ALTER TABLE [dbo].[city]
+    ADD CONSTRAINT [PK_CITY] PRIMARY KEY NONCLUSTERED
+        (
+         [city_id] ASC
+            ) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+GO
+SET ANSI_PADDING ON
+GO
+/****** Object:  Index [province_city_FK]    Script Date: 2020/5/31 17:02:26 ******/
+CREATE NONCLUSTERED INDEX [province_city_FK] ON [dbo].[city]
+    (
+     [province_id] ASC
+        ) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+GO
+SET ANSI_PADDING ON
+GO
+/****** Object:  Index [PK_COMPANY]    Script Date: 2020/5/31 17:02:26 ******/
+ALTER TABLE [dbo].[company]
+    ADD CONSTRAINT [PK_COMPANY] PRIMARY KEY NONCLUSTERED
+        (
+         [company_id] ASC
+            ) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+GO
+SET ANSI_PADDING ON
+GO
+/****** Object:  Index [PK_COUNTRY]    Script Date: 2020/5/31 17:02:26 ******/
+ALTER TABLE [dbo].[country]
+    ADD CONSTRAINT [PK_COUNTRY] PRIMARY KEY NONCLUSTERED
+        (
+         [country_id] ASC
+            ) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+GO
+SET ANSI_PADDING ON
+GO
+/****** Object:  Index [city_country_FK]    Script Date: 2020/5/31 17:02:26 ******/
+CREATE NONCLUSTERED INDEX [city_country_FK] ON [dbo].[country]
+    (
+     [city_id] ASC
+        ) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+GO
+SET ANSI_PADDING ON
+GO
+/****** Object:  Index [PK_FIELD]    Script Date: 2020/5/31 17:02:26 ******/
+ALTER TABLE [dbo].[field]
+    ADD CONSTRAINT [PK_FIELD] PRIMARY KEY NONCLUSTERED
+        (
+         [field_id] ASC
+            ) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+GO
+SET ANSI_PADDING ON
+GO
+/****** Object:  Index [movie_field_FK]    Script Date: 2020/5/31 17:02:26 ******/
+CREATE NONCLUSTERED INDEX [movie_field_FK] ON [dbo].[field]
+    (
+     [movie_id] ASC
+        ) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+GO
+SET ANSI_PADDING ON
+GO
+/****** Object:  Index [screening_room_field_FK]    Script Date: 2020/5/31 17:02:26 ******/
+CREATE NONCLUSTERED INDEX [screening_room_field_FK] ON [dbo].[field]
+    (
+     [screening_room_id] ASC
+        ) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+GO
+SET ANSI_PADDING ON
+GO
+/****** Object:  Index [PK_FUN]    Script Date: 2020/5/31 17:02:26 ******/
+ALTER TABLE [dbo].[fun]
+    ADD CONSTRAINT [PK_FUN] PRIMARY KEY NONCLUSTERED
+        (
+         [fun_id] ASC
+            ) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+GO
+SET ANSI_PADDING ON
+GO
+/****** Object:  Index [PK_MOVIE]    Script Date: 2020/5/31 17:02:26 ******/
+ALTER TABLE [dbo].[movie]
+    ADD CONSTRAINT [PK_MOVIE] PRIMARY KEY NONCLUSTERED
+        (
+         [movie_id] ASC
+            ) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+GO
+SET ANSI_PADDING ON
+GO
+/****** Object:  Index [movie_location_FK]    Script Date: 2020/5/31 17:02:26 ******/
+CREATE NONCLUSTERED INDEX [movie_location_FK] ON [dbo].[movie]
+    (
+     [city_id] ASC
+        ) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+GO
+SET ANSI_PADDING ON
+GO
+/****** Object:  Index [movies_type_FK]    Script Date: 2020/5/31 17:02:26 ******/
+CREATE NONCLUSTERED INDEX [movies_type_FK] ON [dbo].[movie]
+    (
+     [movie_type_id] ASC
+        ) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+GO
+SET ANSI_PADDING ON
+GO
+/****** Object:  Index [PK_MOVIE_ACTORS]    Script Date: 2020/5/31 17:02:26 ******/
+ALTER TABLE [dbo].[movie_actors]
+    ADD CONSTRAINT [PK_MOVIE_ACTORS] PRIMARY KEY NONCLUSTERED
+        (
+         [movie_actors_id] ASC
+            ) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+GO
+SET ANSI_PADDING ON
+GO
+/****** Object:  Index [actor_movie_actors_FK]    Script Date: 2020/5/31 17:02:26 ******/
+CREATE NONCLUSTERED INDEX [actor_movie_actors_FK] ON [dbo].[movie_actors]
+    (
+     [actor_id] ASC
+        ) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+GO
+SET ANSI_PADDING ON
+GO
+/****** Object:  Index [actor_role_movie_actors_FK]    Script Date: 2020/5/31 17:02:26 ******/
+CREATE NONCLUSTERED INDEX [actor_role_movie_actors_FK] ON [dbo].[movie_actors]
+    (
+     [actor_role_id] ASC
+        ) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+GO
+SET ANSI_PADDING ON
+GO
+/****** Object:  Index [movie_movie_actors_FK]    Script Date: 2020/5/31 17:02:26 ******/
+CREATE NONCLUSTERED INDEX [movie_movie_actors_FK] ON [dbo].[movie_actors]
+    (
+     [movie_id] ASC
+        ) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+GO
+SET ANSI_PADDING ON
+GO
+/****** Object:  Index [PK_ORDER]    Script Date: 2020/5/31 17:02:26 ******/
+ALTER TABLE [dbo].[order]
+    ADD CONSTRAINT [PK_ORDER] PRIMARY KEY NONCLUSTERED
+        (
+         [order_id] ASC
+            ) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+GO
+SET ANSI_PADDING ON
+GO
+/****** Object:  Index [PK_PICTURE]    Script Date: 2020/5/31 17:02:26 ******/
+ALTER TABLE [dbo].[picture]
+    ADD CONSTRAINT [PK_PICTURE] PRIMARY KEY NONCLUSTERED
+        (
+         [pricture_id] ASC
+            ) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+GO
+SET ANSI_PADDING ON
+GO
+/****** Object:  Index [actor_picture_FK]    Script Date: 2020/5/31 17:02:26 ******/
+CREATE NONCLUSTERED INDEX [actor_picture_FK] ON [dbo].[picture]
+    (
+     [actor_id] ASC
+        ) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+GO
+SET ANSI_PADDING ON
+GO
+/****** Object:  Index [movie_picture_FK]    Script Date: 2020/5/31 17:02:26 ******/
+CREATE NONCLUSTERED INDEX [movie_picture_FK] ON [dbo].[picture]
+    (
+     [movie_id] ASC
+        ) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+GO
+SET ANSI_PADDING ON
+GO
+/****** Object:  Index [PK_PROVINCE]    Script Date: 2020/5/31 17:02:26 ******/
+ALTER TABLE [dbo].[province]
+    ADD CONSTRAINT [PK_PROVINCE] PRIMARY KEY NONCLUSTERED
+        (
+         [province_id] ASC
+            ) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+GO
+SET ANSI_PADDING ON
+GO
+/****** Object:  Index [country_province_FK]    Script Date: 2020/5/31 17:02:26 ******/
+CREATE NONCLUSTERED INDEX [country_province_FK] ON [dbo].[province]
+    (
+     [world_country_id] ASC
+        ) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+GO
+SET ANSI_PADDING ON
+GO
+/****** Object:  Index [regional_PK]    Script Date: 2020/5/31 17:02:26 ******/
+ALTER TABLE [dbo].[regional]
+    ADD CONSTRAINT [regional_PK] PRIMARY KEY NONCLUSTERED
+        (
+         [regional_id] ASC
+            ) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+GO
+SET ANSI_PADDING ON
+GO
+/****** Object:  Index [PK_SCREENING_ROOM]    Script Date: 2020/5/31 17:02:26 ******/
+ALTER TABLE [dbo].[screening_room]
+    ADD CONSTRAINT [PK_SCREENING_ROOM] PRIMARY KEY NONCLUSTERED
+        (
+         [screening_room_id] ASC
+            ) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+GO
+SET ANSI_PADDING ON
+GO
+/****** Object:  Index [cinema_screening_room_FK]    Script Date: 2020/5/31 17:02:26 ******/
+CREATE NONCLUSTERED INDEX [cinema_screening_room_FK] ON [dbo].[screening_room]
+    (
+     [cinema_id] ASC
+        ) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+GO
+SET ANSI_PADDING ON
+GO
+/****** Object:  Index [PK_SEAT]    Script Date: 2020/5/31 17:02:26 ******/
+ALTER TABLE [dbo].[seat]
+    ADD CONSTRAINT [PK_SEAT] PRIMARY KEY NONCLUSTERED
+        (
+         [seat_id] ASC
+            ) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+GO
+SET ANSI_PADDING ON
+GO
+/****** Object:  Index [screening_room_seat_FK]    Script Date: 2020/5/31 17:02:26 ******/
+CREATE NONCLUSTERED INDEX [screening_room_seat_FK] ON [dbo].[seat]
+    (
+     [screening_room_id] ASC
+        ) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+GO
+SET ANSI_PADDING ON
+GO
+/****** Object:  Index [PK_STATE_LIFE]    Script Date: 2020/5/31 17:02:26 ******/
+ALTER TABLE [dbo].[state_life]
+    ADD CONSTRAINT [PK_STATE_LIFE] PRIMARY KEY NONCLUSTERED
+        (
+         [state_life_id] ASC
+            ) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+GO
+SET ANSI_PADDING ON
+GO
+/****** Object:  Index [PK_TICKET]    Script Date: 2020/5/31 17:02:26 ******/
+ALTER TABLE [dbo].[ticket]
+    ADD CONSTRAINT [PK_TICKET] PRIMARY KEY NONCLUSTERED
+        (
+         [ticket_id] ASC
+            ) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+GO
+SET ANSI_PADDING ON
+GO
+/****** Object:  Index [field_ticket_FK]    Script Date: 2020/5/31 17:02:26 ******/
+CREATE NONCLUSTERED INDEX [field_ticket_FK] ON [dbo].[ticket]
+    (
+     [field_id] ASC
+        ) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+GO
+SET ANSI_PADDING ON
+GO
+/****** Object:  Index [movie_ticket_FK]    Script Date: 2020/5/31 17:02:26 ******/
+CREATE NONCLUSTERED INDEX [movie_ticket_FK] ON [dbo].[ticket]
+    (
+     [movie_id] ASC
+        ) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+GO
+SET ANSI_PADDING ON
+GO
+/****** Object:  Index [order_ticket_FK]    Script Date: 2020/5/31 17:02:26 ******/
+CREATE NONCLUSTERED INDEX [order_ticket_FK] ON [dbo].[ticket]
+    (
+     [order_id] ASC
+        ) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+GO
+SET ANSI_PADDING ON
+GO
+/****** Object:  Index [seat_ticket_FK]    Script Date: 2020/5/31 17:02:26 ******/
+CREATE NONCLUSTERED INDEX [seat_ticket_FK] ON [dbo].[ticket]
+    (
+     [seat_id] ASC
+        ) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+GO
+SET ANSI_PADDING ON
+GO
+/****** Object:  Index [ticket_watch_FK]    Script Date: 2020/5/31 17:02:26 ******/
+CREATE NONCLUSTERED INDEX [ticket_watch_FK] ON [dbo].[ticket]
+    (
+     [watched_id] ASC
+        ) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+GO
+SET ANSI_PADDING ON
+GO
+/****** Object:  Index [PK_TYPE]    Script Date: 2020/5/31 17:02:26 ******/
+ALTER TABLE [dbo].[type]
+    ADD CONSTRAINT [PK_TYPE] PRIMARY KEY NONCLUSTERED
+        (
+         [type_id] ASC
+            ) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+GO
+SET ANSI_PADDING ON
+GO
+/****** Object:  Index [PK_USER]    Script Date: 2020/5/31 17:02:26 ******/
+ALTER TABLE [dbo].[user]
+    ADD CONSTRAINT [PK_USER] PRIMARY KEY NONCLUSTERED
+        (
+         [user_id] ASC
+            ) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+GO
+SET ANSI_PADDING ON
+GO
+/****** Object:  Index [user_city_FK]    Script Date: 2020/5/31 17:02:26 ******/
+CREATE NONCLUSTERED INDEX [user_city_FK] ON [dbo].[user]
+    (
+     [city_id] ASC
+        ) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+GO
+SET ANSI_PADDING ON
+GO
+/****** Object:  Index [user_state_life_FK]    Script Date: 2020/5/31 17:02:26 ******/
+CREATE NONCLUSTERED INDEX [user_state_life_FK] ON [dbo].[user]
+    (
+     [state_life_id] ASC
+        ) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+GO
+SET ANSI_PADDING ON
+GO
+/****** Object:  Index [user_fun_FK]    Script Date: 2020/5/31 17:02:26 ******/
+CREATE NONCLUSTERED INDEX [user_fun_FK] ON [dbo].[user_fun]
+    (
+     [user_id] ASC
+        ) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+GO
+SET ANSI_PADDING ON
+GO
+/****** Object:  Index [user_fun2_FK]    Script Date: 2020/5/31 17:02:26 ******/
+CREATE NONCLUSTERED INDEX [user_fun2_FK] ON [dbo].[user_fun]
+    (
+     [fun_id] ASC
+        ) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+GO
+SET ANSI_PADDING ON
+GO
+/****** Object:  Index [PK_WANT_WATCH]    Script Date: 2020/5/31 17:02:26 ******/
+ALTER TABLE [dbo].[want_watch]
+    ADD CONSTRAINT [PK_WANT_WATCH] PRIMARY KEY NONCLUSTERED
+        (
+         [want_watch_id] ASC
+            ) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+GO
+SET ANSI_PADDING ON
+GO
+/****** Object:  Index [user_want_watch_FK]    Script Date: 2020/5/31 17:02:26 ******/
+CREATE NONCLUSTERED INDEX [user_want_watch_FK] ON [dbo].[want_watch]
+    (
+     [user_id] ASC
+        ) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+GO
+SET ANSI_PADDING ON
+GO
+/****** Object:  Index [want_watch_movie_FK]    Script Date: 2020/5/31 17:02:26 ******/
+CREATE NONCLUSTERED INDEX [want_watch_movie_FK] ON [dbo].[want_watch]
+    (
+     [movie_id] ASC
+        ) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+GO
+SET ANSI_PADDING ON
+GO
+/****** Object:  Index [PK_WATCHED]    Script Date: 2020/5/31 17:02:26 ******/
+ALTER TABLE [dbo].[watched]
+    ADD CONSTRAINT [PK_WATCHED] PRIMARY KEY NONCLUSTERED
+        (
+         [watched_id] ASC
+            ) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+GO
+SET ANSI_PADDING ON
+GO
+/****** Object:  Index [movie_watched_FK]    Script Date: 2020/5/31 17:02:26 ******/
+CREATE NONCLUSTERED INDEX [movie_watched_FK] ON [dbo].[watched]
+    (
+     [movie_id] ASC
+        ) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+GO
+SET ANSI_PADDING ON
+GO
+/****** Object:  Index [ticket_watch2_FK]    Script Date: 2020/5/31 17:02:26 ******/
+CREATE NONCLUSTERED INDEX [ticket_watch2_FK] ON [dbo].[watched]
+    (
+     [ticket_id] ASC
+        ) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+GO
+SET ANSI_PADDING ON
+GO
+/****** Object:  Index [user_watched_FK]    Script Date: 2020/5/31 17:02:26 ******/
+CREATE NONCLUSTERED INDEX [user_watched_FK] ON [dbo].[watched]
+    (
+     [user_id] ASC
+        ) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+GO
+SET ANSI_PADDING ON
+GO
+/****** Object:  Index [PK_WORLD_COUNTRY]    Script Date: 2020/5/31 17:02:26 ******/
+ALTER TABLE [dbo].[world_country]
+    ADD CONSTRAINT [PK_WORLD_COUNTRY] PRIMARY KEY NONCLUSTERED
+        (
+         [world_country_id] ASC
+            ) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+GO
+SET ANSI_PADDING ON
+GO
+/****** Object:  Index [chau_country_FK]    Script Date: 2020/5/31 17:02:26 ******/
+CREATE NONCLUSTERED INDEX [chau_country_FK] ON [dbo].[world_country]
+    (
+     [chau_id] ASC
+        ) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[user]
+    ADD CONSTRAINT [user_picture_address_default] DEFAULT ('/img/photo.jpg') FOR [user_picture_address]
+GO
+ALTER TABLE [dbo].[actor]
+    WITH CHECK ADD CONSTRAINT [FK_ACTOR_ACTOR_HOM_CITY] FOREIGN KEY ([city_id])
+        REFERENCES [dbo].[city] ([city_id])
+GO
+ALTER TABLE [dbo].[actor]
+    CHECK CONSTRAINT [FK_ACTOR_ACTOR_HOM_CITY]
+GO
+ALTER TABLE [dbo].[cinema]
+    WITH CHECK ADD CONSTRAINT [FK_CINEMA_COMPANY_C_COMPANY] FOREIGN KEY ([company_id])
+        REFERENCES [dbo].[company] ([company_id])
+GO
+ALTER TABLE [dbo].[cinema]
+    CHECK CONSTRAINT [FK_CINEMA_COMPANY_C_COMPANY]
+GO
+ALTER TABLE [dbo].[cinema]
+    WITH CHECK ADD CONSTRAINT [FK_CINEMA_COUNTRY_C_COUNTRY] FOREIGN KEY ([country_id])
+        REFERENCES [dbo].[country] ([country_id])
+GO
+ALTER TABLE [dbo].[cinema]
+    CHECK CONSTRAINT [FK_CINEMA_COUNTRY_C_COUNTRY]
+GO
+ALTER TABLE [dbo].[city]
+    WITH CHECK ADD CONSTRAINT [FK_CITY_PROVINCE__PROVINCE] FOREIGN KEY ([province_id])
+        REFERENCES [dbo].[province] ([province_id])
+GO
+ALTER TABLE [dbo].[city]
+    CHECK CONSTRAINT [FK_CITY_PROVINCE__PROVINCE]
+GO
+ALTER TABLE [dbo].[country]
+    WITH CHECK ADD CONSTRAINT [FK_COUNTRY_CITY_COUN_CITY] FOREIGN KEY ([city_id])
+        REFERENCES [dbo].[city] ([city_id])
+GO
+ALTER TABLE [dbo].[country]
+    CHECK CONSTRAINT [FK_COUNTRY_CITY_COUN_CITY]
+GO
+ALTER TABLE [dbo].[field]
+    WITH CHECK ADD CONSTRAINT [FK_FIELD_MOVIE] FOREIGN KEY ([movie_id])
+        REFERENCES [dbo].[movie] ([movie_id])
+GO
+ALTER TABLE [dbo].[field]
+    CHECK CONSTRAINT [FK_FIELD_MOVIE]
+GO
+ALTER TABLE [dbo].[field]
+    WITH CHECK ADD CONSTRAINT [FK_FIELD_MOVIE_FIE_MOVIE] FOREIGN KEY ([movie_id])
+        REFERENCES [dbo].[movie] ([movie_id])
+GO
+ALTER TABLE [dbo].[field]
+    CHECK CONSTRAINT [FK_FIELD_MOVIE_FIE_MOVIE]
+GO
+ALTER TABLE [dbo].[field]
+    WITH CHECK ADD CONSTRAINT [FK_FIELD_SCREENING_SCREENIN] FOREIGN KEY ([screening_room_id])
+        REFERENCES [dbo].[screening_room] ([screening_room_id])
+GO
+ALTER TABLE [dbo].[field]
+    CHECK CONSTRAINT [FK_FIELD_SCREENING_SCREENIN]
+GO
+ALTER TABLE [dbo].[movie]
+    WITH CHECK ADD CONSTRAINT [FK_MOVIE_MOVIE_LOC_CITY] FOREIGN KEY ([city_id])
+        REFERENCES [dbo].[city] ([city_id])
+GO
+ALTER TABLE [dbo].[movie]
+    CHECK CONSTRAINT [FK_MOVIE_MOVIE_LOC_CITY]
+GO
+ALTER TABLE [dbo].[movie]
+    WITH CHECK ADD CONSTRAINT [FK_MOVIE_MOVIES_TY_MOVIE_TY] FOREIGN KEY ([movie_type_id])
+        REFERENCES [dbo].[movie_type] ([movie_type_id])
+GO
+ALTER TABLE [dbo].[movie]
+    CHECK CONSTRAINT [FK_MOVIE_MOVIES_TY_MOVIE_TY]
+GO
+ALTER TABLE [dbo].[movie_actors]
+    WITH CHECK ADD CONSTRAINT [FK_MOVIE_AC_ACTOR_MOV_ACTOR] FOREIGN KEY ([actor_id])
+        REFERENCES [dbo].[actor] ([actor_id])
+GO
+ALTER TABLE [dbo].[movie_actors]
+    CHECK CONSTRAINT [FK_MOVIE_AC_ACTOR_MOV_ACTOR]
+GO
+ALTER TABLE [dbo].[movie_actors]
+    WITH CHECK ADD CONSTRAINT [FK_MOVIE_AC_ACTOR_ROL_ACTOR_RO] FOREIGN KEY ([actor_role_id])
+        REFERENCES [dbo].[actor_role] ([actor_role_id])
+GO
+ALTER TABLE [dbo].[movie_actors]
+    CHECK CONSTRAINT [FK_MOVIE_AC_ACTOR_ROL_ACTOR_RO]
+GO
+ALTER TABLE [dbo].[movie_actors]
+    WITH CHECK ADD CONSTRAINT [FK_MOVIE_AC_MOVIE_MOV_MOVIE] FOREIGN KEY ([movie_id])
+        REFERENCES [dbo].[movie] ([movie_id])
+GO
+ALTER TABLE [dbo].[movie_actors]
+    CHECK CONSTRAINT [FK_MOVIE_AC_MOVIE_MOV_MOVIE]
+GO
+ALTER TABLE [dbo].[picture]
+    WITH CHECK ADD CONSTRAINT [FK_PICTURE_ACTOR_PIC_ACTOR] FOREIGN KEY ([actor_id])
+        REFERENCES [dbo].[actor] ([actor_id])
+GO
+ALTER TABLE [dbo].[picture]
+    CHECK CONSTRAINT [FK_PICTURE_ACTOR_PIC_ACTOR]
+GO
+ALTER TABLE [dbo].[picture]
+    WITH CHECK ADD CONSTRAINT [FK_PICTURE_MOVIE_PIC_MOVIE] FOREIGN KEY ([movie_id])
+        REFERENCES [dbo].[movie] ([movie_id])
+GO
+ALTER TABLE [dbo].[picture]
+    CHECK CONSTRAINT [FK_PICTURE_MOVIE_PIC_MOVIE]
+GO
+ALTER TABLE [dbo].[province]
+    WITH CHECK ADD CONSTRAINT [FK_PROVINCE_WORLD_COU_WORLD_CO] FOREIGN KEY ([world_country_id])
+        REFERENCES [dbo].[world_country] ([world_country_id])
+GO
+ALTER TABLE [dbo].[province]
+    CHECK CONSTRAINT [FK_PROVINCE_WORLD_COU_WORLD_CO]
+GO
+ALTER TABLE [dbo].[screening_room]
+    WITH CHECK ADD CONSTRAINT [FK_SCREENIN_CINEMA_SC_CINEMA] FOREIGN KEY ([cinema_id])
+        REFERENCES [dbo].[cinema] ([cinema_id])
+GO
+ALTER TABLE [dbo].[screening_room]
+    CHECK CONSTRAINT [FK_SCREENIN_CINEMA_SC_CINEMA]
+GO
+ALTER TABLE [dbo].[seat]
+    WITH CHECK ADD CONSTRAINT [FK_SEAT_SCREENING_SCREENIN] FOREIGN KEY ([screening_room_id])
+        REFERENCES [dbo].[screening_room] ([screening_room_id])
+GO
+ALTER TABLE [dbo].[seat]
+    CHECK CONSTRAINT [FK_SEAT_SCREENING_SCREENIN]
+GO
+ALTER TABLE [dbo].[ticket]
+    WITH CHECK ADD CONSTRAINT [FK_TICKET_FIELD_TIC_FIELD] FOREIGN KEY ([field_id])
+        REFERENCES [dbo].[field] ([field_id])
+GO
+ALTER TABLE [dbo].[ticket]
+    CHECK CONSTRAINT [FK_TICKET_FIELD_TIC_FIELD]
+GO
+ALTER TABLE [dbo].[ticket]
+    WITH CHECK ADD CONSTRAINT [FK_TICKET_MOVIE_TIC_MOVIE] FOREIGN KEY ([movie_id])
+        REFERENCES [dbo].[movie] ([movie_id])
+GO
+ALTER TABLE [dbo].[ticket]
+    CHECK CONSTRAINT [FK_TICKET_MOVIE_TIC_MOVIE]
+GO
+ALTER TABLE [dbo].[ticket]
+    WITH CHECK ADD CONSTRAINT [FK_TICKET_ORDER_TIC_ORDER] FOREIGN KEY ([order_id])
+        REFERENCES [dbo].[order] ([order_id])
+GO
+ALTER TABLE [dbo].[ticket]
+    CHECK CONSTRAINT [FK_TICKET_ORDER_TIC_ORDER]
+GO
+ALTER TABLE [dbo].[ticket]
+    WITH CHECK ADD CONSTRAINT [FK_TICKET_SEAT_TICK_SEAT] FOREIGN KEY ([seat_id])
+        REFERENCES [dbo].[seat] ([seat_id])
+GO
+ALTER TABLE [dbo].[ticket]
+    CHECK CONSTRAINT [FK_TICKET_SEAT_TICK_SEAT]
+GO
+ALTER TABLE [dbo].[ticket]
+    WITH CHECK ADD CONSTRAINT [FK_TICKET_TICKET_WA_WATCHED] FOREIGN KEY ([watched_id])
+        REFERENCES [dbo].[watched] ([watched_id])
+GO
+ALTER TABLE [dbo].[ticket]
+    CHECK CONSTRAINT [FK_TICKET_TICKET_WA_WATCHED]
+GO
+ALTER TABLE [dbo].[user]
+    WITH CHECK ADD CONSTRAINT [FK_USER_USER_CITY_CITY] FOREIGN KEY ([city_id])
+        REFERENCES [dbo].[city] ([city_id])
+GO
+ALTER TABLE [dbo].[user]
+    CHECK CONSTRAINT [FK_USER_USER_CITY_CITY]
+GO
+ALTER TABLE [dbo].[user]
+    WITH CHECK ADD CONSTRAINT [FK_USER_USER_STAT_STATE_LI] FOREIGN KEY ([state_life_id])
+        REFERENCES [dbo].[state_life] ([state_life_id])
+GO
+ALTER TABLE [dbo].[user]
+    CHECK CONSTRAINT [FK_USER_USER_STAT_STATE_LI]
+GO
+ALTER TABLE [dbo].[user_fun]
+    WITH CHECK ADD CONSTRAINT [FK_USER_FUN_RELATIONS_FUN] FOREIGN KEY ([fun_id])
+        REFERENCES [dbo].[fun] ([fun_id])
+GO
+ALTER TABLE [dbo].[user_fun]
+    CHECK CONSTRAINT [FK_USER_FUN_RELATIONS_FUN]
+GO
+ALTER TABLE [dbo].[user_fun]
+    WITH CHECK ADD CONSTRAINT [FK_USER_FUN_RELATIONS_USER] FOREIGN KEY ([user_id])
+        REFERENCES [dbo].[user] ([user_id])
+GO
+ALTER TABLE [dbo].[user_fun]
+    CHECK CONSTRAINT [FK_USER_FUN_RELATIONS_USER]
+GO
+ALTER TABLE [dbo].[want_watch]
+    WITH CHECK ADD CONSTRAINT [FK_WANT_WAT_USER_WANT_USER] FOREIGN KEY ([user_id])
+        REFERENCES [dbo].[user] ([user_id])
+GO
+ALTER TABLE [dbo].[want_watch]
+    CHECK CONSTRAINT [FK_WANT_WAT_USER_WANT_USER]
+GO
+ALTER TABLE [dbo].[want_watch]
+    WITH CHECK ADD CONSTRAINT [FK_WANT_WAT_WANT_WATC_MOVIE] FOREIGN KEY ([movie_id])
+        REFERENCES [dbo].[movie] ([movie_id])
+GO
+ALTER TABLE [dbo].[want_watch]
+    CHECK CONSTRAINT [FK_WANT_WAT_WANT_WATC_MOVIE]
+GO
+ALTER TABLE [dbo].[watched]
+    WITH CHECK ADD CONSTRAINT [FK_WATCHED_MOVIE_WAT_MOVIE] FOREIGN KEY ([movie_id])
+        REFERENCES [dbo].[movie] ([movie_id])
+GO
+ALTER TABLE [dbo].[watched]
+    CHECK CONSTRAINT [FK_WATCHED_MOVIE_WAT_MOVIE]
+GO
+ALTER TABLE [dbo].[watched]
+    WITH CHECK ADD CONSTRAINT [FK_WATCHED_TICKET_WA_TICKET] FOREIGN KEY ([ticket_id])
+        REFERENCES [dbo].[ticket] ([ticket_id])
+GO
+ALTER TABLE [dbo].[watched]
+    CHECK CONSTRAINT [FK_WATCHED_TICKET_WA_TICKET]
+GO
+ALTER TABLE [dbo].[watched]
+    WITH CHECK ADD CONSTRAINT [FK_WATCHED_USER_WATC_USER] FOREIGN KEY ([user_id])
+        REFERENCES [dbo].[user] ([user_id])
+GO
+ALTER TABLE [dbo].[watched]
+    CHECK CONSTRAINT [FK_WATCHED_USER_WATC_USER]
+GO
+ALTER TABLE [dbo].[world_country]
+    WITH CHECK ADD CONSTRAINT [FK_WORLD_CO_CHAU_COUN_CHAU] FOREIGN KEY ([chau_id])
+        REFERENCES [dbo].[chau] ([chau_id])
+GO
+ALTER TABLE [dbo].[world_country]
+    CHECK CONSTRAINT [FK_WORLD_CO_CHAU_COUN_CHAU]
+GO
+ALTER TABLE [dbo].[world_country]
+    WITH CHECK ADD CONSTRAINT [regional_id_FK] FOREIGN KEY ([regional_id])
+        REFERENCES [dbo].[regional] ([regional_id])
+GO
+ALTER TABLE [dbo].[world_country]
+    CHECK CONSTRAINT [regional_id_FK]
+GO
+USE [master]
+GO
+ALTER DATABASE [somali_cinema] SET READ_WRITE
+GO

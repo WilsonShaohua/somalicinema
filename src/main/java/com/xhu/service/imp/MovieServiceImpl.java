@@ -4,6 +4,7 @@ import com.xhu.mapper.*;
 import com.xhu.po.*;
 import com.xhu.service.MovieService;
 import com.xhu.utils.DateUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,7 @@ import java.util.*;
  * 未完成，程序有待优化性能
  * 在查询Movie时可使用TreeSet作为方法类型，而使用List不具有自动去重功能，如果要完成去重功能，需要较大的性能代价
  */
+@Slf4j
 @Service
 public class MovieServiceImpl implements MovieService {
     @Autowired
@@ -259,45 +261,10 @@ public class MovieServiceImpl implements MovieService {
 
     //查询某一区域的电影
     @Override
-    public List<Movie> findMovieByRegionalId(String movieRegionalId) {
-        //查询区域所在的国家
-        WorldCountryExample worldCountryExample = new WorldCountryExample();
-        WorldCountryExample.Criteria worldCountryCriteria = worldCountryExample.createCriteria();
-        worldCountryCriteria.andRegionalIdEqualTo(movieRegionalId);
-        List<WorldCountry> worldCountries = worldCountryMapper.selectByExample(worldCountryExample);
-        //获取国家id
-        List<String> worldCountryIds = new ArrayList<>();
-        for (WorldCountry worldCountry : worldCountries) {
-            worldCountryIds.add(worldCountry.getWorldCountryId());
-        }
-
-        //查询国家所拥有省份
-        ProvinceExample provinceExample = new ProvinceExample();
-        ProvinceExample.Criteria provinceCriteria = provinceExample.createCriteria();
-        provinceCriteria.andWorldCountryIdIn(worldCountryIds);
-        List<Province> provinces = provinceMapper.selectByExample(provinceExample);
-        //获取省份id
-        List<String> provinceIds = new ArrayList<>();
-        for (Province province :
-                provinces) {
-            provinceIds.add(province.getProvinceId());
-
-        }
-        //查询省份拥有城市
-        CityExample cityExample = new CityExample();
-        CityExample.Criteria cityCriteria = cityExample.createCriteria();
-        cityCriteria.andProvinceIdIn(provinceIds);
-        List<City> cities = cityMapper.selectByExample(cityExample);
-        //获取城市id
-        List<String> cityIds = new ArrayList<>();
-        for (City city :
-                cities) {
-            cityIds.add(city.getCityId());
-        }
-        //查询电影所在城市
+    public List<Movie> findMovieByWorldCountryId(String worldCountryId) {
         MovieExample movieExample = new MovieExample();
-        MovieExample.Criteria movieCriteria = movieExample.createCriteria();
-        movieCriteria.andCityIdIn(cityIds);
+        MovieExample.Criteria criteria = movieExample.createCriteria();
+        criteria.andWorldCountryIdEqualTo(worldCountryId);
         List<Movie> movies = movieMapper.selectByExample(movieExample);
 
         return movies;
@@ -321,5 +288,25 @@ public class MovieServiceImpl implements MovieService {
         movieCriteria.andMoviePublishingDataLessThanOrEqualTo(now);
         List<Movie> movies = movieMapper.selectByExample(movieExample);
         return movies;
+    }
+
+    @Override
+    public Set<Movie> search(String[] conditions) {
+        if (conditions == null || conditions.length == 0) return null;
+        MovieExample movieExample = new MovieExample();
+        for (String condition : conditions) {
+            //影片名
+            MovieExample.Criteria movieNameCriteria = movieExample.createCriteria();
+            movieNameCriteria.andMovieNameLike("%" + condition + "%");
+            movieExample.or(movieNameCriteria);
+            //影片介绍信息
+            MovieExample.Criteria movieInfoCriteria = movieExample.createCriteria();
+            movieInfoCriteria.andMovieIntroductionLike("%" + condition + "%");
+            movieExample.or(movieInfoCriteria);
+        }
+        //查询
+        List<Movie> movieList = movieMapper.selectByExample(movieExample);
+        log.info("movie list" + movieList.toString());
+        return new HashSet<>(movieList);
     }
 }

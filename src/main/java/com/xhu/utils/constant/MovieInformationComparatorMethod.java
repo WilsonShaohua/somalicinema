@@ -2,7 +2,6 @@ package com.xhu.utils.constant;
 
 import com.xhu.po.Movie;
 import com.xhu.po.MoviePo;
-import com.xhu.service.WantWatchService;
 import com.xhu.service.WatchedhService;
 import org.springframework.stereotype.Component;
 
@@ -72,7 +71,7 @@ public class MovieInformationComparatorMethod {
             return o1.getTodaySalledMoney().compareTo(o2.getTodaySalledMoney());
         }
     };
-    private static WantWatchService wantWatchService;
+
     /**
      * 最受期待
      * compare movieInformation1 and movieInformation2 most want watch

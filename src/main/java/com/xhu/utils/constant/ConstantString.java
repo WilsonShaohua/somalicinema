@@ -8,5 +8,6 @@ public interface ConstantString {
     /**
      * 默认数据长度
      */
-    int DEAFULT_PAGE_SIZE = 8;
+    int DEFAULT_INDEX_PAGE_SIZE = 8;
+    int DEFAULT_MENU_PAGE_SIZE = 12;
 }

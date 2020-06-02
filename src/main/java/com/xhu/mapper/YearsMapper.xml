@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xhu.mapper.YearsMapper">
+    <resultMap id="BaseResultMap" type="com.xhu.po.Years">
+        <id column="years_id" jdbcType="CHAR" property="yearsId"/>
+        <result column="years_endt_year" jdbcType="DATE" property="yearsEndtYear"/>
+        <result column="years_start_year" jdbcType="DATE" property="yearsStartYear"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+        years_id, years_endt_year, years_start_year
+    </sql>
+    <select id="selectByExample" parameterType="com.xhu.po.YearsExample" resultMap="BaseResultMap">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List"/>
+        from years
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from years
+        where years_id = #{yearsId,jdbcType=CHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+        delete
+        from years
+        where years_id = #{yearsId,jdbcType=CHAR}
+    </delete>
+    <delete id="deleteByExample" parameterType="com.xhu.po.YearsExample">
+        delete from years
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </delete>
+    <insert id="insert" parameterType="com.xhu.po.Years">
+        insert into years (years_id, years_endt_year, years_start_year)
+        values (#{yearsId,jdbcType=CHAR}, #{yearsEndtYear,jdbcType=DATE}, #{yearsStartYear,jdbcType=DATE})
+    </insert>
+    <insert id="insertSelective" parameterType="com.xhu.po.Years">
+        insert into years
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="yearsId != null">
+                years_id,
+            </if>
+            <if test="yearsEndtYear != null">
+                years_endt_year,
+            </if>
+            <if test="yearsStartYear != null">
+                years_start_year,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="yearsId != null">
+                #{yearsId,jdbcType=CHAR},
+            </if>
+            <if test="yearsEndtYear != null">
+                #{yearsEndtYear,jdbcType=DATE},
+            </if>
+            <if test="yearsStartYear != null">
+                #{yearsStartYear,jdbcType=DATE},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.xhu.po.YearsExample" resultType="java.lang.Long">
+        select count(*) from years
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+        update years
+        <set>
+            <if test="record.yearsId != null">
+                years_id = #{record.yearsId,jdbcType=CHAR},
+            </if>
+            <if test="record.yearsEndtYear != null">
+                years_endt_year = #{record.yearsEndtYear,jdbcType=DATE},
+            </if>
+            <if test="record.yearsStartYear != null">
+                years_start_year = #{record.yearsStartYear,jdbcType=DATE},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update years
+        set years_id = #{record.yearsId,jdbcType=CHAR},
+        years_endt_year = #{record.yearsEndtYear,jdbcType=DATE},
+        years_start_year = #{record.yearsStartYear,jdbcType=DATE}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.xhu.po.Years">
+        update years
+        <set>
+            <if test="yearsEndtYear != null">
+                years_endt_year = #{yearsEndtYear,jdbcType=DATE},
+            </if>
+            <if test="yearsStartYear != null">
+                years_start_year = #{yearsStartYear,jdbcType=DATE},
+            </if>
+        </set>
+        where years_id = #{yearsId,jdbcType=CHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.xhu.po.Years">
+        update years
+        set years_endt_year  = #{yearsEndtYear,jdbcType=DATE},
+            years_start_year = #{yearsStartYear,jdbcType=DATE}
+        where years_id = #{yearsId,jdbcType=CHAR}
+    </update>
+</mapper>
