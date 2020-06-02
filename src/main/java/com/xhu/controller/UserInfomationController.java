@@ -70,19 +70,23 @@ public class UserInfomationController {
     public void writeInfomation(HttpServletRequest request, HttpServletResponse response) throws IOException {
         //将前端数据转化为String
         String jsonStr = JSONUtils.getRequestPostStr(request);
-        System.out.println(jsonStr);
+        log.info(jsonStr);
         //将前端获取的数据转化为UserInfomaton对象
         UserPo userInformation = JSON.parseObject(jsonStr, UserPo.class);
         User user = userInformation.getUser();
         String userPassword = user.getUserPassword();
-        user.setUserPassword(DigestUtils.md5Hex(userPassword));
-        userInformation.setUser(user);
-        //用户名 密码校验失败
-        if (userService.checkPassword(user.getUserId(), user.getUserPassword()) == false) {
-            JSONObject jsonObject = JSONUtils.packageJson(StateCode.ERROR_PASSWORD, StateCode.MSG.get(StateCode.ERROR_PASSWORD), null);
-            response.getWriter().write(jsonObject.toJSONString());
-            return;
+        if (userPassword != null) {
+            log.info(DigestUtils.md5Hex(userPassword));
+            user.setUserPassword(DigestUtils.md5Hex(userPassword));
+            userInformation.setUser(user);
+            //用户名 密码校验失败
+            if (userService.checkPassword(user.getUserId(), user.getUserPassword()) == false) {
+                JSONObject jsonObject = JSONUtils.packageJson(StateCode.ERROR_PASSWORD, StateCode.MSG.get(StateCode.ERROR_PASSWORD), null);
+                response.getWriter().write(jsonObject.toJSONString());
+                return;
+            }
         }
+
 
         //修改userfun数据
         int userFunRes = StateCode.FAIL;

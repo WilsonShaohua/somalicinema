@@ -56,13 +56,13 @@
             <artifactId>jstl</artifactId>
             <version>1.2</version>
         </dependency>
-        <!--        mysql-connecter-->
+        <!--mysql-connecter用于测试本地框架搭建是否成功-->
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <version>8.0.11</version>
         </dependency>
-        <!--        dbcp2-->
+        <!--  dbcp2-->
         <dependency>
             <groupId>commons-dbcp</groupId>
             <artifactId>commons-dbcp</artifactId>
