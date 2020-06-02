@@ -16,7 +16,6 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -226,7 +225,7 @@ public class MovieController {
 
     //最受期待
     @ApiOperation(value = "expect", notes = "最受期待")
-    @RequestMapping(value = "/expect", method = RequestMethod.POST)
+    @RequestMapping(value = "/expect")
     public void expect(HttpServletResponse response) throws IOException {
         List<MoviePo> moviePos = expect();
         int code = StateCode.FAIL;
@@ -266,7 +265,7 @@ public class MovieController {
     //Top100
     @ApiOperation(value = "top100", notes = "TOP100")
     @RequestMapping(value = "/top100", method = RequestMethod.POST)
-    public void top100(HttpServletResponse response, @RequestBody int pageNo) throws IOException {
+    public void top100(HttpServletResponse response) throws IOException {
         //上映日期晚于当前受期待电影
         List<Movie> movies = movieService.findMovieBeforeNow();
         //获取电影信息
@@ -274,7 +273,7 @@ public class MovieController {
         int code = StateCode.FAIL;
         if (moviePos != null)
             code = StateCode.SUCCESS;
-        moviePos = PageUtils.page(pageNo, ConstantString.DEFAULT_MENU_PAGE_SIZE, moviePos);
+        //moviePos = PageUtils.page(pageNo, ConstantString.DEFAULT_MENU_PAGE_SIZE, moviePos);
         JSONObject jsonObject = JSONUtils.packageJson(code, StateCode.MSG.get(code), moviePos);
         String jsonString = jsonObject.toJSONString();
         log.info("/movie/top100 response : \n" + jsonString);
