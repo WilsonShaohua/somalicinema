@@ -313,6 +313,7 @@ public class MovieController {
     @RequestMapping(value = "/screening", method = RequestMethod.POST)
     public void screening(HttpServletResponse response, HttpServletRequest request) throws IOException {
         JSONObject jsonObject = JSONUtils.getRequestJsonObject(request);
+        log.info("json string :" + jsonObject.toJSONString());
         Integer pageNo = jsonObject.getInteger("pageNo");
         pageNo = pageNo == null ? 0 : pageNo;
         String areaId = jsonObject.getString("areaId");
@@ -320,7 +321,7 @@ public class MovieController {
         String yearsId = jsonObject.getString("yearsId");
         List<MoviePo> moviePos = moviePoService.selectByScreeningConditions(areaId, typeId, yearsId);
         int code = StateCode.FAIL;
-        if (moviePos == null) {
+        if (moviePos != null && moviePos.size() > 0) {
             code = StateCode.SUCCESS;
         }
         moviePos = PageUtils.page(pageNo, ConstantString.DEFAULT_MENU_PAGE_SIZE, moviePos);
