@@ -40,7 +40,7 @@ public class MovieInformationComparatorMethod {
         public int compare(MoviePo o1, MoviePo o2) {
             double score1 = o1.getScore();
             double score2 = o2.getScore();
-            return Double.compare(score1, score2);
+            return Double.compare(score2, score1);
         }
     };
     /**

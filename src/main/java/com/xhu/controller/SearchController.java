@@ -45,16 +45,25 @@ public class SearchController {
     //实现搜索功能
     //无分页信息
 
-    @ApiOperation(value = "search", notes = "搜索接口", httpMethod = "post")
+    @ApiOperation(value = "search", notes = "搜索接口", httpMethod = "POST")
     @RequestMapping(value = "/search", method = RequestMethod.POST)
     public void search(HttpServletRequest request, HttpServletResponse response) throws IOException {
         //获取前端json数据
         JSONObject jsonObject = JSONUtils.getRequestJsonObject(request);
-        String codition = jsonObject.getString("search");
+        log.info(jsonObject.toJSONString());
+        String condition = null;
+        condition = jsonObject.getString("search");
+        if (condition == null || condition.trim().length() == 0) {
+            log.warn("请输入搜索信息");
+            int code = StateCode.NULL_INPUT;
+            JSONObject jsonObject1 = JSONUtils.packageJson(code, StateCode.MSG.get(code), null);
+            response.getWriter().write(jsonObject1.toJSONString());
+            return;
+        }
         //解析搜索字段
-        String[] conditions = codition.split(SplitCharConstant.SPLIT_CHARS);
-        for (String condition : conditions) {
-            log.info("condition：" + condition);
+        String[] conditions = condition.split(SplitCharConstant.SPLIT_CHARS);
+        for (String con : conditions) {
+            log.info("condition：" + con);
         }
         Set<Movie> movieSet = new HashSet<>();
         //查询演员信息

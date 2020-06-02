@@ -19,7 +19,7 @@ import java.util.Map;
 public interface StateCode {
     int SUCCESS = 200; //成功
     int FAIL = 400; //失败
-    int NOT_FOUND=404; //未找到
+    int NOT_FOUND = 404; //未找到
     int MULTI_INSTANCE = 405; //多个实例
     int ONE_INSTANCE = 1; //存在一个实例
     int USED = 406; //已经使用
@@ -28,6 +28,7 @@ public interface StateCode {
     int ERROR_PASSWORD = 401; //密码错误
     int SQL_KEY_NOT_IN_DATABASE = 1433; //数据库无该键值
     int NULL_LOGIN = 99; //未登录
+    int NULL_INPUT = 104;//没有输入
     Map<Integer, String> MSG = ImmutableMap.<Integer, String>builder()
             .put(SUCCESS, "成功")
             .put(FAIL, "失败")
@@ -37,9 +38,10 @@ public interface StateCode {
             .put(ONE_INSTANCE, "存在一个实例")
             .put(UNREGIST, "未注册")
             .put(NULL_FEILD, "空值")
-            .put(ERROR_PASSWORD,"密码错误")
-            .put(SQL_KEY_NOT_IN_DATABASE,"数据库查不带此键值：")
+            .put(ERROR_PASSWORD, "密码错误")
+            .put(SQL_KEY_NOT_IN_DATABASE, "数据库查不带此键值：")
             .put(NULL_LOGIN, "请登录")
+            .put(NULL_INPUT, "请输入数据")
             .build();
 
 }

@@ -99,7 +99,8 @@ public class MovieActorServiceImpl implements MovieActorService {
         }
         MovieExample movieExample = new MovieExample();
         MovieExample.Criteria movieCriteria = movieExample.createCriteria();
-        movieCriteria.andMovieIdIn(movieIds);
+        if (movieIds != null && movieIds.size() > 0)
+            movieCriteria.andMovieIdIn(movieIds);
         List<Movie> movieList = movieMapper.selectByExample(movieExample);
         log.info("movie list\n" + movieList);
         Set<Movie> movieSet = new HashSet<>();
