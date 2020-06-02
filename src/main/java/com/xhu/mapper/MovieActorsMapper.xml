@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xhu.mapper.MovieActorsMapper">
+  <resultMap id="BaseResultMap" type="com.xhu.po.MovieActors">
+    <id column="movie_actors_id" jdbcType="CHAR" property="movieActorsId" />
+    <result column="actor_id" jdbcType="CHAR" property="actorId" />
+    <result column="movie_id" jdbcType="CHAR" property="movieId" />
+    <result column="actor_role_id" jdbcType="CHAR" property="actorRoleId" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    movie_actors_id, actor_id, movie_id, actor_role_id
+  </sql>
+  <select id="selectByExample" parameterType="com.xhu.po.MovieActorsExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from movie_actors
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from movie_actors
+    where movie_actors_id = #{movieActorsId,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from movie_actors
+    where movie_actors_id = #{movieActorsId,jdbcType=CHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.xhu.po.MovieActorsExample">
+    delete from movie_actors
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.xhu.po.MovieActors">
+    insert into movie_actors (movie_actors_id, actor_id, movie_id, 
+      actor_role_id)
+    values (#{movieActorsId,jdbcType=CHAR}, #{actorId,jdbcType=CHAR}, #{movieId,jdbcType=CHAR}, 
+      #{actorRoleId,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.xhu.po.MovieActors">
+    insert into movie_actors
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="movieActorsId != null">
+        movie_actors_id,
+      </if>
+      <if test="actorId != null">
+        actor_id,
+      </if>
+      <if test="movieId != null">
+        movie_id,
+      </if>
+      <if test="actorRoleId != null">
+        actor_role_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="movieActorsId != null">
+        #{movieActorsId,jdbcType=CHAR},
+      </if>
+      <if test="actorId != null">
+        #{actorId,jdbcType=CHAR},
+      </if>
+      <if test="movieId != null">
+        #{movieId,jdbcType=CHAR},
+      </if>
+      <if test="actorRoleId != null">
+        #{actorRoleId,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.xhu.po.MovieActorsExample" resultType="java.lang.Long">
+    select count(*) from movie_actors
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update movie_actors
+    <set>
+      <if test="record.movieActorsId != null">
+        movie_actors_id = #{record.movieActorsId,jdbcType=CHAR},
+      </if>
+      <if test="record.actorId != null">
+        actor_id = #{record.actorId,jdbcType=CHAR},
+      </if>
+      <if test="record.movieId != null">
+        movie_id = #{record.movieId,jdbcType=CHAR},
+      </if>
+      <if test="record.actorRoleId != null">
+        actor_role_id = #{record.actorRoleId,jdbcType=CHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update movie_actors
+    set movie_actors_id = #{record.movieActorsId,jdbcType=CHAR},
+      actor_id = #{record.actorId,jdbcType=CHAR},
+      movie_id = #{record.movieId,jdbcType=CHAR},
+      actor_role_id = #{record.actorRoleId,jdbcType=CHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xhu.po.MovieActors">
+    update movie_actors
+    <set>
+      <if test="actorId != null">
+        actor_id = #{actorId,jdbcType=CHAR},
+      </if>
+      <if test="movieId != null">
+        movie_id = #{movieId,jdbcType=CHAR},
+      </if>
+      <if test="actorRoleId != null">
+        actor_role_id = #{actorRoleId,jdbcType=CHAR},
+      </if>
+    </set>
+    where movie_actors_id = #{movieActorsId,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xhu.po.MovieActors">
+    update movie_actors
+    set actor_id = #{actorId,jdbcType=CHAR},
+      movie_id = #{movieId,jdbcType=CHAR},
+      actor_role_id = #{actorRoleId,jdbcType=CHAR}
+    where movie_actors_id = #{movieActorsId,jdbcType=CHAR}
+  </update>
+</mapper>

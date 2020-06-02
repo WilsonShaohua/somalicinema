@@ -1,4 +1,4 @@
-package com.xhu.api;
+package com.xhu.utils.api;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -27,7 +27,7 @@ public class Swagger2 {
                 .apiInfo(apiInfo())
                 .select()
                 // 为当前包路径
-                .apis(RequestHandlerSelectors.basePackage("com.xpf.imoney"))
+                .apis(RequestHandlerSelectors.basePackage("com.xhu.controller"))
                 .paths(PathSelectors.any())
                 .build();
     }

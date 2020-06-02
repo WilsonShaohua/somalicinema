@@ -5,4 +5,8 @@
     <typeAliases>
         <package name="com.xhu.po"/>
     </typeAliases>
+<!--   <mappers>-->
+<!--       <package name="com.xhu.mapper"/>-->
+<!--   </mappers>-->
+
 </configuration>

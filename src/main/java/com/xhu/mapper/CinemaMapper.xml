@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xhu.mapper.CinemaMapper">
+  <resultMap id="BaseResultMap" type="com.xhu.po.Cinema">
+    <id column="cinema_id" jdbcType="CHAR" property="cinemaId" />
+    <result column="company_id" jdbcType="CHAR" property="companyId" />
+    <result column="country_id" jdbcType="CHAR" property="countryId" />
+    <result column="cinema_name" jdbcType="VARCHAR" property="cinemaName" />
+    <result column="cinema_address" jdbcType="VARCHAR" property="cinemaAddress" />
+    <result column="cinema_telphone" jdbcType="VARCHAR" property="cinemaTelphone" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    cinema_id, company_id, country_id, cinema_name, cinema_address, cinema_telphone
+  </sql>
+  <select id="selectByExample" parameterType="com.xhu.po.CinemaExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from cinema
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from cinema
+    where cinema_id = #{cinemaId,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from cinema
+    where cinema_id = #{cinemaId,jdbcType=CHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.xhu.po.CinemaExample">
+    delete from cinema
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.xhu.po.Cinema">
+    insert into cinema (cinema_id, company_id, country_id, 
+      cinema_name, cinema_address, cinema_telphone
+      )
+    values (#{cinemaId,jdbcType=CHAR}, #{companyId,jdbcType=CHAR}, #{countryId,jdbcType=CHAR}, 
+      #{cinemaName,jdbcType=VARCHAR}, #{cinemaAddress,jdbcType=VARCHAR}, #{cinemaTelphone,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.xhu.po.Cinema">
+    insert into cinema
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="cinemaId != null">
+        cinema_id,
+      </if>
+      <if test="companyId != null">
+        company_id,
+      </if>
+      <if test="countryId != null">
+        country_id,
+      </if>
+      <if test="cinemaName != null">
+        cinema_name,
+      </if>
+      <if test="cinemaAddress != null">
+        cinema_address,
+      </if>
+      <if test="cinemaTelphone != null">
+        cinema_telphone,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="cinemaId != null">
+        #{cinemaId,jdbcType=CHAR},
+      </if>
+      <if test="companyId != null">
+        #{companyId,jdbcType=CHAR},
+      </if>
+      <if test="countryId != null">
+        #{countryId,jdbcType=CHAR},
+      </if>
+      <if test="cinemaName != null">
+        #{cinemaName,jdbcType=VARCHAR},
+      </if>
+      <if test="cinemaAddress != null">
+        #{cinemaAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="cinemaTelphone != null">
+        #{cinemaTelphone,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.xhu.po.CinemaExample" resultType="java.lang.Long">
+    select count(*) from cinema
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update cinema
+    <set>
+      <if test="record.cinemaId != null">
+        cinema_id = #{record.cinemaId,jdbcType=CHAR},
+      </if>
+      <if test="record.companyId != null">
+        company_id = #{record.companyId,jdbcType=CHAR},
+      </if>
+      <if test="record.countryId != null">
+        country_id = #{record.countryId,jdbcType=CHAR},
+      </if>
+      <if test="record.cinemaName != null">
+        cinema_name = #{record.cinemaName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cinemaAddress != null">
+        cinema_address = #{record.cinemaAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cinemaTelphone != null">
+        cinema_telphone = #{record.cinemaTelphone,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update cinema
+    set cinema_id = #{record.cinemaId,jdbcType=CHAR},
+      company_id = #{record.companyId,jdbcType=CHAR},
+      country_id = #{record.countryId,jdbcType=CHAR},
+      cinema_name = #{record.cinemaName,jdbcType=VARCHAR},
+      cinema_address = #{record.cinemaAddress,jdbcType=VARCHAR},
+      cinema_telphone = #{record.cinemaTelphone,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xhu.po.Cinema">
+    update cinema
+    <set>
+      <if test="companyId != null">
+        company_id = #{companyId,jdbcType=CHAR},
+      </if>
+      <if test="countryId != null">
+        country_id = #{countryId,jdbcType=CHAR},
+      </if>
+      <if test="cinemaName != null">
+        cinema_name = #{cinemaName,jdbcType=VARCHAR},
+      </if>
+      <if test="cinemaAddress != null">
+        cinema_address = #{cinemaAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="cinemaTelphone != null">
+        cinema_telphone = #{cinemaTelphone,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where cinema_id = #{cinemaId,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xhu.po.Cinema">
+    update cinema
+    set company_id = #{companyId,jdbcType=CHAR},
+      country_id = #{countryId,jdbcType=CHAR},
+      cinema_name = #{cinemaName,jdbcType=VARCHAR},
+      cinema_address = #{cinemaAddress,jdbcType=VARCHAR},
+      cinema_telphone = #{cinemaTelphone,jdbcType=VARCHAR}
+    where cinema_id = #{cinemaId,jdbcType=CHAR}
+  </update>
+</mapper>
