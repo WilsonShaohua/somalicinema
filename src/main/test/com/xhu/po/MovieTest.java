@@ -1,5 +1,6 @@
 package com.xhu.po;
 
+import com.xhu.mapper.MovieMapper;
 import com.xhu.service.MovieService;
 import com.xhu.service.MovieTypeService;
 import com.xhu.service.WorldCountryService;
@@ -57,7 +58,63 @@ public class MovieTest extends SpringTest {
             System.out.println(movie);
             movieService.insertMovie(movie);
         }
+    }
 
+    @Autowired
+    private MovieMapper movieMapper;
 
+    @Test
+    public void setPhoto() {
+        String photo = " /img/img21.jpg" +
+                " /img/img22.jpeg" +
+                " /img/img23.jpg" +
+                " /img/img24.jpg" +
+                " /img/img25.jpg" +
+                " /img/img26.jpg" +
+                " /img/img27.jpg" +
+                " /img/img28.jpeg" +
+                " /img/img13.jpg" +
+                " /img/img14.jpg" +
+                " /img/img15.jpg" +
+                " /img/img16.jpg" +
+                " /img/img17.jpg" +
+                " /img/img18.jpg" +
+                " /img/img19.jpg" +
+                " /img/img20.jpg" +
+                " /img/img6.jpeg" +
+                " /img/img12.jpg" +
+                " /img/img11.jpg" +
+                " /img/img1.jpg" +
+                " /img/img7.jpg" +
+                " /img/img8.jpg" +
+                " /img/img9.jpg" +
+                " /img/img10.jpg" +
+                " /img/img2.jpg" +
+                " /img/img2.jpg" +
+                " /img/img2.jpg" +
+                " /img/img2.jpg" +
+                " /img/img3.jpg" +
+                " /img/img4.jpeg" +
+                " /img/img5.jpg" +
+                " /img/img2.jpg" +
+                " /img/img2.jpg" +
+                " /img/img29.jpeg" +
+                " /img/img2.jpg" +
+                " /img/img28.jpg" +
+                " /img/img30.jpg" +
+                " /img/img31.jpg" +
+                " /img/img19.jpg" +
+                " /img/img32.jpg" +
+                " /img/img33.jpg" +
+                " /img/img34.jpeg" +
+                " /img/img35.jpeg";
+        String[] photos = photo.split(" ");
+        List<Movie> movieList = movieService.selectAll();
+        Random random = new Random();
+        for (Movie movie : movieList) {
+            int index = random.nextInt(photos.length);
+            movie.setMoviePosterAddress(photos[index]);
+            movieMapper.updateByPrimaryKey(movie);
+        }
     }
 }
