@@ -371,7 +371,7 @@ public class MovieController {
             code = StateCode.SUCCESS;
             List<Movie> resoult = new ArrayList<>();
             Random random = new Random();
-            for (int i = 0; i < 6; i++) {
+            for (int i = 0; i < 8; i++) {
                 int index = random.nextInt(movies.size());
                 resoult.add(movies.get(index));
                 movies.remove(index);
