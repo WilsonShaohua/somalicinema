@@ -89,17 +89,10 @@ public class MovieTest extends SpringTest {
                 " /img/img8.jpg" +
                 " /img/img9.jpg" +
                 " /img/img10.jpg" +
-                " /img/img2.jpg" +
-                " /img/img2.jpg" +
-                " /img/img2.jpg" +
-                " /img/img2.jpg" +
                 " /img/img3.jpg" +
                 " /img/img4.jpeg" +
                 " /img/img5.jpg" +
-                " /img/img2.jpg" +
-                " /img/img2.jpg" +
                 " /img/img29.jpeg" +
-                " /img/img2.jpg" +
                 " /img/img28.jpg" +
                 " /img/img30.jpg" +
                 " /img/img31.jpg" +

@@ -314,16 +314,18 @@ public class MovieController {
         JSONObject jsonObject = JSONUtils.getRequestJsonObject(request);
         log.info("json string :" + jsonObject.toJSONString());
         Integer pageNo = jsonObject.getInteger("pageNo");
-        pageNo = pageNo == null ? 0 : pageNo;
+        pageNo = pageNo == null ? 0 : (pageNo - 1);
         String areaId = jsonObject.getString("areaId");
         String typeId = jsonObject.getString("typeId");
         String yearsId = jsonObject.getString("yearsId");
-        List<MoviePo> moviePos = moviePoService.selectByScreeningConditions(pageNo, areaId, typeId, yearsId);
+        List<MoviePo> moviePos = moviePoService.selectByScreeningConditions(areaId, typeId, yearsId);
         int code = StateCode.FAIL;
         if (moviePos != null && moviePos.size() > 0) {
             code = StateCode.SUCCESS;
         }
+        log.info(moviePos.size() + "");
         moviePos = PageUtils.page(pageNo, ConstantString.DEFAULT_MENU_PAGE_SIZE, moviePos);
+        log.info(moviePos.size() + "");
         jsonObject = JSONUtils.packageJson(code, StateCode.MSG.get(code), moviePos);
 
         log.info("json response " + jsonObject);
