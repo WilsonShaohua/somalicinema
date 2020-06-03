@@ -12,10 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author liu li
@@ -32,9 +29,12 @@ public class WatchedhServiceImpl implements WatchedhService {
 
     @Autowired
     private OrderMapper orderMapper;
-
+    private static Map<String,Double> movieIdScore = null;
     @Override
     public double movieScoreByMovieId(String movieId) {
+        if(movieIdScore!= null && movieIdScore.containsKey(movieId)==true){
+            return movieIdScore.get(movieId);
+        }
         WatchedExample watchedExample = new WatchedExample();
         WatchedExample.Criteria watchedCriteria = watchedExample.createCriteria();
         watchedCriteria.andMovieIdEqualTo(movieId);
@@ -51,7 +51,11 @@ public class WatchedhServiceImpl implements WatchedhService {
         } catch (ArithmeticException e) {
 
         }
-        return avgScore.setScale(1, BigDecimal.ROUND_HALF_UP).doubleValue();
+        double scode = avgScore.setScale(1, BigDecimal.ROUND_HALF_UP).doubleValue();
+        if(movieIdScore == null)
+                movieIdScore = new HashMap<>();
+        movieIdScore.put(movieId, scode);
+        return scode;
     }
 
     @Override
