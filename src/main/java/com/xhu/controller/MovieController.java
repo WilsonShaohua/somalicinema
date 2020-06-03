@@ -360,4 +360,27 @@ public class MovieController {
         jsonObject = JSONUtils.packageJson(code, StateCode.MSG.get(code), moviePo);
         response.getWriter().write(jsonObject.toJSONString());
     }
+
+    @ApiOperation(value = "related", notes = "相关推荐", httpMethod = "POST")
+    @RequestMapping(value = "/related", method = RequestMethod.POST)
+    public void related(HttpServletResponse response) throws IOException {
+        int code = StateCode.FAIL;
+        List<Movie> movies = movieService.findMovieBeforeNow();
+        JSONObject jsonObject = null;
+        if (movies != null && movies.size() >= 6) {
+            code = StateCode.SUCCESS;
+            List<Movie> resoult = new ArrayList<>();
+            Random random = new Random();
+            for (int i = 0; i < 6; i++) {
+                int index = random.nextInt(movies.size());
+                resoult.add(movies.get(index));
+                movies.remove(index);
+            }
+            jsonObject = JSONUtils.packageJson(code, StateCode.MSG.get(code), movies);
+        } else {
+            jsonObject = JSONUtils.packageJson(code, StateCode.MSG.get(code), null);
+
+        }
+        response.getWriter().write(jsonObject.toJSONString());
+    }
 }
