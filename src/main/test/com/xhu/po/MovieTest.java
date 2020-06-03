@@ -113,6 +113,9 @@ public class MovieTest extends SpringTest {
         Random random = new Random();
         for (Movie movie : movieList) {
             int index = random.nextInt(photos.length);
+            while (photos[index].trim().length() == 0)
+                random.nextInt(photos.length);
+            log.info(photos[index]);
             movie.setMoviePosterAddress(photos[index]);
             movieMapper.updateByPrimaryKey(movie);
         }

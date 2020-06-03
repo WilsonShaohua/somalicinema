@@ -92,7 +92,7 @@ public class MovieActorServiceImpl implements MovieActorService {
         MovieActorsExample.Criteria criteria = movieActorsExample.createCriteria();
         criteria.andActorIdIn(actorIds);
         List<MovieActors> movieActorsList = movieActorsMapper.selectByExample(movieActorsExample);
-        log.info("movie actor list\n" + movieActorsList);
+
         List<String> movieIds = new ArrayList<>();
         for (MovieActors movieActors : movieActorsList) {
             movieIds.add(movieActors.getActorId());
@@ -102,10 +102,10 @@ public class MovieActorServiceImpl implements MovieActorService {
         if (movieIds != null && movieIds.size() > 0)
             movieCriteria.andMovieIdIn(movieIds);
         List<Movie> movieList = movieMapper.selectByExample(movieExample);
-        log.info("movie list\n" + movieList);
+
         Set<Movie> movieSet = new HashSet<>();
         movieSet.addAll(movieList);
-        log.info("movie set\n" + movieSet);
+
         return movieSet;
     }
 

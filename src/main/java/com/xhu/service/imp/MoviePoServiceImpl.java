@@ -205,8 +205,9 @@ public class MoviePoServiceImpl implements MoviePoService {
         return moviePos;
     }
 
+
     @Override
-    public List<MoviePo> selectByScreeningConditions(String areaId, String typeId, String yearsId) {
+    public List<MoviePo> selectByScreeningConditions(int pageNo, String areaId, String typeId, String yearsId) {
         MovieExample movieExample = new MovieExample();
         MovieExample.Criteria criteria = movieExample.createCriteria();
         //添加地区查询

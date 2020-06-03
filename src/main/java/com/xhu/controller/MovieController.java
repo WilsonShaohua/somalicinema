@@ -49,12 +49,12 @@ public class MovieController {
     @Autowired
     private MoviePoService moviePoService;
 
-
     /**
      * @param limit
      * @return
      */
     private List<MoviePo> now(int... limit) {
+
         //找到排片晚于当前且出版日期早于现在的电影
         List<Movie> movies = fieldService.findMovieAfterNow();
         //获取电影信息
@@ -94,7 +94,7 @@ public class MovieController {
         //获取电影信息
         List<MoviePo> moviePos = moviePoService.findMoviePoByMovies(movies);
         if (moviePos == null || moviePos.size() == 0) {
-            log.warn("/movie/coming null date");
+            log.info("/movie/coming null date");
             return null;
         }
         //排序
@@ -318,13 +318,15 @@ public class MovieController {
         String areaId = jsonObject.getString("areaId");
         String typeId = jsonObject.getString("typeId");
         String yearsId = jsonObject.getString("yearsId");
-        List<MoviePo> moviePos = moviePoService.selectByScreeningConditions(areaId, typeId, yearsId);
+        List<MoviePo> moviePos = moviePoService.selectByScreeningConditions(pageNo, areaId, typeId, yearsId);
         int code = StateCode.FAIL;
         if (moviePos != null && moviePos.size() > 0) {
             code = StateCode.SUCCESS;
         }
         moviePos = PageUtils.page(pageNo, ConstantString.DEFAULT_MENU_PAGE_SIZE, moviePos);
         jsonObject = JSONUtils.packageJson(code, StateCode.MSG.get(code), moviePos);
+
+        log.info("json response " + jsonObject);
         //修正数据字符集
         response.setContentType("text/html;charset=utf-8");
         //传递数据
