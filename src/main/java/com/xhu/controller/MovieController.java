@@ -376,7 +376,7 @@ public class MovieController {
                 resoult.add(movies.get(index));
                 movies.remove(index);
             }
-            jsonObject = JSONUtils.packageJson(code, StateCode.MSG.get(code), movies);
+            jsonObject = JSONUtils.packageJson(code, StateCode.MSG.get(code), resoult);
         } else {
             jsonObject = JSONUtils.packageJson(code, StateCode.MSG.get(code), null);
 
