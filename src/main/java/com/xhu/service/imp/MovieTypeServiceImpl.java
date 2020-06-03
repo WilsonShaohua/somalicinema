@@ -51,4 +51,10 @@ public class MovieTypeServiceImpl implements MovieTypeService {
     public int deleteMovieType(String movieType) {
         return movieTypeMapper.deleteByPrimaryKey(movieType);
     }
+
+    @Override
+    public List<MovieType> selectAll() {
+        return movieTypeMapper.selectByExample(new MovieTypeExample());
+
+    }
 }

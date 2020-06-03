@@ -108,4 +108,9 @@ public class MovieActorServiceImpl implements MovieActorService {
         log.info("movie set\n" + movieSet);
         return movieSet;
     }
+
+    @Override
+    public void insert(MovieActors movieActors) {
+        movieActorsMapper.insert(movieActors);
+    }
 }

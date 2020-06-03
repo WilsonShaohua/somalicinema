@@ -29,6 +29,7 @@ public interface StateCode {
     int SQL_KEY_NOT_IN_DATABASE = 1433; //数据库无该键值
     int NULL_LOGIN = 99; //未登录
     int NULL_INPUT = 104;//没有输入
+    int ID_SIZE_FALSE = 105; //id长度错误
     Map<Integer, String> MSG = ImmutableMap.<Integer, String>builder()
             .put(SUCCESS, "成功")
             .put(FAIL, "失败")
@@ -42,6 +43,7 @@ public interface StateCode {
             .put(SQL_KEY_NOT_IN_DATABASE, "数据库查不带此键值：")
             .put(NULL_LOGIN, "请登录")
             .put(NULL_INPUT, "请输入数据")
+            .put(ID_SIZE_FALSE, "ID长度错误")
             .build();
 
 }

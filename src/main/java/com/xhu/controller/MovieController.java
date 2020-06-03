@@ -195,7 +195,7 @@ public class MovieController {
         // moviePos = PageUtils.page(pageNo, ConstantString.DEFAULT_MENU_PAGE_SIZE, moviePos);
         JSONObject jsonObject = JSONUtils.packageJson(code, StateCode.MSG.get(code), moviePos);
         String jsonString = jsonObject.toJSONString();
-        log.info("/movie/box : response：/n" + jsonString);
+        log.info("/movie/box : response：\n" + jsonString);
         //修正数据字符集
         response.setContentType("text/html;charset=utf-8");
         //传递数据
@@ -328,6 +328,32 @@ public class MovieController {
         //修正数据字符集
         response.setContentType("text/html;charset=utf-8");
         //传递数据
+        response.getWriter().write(jsonObject.toJSONString());
+    }
+
+    @ApiOperation(value = "/info", notes = "显示影片详情页面", httpMethod = "POST")
+    @RequestMapping(value = "/info", method = RequestMethod.POST)
+    public void info(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        JSONObject jsonObject = JSONUtils.getRequestJsonObject(request);
+        String movieId = jsonObject.getString("movieId");
+        int code = StateCode.FAIL;
+        if (movieId == null || movieId.length() == 0) {
+            code = StateCode.NULL_INPUT;
+            jsonObject = JSONUtils.packageJson(code, StateCode.MSG.get(code), null);
+            response.getWriter().write(jsonObject.toJSONString());
+            return;
+        } else if (movieId.length() != 10) {
+            code = StateCode.ID_SIZE_FALSE;
+            jsonObject = JSONUtils.packageJson(code, StateCode.MSG.get(code), null);
+            response.getWriter().write(jsonObject.toJSONString());
+            return;
+        }
+        MoviePo moviePo = moviePoService.findMoviePoByMovieId(movieId);
+        if (moviePo == null)
+            code = StateCode.NOT_FOUND;
+        else
+            code = StateCode.SUCCESS;
+        jsonObject = JSONUtils.packageJson(code, StateCode.MSG.get(code), moviePo);
         response.getWriter().write(jsonObject.toJSONString());
     }
 }

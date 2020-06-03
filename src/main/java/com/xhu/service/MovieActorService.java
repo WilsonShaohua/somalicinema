@@ -22,4 +22,5 @@ public interface MovieActorService {
 
     Set<Movie> findMvoieByActorId(List<String> actorId);
 
+    void insert(MovieActors movieActors);
 }

@@ -309,4 +309,14 @@ public class MovieServiceImpl implements MovieService {
         log.info("movie list" + movieList.toString());
         return new HashSet<>(movieList);
     }
+
+    @Override
+    public void insertMovie(Movie movie) {
+        movieMapper.insert(movie);
+    }
+
+    @Override
+    public List<Movie> selectAll() {
+        return movieMapper.selectByExample(new MovieExample());
+    }
 }

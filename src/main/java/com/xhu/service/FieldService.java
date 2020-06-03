@@ -1,5 +1,6 @@
 package com.xhu.service;
 
+import com.xhu.po.Field;
 import com.xhu.po.Movie;
 
 import java.util.Date;
@@ -15,4 +16,8 @@ public interface FieldService {
     List<String> findTodayFeild();
 
     List<Movie> findMovieAfterDate(Date date);
+
+    void insert(Field field);
+
+    List<Field> selectAll();
 }

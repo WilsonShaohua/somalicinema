@@ -3,12 +3,9 @@ package com.xhu.mapper;
 import com.alibaba.fastjson.JSON;
 import com.xhu.po.Actor;
 import com.xhu.po.ActorExample;
-import com.xhu.utils.KeyProductor;
 import com.xhu.utils.SpringTest;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import java.util.Date;
 
 /**
  * @author liu li
@@ -36,9 +33,7 @@ public class ActorMapperTest extends SpringTest {
 
     @Test
     public void insert() {
-        Actor actor = new Actor(KeyProductor.getKey(),"110100000000","功夫演员","李小龙",true,new Date(1969,7,12));
-        int returnCode = actorMapper.insertSelective(actor);
-        System.out.println(returnCode);
+
     }
 
     @Test

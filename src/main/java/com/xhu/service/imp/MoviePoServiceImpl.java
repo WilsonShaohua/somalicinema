@@ -56,7 +56,7 @@ public class MoviePoServiceImpl implements MoviePoService {
             moviePo = getWantWatchAmount(moviePo);
             moviePos.add(moviePo);
         }
-        log.info(moviePos.toString());
+
         return moviePos;
     }
 
@@ -91,7 +91,7 @@ public class MoviePoServiceImpl implements MoviePoService {
         moviePo.setActors(actors);
         moviePo.setMovieType(movieType);
         moviePo = getWantWatchAmount(moviePo);
-        log.info("get movie id :" + movie.getMovieId());
+        moviePo = getScore(moviePo);
         return moviePo;
     }
 
@@ -191,7 +191,6 @@ public class MoviePoServiceImpl implements MoviePoService {
     public MoviePo getWantWatchAmount(MoviePo moviePo) {
         Movie movie = moviePo.getMovie();
         long total = wantWatchService.countTotalWantByMovieId(movie.getMovieId());
-        log.info("total want watch " + movie.getMovieId() + " " + total);
         moviePo.setWantWatch(total);
         return moviePo;
     }
@@ -212,17 +211,13 @@ public class MoviePoServiceImpl implements MoviePoService {
         MovieExample.Criteria criteria = movieExample.createCriteria();
         //添加地区查询
         if (null != areaId && MovieScreeningConstant.ALL_AREA_ID.equals(areaId.trim()) == false) {
-            log.info("select area id " + areaId.trim());
+
             criteria.andWorldCountryIdEqualTo(areaId);
-        } else {
-            log.info("no area id or select all area");
         }
         //添加类型查询
         if (null != typeId && MovieScreeningConstant.ALL_TYPE_ID.equals(typeId.trim()) == false) {
             criteria.andMovieTypeIdEqualTo(typeId.trim());
-            log.info("select type id " + typeId);
-        } else {
-            log.info("no type id or select all type");
+
         }
         //添加年代查询
         if (null != yearsId && MovieScreeningConstant.ALL_YEARS_ID.equals(yearsId.trim()) == false) {
@@ -232,13 +227,11 @@ public class MoviePoServiceImpl implements MoviePoService {
             } else {
                 criteria.andMoviePublishingDataLessThan(years.getYearsEndtYear());
             }
-            log.info("select years, years id " + yearsId);
-        } else {
-            log.info("no years id or select all years");
+
         }
         //查询符合条件的影片
         List<Movie> movies = movieMapper.selectByExample(movieExample);
-        log.info("select movies " + movies);
+
         //返回查询符合条件的影片信息
         return findMoviePoByMovies(movies);
 

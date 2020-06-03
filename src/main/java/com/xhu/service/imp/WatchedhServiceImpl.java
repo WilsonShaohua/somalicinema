@@ -43,15 +43,15 @@ public class WatchedhServiceImpl implements WatchedhService {
         List<Watched> watchedList = watchedMapper.selectByExample(watchedExample);
         BigDecimal totalScore = BigDecimal.ZERO;
         for (Watched watched : watchedList) {
-            totalScore.add(BigDecimal.valueOf(watched.getMovieScore()));
+            totalScore = totalScore.add(BigDecimal.valueOf(watched.getMovieScore()));
         }
         BigDecimal avgScore = BigDecimal.ZERO;
         try {
-            totalScore.divide(BigDecimal.valueOf(watchedList.size()));
+            avgScore = totalScore.divide(BigDecimal.valueOf(watchedList.size()));
         } catch (ArithmeticException e) {
             log.info(movieId + "无分数信息");
         }
-        return Double.parseDouble(avgScore.toString());
+        return avgScore.setScale(1, BigDecimal.ROUND_HALF_UP).doubleValue();
     }
 
     @Override
@@ -109,5 +109,10 @@ public class WatchedhServiceImpl implements WatchedhService {
             total.add(ticketPrice);
         }
         return total;
+    }
+
+    @Override
+    public void insert(Watched watched) {
+        watchedMapper.insertSelective(watched);
     }
 }

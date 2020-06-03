@@ -8,6 +8,7 @@
     <result column="actor_name" jdbcType="VARCHAR" property="actorName" />
     <result column="actor_sex" jdbcType="BIT" property="actorSex" />
     <result column="actor_birthday" jdbcType="TIMESTAMP" property="actorBirthday" />
+      <result column="picture" jdbcType="CHAR" property="picture"/>
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -68,7 +69,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    actor_id, city_id, actor_introduction, actor_name, actor_sex, actor_birthday
+              actor_id, city_id, actor_introduction, actor_name, actor_sex, actor_birthday, picture
   </sql>
   <select id="selectByExample" parameterType="com.xhu.po.ActorExample" resultMap="BaseResultMap">
     select
@@ -101,12 +102,12 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.xhu.po.Actor">
-    insert into actor (actor_id, city_id, actor_introduction, 
-      actor_name, actor_sex, actor_birthday
-      )
-    values (#{actorId,jdbcType=CHAR}, #{cityId,jdbcType=CHAR}, #{actorIntroduction,jdbcType=VARCHAR}, 
-      #{actorName,jdbcType=VARCHAR}, #{actorSex,jdbcType=BIT}, #{actorBirthday,jdbcType=TIMESTAMP}
-      )
+    insert into actor (actor_id, city_id, actor_introduction,
+                       actor_name, actor_sex, actor_birthday,
+                       picture)
+    values (#{actorId,jdbcType=CHAR}, #{cityId,jdbcType=CHAR}, #{actorIntroduction,jdbcType=VARCHAR},
+            #{actorName,jdbcType=VARCHAR}, #{actorSex,jdbcType=BIT}, #{actorBirthday,jdbcType=TIMESTAMP},
+            #{picture,jdbcType=CHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.xhu.po.Actor">
     insert into actor
@@ -129,6 +130,9 @@
       <if test="actorBirthday != null">
         actor_birthday,
       </if>
+        <if test="picture != null">
+            picture,
+        </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="actorId != null">
@@ -149,6 +153,9 @@
       <if test="actorBirthday != null">
         #{actorBirthday,jdbcType=TIMESTAMP},
       </if>
+        <if test="picture != null">
+            #{picture,jdbcType=CHAR},
+        </if>
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.xhu.po.ActorExample" resultType="java.lang.Long">
@@ -178,6 +185,9 @@
       <if test="record.actorBirthday != null">
         actor_birthday = #{record.actorBirthday,jdbcType=TIMESTAMP},
       </if>
+        <if test="record.picture != null">
+            picture = #{record.picture,jdbcType=CHAR},
+        </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -190,7 +200,8 @@
       actor_introduction = #{record.actorIntroduction,jdbcType=VARCHAR},
       actor_name = #{record.actorName,jdbcType=VARCHAR},
       actor_sex = #{record.actorSex,jdbcType=BIT},
-      actor_birthday = #{record.actorBirthday,jdbcType=TIMESTAMP}
+      actor_birthday = #{record.actorBirthday,jdbcType=TIMESTAMP},
+      picture = #{record.picture,jdbcType=CHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -213,16 +224,20 @@
       <if test="actorBirthday != null">
         actor_birthday = #{actorBirthday,jdbcType=TIMESTAMP},
       </if>
+        <if test="picture != null">
+            picture = #{picture,jdbcType=CHAR},
+        </if>
     </set>
     where actor_id = #{actorId,jdbcType=CHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.xhu.po.Actor">
     update actor
-    set city_id = #{cityId,jdbcType=CHAR},
-      actor_introduction = #{actorIntroduction,jdbcType=VARCHAR},
-      actor_name = #{actorName,jdbcType=VARCHAR},
-      actor_sex = #{actorSex,jdbcType=BIT},
-      actor_birthday = #{actorBirthday,jdbcType=TIMESTAMP}
+    set city_id            = #{cityId,jdbcType=CHAR},
+        actor_introduction = #{actorIntroduction,jdbcType=VARCHAR},
+        actor_name         = #{actorName,jdbcType=VARCHAR},
+        actor_sex          = #{actorSex,jdbcType=BIT},
+        actor_birthday     = #{actorBirthday,jdbcType=TIMESTAMP},
+        picture            = #{picture,jdbcType=CHAR}
     where actor_id = #{actorId,jdbcType=CHAR}
   </update>
 </mapper>

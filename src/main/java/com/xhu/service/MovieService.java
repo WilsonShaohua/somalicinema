@@ -108,4 +108,8 @@ public interface MovieService {
     List<Movie> findMovieBeforeNow();
 
     Set<Movie> search(String[] conditions);
+
+    void insertMovie(Movie movie);
+
+    List<Movie> selectAll();
 }

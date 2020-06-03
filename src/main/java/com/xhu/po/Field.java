@@ -4,10 +4,11 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
 import java.util.Date;
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 public class Field {
     private String fieldId;
 
@@ -16,4 +17,7 @@ public class Field {
     private String movieId;
 
     private Date fieldStartDataTime;
+
+    private BigDecimal fieldMoney;
+
 }

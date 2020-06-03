@@ -6,6 +6,7 @@
     <result column="screening_room_id" jdbcType="CHAR" property="screeningRoomId" />
     <result column="movie_id" jdbcType="CHAR" property="movieId" />
     <result column="field_start_data_time" jdbcType="TIMESTAMP" property="fieldStartDataTime" />
+      <result column="field_money" jdbcType="DECIMAL" property="fieldMoney"/>
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -66,7 +67,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    field_id, screening_room_id, movie_id, field_start_data_time
+              field_id, screening_room_id, movie_id, field_start_data_time, field_money
   </sql>
   <select id="selectByExample" parameterType="com.xhu.po.FieldExample" resultMap="BaseResultMap">
     select
@@ -99,10 +100,10 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.xhu.po.Field">
-    insert into field (field_id, screening_room_id, movie_id, 
-      field_start_data_time)
-    values (#{fieldId,jdbcType=CHAR}, #{screeningRoomId,jdbcType=CHAR}, #{movieId,jdbcType=CHAR}, 
-      #{fieldStartDataTime,jdbcType=TIMESTAMP})
+    insert into field (field_id, screening_room_id, movie_id,
+                       field_start_data_time, field_money)
+    values (#{fieldId,jdbcType=CHAR}, #{screeningRoomId,jdbcType=CHAR}, #{movieId,jdbcType=CHAR},
+            #{fieldStartDataTime,jdbcType=TIMESTAMP}, #{fieldMoney,jdbcType=DECIMAL})
   </insert>
   <insert id="insertSelective" parameterType="com.xhu.po.Field">
     insert into field
@@ -119,6 +120,9 @@
       <if test="fieldStartDataTime != null">
         field_start_data_time,
       </if>
+        <if test="fieldMoney != null">
+            field_money,
+        </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="fieldId != null">
@@ -133,6 +137,9 @@
       <if test="fieldStartDataTime != null">
         #{fieldStartDataTime,jdbcType=TIMESTAMP},
       </if>
+        <if test="fieldMoney != null">
+            #{fieldMoney,jdbcType=DECIMAL},
+        </if>
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.xhu.po.FieldExample" resultType="java.lang.Long">
@@ -156,6 +163,9 @@
       <if test="record.fieldStartDataTime != null">
         field_start_data_time = #{record.fieldStartDataTime,jdbcType=TIMESTAMP},
       </if>
+        <if test="record.fieldMoney != null">
+            field_money = #{record.fieldMoney,jdbcType=DECIMAL},
+        </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -166,7 +176,8 @@
     set field_id = #{record.fieldId,jdbcType=CHAR},
       screening_room_id = #{record.screeningRoomId,jdbcType=CHAR},
       movie_id = #{record.movieId,jdbcType=CHAR},
-      field_start_data_time = #{record.fieldStartDataTime,jdbcType=TIMESTAMP}
+      field_start_data_time = #{record.fieldStartDataTime,jdbcType=TIMESTAMP},
+      field_money = #{record.fieldMoney,jdbcType=DECIMAL}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -183,14 +194,18 @@
       <if test="fieldStartDataTime != null">
         field_start_data_time = #{fieldStartDataTime,jdbcType=TIMESTAMP},
       </if>
+        <if test="fieldMoney != null">
+            field_money = #{fieldMoney,jdbcType=DECIMAL},
+        </if>
     </set>
     where field_id = #{fieldId,jdbcType=CHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.xhu.po.Field">
     update field
-    set screening_room_id = #{screeningRoomId,jdbcType=CHAR},
-      movie_id = #{movieId,jdbcType=CHAR},
-      field_start_data_time = #{fieldStartDataTime,jdbcType=TIMESTAMP}
+    set screening_room_id     = #{screeningRoomId,jdbcType=CHAR},
+        movie_id              = #{movieId,jdbcType=CHAR},
+        field_start_data_time = #{fieldStartDataTime,jdbcType=TIMESTAMP},
+        field_money           = #{fieldMoney,jdbcType=DECIMAL}
     where field_id = #{fieldId,jdbcType=CHAR}
   </update>
 </mapper>

@@ -1,5 +1,7 @@
 package com.xhu.service;
 
+import com.xhu.po.Watched;
+
 import java.math.BigDecimal;
 import java.text.ParseException;
 
@@ -13,4 +15,6 @@ public interface WatchedhService {
     BigDecimal totalTickedSale(String movieId);
 
     BigDecimal totalTickedSaleToday(String movieId) throws ParseException;
+
+    void insert(Watched watched);
 }

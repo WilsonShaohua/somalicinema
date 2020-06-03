@@ -2,7 +2,6 @@ package com.xhu.service.imp;
 
 import com.xhu.po.Actor;
 import com.xhu.service.ActorService;
-import com.xhu.utils.KeyProductor;
 import com.xhu.utils.SpringTest;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +16,7 @@ public class ActorServiceImplTest extends SpringTest {
     ActorService actorService;
     @Test
     public void addActor() {
-        System.out.println(actorService.addActor(new Actor(KeyProductor.getKey(),"110100000000","功夫演员","李小龙",true,null)));
+
     }
 
     @Test

@@ -98,4 +98,14 @@ public class FieldServiceImpl implements FieldService {
         return movies;
     }
 
+    @Override
+    public void insert(Field field) {
+        fieldMapper.insert(field);
+    }
+
+    @Override
+    public List<Field> selectAll() {
+        return fieldMapper.selectByExample(new FieldExample());
+    }
+
 }

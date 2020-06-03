@@ -2,6 +2,8 @@ package com.xhu.service;
 
 import com.xhu.po.User;
 
+import java.util.List;
+
 /**
  * @author liu li
  * @date 2020/5/24 17:17
@@ -18,4 +20,7 @@ public interface UserService {
     int updteUserByPrimaryKey(User user);
 
     boolean checkPassword(String userId, String userPassword);
+
+    List<User> selectAll();
+
 }

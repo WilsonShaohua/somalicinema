@@ -20,4 +20,6 @@ public interface MovieTypeService {
     int insertMovieType(MovieType movieType);
 
     int deleteMovieType(String movieType);
+
+    List<MovieType> selectAll();
 }

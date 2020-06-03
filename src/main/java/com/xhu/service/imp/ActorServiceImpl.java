@@ -111,4 +111,10 @@ public class ActorServiceImpl implements ActorService {
         }
         return actorIdSet;
     }
+
+    @Override
+    public List<Actor> selectAll() {
+
+        return actorMapper.selectByExample(new ActorExample());
+    }
 }

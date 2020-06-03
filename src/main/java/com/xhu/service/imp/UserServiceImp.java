@@ -156,5 +156,11 @@ public class UserServiceImp implements UserService {
         return count == 1;
     }
 
+    @Override
+    public List<User> selectAll() {
+
+        return userMapper.selectByExample(new UserExample());
+    }
+
 
 }

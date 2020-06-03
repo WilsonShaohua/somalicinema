@@ -1,5 +1,6 @@
 package com.xhu.po;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -372,6 +373,66 @@ public class FieldExample {
 
         public Criteria andFieldStartDataTimeNotBetween(Date value1, Date value2) {
             addCriterion("field_start_data_time not between", value1, value2, "fieldStartDataTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andFieldMoneyIsNull() {
+            addCriterion("field_money is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andFieldMoneyIsNotNull() {
+            addCriterion("field_money is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andFieldMoneyEqualTo(BigDecimal value) {
+            addCriterion("field_money =", value, "fieldMoney");
+            return (Criteria) this;
+        }
+
+        public Criteria andFieldMoneyNotEqualTo(BigDecimal value) {
+            addCriterion("field_money <>", value, "fieldMoney");
+            return (Criteria) this;
+        }
+
+        public Criteria andFieldMoneyGreaterThan(BigDecimal value) {
+            addCriterion("field_money >", value, "fieldMoney");
+            return (Criteria) this;
+        }
+
+        public Criteria andFieldMoneyGreaterThanOrEqualTo(BigDecimal value) {
+            addCriterion("field_money >=", value, "fieldMoney");
+            return (Criteria) this;
+        }
+
+        public Criteria andFieldMoneyLessThan(BigDecimal value) {
+            addCriterion("field_money <", value, "fieldMoney");
+            return (Criteria) this;
+        }
+
+        public Criteria andFieldMoneyLessThanOrEqualTo(BigDecimal value) {
+            addCriterion("field_money <=", value, "fieldMoney");
+            return (Criteria) this;
+        }
+
+        public Criteria andFieldMoneyIn(List<BigDecimal> values) {
+            addCriterion("field_money in", values, "fieldMoney");
+            return (Criteria) this;
+        }
+
+        public Criteria andFieldMoneyNotIn(List<BigDecimal> values) {
+            addCriterion("field_money not in", values, "fieldMoney");
+            return (Criteria) this;
+        }
+
+        public Criteria andFieldMoneyBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("field_money between", value1, value2, "fieldMoney");
+            return (Criteria) this;
+        }
+
+        public Criteria andFieldMoneyNotBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("field_money not between", value1, value2, "fieldMoney");
             return (Criteria) this;
         }
     }
