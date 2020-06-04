@@ -81,15 +81,20 @@ public class MovieController {
         log.info("request json " + jsonObject.toJSONString());
         Condition condition = jsonObject.getObject("condition", Condition.class);
         List<MoviePo> moviePos = now();
+        Map<String, Object> data = new HashMap<>();
         int code = StateCode.FAIL;
         if (moviePos != null)
             code = StateCode.SUCCESS;
         if (condition != null) {
             moviePos = moviePoService.selectByScreeningConditions(condition, moviePos);
+            data.put("size", moviePos.size());
             moviePos = PageUtils.page(condition.getPageNo(), ConstantString.DEFAULT_MENU_PAGE_SIZE, moviePos);
+        } else {
+            data.put("size", moviePos.size());
         }
 
-        jsonObject = JSONUtils.packageJson(code, StateCode.MSG.get(code), moviePos);
+        data.put("movie", moviePos);
+        jsonObject = JSONUtils.packageJson(code, StateCode.MSG.get(code), data);
         log.info("/movie/now response\n" + jsonObject.toJSONString());
         //修正数据字符集
         response.setContentType("text/html;charset=utf-8");
@@ -123,11 +128,17 @@ public class MovieController {
         int code = StateCode.FAIL;
         if (moviePos != null)
             code = StateCode.SUCCESS;
+        Map<String, Object> data = new HashMap<>();
         if (condition != null) {
             moviePos = moviePoService.selectByScreeningConditions(condition, moviePos);
             moviePos = PageUtils.page(condition.getPageNo(), ConstantString.DEFAULT_MENU_PAGE_SIZE, moviePos);
+            data.put("size", moviePos.size());
+        } else {
+            data.put("size", moviePos.size());
         }
-        jsonObject = JSONUtils.packageJson(code, StateCode.MSG.get(code), moviePos);
+
+        data.put("movie", moviePos);
+        jsonObject = JSONUtils.packageJson(code, StateCode.MSG.get(code), data);
         log.info("/movie/comming response \n" + jsonObject.toJSONString());
         //修正数据字符集
         response.setContentType("text/html;charset=utf-8");
@@ -287,13 +298,19 @@ public class MovieController {
         //获取电影信息
         List<MoviePo> moviePos = top100();
         int code = StateCode.FAIL;
+        Map<String, Object> data = new HashMap<>();
         if (moviePos != null)
             code = StateCode.SUCCESS;
         if (condition != null) {
             moviePos = moviePoService.selectByScreeningConditions(condition, moviePos);
             moviePos = PageUtils.page(condition.getPageNo(), ConstantString.DEFAULT_MENU_PAGE_SIZE, moviePos);
+            data.put("size", moviePos.size());
+        } else {
+            data.put("size", moviePos.size());
         }
-        jsonObject = JSONUtils.packageJson(code, StateCode.MSG.get(code), moviePos);
+
+        data.put("movie", moviePos);
+        jsonObject = JSONUtils.packageJson(code, StateCode.MSG.get(code), data);
         String jsonString = jsonObject.toJSONString();
         log.info("/movie/top100 response : \n" + jsonString);
         //修正数据字符集
