@@ -82,10 +82,14 @@ public class MovieController {
         Condition condition = jsonObject.getObject("condition", Condition.class);
         List<MoviePo> moviePos = now();
         int code = StateCode.FAIL;
-        if (moviePos != null)
+        int size = 0;
+        if (moviePos != null) {
+            size = moviePos.size();
             code = StateCode.SUCCESS;
+        }
         if (condition != null) {
             moviePos = moviePoService.selectByScreeningConditions(condition, moviePos);
+            size = moviePos.size();
             moviePos = PageUtils.page(condition.getPageNo(), ConstantString.DEFAULT_MENU_PAGE_SIZE, moviePos);
         }
 
@@ -126,17 +130,18 @@ public class MovieController {
         Condition condition = jsonObject.getObject("condition", Condition.class);
         List<MoviePo> moviePos = comingSoon();
         int code = StateCode.FAIL;
-        if (moviePos != null)
+        int size = 0;
+        if (moviePos != null) {
+            size = moviePos.size();
             code = StateCode.SUCCESS;
+        }
         if (condition != null) {
             moviePos = moviePoService.selectByScreeningConditions(condition, moviePos);
+            size = moviePos.size();
             moviePos = PageUtils.page(condition.getPageNo(), ConstantString.DEFAULT_MENU_PAGE_SIZE, moviePos);
         }
         jsonObject = JSONUtils.packageJson(code, StateCode.MSG.get(code), moviePos);
-        if (moviePos != null)
-            jsonObject.put("size", moviePos.size());
-        else
-            jsonObject.put("size", 0);
+        jsonObject.put("size", size);
         log.info("/movie/comming response \n" + jsonObject.toJSONString());
         //修正数据字符集
         response.setContentType("text/html;charset=utf-8");
@@ -176,14 +181,15 @@ public class MovieController {
     public void hot(HttpServletResponse response) throws IOException {
         List<MoviePo> moviePos = hot();
         int code = StateCode.FAIL;
-        if (moviePos != null)
+        int size = 0;
+        if (moviePos != null) {
             code = StateCode.SUCCESS;
+            size = moviePos.size();
+        }
 
         JSONObject jsonObject = JSONUtils.packageJson(code, StateCode.MSG.get(code), moviePos);
-        if (moviePos != null)
-            jsonObject.put("size", moviePos.size());
-        else
-            jsonObject.put("size", 0);
+
+        jsonObject.put("size", size);
         log.info("/movie/hot response: \n" + jsonObject.toJSONString());
         //修正数据字符集
         response.setContentType("text/html;charset=utf-8");
@@ -300,17 +306,18 @@ public class MovieController {
         //获取电影信息
         List<MoviePo> moviePos = top100();
         int code = StateCode.FAIL;
-        if (moviePos != null)
+        int size = 0;
+        if (moviePos != null) {
             code = StateCode.SUCCESS;
+            size = moviePos.size();
+        }
         if (condition != null) {
             moviePos = moviePoService.selectByScreeningConditions(condition, moviePos);
+            size = moviePos.size();
             moviePos = PageUtils.page(condition.getPageNo(), ConstantString.DEFAULT_MENU_PAGE_SIZE, moviePos);
         }
         jsonObject = JSONUtils.packageJson(code, StateCode.MSG.get(code), moviePos);
-        if (moviePos != null)
-            jsonObject.put("size", moviePos.size());
-        else
-            jsonObject.put("size", 0);
+        jsonObject.put("size", size);
         String jsonString = jsonObject.toJSONString();
         log.info("/movie/top100 response : \n" + jsonString);
         //修正数据字符集
