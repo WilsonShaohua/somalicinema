@@ -60,7 +60,7 @@ public class MovieController {
         //获取电影信息
         List<MoviePo> moviePos = moviePoService.findMoviePoByMovies(movies);
         if (moviePos == null || moviePos.size() == 0) {
-            log.warn("/movie/now null date");
+            log.info("/movie/now null date");
             return null;
         }
         moviePos = moviePoService.getTicketAmount(moviePos);
@@ -132,10 +132,10 @@ public class MovieController {
         //获取电影信息
         List<MoviePo> moviePos = moviePoService.findMoviePoByMovies(movies);
         if (moviePos == null || moviePos.size() == 0) {
-            log.warn("/movie/hot null date");
+            log.info("/movie/hot null date");
             return null;
         }
-        log.info("/movie/hot had date : " + moviePos.toString());
+
         //获取票房数据
         moviePos = moviePoService.getTodaySalledMoney(moviePos);
         //获取排序方式
@@ -171,14 +171,13 @@ public class MovieController {
         //获取电影信息
         List<MoviePo> moviePos = moviePoService.findMoviePoByMovieIds(movieIds);
         if (moviePos == null || moviePos.size() == 0) {
-            log.warn("/movie/box null date");
+            log.info("/movie/box null date");
             return null;
         }
         //添加票房数据
         moviePos = moviePoService.getSalledMoney(moviePos);
         moviePos.sort(MovieSortCode.SORT_WAY.get(MovieSortCode.TODAY_BOX));
         if (limit != null && limit.length > 0 && limit[0] <= moviePos.size()) {
-            log.info("index请求");
             return moviePos.subList(0, limit[0]);
         }
         return moviePos;
@@ -212,7 +211,7 @@ public class MovieController {
         //获取电影信息
         List<MoviePo> moviePos = moviePoService.findMoviePoByMovies(movies);
         if (moviePos == null || moviePos.size() == 0) {
-            log.error("/movie/expect : null date");
+            log.info("/movie/expect : null date");
             return null;
         }
         //添加期待数据
@@ -252,7 +251,7 @@ public class MovieController {
         //获取电影信息
         List<MoviePo> moviePos = moviePoService.findMoviePoByMovies(movies);
         if (moviePos == null || moviePos.size() == 0) {
-            log.warn("/movie/top100 null data");
+            log.info("/movie/top100 null data");
             return null;
         }
         moviePos = moviePoService.getScore(moviePos);
