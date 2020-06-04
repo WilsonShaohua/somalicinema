@@ -45,7 +45,7 @@ public class SearchController {
     //实现搜索功能
     //无分页信息
 
-    @ApiOperation(value = "search", notes = "搜索接口", httpMethod = "POST")
+    @ApiOperation(value = "搜索功能", notes = "模糊检索数据库 演员姓名、简介，电影名、简介、类型名", httpMethod = "POST")
     @RequestMapping(value = "/search", method = RequestMethod.POST)
     public void search(HttpServletRequest request, HttpServletResponse response) throws IOException {
         //获取前端json数据

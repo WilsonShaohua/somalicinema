@@ -73,7 +73,7 @@ public class MovieController {
     }
 
     //正在热映
-    @ApiOperation(value = "now", notes = "正在热映", httpMethod = "POST")
+    @ApiOperation(value = "正在热映", notes = "正在热映", httpMethod = "POST")
     @RequestMapping(value = "/now", method = RequestMethod.POST)
     public void now(HttpServletResponse response) throws IOException {
         List<MoviePo> moviePos = now();
@@ -105,7 +105,7 @@ public class MovieController {
     }
 
     //即将上映
-    @ApiOperation(value = "coming", notes = "即将上映", httpMethod = "POST")
+    @ApiOperation(value = "即将上映", notes = "即将上映", httpMethod = "POST")
     @RequestMapping(value = "/coming", method = RequestMethod.POST)
     public void comingSoon(HttpServletResponse response) throws IOException {
         List<MoviePo> moviePos = comingSoon();
@@ -148,7 +148,7 @@ public class MovieController {
     }
 
     //热播电影
-    @ApiOperation(value = "hot", notes = "热播电影", httpMethod = "POST")
+    @ApiOperation(value = "热播电影", notes = "热播电影", httpMethod = "POST")
     @RequestMapping(value = "/hot", method = RequestMethod.POST)
     public void hot(HttpServletResponse response) throws IOException {
         List<MoviePo> moviePos = hot();
@@ -185,7 +185,7 @@ public class MovieController {
     }
 
     //今日票房
-    @ApiOperation(value = "box", notes = "今日票房", tags = "今日票房", httpMethod = "POST")
+    @ApiOperation(value = "今日票房", notes = "今日票房", tags = "今日票房", httpMethod = "POST")
     @RequestMapping(value = "/box", method = RequestMethod.POST)
     public void box(HttpServletResponse response) throws IOException {
         List<MoviePo> moviePos = box();
@@ -224,7 +224,7 @@ public class MovieController {
     }
 
     //最受期待
-    @ApiOperation(value = "expect", notes = "最受期待", httpMethod = "POST")
+    @ApiOperation(value = "最受期待", notes = "最受期待", httpMethod = "POST")
     @RequestMapping(value = "/expect")
     public void expect(HttpServletResponse response) throws IOException {
         List<MoviePo> moviePos = expect();
@@ -263,7 +263,7 @@ public class MovieController {
     }
 
     //Top100
-    @ApiOperation(value = "top100", notes = "TOP100", httpMethod = "POST")
+    @ApiOperation(value = "TOP100", notes = "TOP100", httpMethod = "POST")
     @RequestMapping(value = "/top100", method = RequestMethod.POST)
     public void top100(HttpServletResponse response) throws IOException {
         //上映日期晚于当前受期待电影
@@ -283,7 +283,7 @@ public class MovieController {
         response.getWriter().write(jsonString);
     }
 
-    @ApiOperation(value = "index", notes = "主页信息", httpMethod = "POST")
+    @ApiOperation(value = "主页信息", notes = "主页信息", httpMethod = "POST")
     @RequestMapping(value = "/index", method = RequestMethod.POST)
     public void index(HttpServletResponse response) throws IOException {
         Map<String, List<MoviePo>> moviePoMap = new TreeMap<>();
@@ -308,7 +308,7 @@ public class MovieController {
 
 
     //筛选 区域、影片类型、区域
-    @ApiOperation(value = "screening", notes = "筛选功能", httpMethod = "POST")
+    @ApiOperation(value = "筛选", notes = "筛选功能", httpMethod = "POST")
     @RequestMapping(value = "/screening", method = RequestMethod.POST)
     public void screening(HttpServletResponse response, HttpServletRequest request) throws IOException {
         JSONObject jsonObject = JSONUtils.getRequestJsonObject(request);
@@ -335,7 +335,7 @@ public class MovieController {
         response.getWriter().write(jsonObject.toJSONString());
     }
 
-    @ApiOperation(value = "/info", notes = "显示影片详情页面", httpMethod = "POST")
+    @ApiOperation(value = "显示影片详情页面", notes = "显示影片详情页面", httpMethod = "POST")
     @RequestMapping(value = "/info", method = RequestMethod.POST)
     public void info(HttpServletRequest request, HttpServletResponse response) throws IOException {
         JSONObject jsonObject = JSONUtils.getRequestJsonObject(request);
@@ -361,7 +361,7 @@ public class MovieController {
         response.getWriter().write(jsonObject.toJSONString());
     }
 
-    @ApiOperation(value = "related", notes = "相关推荐", httpMethod = "POST")
+    @ApiOperation(value = "相关推荐", notes = "相关推荐", httpMethod = "POST")
     @RequestMapping(value = "/related", method = RequestMethod.POST)
     public void related(HttpServletResponse response) throws IOException {
         int code = StateCode.FAIL;
