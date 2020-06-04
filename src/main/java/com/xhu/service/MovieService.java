@@ -33,6 +33,7 @@ public interface MovieService {
      */
     List<Movie> findMovieByMovieTypeId(String movieTypeId);
 
+    List<Movie> findMovieByMovieTypeId(List<String> movieTypeId);
     /**
      * 按照类型对数据排序取限定数量的值
      * @param orderType

@@ -85,6 +85,16 @@ public class MovieServiceImpl implements MovieService {
         return movies;
     }
 
+    @Override
+    public List<Movie> findMovieByMovieTypeId(List<String> movieTypeId) {
+        if (movieTypeId == null || movieTypeId.size() == 0) return null;
+        MovieExample movieExample = new MovieExample();
+        MovieExample.Criteria criteria = movieExample.createCriteria();
+        criteria.andMovieTypeIdIn(movieTypeId);
+        List<Movie> movieList = movieMapper.selectByExample(movieExample);
+        return movieList;
+    }
+
     /**
      * 查找特定类型名的影片，并且限制数量
      * 模糊查询类型名

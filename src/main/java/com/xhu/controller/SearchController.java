@@ -68,18 +68,22 @@ public class SearchController {
         Set<Movie> movieSet = new HashSet<>();
         //查询演员信息
         Set<String> actorSet = actorService.searchAcotrId(conditions);
-        log.info("actor ids\n" + actorSet);
+
         List<String> actorList = new ArrayList<>(actorSet);
-        log.info("actor list \n" + actorList);
         Set<Movie> movieSetFromActor = movieActorService.findMvoieByActorId(new ArrayList<String>(actorSet));
         if (movieSetFromActor != null && movieSetFromActor.size() > 0)
             movieSet.addAll(movieSetFromActor);
-        log.info("movie set\n" + movieSet);
+
         //查询电影信息
         Set<Movie> movieSetFromMovie = movieService.search(conditions);
         if (movieSetFromMovie != null && movieSetFromMovie.size() > 0)
             movieSet.addAll(movieSetFromMovie);
-        log.info("movie set\n" + movieSet);
+
+        //类型查询
+        List<String> movieTypeIdList = movieTypeService.selectMovieTypeIdByTypeName(conditions);
+        List<Movie> movieTypeList = movieService.findMovieByMovieTypeId(movieTypeIdList);
+        if (movieTypeList != null)
+            movieSet.addAll(movieTypeList);
         Set<MoviePo> moviePoSet = new HashSet<>(moviePoService.findMoviePoByMovies(new ArrayList<>(movieSet)));
         log.info("movie po set \n" + moviePoSet);
         int code = StateCode.FAIL;

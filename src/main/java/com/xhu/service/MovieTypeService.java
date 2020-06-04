@@ -22,4 +22,8 @@ public interface MovieTypeService {
     int deleteMovieType(String movieType);
 
     List<MovieType> selectAll();
+
+    List<String> selectMovieTypeIdByTypeName(String typeName);
+
+    List<String> selectMovieTypeIdByTypeName(String[] conditions);
 }

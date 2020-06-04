@@ -7,7 +7,10 @@ import com.xhu.service.MovieTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author liu li
@@ -56,5 +59,27 @@ public class MovieTypeServiceImpl implements MovieTypeService {
     public List<MovieType> selectAll() {
         return movieTypeMapper.selectByExample(new MovieTypeExample());
 
+    }
+
+    @Override
+    public List<String> selectMovieTypeIdByTypeName(String typeName) {
+        MovieTypeExample movieTypeExample = new MovieTypeExample();
+        MovieTypeExample.Criteria criteria = movieTypeExample.createCriteria();
+        criteria.andMovieTypeNameLike("%" + typeName + "%");
+        List<MovieType> movieTypeList = movieTypeMapper.selectByExample(movieTypeExample);
+        List<String> movieTypeIdList = new ArrayList<>();
+        for (MovieType movieType : movieTypeList) {
+            movieTypeIdList.add(movieType.getMovieTypeId());
+        }
+        return movieTypeIdList;
+    }
+
+    @Override
+    public List<String> selectMovieTypeIdByTypeName(String[] typeName) {
+        Set<String> movieTypeIdSet = new HashSet<>();
+        for (String movieTypeName : typeName) {
+            movieTypeIdSet.addAll(selectMovieTypeIdByTypeName(movieTypeName));
+        }
+        return new ArrayList<>(movieTypeIdSet);
     }
 }
