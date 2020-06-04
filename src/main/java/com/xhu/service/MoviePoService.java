@@ -1,5 +1,6 @@
 package com.xhu.service;
 
+import com.xhu.po.Condition;
 import com.xhu.po.Movie;
 import com.xhu.po.MoviePo;
 
@@ -44,4 +45,6 @@ public interface MoviePoService {
     List<MoviePo> getWantWatchAmount(List<MoviePo> moviePoList);
 
     List<MoviePo> selectByScreeningConditions(String areaId, String typeId, String yearsId);
+
+    List<MoviePo> selectByScreeningConditions(Condition condition, List<MoviePo> moviePos);
 }

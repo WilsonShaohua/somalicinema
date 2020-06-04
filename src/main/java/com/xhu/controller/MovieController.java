@@ -1,6 +1,7 @@
 package com.xhu.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.xhu.po.Condition;
 import com.xhu.po.Movie;
 import com.xhu.po.MoviePo;
 import com.xhu.service.FieldService;
@@ -77,16 +78,17 @@ public class MovieController {
     @RequestMapping(value = "/now", method = RequestMethod.POST)
     public void now(HttpServletResponse response, HttpServletRequest request) throws IOException {
         JSONObject jsonObject = JSONUtils.getRequestJsonObject(request);
-        Integer pageNo = jsonObject.getInteger("pageNo");
-
+        log.info(jsonObject.toJSONString());
+        Condition condition = jsonObject.getObject("condition", Condition.class);
         List<MoviePo> moviePos = now();
         int code = StateCode.FAIL;
         if (moviePos != null)
             code = StateCode.SUCCESS;
-        if (pageNo != null && pageNo > 0) {
-            moviePos = PageUtils.page(pageNo, ConstantString.DEFAULT_MENU_PAGE_SIZE, moviePos);
+        if (condition != null) {
+            moviePos = moviePoService.selectByScreeningConditions(condition, moviePos);
+            moviePos = PageUtils.page(condition.getPageNo(), ConstantString.DEFAULT_MENU_PAGE_SIZE, moviePos);
         }
-        //  moviePos = PageUtils.page(pageNo, ConstantString.DEFAULT_MENU_PAGE_SIZE, moviePos);
+
         jsonObject = JSONUtils.packageJson(code, StateCode.MSG.get(code), moviePos);
         log.info("/movie/now response\n" + jsonObject.toJSONString());
         //修正数据字符集
@@ -115,13 +117,15 @@ public class MovieController {
     @RequestMapping(value = "/coming", method = RequestMethod.POST)
     public void comingSoon(HttpServletResponse response, HttpServletRequest request) throws IOException {
         JSONObject jsonObject = JSONUtils.getRequestJsonObject(request);
-        Integer pageNo = jsonObject.getInteger("pageNo");
+        Condition condition = jsonObject.getObject("condition", Condition.class);
         List<MoviePo> moviePos = comingSoon();
         int code = StateCode.FAIL;
         if (moviePos != null)
             code = StateCode.SUCCESS;
-        if (pageNo != null && pageNo > 0)
-            moviePos = PageUtils.page(pageNo, ConstantString.DEFAULT_MENU_PAGE_SIZE, moviePos);
+        if (condition != null) {
+            moviePos = moviePoService.selectByScreeningConditions(condition, moviePos);
+            moviePos = PageUtils.page(condition.getPageNo(), ConstantString.DEFAULT_MENU_PAGE_SIZE, moviePos);
+        }
         jsonObject = JSONUtils.packageJson(code, StateCode.MSG.get(code), moviePos);
         log.info("/movie/comming response \n" + jsonObject.toJSONString());
         //修正数据字符集
@@ -275,7 +279,7 @@ public class MovieController {
     @RequestMapping(value = "/top100", method = RequestMethod.POST)
     public void top100(HttpServletResponse response, HttpServletRequest request) throws IOException {
         JSONObject jsonObject = JSONUtils.getRequestJsonObject(request);
-        Integer pageNo = jsonObject.getInteger("pageNo");
+        Condition condition = jsonObject.getObject("condition", Condition.class);
         //上映日期晚于当前受期待电影
         List<Movie> movies = movieService.findMovieBeforeNow();
         //获取电影信息
@@ -283,8 +287,10 @@ public class MovieController {
         int code = StateCode.FAIL;
         if (moviePos != null)
             code = StateCode.SUCCESS;
-        if (pageNo != null && pageNo > 0)
-            moviePos = PageUtils.page(pageNo, ConstantString.DEFAULT_MENU_PAGE_SIZE, moviePos);
+        if (condition != null) {
+            moviePos = moviePoService.selectByScreeningConditions(condition, moviePos);
+            moviePos = PageUtils.page(condition.getPageNo(), ConstantString.DEFAULT_MENU_PAGE_SIZE, moviePos);
+        }
         jsonObject = JSONUtils.packageJson(code, StateCode.MSG.get(code), moviePos);
         String jsonString = jsonObject.toJSONString();
         log.info("/movie/top100 response : \n" + jsonString);
@@ -324,18 +330,14 @@ public class MovieController {
     public void screening(HttpServletResponse response, HttpServletRequest request) throws IOException {
         JSONObject jsonObject = JSONUtils.getRequestJsonObject(request);
         log.info("json string :" + jsonObject.toJSONString());
-        Integer pageNo = jsonObject.getInteger("pageNo");
-        pageNo = pageNo == null ? 0 : (pageNo);
-        String areaId = jsonObject.getString("areaId");
-        String typeId = jsonObject.getString("typeId");
-        String yearsId = jsonObject.getString("yearsId");
-        List<MoviePo> moviePos = moviePoService.selectByScreeningConditions(areaId, typeId, yearsId);
+        Condition conditionObject = jsonObject.getObject("condition", Condition.class);
+        List<MoviePo> moviePos = moviePoService.selectByScreeningConditions(conditionObject.getAreaId(), conditionObject.getTypeId(), conditionObject.getYearsId());
         int code = StateCode.FAIL;
         if (moviePos != null && moviePos.size() > 0) {
             code = StateCode.SUCCESS;
         }
         log.info(moviePos.size() + "");
-        moviePos = PageUtils.page(pageNo, ConstantString.DEFAULT_MENU_PAGE_SIZE, moviePos);
+        moviePos = PageUtils.page(conditionObject.getPageNo(), ConstantString.DEFAULT_MENU_PAGE_SIZE, moviePos);
         log.info(moviePos.size() + "");
         jsonObject = JSONUtils.packageJson(code, StateCode.MSG.get(code), moviePos);
 

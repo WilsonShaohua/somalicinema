@@ -212,7 +212,47 @@ public class MoviePoServiceImpl implements MoviePoService {
         MovieExample.Criteria criteria = movieExample.createCriteria();
         //添加地区查询
         if (null != areaId && MovieScreeningConstant.ALL_AREA_ID.equals(areaId.trim()) == false) {
+            criteria.andWorldCountryIdEqualTo(areaId);
+        }
+        //添加类型查询
+        if (null != typeId && MovieScreeningConstant.ALL_TYPE_ID.equals(typeId.trim()) == false) {
+            criteria.andMovieTypeIdEqualTo(typeId.trim());
 
+        }
+        //添加年代查询
+        if (null != yearsId && MovieScreeningConstant.ALL_YEARS_ID.equals(yearsId.trim()) == false) {
+            Years years = yearsMapper.selectByPrimaryKey(yearsId.trim());
+            if (null != years.getYearsStartYear() && null != years.getYearsEndtYear()) {
+                criteria.andMoviePublishingDataBetween(years.getYearsStartYear(), years.getYearsEndtYear());
+            } else {
+                criteria.andMoviePublishingDataLessThan(years.getYearsEndtYear());
+            }
+
+        }
+        //查询符合条件的影片
+        List<Movie> movies = movieMapper.selectByExample(movieExample);
+
+        //返回查询符合条件的影片信息
+        return findMoviePoByMovies(movies);
+
+    }
+
+    @Override
+    public List<MoviePo> selectByScreeningConditions(Condition condition, List<MoviePo> moviePos) {
+        MovieExample movieExample = new MovieExample();
+        MovieExample.Criteria criteria = movieExample.createCriteria();
+        if (moviePos == null || moviePos.size() == 0) return null;
+        List<String> movieIdList = new ArrayList<>();
+        for (MoviePo moviePo : moviePos) {
+            movieIdList.add(moviePo.getMovie().getMovieId());
+        }
+        criteria.andMovieIdIn(movieIdList);
+        String areaId = condition.getAreaId();
+        String typeId = condition.getTypeId();
+        String yearsId = condition.getYearsId();
+
+        //添加地区查询
+        if (null != areaId && MovieScreeningConstant.ALL_AREA_ID.equals(areaId.trim()) == false) {
             criteria.andWorldCountryIdEqualTo(areaId);
         }
         //添加类型查询
