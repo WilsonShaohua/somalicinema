@@ -95,10 +95,8 @@ public class MovieController {
 
 
         jsonObject = JSONUtils.packageJson(code, StateCode.MSG.get(code), moviePos);
-        if (moviePos != null)
-            jsonObject.put("size", moviePos.size());
-        else
-            jsonObject.put("size", 0);
+
+        jsonObject.put("size", size);
         log.info("/movie/now response\n" + jsonObject.toJSONString());
         //修正数据字符集
         response.setContentType("text/html;charset=utf-8");
