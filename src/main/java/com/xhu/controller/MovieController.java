@@ -78,7 +78,7 @@ public class MovieController {
     @RequestMapping(value = "/now", method = RequestMethod.POST)
     public void now(HttpServletResponse response, HttpServletRequest request) throws IOException {
         JSONObject jsonObject = JSONUtils.getRequestJsonObject(request);
-        log.info(jsonObject.toJSONString());
+        log.info("request json " + jsonObject.toJSONString());
         Condition condition = jsonObject.getObject("condition", Condition.class);
         List<MoviePo> moviePos = now();
         int code = StateCode.FAIL;
@@ -117,6 +117,7 @@ public class MovieController {
     @RequestMapping(value = "/coming", method = RequestMethod.POST)
     public void comingSoon(HttpServletResponse response, HttpServletRequest request) throws IOException {
         JSONObject jsonObject = JSONUtils.getRequestJsonObject(request);
+        log.info("request json " + jsonObject.toJSONString());
         Condition condition = jsonObject.getObject("condition", Condition.class);
         List<MoviePo> moviePos = comingSoon();
         int code = StateCode.FAIL;
@@ -279,6 +280,7 @@ public class MovieController {
     @RequestMapping(value = "/top100", method = RequestMethod.POST)
     public void top100(HttpServletResponse response, HttpServletRequest request) throws IOException {
         JSONObject jsonObject = JSONUtils.getRequestJsonObject(request);
+        log.info("request json " + jsonObject.toJSONString());
         Condition condition = jsonObject.getObject("condition", Condition.class);
         //上映日期晚于当前受期待电影
         List<Movie> movies = movieService.findMovieBeforeNow();
@@ -329,7 +331,7 @@ public class MovieController {
     @RequestMapping(value = "/screening", method = RequestMethod.POST)
     public void screening(HttpServletResponse response, HttpServletRequest request) throws IOException {
         JSONObject jsonObject = JSONUtils.getRequestJsonObject(request);
-        log.info("json string :" + jsonObject.toJSONString());
+        log.info("request json " + jsonObject.toJSONString());
         Condition conditionObject = jsonObject.getObject("condition", Condition.class);
         List<MoviePo> moviePos = moviePoService.selectByScreeningConditions(conditionObject.getAreaId(), conditionObject.getTypeId(), conditionObject.getYearsId());
         int code = StateCode.FAIL;
@@ -352,6 +354,7 @@ public class MovieController {
     @RequestMapping(value = "/info", method = RequestMethod.POST)
     public void info(HttpServletRequest request, HttpServletResponse response) throws IOException {
         JSONObject jsonObject = JSONUtils.getRequestJsonObject(request);
+        log.info("request json " + jsonObject.toJSONString());
         String movieId = jsonObject.getString("movieId");
         int code = StateCode.FAIL;
         if (movieId == null || movieId.length() == 0) {
